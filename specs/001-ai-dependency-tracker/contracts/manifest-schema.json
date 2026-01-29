@@ -1,0 +1,256 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/pradeepmouli/dependabit/schemas/manifest.json",
+  "title": "Dependabit Manifest Schema",
+  "description": "Schema for .dependabit/manifest.json - tracks external dependencies",
+  "type": "object",
+  "required": ["version", "generatedAt", "generatedBy", "repository", "dependencies", "statistics"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "Manifest schema version"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when manifest was generated"
+    },
+    "generatedBy": {
+      "type": "object",
+      "required": ["action", "version", "llmProvider"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Action name (e.g., 'dependabit')"
+        },
+        "version": {
+          "type": "string",
+          "description": "Action version that generated this manifest"
+        },
+        "llmProvider": {
+          "type": "string",
+          "description": "LLM provider used (e.g., 'github-copilot')"
+        },
+        "llmModel": {
+          "type": "string",
+          "description": "Specific model used (optional)"
+        }
+      }
+    },
+    "repository": {
+      "type": "object",
+      "required": ["owner", "name", "branch", "commit"],
+      "properties": {
+        "owner": {
+          "type": "string",
+          "description": "Repository owner"
+        },
+        "name": {
+          "type": "string",
+          "description": "Repository name"
+        },
+        "branch": {
+          "type": "string",
+          "description": "Branch analyzed"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$",
+          "description": "Full commit SHA"
+        }
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/DependencyEntry"
+      }
+    },
+    "statistics": {
+      "type": "object",
+      "required": ["totalDependencies", "byType", "byDetectionMethod", "averageConfidence"],
+      "properties": {
+        "totalDependencies": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "byType": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "byDetectionMethod": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "averageConfidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    }
+  },
+  "definitions": {
+    "DependencyEntry": {
+      "type": "object",
+      "required": ["id", "url", "type", "name", "currentStateHash", "detectionMethod", "detectionConfidence", "detectedAt", "lastChecked", "referencedIn"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier (UUID v4)"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "External resource URL"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["github-repo", "npm-package", "documentation-url", "api-endpoint", "blog-post", "research-paper", "other"]
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional description"
+        },
+        "currentVersion": {
+          "type": "string",
+          "description": "Semantic version if available"
+        },
+        "currentStateHash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "description": "SHA256 hash of current state"
+        },
+        "detectionMethod": {
+          "type": "string",
+          "enum": ["llm-analysis", "manual", "package-json", "requirements-txt", "code-comment"]
+        },
+        "detectionConfidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence score (0.0 - 1.0)"
+        },
+        "detectedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastChecked": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastChanged": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "auth": {
+          "$ref": "#/definitions/AuthConfig"
+        },
+        "monitoring": {
+          "$ref": "#/definitions/MonitoringRules"
+        },
+        "referencedIn": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Reference"
+          }
+        },
+        "changeHistory": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChangeRecord"
+          }
+        }
+      }
+    },
+    "AuthConfig": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["token", "basic", "oauth", "none"]
+        },
+        "secret": {
+          "type": "string",
+          "description": "GitHub Secret name reference"
+        }
+      }
+    },
+    "MonitoringRules": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "checkFrequency": {
+          "type": "string",
+          "enum": ["hourly", "daily", "weekly", "monthly"],
+          "default": "daily"
+        },
+        "ignoreChanges": {
+          "type": "boolean",
+          "default": false
+        },
+        "severityOverride": {
+          "type": "string",
+          "enum": ["breaking", "major", "minor"]
+        }
+      }
+    },
+    "Reference": {
+      "type": "object",
+      "required": ["file"],
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "Relative path from repo root"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "context": {
+          "type": "string",
+          "description": "Surrounding text"
+        }
+      }
+    },
+    "ChangeRecord": {
+      "type": "object",
+      "required": ["detectedAt", "severity"],
+      "properties": {
+        "detectedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "oldVersion": {
+          "type": "string"
+        },
+        "newVersion": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["breaking", "major", "minor"]
+        },
+        "issueNumber": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
