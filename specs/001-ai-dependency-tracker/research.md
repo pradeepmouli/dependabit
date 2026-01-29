@@ -1,7 +1,7 @@
 # Research: AI-Powered Dependency Tracking System
 
-**Feature**: 001-ai-dependency-tracker  
-**Phase**: 0 - Technology Research & Decision Documentation  
+**Feature**: 001-ai-dependency-tracker
+**Phase**: 0 - Technology Research & Decision Documentation
 **Date**: 2026-01-29
 
 ## Overview

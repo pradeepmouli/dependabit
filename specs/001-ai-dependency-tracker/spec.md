@@ -1,8 +1,8 @@
 # Feature Specification: AI-Powered Dependency Tracking System
 
-**Feature Branch**: `001-ai-dependency-tracker`  
-**Created**: 2026-01-29  
-**Status**: Draft  
+**Feature Branch**: `001-ai-dependency-tracker`
+**Created**: 2026-01-29
+**Status**: Draft
 **Input**: User description: "build a github action(s) that will 1. use an LLM (copilot by default) create a manifest of external resources/repos/projects/documents on which a project may depend 2. Use an LLM to update that manifest as triggered (i.e. commits to master branch) 3. Periodically look for changes to the entries listed in the manifest and open issues/PRs when changes occur (which can be manually or automatically assigned to copilot/claude etc...)"
 
 ## Clarifications

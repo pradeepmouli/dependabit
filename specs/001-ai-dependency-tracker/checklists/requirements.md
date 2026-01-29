@@ -1,7 +1,7 @@
 # Specification Quality Checklist: AI-Powered Dependency Tracking System
 
-**Purpose**: Validate specification completeness and quality before proceeding to planning  
-**Created**: 2026-01-29  
+**Purpose**: Validate specification completeness and quality before proceeding to planning
+**Created**: 2026-01-29
 **Feature**: [spec.md](../spec.md)
 
 ## Content Quality
