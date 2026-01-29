@@ -1,7 +1,7 @@
 # Data Model: AI-Powered Dependency Tracking System
 
-**Feature**: 001-ai-dependency-tracker  
-**Phase**: 1 - Data Model Design  
+**Feature**: 001-ai-dependency-tracker
+**Phase**: 1 - Data Model Design
 **Date**: 2026-01-29
 
 ## Overview
@@ -65,29 +65,29 @@ export const DependencyEntrySchema = z.object({
   type: DependencyTypeSchema,
   name: z.string(), // Human-readable name
   description: z.string().optional(),
-  
+
   // Version/state tracking
   currentVersion: z.string().optional(), // Semantic version if available
   currentStateHash: z.string(), // SHA256 hash of current state
-  
+
   // Metadata
   detectionMethod: DetectionMethodSchema,
   detectionConfidence: z.number().min(0).max(1), // 0.0 - 1.0
   detectedAt: z.string().datetime(), // ISO 8601 timestamp
   lastChecked: z.string().datetime(),
   lastChanged: z.string().datetime().optional(),
-  
+
   // Configuration
   auth: AuthConfigSchema,
   monitoring: MonitoringRulesSchema.optional(),
-  
+
   // Relationships
   referencedIn: z.array(z.object({
     file: z.string(), // Relative path from repo root
     line: z.number().optional(),
     context: z.string().optional(), // Surrounding text
   })),
-  
+
   // Change history
   changeHistory: z.array(z.object({
     detectedAt: z.string().datetime(),
@@ -108,16 +108,16 @@ export const DependencyManifestSchema = z.object({
     llmProvider: z.string(), // e.g., "github-copilot"
     llmModel: z.string().optional(),
   }),
-  
+
   repository: z.object({
     owner: z.string(),
     name: z.string(),
     branch: z.string(),
     commit: z.string(), // SHA of last analyzed commit
   }),
-  
+
   dependencies: z.array(DependencyEntrySchema),
-  
+
   statistics: z.object({
     totalDependencies: z.number(),
     byType: z.record(DependencyTypeSchema, z.number()),
@@ -271,22 +271,22 @@ export const DependencyOverrideSchema = z.object({
 // Complete configuration
 export const DependabitConfigSchema = z.object({
   version: z.literal('1'),
-  
+
   // Global settings
   llm: LLMConfigSchema.optional(),
   schedule: ScheduleSchema.default({ interval: 'daily', timezone: 'UTC' }),
   issues: IssueConfigSchema.optional(),
-  
+
   // Monitoring behavior
   monitoring: z.object({
     enabled: z.boolean().default(true),
     autoUpdate: z.boolean().default(true), // Auto-update manifest on push
     falsePositiveThreshold: z.number().min(0).max(1).default(0.1),
   }).optional(),
-  
+
   // Dependency-specific overrides
   dependencies: z.array(DependencyOverrideSchema).optional(),
-  
+
   // Exclusions
   ignore: z.object({
     urls: z.array(z.string()).optional(),
@@ -376,16 +376,16 @@ export const ChangeTypeSchema = z.enum([
 export const ChangeDetectionRecordSchema = z.object({
   id: z.string().uuid(),
   timestamp: z.string().datetime(),
-  
+
   // Dependency reference
   dependencyId: z.string().uuid(),
   dependencyUrl: z.string().url(),
   dependencyName: z.string(),
-  
+
   // Change details
   changeType: ChangeTypeSchema,
   severity: SeveritySchema,
-  
+
   // State comparison
   oldState: z.object({
     version: z.string().optional(),
@@ -397,12 +397,12 @@ export const ChangeDetectionRecordSchema = z.object({
     hash: z.string(),
     checkedAt: z.string().datetime(),
   }),
-  
+
   // Change description (LLM-generated)
   summary: z.string(),
   details: z.string().optional(),
   breakingChanges: z.array(z.string()).optional(),
-  
+
   // Action taken
   issueCreated: z.boolean().default(false),
   issueNumber: z.number().optional(),

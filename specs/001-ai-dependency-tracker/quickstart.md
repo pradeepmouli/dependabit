@@ -1,7 +1,7 @@
 # Quickstart Guide: AI-Powered Dependency Tracking
 
-**Feature**: 001-ai-dependency-tracker  
-**Audience**: Repository maintainers setting up dependabit  
+**Feature**: 001-ai-dependency-tracker
+**Audience**: Repository maintainers setting up dependabit
 **Time to Setup**: ~5 minutes
 
 ## Overview
@@ -32,14 +32,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Generate manifest
         uses: pradeepmouli/dependabit@v1
         with:
           action: generate
           github-token: ${{ secrets.GITHUB_TOKEN }}
           llm-provider: github-copilot
-      
+
       - name: Commit manifest
         run: |
           git config user.name "dependabit[bot]"
@@ -69,13 +69,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Update manifest
         uses: pradeepmouli/dependabit@v1
         with:
           action: update
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Commit changes
         run: |
           git config user.name "dependabit[bot]"
@@ -99,7 +99,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Check for changes
         uses: pradeepmouli/dependabit@v1
         with:
