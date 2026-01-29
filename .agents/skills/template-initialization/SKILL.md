@@ -25,8 +25,8 @@ Collect these from the user before proceeding:
 Optional (use defaults if not provided):
 
 - `author_email` - Author email (default: "")
-- `repository_url` - Repository URL (default: "")
-- `package_scope` - Package scope (default: "company")
+- `repository_url` - Repository URL (default: "CURRENT_GIT_URL" or "")
+- `package_scope` - Package scope (default: "")
 - `remove_example_packages` - Remove example packages? (default: "y")
 - `remove_example_tests` - Remove example tests? (default: "y")
 - `remove_example_e2e` - Remove E2E tests? (default: "y")
