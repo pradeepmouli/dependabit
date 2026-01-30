@@ -110,7 +110,23 @@ export class PluginRegistry {
 }
 
 /**
- * Global plugin registry instance
+ * Create a new, isolated plugin registry instance.
+ *
+ * This is useful in testing scenarios where you want to avoid shared
+ * global state between tests (for example, when tests run in parallel
+ * or when they need strict isolation of registered plugins).
+ */
+export function createPluginRegistry(): PluginRegistry {
+  return new PluginRegistry();
+}
+
+/**
+ * Global plugin registry instance.
+ *
+ * NOTE: This is a shared singleton. Tests that rely on `globalRegistry`
+ * may interfere with each other if they run in parallel, because they
+ * mutate shared state. For isolated testing, prefer using
+ * {@link createPluginRegistry} to obtain a fresh registry instance per test.
  */
 export const globalRegistry = new PluginRegistry();
 
