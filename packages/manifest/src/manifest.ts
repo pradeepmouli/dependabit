@@ -2,8 +2,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import {
   type DependencyManifest,
-  type DependencyEntry,
-  DependencyManifestSchema
+  type DependencyEntry
 } from './schema.js';
 import { validateManifest } from './validator.js';
 
