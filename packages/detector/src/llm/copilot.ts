@@ -3,7 +3,7 @@
  * Integrates with GitHub Copilot via Azure OpenAI SDK
  */
 
-import { OpenAIClient, AzureKeyCredential } from '@azure/openai';
+import { AzureOpenAI } from '@azure/openai';
 import type {
   LLMProvider,
   LLMProviderConfig,
@@ -15,15 +15,15 @@ import type {
 import { SYSTEM_PROMPT } from './prompts.js';
 
 export class GitHubCopilotProvider implements LLMProvider {
-  private client: OpenAIClient;
+  private client: AzureOpenAI;
   private config: Required<LLMProviderConfig>;
   private model: string;
 
   constructor(config: LLMProviderConfig = {}) {
     // Default configuration
     this.config = {
-      apiKey: config.apiKey || process.env.GITHUB_TOKEN || process.env.AZURE_OPENAI_API_KEY || '',
-      endpoint: config.endpoint || process.env.AZURE_OPENAI_ENDPOINT || 'https://api.openai.com',
+      apiKey: config.apiKey || process.env['GITHUB_TOKEN'] || process.env['AZURE_OPENAI_API_KEY'] || '',
+      endpoint: config.endpoint || process.env['AZURE_OPENAI_ENDPOINT'] || 'https://api.openai.com',
       model: config.model || 'gpt-4',
       maxTokens: config.maxTokens || 4000,
       temperature: config.temperature || 0.3
@@ -36,10 +36,9 @@ export class GitHubCopilotProvider implements LLMProvider {
     }
 
     // Initialize Azure OpenAI client
-    this.client = new OpenAIClient(
-      this.config.endpoint,
-      new AzureKeyCredential(this.config.apiKey)
-    );
+    this.client = new AzureOpenAI({
+      apiKey: this.config.apiKey
+    });
   }
 
   async analyze(content: string, prompt: string): Promise<LLMResponse> {
@@ -51,15 +50,13 @@ export class GitHubCopilotProvider implements LLMProvider {
         { role: 'user' as const, content: prompt }
       ];
 
-      const response = await this.client.getChatCompletions(
-        this.model,
+      const response = await this.client.chat.completions.create({
+        model: this.model,
         messages,
-        {
-          maxTokens: this.config.maxTokens,
-          temperature: this.config.temperature,
-          responseFormat: { type: 'json_object' }
-        }
-      );
+        max_tokens: this.config.maxTokens,
+        temperature: this.config.temperature,
+        response_format: { type: 'json_object' }
+      });
 
       const latencyMs = Date.now() - startTime;
 
@@ -79,9 +76,9 @@ export class GitHubCopilotProvider implements LLMProvider {
       }
 
       const usage: LLMUsageMetadata = {
-        promptTokens: response.usage?.promptTokens || 0,
-        completionTokens: response.usage?.completionTokens || 0,
-        totalTokens: response.usage?.totalTokens || 0,
+        promptTokens: response.usage?.prompt_tokens || 0,
+        completionTokens: response.usage?.completion_tokens || 0,
+        totalTokens: response.usage?.total_tokens || 0,
         model: this.model,
         latencyMs
       };

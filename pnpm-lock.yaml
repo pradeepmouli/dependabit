@@ -103,6 +103,9 @@ importers:
       '@azure/openai':
         specifier: ^2.0.0
         version: 2.0.0
+      '@dependabit/manifest':
+        specifier: workspace:*
+        version: link:../manifest
       zod:
         specifier: ^4.3.6
         version: 4.3.6
