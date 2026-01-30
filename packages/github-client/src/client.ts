@@ -55,7 +55,7 @@ export class GitHubClient {
   }
 
   /**
-   * Check rate limit and wait if necessary
+   * Check rate limit and throw if exceeded; log a warning when remaining is low.
    */
   async checkRateLimit(): Promise<void> {
     const rateLimit = await this.getRateLimit();
