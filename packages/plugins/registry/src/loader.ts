@@ -72,9 +72,9 @@ export class PluginLoader {
   /**
    * Instantiate a plugin from a class
    */
-  async instantiate<T extends Plugin>(
-    PluginClass: new (...args: any[]) => T,
-    ...args: any[]
+  async instantiate<T extends Plugin, A extends unknown[]>(
+    PluginClass: new (...args: A) => T,
+    ...args: A
   ): Promise<T> {
     const instance = new PluginClass(...args);
     return (await this.load(instance)) as T;
