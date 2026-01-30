@@ -1,0 +1,80 @@
+name: 'Dependabit - AI-Powered Dependency Tracker'
+description: 'Automatically track and monitor external informational dependencies using LLM analysis'
+author: 'Pradeep Mouli'
+
+branding:
+  icon: 'search'
+  color: 'blue'
+
+inputs:
+  action:
+    description: 'Action to perform: generate, update, check, or validate'
+    required: true
+    default: 'generate'
+  
+  repo_path:
+    description: 'Path to repository root'
+    required: false
+    default: '.'
+  
+  manifest_path:
+    description: 'Path to manifest file (relative to repo_path)'
+    required: false
+    default: '.dependabit/manifest.json'
+  
+  llm_provider:
+    description: 'LLM provider: github-copilot, claude, openai'
+    required: false
+    default: 'github-copilot'
+  
+  llm_model:
+    description: 'LLM model to use (optional)'
+    required: false
+  
+  llm_api_key:
+    description: 'API key for LLM provider (uses GITHUB_TOKEN if not provided)'
+    required: false
+  
+  create_issues:
+    description: 'Create GitHub issues for detected changes (check action)'
+    required: false
+    default: 'true'
+  
+  issue_labels:
+    description: 'Labels to add to created issues (comma-separated)'
+    required: false
+    default: 'dependabit,dependency-update'
+  
+  debug:
+    description: 'Enable debug logging'
+    required: false
+    default: 'false'
+
+outputs:
+  manifest_path:
+    description: 'Path to the generated/updated manifest file'
+  
+  dependency_count:
+    description: 'Number of dependencies detected'
+  
+  files_scanned:
+    description: 'Number of files scanned'
+  
+  llm_calls:
+    description: 'Number of LLM API calls made'
+  
+  total_tokens:
+    description: 'Total tokens used in LLM calls'
+  
+  average_confidence:
+    description: 'Average confidence score of detected dependencies'
+  
+  changes_detected:
+    description: 'Number of dependency changes detected (check action)'
+  
+  issues_created:
+    description: 'Number of GitHub issues created (check action)'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
