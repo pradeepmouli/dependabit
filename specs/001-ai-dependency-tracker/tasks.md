@@ -26,6 +26,11 @@
 - [ ] T004 [P] Initialize @dependabit/monitor package with package.json, tsconfig.json, README.md
 - [ ] T005 [P] Initialize @dependabit/github-client package with package.json, tsconfig.json, README.md
 - [ ] T006 [P] Initialize @dependabit/action package with package.json, tsconfig.json, action.yml, README.md
+- [ ] T006a [P] Initialize @dependabit/plugin-context7 package with package.json, tsconfig.json, README.md
+- [ ] T006b [P] Initialize @dependabit/plugin-arxiv package with package.json, tsconfig.json, README.md
+- [ ] T006c [P] Initialize @dependabit/plugin-openapi package with package.json, tsconfig.json, README.md
+- [ ] T006d [P] Initialize @dependabit/plugin-http package with package.json, tsconfig.json, README.md
+- [ ] T006e [P] Initialize @dependabit/plugin-github package with package.json, tsconfig.json, README.md
 - [ ] T007 Configure pnpm workspace in root pnpm-workspace.yaml to include packages/*
 - [ ] T008 [P] Install shared dependencies (@actions/core, @actions/github, zod, vitest)
 - [ ] T009 Create shared tsconfig.base.json for consistent TypeScript settings across packages
@@ -54,6 +59,11 @@
 - [ ] T023 [P] Implement Octokit wrapper in packages/github-client/src/client.ts with rate limit handling
 - [ ] T024 Export all public APIs from packages/manifest/src/index.ts
 - [ ] T025 Build @dependabit/manifest package and verify exports
+- [ ] T025a [P] Write tests for plugin registry in packages/plugins/tests/registry.test.ts
+- [ ] T025b [P] Implement plugin registry in packages/plugins/src/registry.ts (register, discover, load)
+- [ ] T025c [P] Write tests for plugin loader in packages/plugins/tests/loader.test.ts
+- [ ] T025d [P] Implement plugin loader in packages/plugins/src/loader.ts (validate, instantiate)
+- [ ] T025e Export plugin APIs from packages/plugins/src/index.ts
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -137,8 +147,11 @@
 ### Tests for User Story 3 (TDD - Write FIRST)
 
 - [ ] T060 [P] [US3] Write tests for GitHub repo checker in packages/monitor/tests/checkers/github-repo.test.ts
-- [ ] T061 [P] [US3] Write tests for NPM package checker in packages/monitor/tests/checkers/npm-package.test.ts
-- [ ] T062 [P] [US3] Write tests for URL content checker in packages/monitor/tests/checkers/url-content.test.ts
+- [ ] T061 [P] [US3] Write tests for documentation URL checker in packages/monitor/tests/checkers/url-content.test.ts
+- [ ] T062 [P] [US3] Write tests for OpenAPI spec checker in packages/monitor/tests/checkers/openapi.test.ts
+- [ ] T062a [P] [US3] Write tests for HTML normalizer in packages/monitor/tests/normalizer.test.ts
+- [ ] T062b [P] [US3] Write tests for Context7 checker in packages/monitor/tests/checkers/context7.test.ts
+- [ ] T062c [P] [US3] Write tests for arXiv checker in packages/monitor/tests/checkers/arxiv.test.ts
 - [ ] T063 [P] [US3] Write tests for state comparator in packages/monitor/tests/comparator.test.ts
 - [ ] T064 [P] [US3] Write tests for severity classifier in packages/monitor/tests/severity.test.ts
 - [ ] T065 [US3] Write tests for monitor orchestrator in packages/monitor/tests/monitor.test.ts
@@ -148,8 +161,11 @@
 ### Implementation for User Story 3
 
 - [ ] T068 [P] [US3] Implement GitHub repo checker in packages/monitor/src/checkers/github-repo.ts (releases API)
-- [ ] T069 [P] [US3] Implement NPM package checker in packages/monitor/src/checkers/npm-package.ts (registry API)
-- [ ] T070 [P] [US3] Implement URL content checker in packages/monitor/src/checkers/url-content.ts (SHA256 hashing)
+- [ ] T069 [P] [US3] Implement documentation URL checker in packages/monitor/src/checkers/url-content.ts (SHA256 hashing with normalization)
+- [ ] T070 [P] [US3] Implement OpenAPI spec checker in packages/monitor/src/checkers/openapi.ts (semantic diffing)
+- [ ] T070a [P] [US3] Implement HTML normalizer in packages/monitor/src/normalizer.ts (6-step normalization from research.md)
+- [ ] T070b [P] [US3] Implement Context7 checker in packages/plugin-context7/src/checker.ts (Context7 API integration)
+- [ ] T070c [P] [US3] Implement arXiv checker in packages/plugin-arxiv/src/checker.ts (arXiv API version tracking)
 - [ ] T071 [US3] Export checkers from packages/monitor/src/checkers/index.ts
 - [ ] T072 [P] [US3] Implement state comparator in packages/monitor/src/comparator.ts (old vs new)
 - [ ] T073 [P] [US3] Implement severity classifier in packages/monitor/src/severity.ts (breaking/major/minor)
@@ -163,6 +179,9 @@
 - [ ] T081 [US3] Add AI agent assignment logic based on severity configuration
 - [ ] T082 [US3] Add issue templating with LLM-generated summaries
 - [ ] T083 [US3] Add logging for all API calls (endpoint, method, rate-limit, response code)
+- [ ] T083a [P] [US3] Write tests for summary reporter in packages/action/tests/utils/reporter.test.ts
+- [ ] T083b [P] [US3] Implement summary reporter in packages/action/src/utils/reporter.ts (generates change summary reports)
+- [ ] T083c [P] [US3] Create summary template in contracts/summary-template.md
 
 **Checkpoint**: US3 complete - automated dependency monitoring with issue notifications
 
@@ -177,12 +196,16 @@
 ### Tests for User Story 4 (TDD - Write FIRST)
 
 - [ ] T084 [P] [US4] Write tests for manifest validation in packages/action/tests/actions/validate.test.ts
+- [ ] T084a [P] [US4] Write tests for AI agent config parser in packages/action/tests/utils/agent-config.test.ts
+- [ ] T084b [P] [US4] Write tests for agent router in packages/action/tests/utils/agent-router.test.ts
 - [ ] T085 [P] [US4] Write tests for config override logic in packages/manifest/tests/config.test.ts
 - [ ] T086 [US4] Write tests for per-dependency schedule in packages/monitor/tests/scheduler.test.ts
 
 ### Implementation for User Story 4
 
 - [ ] T087 [US4] Implement validate action in packages/action/src/actions/validate.ts (schema + business rules)
+- [ ] T087a [P] [US4] Implement AI agent config parser in packages/action/src/utils/agent-config.ts (parse severity-to-agent mapping from config.yml)
+- [ ] T087b [P] [US4] Implement agent router in packages/action/src/utils/agent-router.ts (assign issues based on severity rules)
 - [ ] T088 [US4] Implement config override resolution in packages/manifest/src/config.ts (global + per-dependency)
 - [ ] T089 [US4] Implement scheduler in packages/monitor/src/scheduler.ts (respect checkFrequency)
 - [ ] T090 [US4] Add validation step to update/check workflows
@@ -197,18 +220,32 @@
 
 **Purpose**: Production readiness, documentation, observability, security
 
-- [ ] T093 [P] Add authentication support in packages/github-client/src/auth.ts (token, basic, OAuth via secrets)
+- [ ] T092a [P] Write tests for token authentication in packages/github-client/tests/auth/token.test.ts
+- [ ] T092b [P] Write tests for OAuth authentication in packages/github-client/tests/auth/oauth.test.ts
+- [ ] T092c [P] Write tests for basic authentication in packages/github-client/tests/auth/basic.test.ts
+- [ ] T092d [P] Write tests for secret resolver in packages/action/tests/utils/secrets.test.ts
+- [ ] T093 [P] Implement authentication support in packages/github-client/src/auth.ts (token, basic, OAuth via secrets)
+- [ ] T093a [P] Implement token auth handler in packages/github-client/src/auth/token.ts
+- [ ] T093b [P] Implement OAuth handler in packages/github-client/src/auth/oauth.ts
+- [ ] T093c [P] Implement basic auth handler in packages/github-client/src/auth/basic.ts
 - [ ] T094 [P] Implement secret resolution in packages/action/src/utils/secrets.ts
 - [ ] T095 [P] Write E2E test for full workflow in tests/e2e/full-workflow.spec.ts
 - [ ] T096 [P] Create test fixtures in tests/e2e/fixtures/sample-repo/
 - [ ] T097 [P] Add error categorization and remediation messages in packages/action/src/utils/errors.ts
 - [ ] T098 [P] Implement performance metrics tracking (operation durations, API quotas)
+- [ ] T098a [P] Implement proactive rate-limit checking with budget reservation in packages/github-client/src/rate-limit.ts (enhance T077)
 - [ ] T099 [P] Add manifest size checks and warnings (target <1MB, fail >10MB)
+- [ ] T099a [P] Write tests for false positive feedback loop in packages/github-client/tests/feedback.test.ts
+- [ ] T099b [P] Implement false positive feedback listener in packages/github-client/src/feedback.ts (monitors issue labels)
+- [ ] T099c [P] Write tests for false positive metrics calculator in packages/action/tests/utils/metrics.test.ts
+- [ ] T099d [P] Implement false positive rate calculator in packages/action/src/utils/metrics.ts (30-day rolling window)
+- [ ] T099e [P] Create E2E test for false positive validation in tests/e2e/false-positive-validation.spec.ts
 - [ ] T100 [P] Create comprehensive README for each package
 - [ ] T101 [P] Add JSDoc comments for all public APIs
 - [ ] T102 [P] Generate TypeDoc documentation
 - [ ] T103 [P] Create docs/ai-dependency-tracker/architecture.md
 - [ ] T104 [P] Create docs/ai-dependency-tracker/llm-integration.md
+- [ ] T104a [P] Create contracts/plugin-api.md (define plugin registration API)
 - [ ] T105 [P] Create docs/ai-dependency-tracker/troubleshooting.md
 - [ ] T106 Bundle action with @vercel/ncc for single-file distribution
 - [ ] T107 Add action branding in action.yml (icon, color)
@@ -305,18 +342,18 @@ Each phase completion requires:
 
 ## Task Statistics
 
-- **Total Tasks**: 110
-- **Phase 1 (Setup)**: 10 tasks
-- **Phase 2 (Foundational)**: 15 tasks (blocking)
-- **Phase 3 (US1 - MVP)**: 22 tasks
-- **Phase 4 (US2)**: 12 tasks
-- **Phase 5 (US3)**: 24 tasks
-- **Phase 6 (US4)**: 9 tasks
-- **Phase 7 (Polish)**: 18 tasks
+- **Total Tasks**: 136 (previously 110, added 26 for plugin architecture, auth decomposition, false positive tracking, agent routing, summary reporter)
+- **Phase 1 (Setup)**: 15 tasks (added 5 plugin packages)
+- **Phase 2 (Foundational)**: 20 tasks (added 5 plugin registry tasks)
+- **Phase 3 (US1 - MVP)**: 22 tasks (unchanged)
+- **Phase 4 (US2)**: 12 tasks (unchanged)
+- **Phase 5 (US3)**: 33 tasks (added 9: context7/arxiv/openapi checkers, normalizer, summary reporter)
+- **Phase 6 (US4)**: 13 tasks (added 4: agent config parser, agent router + tests)
+- **Phase 7 (Polish)**: 21 tasks (added 9: auth decomposition, false positive tracking)
 
-**Parallelizable Tasks**: 67 tasks marked [P] (60%)
+**Parallelizable Tasks**: 87 tasks marked [P] (64%)
 
-**Estimated Effort**: 4 weeks (1 developer) or 2 weeks (2 developers leveraging parallelism)
+**Estimated Effort**: 5 weeks (1 developer) or 2.5 weeks (2 developers leveraging parallelism)
 
 ---
 

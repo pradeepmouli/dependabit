@@ -50,7 +50,78 @@ interface LLMProvider {
 }
 ```
 
-### 3. Manifest Storage Format
+### 3. Plugin Architecture for Dependency Types
+
+**Decision**: Extensible plugin system with separate access methods and dependency types
+
+**Rationale**:
+- Decouples HOW to retrieve a dependency from WHAT it represents
+- Enables community contributions for new dependency types
+- Avoids feature bloat in core package
+- Plugins can be versioned and maintained independently
+- Supports mixed access methods (e.g., documentation accessed via Context7 or direct URL)
+
+**Architecture Pattern**:
+```typescript
+// Access Method: HOW to retrieve/check the dependency
+interface AccessMethod {
+  name: string; // 'context7' | 'arxiv' | 'http' | 'github-api' | 'openapi'
+  fetch(config: AccessConfig): Promise<DependencySnapshot>;
+  compare(prev: DependencySnapshot, curr: DependencySnapshot): ChangeDetection;
+}
+
+// Dependency Type: WHAT the dependency represents
+interface DependencyType {
+  name: string; // 'reference-implementation' | 'schema' | 'documentation' | 'research-paper'
+  accessMethod: string; // References AccessMethod by name
+  metadata: Record<string, unknown>; // Type-specific fields
+  severityRules?: SeverityRule[]; // Custom rules for change classification
+}
+
+// Plugin registration
+interface DependencyPlugin {
+  type: DependencyType;
+  accessMethod: AccessMethod;
+  validator: (config: unknown) => ValidationResult;
+}
+```
+
+**Example Access Methods** (extensible via plugins):
+- `context7`: Fetch documentation via Context7 API
+- `http`: Generic HTTP fetch with content hashing
+- `arxiv`: arXiv API for research papers
+- `github-api`: GitHub API for releases/tags and file content
+- `openapi`: OpenAPI spec fetching and semantic diffing
+
+**Example Dependency Types** (extensible via plugins):
+- `reference-implementation`: Example code demonstrating API usage
+- `schema`: OpenAPI, JSON Schema, GraphQL schema, Protocol Buffers
+- `documentation`: API docs, tutorials, guides (excluding changelog)
+- `research-paper`: Academic papers, arXiv preprints
+- `api-example`: Code snippets from documentation sites
+
+**Explicitly OUT OF SCOPE** (Handled by existing tools):
+- ❌ NPM packages → Use dependabot (package.json dependencies)
+- ❌ PyPI packages → Use dependabot (requirements.txt dependencies)
+- ❌ Cargo crates → Use dependabot (Cargo.toml dependencies)
+- ❌ Docker images → Use dependabot (Dockerfile FROM statements)
+- ❌ Maven/Gradle deps → Use dependabot (pom.xml/build.gradle dependencies)
+
+**IN SCOPE** (Not covered by dependabot):
+- ✅ GitHub releases/tags (when not a declared dependency)
+- ✅ Documentation sites and API references
+- ✅ OpenAPI/GraphQL schemas
+- ✅ Research papers and arXiv preprints
+- ✅ Reference implementations and code examples
+
+**Focus**: Track dependencies that existing tools CAN'T handle - dependabot only tracks declared dependencies in package manifests, not informational references
+
+**Alternatives Considered**:
+- **Monolithic dependency system**: Rejected - inflexible, hard to extend
+- **Track all dependency types**: Rejected - duplicates dependabot, unnecessary complexity
+- **Access method embedded in type**: Rejected - prevents reuse, tight coupling
+
+### 4. Manifest Storage Format
 
 **Decision**: JSON with Zod schema validation
 
@@ -66,7 +137,7 @@ interface LLMProvider {
 - **SQLite file**: Rejected - binary format not git-friendly, overkill for structured data
 - **Markdown with frontmatter**: Rejected - parsing complexity, limited structure
 
-### 4. Configuration File Format
+### 5. Configuration File Format
 
 **Decision**: YAML (dependabot-style) with Zod schema validation
 
@@ -80,37 +151,49 @@ interface LLMProvider {
 - **JSON config**: Rejected - less readable, no comments, not dependabot-style
 - **TOML**: Rejected - less common in GitHub ecosystem, inconsistent with dependabot
 
-### 5. Change Detection Methods
+### 6. Change Detection Methods
 
-**Decision**: Hybrid approach based on dependency type
+**Decision**: Plugin-based detection matching access methods
 
 **Rationale**:
-- Different dependency types require different detection methods
-- API-based checks (GitHub, NPM) are authoritative and fast
-- Content hashing fallback for arbitrary URLs
-- Semantic versioning comparison when available
+- Detection logic coupled to access method, not dependency type
+- Each access method plugin provides its own change detection
+- Enables semantic diffing when possible (OpenAPI, schemas)
+- Content hashing fallback for unstructured content
 
-**Detection Matrix**:
-| Dependency Type | Primary Method | Fallback |
-|----------------|----------------|----------|
-| GitHub Repo | Releases API + commits | Latest commit SHA |
-| NPM Package | Registry API | package.json version |
-| Documentation URL | Content hash | HTTP ETag/Last-Modified |
-| API Endpoint | OpenAPI spec version | Response schema hash |
-| Blog Post | URL content hash (SHA256) | HTTP Last-Modified header |
-| Research Paper | PDF/URL content hash | arXiv API version check |
+**Access Method Detection Matrix**:
+| Access Method | Detection Strategy | Snapshot Format |
+|---------------|-------------------|----------------|
+| `context7` | Library version + content hash | `{ version, contentHash, metadata }` |
+| `arxiv` | arXiv version number | `{ arxivId, version, publishedDate }` |
+| `openapi` | Semantic diff of spec | `{ version, endpoints[], schemas[] }` |
+| `github-api` | Release tags OR file SHA + commit | `{ release: { tag, publishedAt }, sha, commit }` |
+| `http` | Normalized content hash | `{ url, contentHash, etag, lastModified }` |
 
 **Change Detection Details**:
-- **Blog Posts**: Full HTML content normalized (remove timestamps/ads) → SHA256 hash → compare with last known hash
-- **Research Papers**: If hosted on arXiv, use arXiv API version field; otherwise PDF content hash via URL fetch
-- **Generic URLs**: SHA256 hash of response body after whitespace normalization
+- **Context7**: Uses library version from Context7 API + content hash of docs
+- **arXiv**: Compares arXiv version field (e.g., v1 → v2 indicates revision)
+- **OpenAPI**: Semantic diff detects breaking changes (removed endpoints, changed schemas)
+- **GitHub API**:
+  - **For releases**: Compares latest release tag (e.g., v1.0.0 → v1.1.0)
+  - **For files**: Compares file SHAs and commit history
+  - Use case: Track repos that aren't in your package.json but you reference (e.g., specs, examples)
+- **HTTP**: SHA256 hash after HTML normalization (strip `<script>`, timestamps, ads)
+
+**Content Normalization** (for HTTP access method):
+1. Remove `<script>` and `<style>` tags
+2. Strip HTML comments
+3. Normalize whitespace (collapse multiple spaces)
+4. Remove common timestamp patterns (`Updated: ...`, `Last modified: ...`)
+5. Remove analytics/tracking parameters
+6. Hash remaining content with SHA256
 
 **Alternatives Considered**:
 - **Content hashing only**: Rejected - misses semantic version info, high false positive rate
 - **Manual version specification**: Rejected - defeats automation purpose
-- **Web scraping**: Rejected - fragile, high maintenance, legal concerns
+- **Track package registries**: Rejected - dependabot already handles this efficiently
 
-### 6. Issue Creation Strategy
+### 7. Issue Creation Strategy
 
 **Decision**: One issue per dependency change with severity labels
 
@@ -125,7 +208,7 @@ interface LLMProvider {
 - **Pull requests instead of issues**: Rejected - premature action, user should review first
 - **Slack/email notifications**: Rejected - out of scope, users can integrate via issue webhooks
 
-### 7. Authentication Handling
+### 8. Authentication Handling
 
 **Decision**: Secure credential mapping via GitHub Secrets
 
@@ -139,10 +222,36 @@ interface LLMProvider {
 ```yaml
 # .dependabit/config.yml
 dependencies:
-  - url: "https://private-repo.example.com"
+  - name: "OpenAI API Schema"
+    type: "schema"  # Dependency type
+    accessMethod: "openapi"  # How to fetch it
+    config:
+      url: "https://api.openai.com/v1/openapi.yaml"
     auth:
       type: "token"
-      secret: "PRIVATE_REPO_TOKEN"  # References GitHub Secret
+      secret: "OPENAI_API_KEY"  # References GitHub Secret
+
+  - name: "React Server Components RFC"
+    type: "documentation"
+    accessMethod: "github-api"  # Fetch specific file via API
+    config:
+      repo: "reactjs/rfcs"
+      path: "text/0000-server-components.md"
+    # No auth needed for public repos
+  
+  - name: "Kubernetes Release"
+    type: "reference-implementation"
+    accessMethod: "github-api"  # Track releases/tags
+    config:
+      repo: "kubernetes/kubernetes"
+      trackReleases: true  # Monitor for new releases (not a declared dependency)
+    # Dependabot won't track this unless it's in your go.mod
+
+  - name: "Attention Is All You Need"
+    type: "research-paper"
+    accessMethod: "arxiv"
+    config:
+      arxivId: "1706.03762"
 ```
 
 **Alternatives Considered**:
@@ -150,7 +259,7 @@ dependencies:
 - **Encrypted manifest fields**: Rejected - complex key management, rotation issues
 - **No private resource support**: Rejected - user requirement explicitly includes private repos
 
-### 8. Testing Strategy
+### 9. Testing Strategy
 
 **Decision**: Multi-layer testing with Vitest + GitHub Actions mocking
 
@@ -174,7 +283,7 @@ Unit (Vitest + pure functions)
 - **Manual testing only**: Rejected - violates TDD constitution principle
 - **Real API calls in tests**: Rejected - slow, flaky, rate-limit issues, cost
 
-### 9. Logging & Observability
+### 10. Logging & Observability
 
 **Decision**: Structured JSON logging with @actions/core integration
 
@@ -201,7 +310,7 @@ Unit (Vitest + pure functions)
 - **External logging service**: Rejected - adds dependency, cost, complexity
 - **No structured logging**: Rejected - violates constitution observability principle
 
-### 10. Rate Limit Management
+### 11. Rate Limit Management
 
 **Decision**: Proactive rate-limit checking with exponential backoff
 
@@ -222,7 +331,7 @@ Unit (Vitest + pure functions)
 - **Fixed retry intervals**: Rejected - inefficient, may exceed workflow timeout
 - **Queue-based processing**: Rejected - adds complexity, harder to reason about in GitHub Actions
 
-### 11. False Positive Validation (SC-005)
+### 12. False Positive Validation (SC-005)
 
 **Decision**: Multi-stage validation strategy to achieve <10% false positive rate
 
@@ -288,10 +397,15 @@ Unit (Vitest + pure functions)
 │   ├── @azure/openai
 │   ├── zod
 │   └── @dependabit/manifest
+├── @dependabit/plugins
+│   ├── @dependabit/plugin-context7  # Context7 API access
+│   ├── @dependabit/plugin-arxiv     # arXiv API access
+│   ├── @dependabit/plugin-openapi   # OpenAPI spec fetching
+│   ├── @dependabit/plugin-http      # Generic HTTP with hashing
+│   └── @dependabit/plugin-github    # GitHub API file access
 ├── @dependabit/monitor
 │   ├── @dependabit/github-client
-│   ├── node-fetch
-│   ├── crypto
+│   ├── @dependabit/plugins  # Plugin registry
 │   └── @dependabit/manifest
 ├── @dependabit/github-client
 │   ├── @actions/github

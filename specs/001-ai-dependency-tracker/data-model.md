@@ -21,15 +21,23 @@ import { z } from 'zod';
 // Version tracking
 export const ManifestVersionSchema = z.literal('1.0.0');
 
-// Dependency types
+// Access methods (HOW to retrieve/check dependency)
+export const AccessMethodSchema = z.enum([
+  'context7',      // Context7 API for documentation
+  'arxiv',         // arXiv API for research papers
+  'openapi',       // OpenAPI spec fetching and diffing
+  'github-api',    // GitHub API for releases/tags/files
+  'http',          // Generic HTTP with content hashing
+]);
+
+// Dependency types (WHAT the dependency represents)
 export const DependencyTypeSchema = z.enum([
-  'github-repo',
-  'npm-package',
-  'documentation-url',
-  'api-endpoint',
-  'blog-post',
-  'research-paper',
-  'other'
+  'reference-implementation',  // Example code demonstrating API usage
+  'schema',                    // OpenAPI, JSON Schema, GraphQL, Protocol Buffers
+  'documentation',             // API docs, tutorials, guides
+  'research-paper',            // Academic papers, arXiv preprints
+  'api-example',               // Code snippets from documentation sites
+  'other'                      // Extensible via plugins
 ]);
 
 // Detection methods
@@ -62,7 +70,8 @@ export const MonitoringRulesSchema = z.object({
 export const DependencyEntrySchema = z.object({
   id: z.string().uuid(), // Unique identifier
   url: z.string().url(), // External resource URL
-  type: DependencyTypeSchema,
+  type: DependencyTypeSchema, // WHAT it represents
+  accessMethod: AccessMethodSchema, // HOW to fetch/check it
   name: z.string(), // Human-readable name
   description: z.string().optional(),
 
@@ -95,6 +104,7 @@ export const DependencyEntrySchema = z.object({
     newVersion: z.string().optional(),
     severity: SeveritySchema,
     issueNumber: z.number().optional(),
+    falsePositive: z.boolean().default(false), // User feedback flag
   })).default([]),
 });
 
@@ -121,8 +131,10 @@ export const DependencyManifestSchema = z.object({
   statistics: z.object({
     totalDependencies: z.number(),
     byType: z.record(DependencyTypeSchema, z.number()),
+    byAccessMethod: z.record(AccessMethodSchema, z.number()),
     byDetectionMethod: z.record(DetectionMethodSchema, z.number()),
     averageConfidence: z.number(),
+    falsePositiveRate: z.number().min(0).max(1).optional(), // Tracked over time
   }),
 });
 
@@ -130,6 +142,7 @@ export const DependencyManifestSchema = z.object({
 export type DependencyManifest = z.infer<typeof DependencyManifestSchema>;
 export type DependencyEntry = z.infer<typeof DependencyEntrySchema>;
 export type DependencyType = z.infer<typeof DependencyTypeSchema>;
+export type AccessMethod = z.infer<typeof AccessMethodSchema>;
 export type DetectionMethod = z.infer<typeof DetectionMethodSchema>;
 export type Severity = z.infer<typeof SeveritySchema>;
 ```

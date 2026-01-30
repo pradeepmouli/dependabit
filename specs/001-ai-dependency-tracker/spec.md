@@ -106,12 +106,13 @@ Developers can manually add, edit, or remove entries in the manifest file and co
 - **FR-009**: System MUST handle different dependency types: GitHub repositories, NPM packages, documentation URLs, API endpoints, blog posts, papers
 - **FR-010**: System MUST log all LLM interactions (prompts, responses, tokens, latency) for debugging
 - **FR-011**: System MUST respect GitHub API rate limits and implement appropriate backoff strategies
-- **FR-012**: System MUST validate manifest schema before committing changes
-- **FR-013**: System MUST provide summary reports of changes detected in each monitoring cycle
-- **FR-014**: System MUST allow manual configuration of monitoring rules per dependency (validation occurs automatically on workflow load; optional explicit validation action available for pre-commit verification)
-- **FR-015**: System MUST gracefully handle LLM failures by creating informational issues, logging errors, and retrying on next scheduled run without manual intervention
-- **FR-016**: System MUST support multiple authentication methods (GitHub token, API keys, OAuth) for accessing private resources via GitHub Secrets configuration
-- **FR-017**: System MUST support a dependabot-style YAML configuration file (`.dependabit/config.yml`) for defining monitoring schedules, update strategies, and per-dependency settings
+- **FR-012**: System MUST provide summary reports of changes detected in each monitoring cycle
+- **FR-013**: System MUST allow manual configuration of monitoring rules per dependency (validation occurs automatically on workflow load; optional explicit validation action available for pre-commit verification)
+- **FR-014**: System MUST gracefully handle LLM failures by creating informational issues, logging errors, and retrying on next scheduled run without manual intervention
+- **FR-015**: System MUST support multiple authentication methods (GitHub token, API keys, OAuth) for accessing private resources via GitHub Secrets configuration
+- **FR-016**: System MUST support a dependabot-style YAML configuration file (`.dependabit/config.yml`) for defining monitoring schedules, update strategies, and per-dependency settings
+- **FR-017**: System MUST implement plugin registry for extensible access methods (context7, arxiv, openapi, github-api, http) and dependency types
+- **FR-018**: System MUST track and report false positive rate with user feedback loop (issue labels) to achieve <10% false positive target
 
 ### Key Entities
 
@@ -124,20 +125,21 @@ Developers can manually add, edit, or remove entries in the manifest file and co
 
 ### Measurable Outcomes
 
-- **SC-001**: System successfully generates a manifest with 90%+ accuracy (detected dependencies match manual review) for a sample repository within 5 minutes
+- **SC-001**: System successfully generates a manifest with 90%+ accuracy for a sample repository within 5 minutes - accuracy defined as: (LLM-detected dependencies matching gold-standard manual review) / (total manually identified informational dependencies in test corpus)
 - **SC-002**: Manifest updates complete within 2 minutes of a commit to master branch
 - **SC-003**: Scheduled change detection checks complete for repositories with up to 100 dependencies within 10 minutes
 - **SC-004**: Issues are created within 15 minutes of detecting a dependency change
 - **SC-005**: False positive rate (issues created for non-meaningful changes) is below 10%
 - **SC-006**: System operates within GitHub Actions free tier limits for repositories with typical dependency counts (< 50 external dependencies)
 - **SC-007**: All LLM interactions are logged with complete traceability for debugging and cost optimization
-- **SC-008**: System handles at least 3 different dependency types (GitHub repos, NPM packages, documentation sites) in initial release
+- **SC-008**: System handles at least 3 different access methods (github-api for releases, http for documentation, openapi for schemas) and 3 dependency types (reference-implementation, schema, documentation) in initial release using plugin architecture
 
 ## Assumptions
 
 - GitHub Actions environment has access to GitHub API and configured LLM provider
-- Repositories using this system have external dependencies documented in discoverable locations (README, docs, code comments)
+- Repositories using this system have external **informational dependencies** documented in discoverable locations (README, docs, code comments) - NOT package manifest dependencies
 - LLM provider APIs are generally available with reasonable rate limits
 - Users accept that AI-based detection may not be 100% accurate and manual review/correction is sometimes needed
 - Change detection for external resources can be accomplished through API calls, content hashing, or version checks
 - GitHub repository has appropriate permissions for creating issues and committing manifest updates
+- Dependabot or similar tools handle package manifest dependencies (npm, PyPI, Cargo); this system complements by tracking informational references
