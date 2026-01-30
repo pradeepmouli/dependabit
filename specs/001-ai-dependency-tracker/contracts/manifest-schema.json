@@ -100,7 +100,18 @@
   "definitions": {
     "DependencyEntry": {
       "type": "object",
-      "required": ["id", "url", "type", "name", "currentStateHash", "detectionMethod", "detectionConfidence", "detectedAt", "lastChecked", "referencedIn"],
+      "required": [
+        "id",
+        "url",
+        "type",
+        "name",
+        "currentStateHash",
+        "detectionMethod",
+        "detectionConfidence",
+        "detectedAt",
+        "lastChecked",
+        "referencedIn"
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -114,7 +125,15 @@
         },
         "type": {
           "type": "string",
-          "enum": ["github-repo", "npm-package", "documentation-url", "api-endpoint", "blog-post", "research-paper", "other"]
+          "enum": [
+            "github-repo",
+            "npm-package",
+            "documentation-url",
+            "api-endpoint",
+            "blog-post",
+            "research-paper",
+            "other"
+          ]
         },
         "name": {
           "type": "string",

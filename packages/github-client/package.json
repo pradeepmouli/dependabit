@@ -1,7 +1,7 @@
 {
-  "name": "@company/core",
+  "name": "@dependabit/github-client",
   "version": "0.1.0",
-  "description": "Core utilities for the monorepo",
+  "description": "GitHub API wrapper with rate limiting and authentication",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,6 +20,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@actions/github": "^6.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -29,8 +30,9 @@
     "vitest": "^4.0.18"
   },
   "keywords": [
-    "core",
-    "utilities"
+    "github",
+    "api",
+    "client"
   ],
   "license": "MIT"
 }

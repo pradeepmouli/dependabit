@@ -20,9 +20,9 @@
     }
   },
   "scripts": {
-    "build": "tsgo -p tsconfig.json",
+    "build": "tsc -p tsconfig.json",
     "clean": "rm -rf dist",
-    "type-check": "tsgo --noEmit -p tsconfig.json"
+    "type-check": "tsc --noEmit -p tsconfig.json"
   },
   "devDependencies": {
     "@types/node": "^25.0.10",

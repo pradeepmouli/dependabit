@@ -1,7 +1,7 @@
 {
-  "name": "@company/core",
+  "name": "@dependabit/manifest",
   "version": "0.1.0",
-  "description": "Core utilities for the monorepo",
+  "description": "Manifest schema and validation for dependency tracking",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,8 +29,9 @@
     "vitest": "^4.0.18"
   },
   "keywords": [
-    "core",
-    "utilities"
+    "manifest",
+    "schema",
+    "validation"
   ],
   "license": "MIT"
 }
