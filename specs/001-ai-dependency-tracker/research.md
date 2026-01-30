@@ -238,7 +238,7 @@ dependencies:
       repo: "reactjs/rfcs"
       path: "text/0000-server-components.md"
     # No auth needed for public repos
-  
+
   - name: "Kubernetes Release"
     type: "reference-implementation"
     accessMethod: "github-api"  # Track releases/tags
