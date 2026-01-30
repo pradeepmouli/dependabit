@@ -254,5 +254,22 @@ version: "2"
       expect(shouldIgnoreUrl(config, 'https://exact-match.com')).toBe(true);
       expect(shouldIgnoreUrl(config, 'https://some-pattern-match.com')).toBe(true);
     });
+
+    it('should handle invalid regex patterns gracefully', () => {
+      const config: DependabitConfig = {
+        version: '1',
+        schedule: {
+          interval: 'daily',
+          timezone: 'UTC'
+        },
+        ignore: {
+          patterns: ['[invalid', '.*valid.*']
+        }
+      };
+
+      // Invalid pattern should be skipped, valid pattern should work
+      expect(shouldIgnoreUrl(config, 'https://validurl.com')).toBe(true);
+      expect(shouldIgnoreUrl(config, 'https://other.com')).toBe(false);
+    });
   });
 });

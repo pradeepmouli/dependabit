@@ -10,7 +10,7 @@ import {
   mergeManifests,
   createEmptyManifest
 } from '../src/manifest.js';
-import type { DependencyManifest, DependencyEntry } from '../src/schema.js';
+import type { DependencyEntry } from '../src/schema.js';
 
 const TEST_DIR = '/tmp/dependabit-manifest-tests';
 

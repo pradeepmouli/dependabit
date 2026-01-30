@@ -13,7 +13,7 @@ describe('Plugin Loader Tests', () => {
       version: '1.0.0',
       accessMethod
     },
-    async check(url: string) {
+    async check(_url: string) {
       return {
         hash: 'test-hash',
         available: true
@@ -146,7 +146,7 @@ describe('Plugin Loader Tests', () => {
           accessMethod: 'test'
         };
 
-        async check(url: string) {
+        async check(_url: string) {
           return {
             hash: 'test-hash',
             available: true
@@ -172,7 +172,7 @@ describe('Plugin Loader Tests', () => {
 
         constructor(public readonly config: Record<string, unknown>) {}
 
-        async check(url: string) {
+        async check(_url: string) {
           return {
             hash: 'test-hash',
             available: true,

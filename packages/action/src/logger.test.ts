@@ -95,6 +95,23 @@ describe('Logger Tests', () => {
       expect(child.getCorrelationId()).toBe('parent-123');
     });
 
+    it('should create child logger with merged context', () => {
+      const parent = new Logger({ 
+        correlationId: 'parent-123',
+        context: { service: 'api' }
+      });
+      const child = parent.child({ operation: 'fetch' });
+
+      child.info('Test message');
+
+      expect(core.info).toHaveBeenCalledWith(
+        expect.stringContaining('"service":"api"')
+      );
+      expect(core.info).toHaveBeenCalledWith(
+        expect.stringContaining('"operation":"fetch"')
+      );
+    });
+
     it('should log LLM interactions', () => {
       const logger = new Logger();
       logger.logLLMInteraction({

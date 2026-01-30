@@ -20,7 +20,7 @@ describe('Plugin Registry Tests', () => {
       description: `Plugin for ${accessMethod}`,
       accessMethod
     },
-    async check(url: string) {
+    async check(_url: string) {
       return {
         hash: 'test-hash',
         available: true
@@ -68,19 +68,29 @@ describe('Plugin Registry Tests', () => {
       expect(retrieved).toBeUndefined();
     });
 
-    it('should unregister a plugin', () => {
+    it('should unregister a plugin', async () => {
       const plugin = createMockPlugin('http');
       registry.register(plugin);
 
       expect(registry.has('http')).toBe(true);
-      const result = registry.unregister('http');
+      const result = await registry.unregister('http');
 
       expect(result).toBe(true);
       expect(registry.has('http')).toBe(false);
     });
 
-    it('should return false when unregistering non-existent plugin', () => {
-      const result = registry.unregister('unknown');
+    it('should call destroy when unregistering plugin with destroy method', async () => {
+      const plugin = createMockPlugin('http', { withInit: true });
+      plugin.destroy = vi.fn(async () => {});
+      registry.register(plugin);
+
+      await registry.unregister('http');
+
+      expect(plugin.destroy).toHaveBeenCalled();
+    });
+
+    it('should return false when unregistering non-existent plugin', async () => {
+      const result = await registry.unregister('unknown');
       expect(result).toBe(false);
     });
 

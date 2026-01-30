@@ -4,7 +4,7 @@ import {
   type DependencyManifest,
   type DependencyEntry
 } from './schema.js';
-import { validateManifest } from './validator.js';
+import { validateManifest, validateDependencyEntry } from './validator.js';
 
 /**
  * Read and parse a manifest file
@@ -50,6 +50,9 @@ export async function updateDependency(
 
   // Update the dependency in place
   Object.assign(dep, updates);
+  
+  // Validate the merged dependency
+  validateDependencyEntry(dep);
 
   // Update statistics
   manifest.statistics = calculateStatistics(manifest.dependencies);
@@ -136,7 +139,11 @@ export function mergeManifests(
   // Create a deep copy of the updated manifest to avoid mutations
   const merged: DependencyManifest = {
     ...updated,
-    dependencies: [...updated.dependencies]
+    dependencies: updated.dependencies.map(dep => ({
+      ...dep,
+      changeHistory: dep.changeHistory ? [...dep.changeHistory] : [],
+      referencedIn: dep.referencedIn ? [...dep.referencedIn] : []
+    }))
   };
 
   if (preserveManual) {
@@ -152,7 +159,11 @@ export function mergeManifests(
       );
 
       if (!existsInUpdated) {
-        merged.dependencies.push({ ...manualEntry });
+        merged.dependencies.push({
+          ...manualEntry,
+          changeHistory: manualEntry.changeHistory ? [...manualEntry.changeHistory] : [],
+          referencedIn: manualEntry.referencedIn ? [...manualEntry.referencedIn] : []
+        });
       }
     }
   }

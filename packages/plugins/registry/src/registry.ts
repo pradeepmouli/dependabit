@@ -55,7 +55,11 @@ export class PluginRegistry {
   /**
    * Unregister a plugin
    */
-  unregister(accessMethod: string): boolean {
+  async unregister(accessMethod: string): Promise<boolean> {
+    const plugin = this.plugins.get(accessMethod);
+    if (plugin && plugin.destroy) {
+      await plugin.destroy();
+    }
     return this.plugins.delete(accessMethod);
   }
 

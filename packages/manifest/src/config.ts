@@ -87,7 +87,7 @@ export function shouldIgnoreUrl(config: DependabitConfig, url: string): boolean 
         if (regex.test(url)) {
           return true;
         }
-      } catch (error) {
+      } catch {
         // Invalid regex pattern - log warning but continue
         console.warn(`Invalid regex pattern in config.ignore.patterns: ${pattern}`);
       }
