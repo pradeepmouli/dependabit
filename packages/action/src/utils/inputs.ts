@@ -59,11 +59,14 @@ export function getActionInputs(): ActionInputs {
  * Validate required inputs
  */
 export function validateInputs(inputs: ActionInputs): void {
+  // Currently only github-copilot is implemented
+  const implementedProviders = ['github-copilot'];
   const validProviders = ['github-copilot', 'claude', 'openai'];
 
-  if (!validProviders.includes(inputs.llmProvider)) {
-    throw new Error(
-      `Invalid LLM provider: ${inputs.llmProvider}. Must be one of: ${validProviders.join(', ')}`
+  if (!implementedProviders.includes(inputs.llmProvider)) {
+    core.warning(
+      `LLM provider '${inputs.llmProvider}' is not yet implemented. Falling back to 'github-copilot'. ` +
+      `Valid providers: ${validProviders.join(', ')} (only github-copilot currently implemented)`
     );
   }
 }

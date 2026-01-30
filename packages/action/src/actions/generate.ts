@@ -55,6 +55,8 @@ export async function generateManifest(
     });
 
     // Initialize detector
+    // Note: Currently only github-copilot is implemented
+    // TODO: Add support for other LLM providers (claude, openai)
     const detector = new Detector({
       repoPath
     });

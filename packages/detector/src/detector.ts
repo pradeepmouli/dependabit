@@ -4,14 +4,20 @@
  */
 
 import { readFile, readdir, stat } from 'node:fs/promises';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 import { randomUUID } from 'node:crypto';
+import { createHash } from 'node:crypto';
 import type { DependencyEntry } from '@dependabit/manifest';
 import type { LLMClient } from './llm/client.js';
 import { CopilotClient } from './llm/copilot.js';
 import { ReadmeParser } from './parsers/readme.js';
 import { CodeCommentParser } from './parsers/code-comments.js';
 import { PackageFileParser } from './parsers/package-files.js';
+
+// Placeholder warning logger (replace with actual logger in production)
+function logWarning(_message: string, _data?: Record<string, unknown>): void {
+  // console.warn(message, data);
+}
 
 export interface DetectorOptions {
   /**
@@ -113,7 +119,7 @@ export class Detector {
     for (const file of files) {
       try {
         const content = await readFile(file, 'utf-8');
-        const relativePath = file.replace(this.repoPath + '/', '');
+        const relativePath = relative(this.repoPath, file);
 
         if (file.match(/readme\.md$/i)) {
           // Parse README
@@ -189,7 +195,11 @@ export class Detector {
           dependencies.push(entry);
         }
       } catch (error) {
-        // If LLM analysis fails, create basic entry
+        // Log errors but continue processing other URLs
+        logWarning(`Failed to analyze URL: ${url}`, {
+          error: error instanceof Error ? error.message : String(error)
+        });
+        // Create basic entry without LLM classification
         const entry: DependencyEntry = {
           id: randomUUID(),
           url,
@@ -344,8 +354,7 @@ export class Detector {
    * Generate hash for URL
    */
   private generateHash(url: string): string {
-    // Simple hash generation (in production, use crypto.createHash)
-    return Buffer.from(url).toString('base64').slice(0, 16);
+    return createHash('sha256').update(url).digest('hex').slice(0, 16);
   }
 
   /**
