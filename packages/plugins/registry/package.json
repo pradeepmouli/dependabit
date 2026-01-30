@@ -1,7 +1,7 @@
 {
-  "name": "@dependabit/github-client",
+  "name": "@dependabit/plugins",
   "version": "0.1.0",
-  "description": "GitHub API wrapper with rate limiting and authentication",
+  "description": "Plugin registry and loader for extensible access methods",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,8 +20,6 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@actions/github": "^6.0.0",
-    "octokit": "^5.0.5",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -31,9 +29,9 @@
     "vitest": "^4.0.18"
   },
   "keywords": [
-    "github",
-    "api",
-    "client"
+    "plugins",
+    "registry",
+    "extensibility"
   ],
   "license": "MIT"
 }
