@@ -141,6 +141,9 @@ importers:
 
   packages/manifest:
     dependencies:
+      yaml:
+        specifier: ^2.8.2
+        version: 2.8.2
       zod:
         specifier: ^4.3.6
         version: 4.3.6
