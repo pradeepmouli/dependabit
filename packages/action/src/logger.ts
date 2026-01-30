@@ -27,6 +27,7 @@ export interface LogEntry {
 export interface LoggerConfig {
   correlationId?: string;
   enableDebug?: boolean;
+  context?: Record<string, unknown>;
 }
 
 /**
@@ -35,10 +36,12 @@ export interface LoggerConfig {
 export class Logger {
   private correlationId: string;
   private enableDebug: boolean;
+  private context: Record<string, unknown>;
 
   constructor(config: LoggerConfig = {}) {
     this.correlationId = config.correlationId || this.generateCorrelationId();
     this.enableDebug = config.enableDebug ?? false;
+    this.context = config.context || {};
   }
 
   /**
@@ -57,6 +60,7 @@ export class Logger {
       level,
       message,
       correlationId: this.correlationId,
+      ...this.context,
       ...data
     };
 
@@ -117,18 +121,12 @@ export class Logger {
   /**
    * Create a child logger with the same correlation ID
    */
-  child(data?: Record<string, unknown>): Logger {
-    const logger = new Logger({
+  child(context?: Record<string, unknown>): Logger {
+    return new Logger({
       correlationId: this.correlationId,
-      enableDebug: this.enableDebug
+      enableDebug: this.enableDebug,
+      context: { ...this.context, ...context }
     });
-
-    if (data) {
-      // Store additional context for all future logs
-      Object.assign(logger, data);
-    }
-
-    return logger;
   }
 
   /**

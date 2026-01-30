@@ -134,8 +134,11 @@ export function mergeManifests(
 ): DependencyManifest {
   const { preserveManual = true, preserveHistory = true } = options;
 
-  // Start with updated manifest
-  const merged = { ...updated };
+  // Create a deep copy of the updated manifest to avoid mutations
+  const merged: DependencyManifest = {
+    ...updated,
+    dependencies: [...updated.dependencies]
+  };
 
   if (preserveManual) {
     // Find manual entries in existing manifest
@@ -145,30 +148,32 @@ export function mergeManifests(
 
     // Add manual entries that aren't in the updated manifest
     for (const manualEntry of manualEntries) {
-      const existsInUpdated = updated.dependencies.some(
+      const existsInUpdated = merged.dependencies.some(
         (dep) => dep.id === manualEntry.id || dep.url === manualEntry.url
       );
 
       if (!existsInUpdated) {
-        merged.dependencies.push(manualEntry);
+        merged.dependencies.push({ ...manualEntry });
       }
     }
   }
 
   if (preserveHistory) {
     // Preserve change history for matching dependencies
-    for (const dep of merged.dependencies) {
+    merged.dependencies = merged.dependencies.map((dep) => {
       const existingDep = existing.dependencies.find(
         (d) => d.id === dep.id || d.url === dep.url
       );
 
       if (existingDep && existingDep.changeHistory && existingDep.changeHistory.length > 0) {
-        dep.changeHistory = [
-          ...existingDep.changeHistory,
-          ...(dep.changeHistory || [])
-        ];
+        return {
+          ...dep,
+          changeHistory: [...existingDep.changeHistory, ...(dep.changeHistory || [])]
+        };
       }
-    }
+
+      return dep;
+    });
   }
 
   // Recalculate statistics

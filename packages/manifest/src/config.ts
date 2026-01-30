@@ -79,12 +79,17 @@ export function shouldIgnoreUrl(config: DependabitConfig, url: string): boolean 
     return true;
   }
 
-  // Check regex patterns
+  // Check regex patterns with error handling
   if (config.ignore.patterns) {
     for (const pattern of config.ignore.patterns) {
-      const regex = new RegExp(pattern);
-      if (regex.test(url)) {
-        return true;
+      try {
+        const regex = new RegExp(pattern);
+        if (regex.test(url)) {
+          return true;
+        }
+      } catch (error) {
+        // Invalid regex pattern - log warning but continue
+        console.warn(`Invalid regex pattern in config.ignore.patterns: ${pattern}`);
       }
     }
   }
