@@ -98,6 +98,13 @@ export class PluginRegistry {
    * Clear all plugins
    */
   clear(): void {
+    for (const plugin of this.plugins.values()) {
+      if (typeof plugin.destroy === 'function') {
+        plugin.destroy().catch(() => {
+          // Ignore errors during plugin destruction to avoid unhandled rejections
+        });
+      }
+    }
     this.plugins.clear();
   }
 }
