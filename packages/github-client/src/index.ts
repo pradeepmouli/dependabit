@@ -1,2 +1,3 @@
 // Entry point for @dependabit/github-client
-export {};
+
+export * from './client.js';

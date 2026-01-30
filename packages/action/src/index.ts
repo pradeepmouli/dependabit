@@ -1,2 +1,3 @@
 // Entry point for @dependabit/action
-export {};
+
+export * from './logger.js';
