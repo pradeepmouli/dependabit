@@ -1,0 +1,51 @@
+name: 'Dependabit - AI Dependency Tracker'
+description: 'Automatically detect and track external informational dependencies using AI'
+author: 'Pradeep Mouli'
+
+branding:
+  icon: 'package'
+  color: 'blue'
+
+inputs:
+  llm-provider:
+    description: 'LLM provider to use for analysis (github-copilot, claude, openai)'
+    required: false
+    default: 'github-copilot'
+
+  manifest-path:
+    description: 'Path where manifest file should be written'
+    required: false
+    default: '.dependabit/manifest.json'
+
+  repo-path:
+    description: 'Path to repository root'
+    required: false
+    default: ${{ github.workspace }}
+
+  min-confidence:
+    description: 'Minimum confidence threshold for detected dependencies (0-1)'
+    required: false
+    default: '0.5'
+
+outputs:
+  manifest-path:
+    description: 'Path to the generated manifest file'
+
+  dependencies-count:
+    description: 'Total number of dependencies detected'
+
+  average-confidence:
+    description: 'Average confidence score of detected dependencies'
+
+  statistics:
+    description: 'Complete statistics about detected dependencies (JSON)'
+
+  by-type:
+    description: 'Dependencies grouped by type (JSON)'
+
+  repository:
+    description: 'Repository information (JSON)'
+
+runs:
+  using: 'node20'
+  main: 'dist/main.js'

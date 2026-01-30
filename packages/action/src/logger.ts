@@ -208,3 +208,34 @@ export async function withTiming<T>(
     throw error;
   }
 }
+
+// Default logger instance for convenience
+const defaultLogger = new Logger();
+
+/**
+ * Convenience function to log info message
+ */
+export function logInfo(message: string, data?: Record<string, unknown>): void {
+  defaultLogger.info(message, data);
+}
+
+/**
+ * Convenience function to log error message
+ */
+export function logError(message: string, data?: Record<string, unknown>): void {
+  defaultLogger.error(message, data);
+}
+
+/**
+ * Convenience function to log warning message
+ */
+export function logWarning(message: string, data?: Record<string, unknown>): void {
+  defaultLogger.warning(message, data);
+}
+
+/**
+ * Convenience function to log debug message
+ */
+export function logDebug(message: string, data?: Record<string, unknown>): void {
+  defaultLogger.debug(message, data);
+}
