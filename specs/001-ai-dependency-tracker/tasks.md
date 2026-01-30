@@ -1,7 +1,7 @@
 # Tasks: AI-Powered Dependency Tracking System
 
-**Feature**: 001-ai-dependency-tracker  
-**Input**: Design documents from `/specs/001-ai-dependency-tracker/`  
+**Feature**: 001-ai-dependency-tracker
+**Input**: Design documents from `/specs/001-ai-dependency-tracker/`
 **Prerequisites**: plan.md (✓), spec.md (✓), research.md (✓), data-model.md (✓), contracts/ (✓), quickstart.md (✓)
 
 **Tests**: Optional per TDD constitution principle - tests will be written first, then implementation
@@ -76,6 +76,7 @@
 - [ ] T030 [P] [US1] Write tests for package file parser in packages/detector/tests/parsers/package-files.test.ts
 - [ ] T031 [US1] Write tests for detector orchestrator in packages/detector/tests/detector.test.ts
 - [ ] T032 [US1] Write integration test for generate action in packages/action/tests/actions/generate.test.ts
+- [ ] T032a [US1] Create test fixture repository with known dependencies (10+ entries) to validate SC-001 (90%+ accuracy requirement)
 
 ### Implementation for User Story 1
 

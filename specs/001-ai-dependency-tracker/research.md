@@ -97,6 +97,13 @@ interface LLMProvider {
 | NPM Package | Registry API | package.json version |
 | Documentation URL | Content hash | HTTP ETag/Last-Modified |
 | API Endpoint | OpenAPI spec version | Response schema hash |
+| Blog Post | URL content hash (SHA256) | HTTP Last-Modified header |
+| Research Paper | PDF/URL content hash | arXiv API version check |
+
+**Change Detection Details**:
+- **Blog Posts**: Full HTML content normalized (remove timestamps/ads) → SHA256 hash → compare with last known hash
+- **Research Papers**: If hosted on arXiv, use arXiv API version field; otherwise PDF content hash via URL fetch
+- **Generic URLs**: SHA256 hash of response body after whitespace normalization
 
 **Alternatives Considered**:
 - **Content hashing only**: Rejected - misses semantic version info, high false positive rate
@@ -214,6 +221,33 @@ Unit (Vitest + pure functions)
 - **Ignore rate limits**: Rejected - causes failures, poor UX
 - **Fixed retry intervals**: Rejected - inefficient, may exceed workflow timeout
 - **Queue-based processing**: Rejected - adds complexity, harder to reason about in GitHub Actions
+
+### 11. False Positive Validation (SC-005)
+
+**Decision**: Multi-stage validation strategy to achieve <10% false positive rate
+
+**Validation Approach**:
+1. **Pre-deployment**: Test against fixture repositories with known change history (T032a)
+2. **Post-deployment**: Track issue labels with `false-positive` tag for human feedback loop
+3. **Continuous monitoring**: Calculate false positive rate = (issues labeled false-positive) / (total issues created) over 30-day windows
+4. **Improvement cycle**: Review false positives monthly, refine detection logic (e.g., normalize timestamps, filter dynamic content)
+
+**Measurement Methodology**:
+- E2E test suite includes repositories with known dependencies and simulated changes
+- Test cases validate that only genuine changes (version bumps, breaking API changes) trigger issues
+- Non-meaningful changes (whitespace, formatting, ads, analytics scripts) should NOT trigger issues
+- Success metric: ≥90% of test cases correctly classify changes
+
+**Implementation Notes**:
+- Content normalization reduces false positives: strip timestamps, remove ads/tracking scripts, normalize whitespace
+- Semantic versioning comparison preferred over content hashing when available
+- For documentation URLs: compare content hashes after HTML normalization (remove `<script>`, `<style>`, timestamps)
+
+**Post-Launch Tracking**:
+- Add `false-positive` and `true-positive` labels to issue templates
+- Include feedback prompt in issue body: "Is this a meaningful change? Add label: false-positive or true-positive"
+- Generate monthly reports from GitHub issue search: `label:false-positive` vs total issues
+- Refine detection algorithms based on feedback patterns
 
 ## Dependencies & Packages
 

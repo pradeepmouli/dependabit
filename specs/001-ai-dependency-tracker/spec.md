@@ -86,10 +86,10 @@ Developers can manually add, edit, or remove entries in the manifest file and co
 
 - What happens when the LLM is unavailable or rate-limited during manifest generation or update? System fails gracefully, creates an informational issue notifying the team, and automatically retries on the next scheduled workflow run.
 - How does the system handle private repositories or resources requiring authentication? System supports multiple authentication methods (GitHub token, API keys, OAuth tokens) configured via GitHub Secrets, with per-dependency auth configuration in the manifest.
-- What happens when a monitored external resource becomes permanently unavailable (404)?
-- How are false positives (spurious change detections) minimized?
-- What happens when the manifest file grows very large (hundreds of dependencies)?
-- How does the system handle different types of resources (Git repos, NPM packages, documentation sites, API endpoints)?
+- What happens when a monitored external resource becomes permanently unavailable (404)? System retries with exponential backoff (3 attempts over 24 hours), then marks dependency as `status: unavailable` in manifest and creates a warning issue. Monitoring pauses until manual intervention or resource recovery.
+- How are false positives (spurious change detections) minimized? Content normalization (strip timestamps, ads, dynamic scripts), semantic version comparison when available, and human feedback loop with `false-positive` issue labels for algorithm refinement.
+- What happens when the manifest file grows very large (hundreds of dependencies)? System implements size warnings (>1MB) and fails workflow if manifest exceeds 10MB (see T099). Large manifests trigger performance optimization recommendations (split repositories, selective monitoring).
+- How does the system handle different types of resources (Git repos, NPM packages, documentation sites, API endpoints)? Hybrid detection strategy with type-specific checkers (see research.md Decision #5): GitHub Releases API, NPM Registry API, URL content hashing, OpenAPI spec versioning.
 
 ## Requirements *(mandatory)*
 
@@ -101,14 +101,14 @@ Developers can manually add, edit, or remove entries in the manifest file and co
 - **FR-004**: System MUST trigger manifest updates on commits to the default branch (configurable)
 - **FR-005**: System MUST support configurable scheduled checks for dependency changes using a dependabot-style configuration file specifying check frequency, schedules, and per-dependency overrides
 - **FR-006**: System MUST create GitHub issues when dependency changes are detected
-- **FR-007**: System MUST support automatic assignment of issues to AI agents based on configuration
+- **FR-007**: System MUST support automatic assignment of issues to AI agents based on configuration (severity-to-agent mapping defined in `.dependabit/config.yml`: e.g., `breaking` changes → specific agent/team, `minor` changes → different agent/team or none)
 - **FR-008**: System MUST track metadata for each dependency: URL, type, version/state, last checked timestamp, detection confidence
 - **FR-009**: System MUST handle different dependency types: GitHub repositories, NPM packages, documentation URLs, API endpoints, blog posts, papers
 - **FR-010**: System MUST log all LLM interactions (prompts, responses, tokens, latency) for debugging
 - **FR-011**: System MUST respect GitHub API rate limits and implement appropriate backoff strategies
 - **FR-012**: System MUST validate manifest schema before committing changes
 - **FR-013**: System MUST provide summary reports of changes detected in each monitoring cycle
-- **FR-014**: System MUST allow manual configuration of monitoring rules per dependency
+- **FR-014**: System MUST allow manual configuration of monitoring rules per dependency (validation occurs automatically on workflow load; optional explicit validation action available for pre-commit verification)
 - **FR-015**: System MUST gracefully handle LLM failures by creating informational issues, logging errors, and retrying on next scheduled run without manual intervention
 - **FR-016**: System MUST support multiple authentication methods (GitHub token, API keys, OAuth) for accessing private resources via GitHub Secrets configuration
 - **FR-017**: System MUST support a dependabot-style YAML configuration file (`.dependabit/config.yml`) for defining monitoring schedules, update strategies, and per-dependency settings
