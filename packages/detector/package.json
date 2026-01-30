@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
+    "@azure/openai": "^2.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
