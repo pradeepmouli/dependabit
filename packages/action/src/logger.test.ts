@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as core from '@actions/core';
-import { Logger, LogLevel, createLogger, withTiming } from '../src/logger.js';
+import { Logger, createLogger, withTiming } from '../src/logger.js';
 
 // Mock @actions/core
 vi.mock('@actions/core', () => ({
