@@ -1,7 +1,7 @@
 {
-  "name": "@company/core",
+  "name": "@dependabit/action",
   "version": "0.1.0",
-  "description": "Core utilities for the monorepo",
+  "description": "GitHub Action entry points for dependency tracking",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,6 +20,12 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0",
+    "@dependabit/detector": "workspace:*",
+    "@dependabit/manifest": "workspace:*",
+    "@dependabit/monitor": "workspace:*",
+    "@dependabit/github-client": "workspace:*",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -29,8 +35,9 @@
     "vitest": "^4.0.18"
   },
   "keywords": [
-    "core",
-    "utilities"
+    "github-action",
+    "dependency",
+    "tracking"
   ],
   "license": "MIT"
 }

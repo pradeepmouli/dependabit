@@ -1,7 +1,7 @@
 {
-  "name": "@company/core",
+  "name": "@dependabit/plugin-github",
   "version": "0.1.0",
-  "description": "Core utilities for the monorepo",
+  "description": "GitHub API file/release access plugin for dependency tracking",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,6 +20,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@dependabit/manifest": "workspace:*",
+    "@dependabit/github-client": "workspace:*",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -29,8 +31,9 @@
     "vitest": "^4.0.18"
   },
   "keywords": [
-    "core",
-    "utilities"
+    "plugin",
+    "github",
+    "releases"
   ],
   "license": "MIT"
 }

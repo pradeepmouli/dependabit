@@ -1,7 +1,7 @@
 {
-  "name": "@company/core",
+  "name": "@dependabit/plugin-arxiv",
   "version": "0.1.0",
-  "description": "Core utilities for the monorepo",
+  "description": "arXiv API plugin for dependency tracking",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,6 +20,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@dependabit/manifest": "workspace:*",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -29,8 +30,9 @@
     "vitest": "^4.0.18"
   },
   "keywords": [
-    "core",
-    "utilities"
+    "plugin",
+    "arxiv",
+    "api"
   ],
   "license": "MIT"
 }

@@ -1,7 +1,7 @@
 {
-  "name": "@company/core",
+  "name": "@dependabit/detector",
   "version": "0.1.0",
-  "description": "Core utilities for the monorepo",
+  "description": "LLM-based dependency detection for external resources",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,6 +20,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@actions/core": "^1.11.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -29,8 +30,10 @@
     "vitest": "^4.0.18"
   },
   "keywords": [
-    "core",
-    "utilities"
+    "dependency",
+    "detection",
+    "llm",
+    "ai"
   ],
   "license": "MIT"
 }
