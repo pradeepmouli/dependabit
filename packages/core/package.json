@@ -12,10 +12,10 @@
     }
   },
   "scripts": {
-    "build": "tsgo -p tsconfig.json",
+    "build": "tsc -p tsconfig.json",
     "clean": "rm -rf dist",
     "dev": "tsx watch src/index.ts",
-    "type-check": "tsgo --noEmit -p tsconfig.json",
+    "type-check": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest"
   },

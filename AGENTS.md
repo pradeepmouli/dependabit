@@ -3,7 +3,7 @@
 This repository is designed for multi-agent collaboration (Copilot, Claude, Gemini, Codex). Use this guide to stay consistent when automating tasks.
 
 ## Project Metadata
-- Name: @company/ts-template
+- Name: dependabit
 - Language: TypeScript (pnpm workspaces)
 - Tooling: pnpm, oxlint, oxfmt, Vitest, simple-git-hooks, lint-staged
 
@@ -11,15 +11,15 @@ This repository is designed for multi-agent collaboration (Copilot, Claude, Gemi
 - Prefer non-destructive changes; never reset user work.
 - Follow conventional commits.
 - Keep formatting consistent with .editorconfig and .oxfmtrc.json.
-- Run `pnpm run lint` and `pnpm test` after code changes when practical.
+- Run pnpm run lint and pnpm test after code changes when practical.
 - Keep docs current when changing scripts or workflows.
 
 ## Workflow Checklist
-1) Install deps: `pnpm install`
-2) Lint: `pnpm run lint`
-3) Test: `pnpm test`
-4) Format: `pnpm run format` (or `pnpm run format:check`)
-5) Type-check (if added): `pnpm run type-check`
+1) Install deps: pnpm install
+2) Lint: pnpm run lint
+3) Test: pnpm test
+4) Format: pnpm run format (or pnpm run format:check)
+5) Type-check (if added): pnpm run type-check
 
 ## Coding Standards
 - 2-space indentation; spaces (no tabs).
