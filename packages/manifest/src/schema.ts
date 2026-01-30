@@ -38,7 +38,9 @@ export const SeveritySchema = z.enum(['breaking', 'major', 'minor']);
 export const AuthConfigSchema = z
   .object({
     type: z.enum(['token', 'basic', 'oauth', 'none']),
-    secret: z.string().optional()
+    // Reference to an environment variable or secret identifier.
+    // Do NOT store raw secret values directly in the manifest.
+    secretEnvVar: z.string().optional()
   })
   .optional();
 
