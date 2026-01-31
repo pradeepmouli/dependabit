@@ -3,7 +3,7 @@
  * Coordinates content parsers and LLM analysis to detect external dependencies
  */
 
-import { readdir, readFile, stat } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import type { LLMProvider } from './llm/client.js';
