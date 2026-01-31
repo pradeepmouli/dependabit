@@ -93,7 +93,7 @@ export class Monitor {
    */
   async checkAll(dependencies: DependencyConfig[]): Promise<CheckResult[]> {
     // Filter out disabled dependencies
-    const enabledDeps = dependencies.filter(dep => {
+    const enabledDeps = dependencies.filter((dep) => {
       if (dep.monitoring?.enabled === false) {
         return false;
       }
@@ -104,9 +104,7 @@ export class Monitor {
     });
 
     // Check all dependencies in parallel
-    const results = await Promise.all(
-      enabledDeps.map(dep => this.checkDependency(dep))
-    );
+    const results = await Promise.all(enabledDeps.map((dep) => this.checkDependency(dep)));
 
     return results;
   }

@@ -28,9 +28,9 @@ export class SummaryReporter {
       return '✅ All dependencies are up to date. No changes detected.';
     }
 
-    const breaking = changes.filter(c => c.severity === 'breaking');
-    const major = changes.filter(c => c.severity === 'major');
-    const minor = changes.filter(c => c.severity === 'minor');
+    const breaking = changes.filter((c) => c.severity === 'breaking');
+    const major = changes.filter((c) => c.severity === 'major');
+    const minor = changes.filter((c) => c.severity === 'minor');
 
     let summary = '# Dependency Changes Detected\n\n';
     summary += `**Total Changes**: ${changes.length}\n`;
@@ -40,21 +40,21 @@ export class SummaryReporter {
 
     if (breaking.length > 0) {
       summary += '## ⚠️ Breaking Changes\n\n';
-      breaking.forEach(change => {
+      breaking.forEach((change) => {
         summary += this.formatChangeItem(change);
       });
     }
 
     if (major.length > 0) {
       summary += '## 🔔 Major Updates\n\n';
-      major.forEach(change => {
+      major.forEach((change) => {
         summary += this.formatChangeItem(change);
       });
     }
 
     if (minor.length > 0) {
       summary += '## 📝 Minor Updates\n\n';
-      minor.forEach(change => {
+      minor.forEach((change) => {
         summary += this.formatChangeItem(change);
       });
     }
@@ -94,7 +94,7 @@ export class SummaryReporter {
 
     // Changes detected
     body += `\n## Changes Detected\n\n`;
-    changes.forEach(change => {
+    changes.forEach((change) => {
       body += `- ${change}\n`;
     });
 
@@ -154,7 +154,7 @@ export class SummaryReporter {
     const name = change.dependency.name || change.dependency.id;
     let item = `### ${name}\n\n`;
     item += `- **URL**: ${change.dependency.url}\n`;
-    
+
     if (change.oldVersion && change.newVersion) {
       item += `- **Version**: \`${change.oldVersion}\` → \`${change.newVersion}\`\n`;
     }

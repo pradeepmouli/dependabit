@@ -70,7 +70,7 @@ export class Detector {
 
   /**
    * Detect all external dependencies in the repository
-   * 
+   *
    * Implementation follows a hybrid approach:
    * 1. Programmatic parsing of repository files (README, code comments, package files)
    * 2. LLM analysis only for documents not fully parsed in step 1 (future enhancement)
@@ -81,11 +81,14 @@ export class Detector {
    * 7. Manifest entry creation with references and versioning
    */
   async detectDependencies(): Promise<DetectionResult> {
-    const allReferences: Map<string, {
-      url: string;
-      contexts: Array<{ file: string; line?: number; text: string }>;
-      detectionMethod: DetectionMethod;
-    }> = new Map();
+    const allReferences: Map<
+      string,
+      {
+        url: string;
+        contexts: Array<{ file: string; line?: number; text: string }>;
+        detectionMethod: DetectionMethod;
+      }
+    > = new Map();
 
     let filesScanned = 0;
     let llmCalls = 0;
@@ -98,15 +101,20 @@ export class Detector {
     for (const file of readmeFiles) {
       const content = await readFile(file, 'utf-8');
       const references = parseReadme(content, relative(this.options.repoPath, file));
-      
+
       for (const ref of references) {
-        this.addReference(allReferences, ref.url, {
-          file: relative(this.options.repoPath, file),
-          ...(ref.line !== undefined && { line: ref.line }),
-          text: ref.context
-        }, 'llm-analysis');
+        this.addReference(
+          allReferences,
+          ref.url,
+          {
+            file: relative(this.options.repoPath, file),
+            ...(ref.line !== undefined && { line: ref.line }),
+            text: ref.context
+          },
+          'llm-analysis'
+        );
       }
-      
+
       filesScanned++;
     }
 
@@ -115,43 +123,60 @@ export class Detector {
     for (const file of packageFiles) {
       const content = await readFile(file, 'utf-8');
       const metadata = this.parsePackageFile(file, content);
-      
-      for (const url of [...(metadata.urls || []), metadata.repository, metadata.homepage, metadata.documentation].filter(Boolean)) {
-        this.addReference(allReferences, url!, {
-          file: relative(this.options.repoPath, file),
-          text: 'Package metadata'
-        }, 'package-json');
+
+      for (const url of [
+        ...(metadata.urls || []),
+        metadata.repository,
+        metadata.homepage,
+        metadata.documentation
+      ].filter(Boolean)) {
+        this.addReference(
+          allReferences,
+          url!,
+          {
+            file: relative(this.options.repoPath, file),
+            text: 'Package metadata'
+          },
+          'package-json'
+        );
       }
-      
+
       filesScanned++;
     }
 
     // 1c. Parse code comments from source files
     const sourceFiles = await this.findSourceFiles(this.options.repoPath);
-    for (const file of sourceFiles.slice(0, 50)) { // Limit to 50 files for performance
+    for (const file of sourceFiles.slice(0, 50)) {
+      // Limit to 50 files for performance
       const content = await readFile(file, 'utf-8');
       const references = parseCodeComments(content, relative(this.options.repoPath, file));
-      
+
       for (const ref of references) {
-        this.addReference(allReferences, ref.url, {
-          file: ref.file,
-          line: ref.line,
-          text: ref.context
-        }, 'code-comment');
+        this.addReference(
+          allReferences,
+          ref.url,
+          {
+            file: ref.file,
+            line: ref.line,
+            text: ref.context
+          },
+          'code-comment'
+        );
       }
-      
+
       filesScanned++;
     }
 
     // Step 2: LLM 2nd pass for documents not fully parsed in step 1
     // Analyze README files for dependency context that parsers might have missed
     const llmEnhancedReferences = new Set<string>();
-    
-    for (const file of readmeFiles.slice(0, 5)) { // Limit to 5 READMEs for LLM analysis
+
+    for (const file of readmeFiles.slice(0, 5)) {
+      // Limit to 5 READMEs for LLM analysis
       try {
         const content = await readFile(file, 'utf-8');
         const relPath = relative(this.options.repoPath, file);
-        
+
         // Use LLM to extract additional context from README
         const detectionPrompt = `Analyze this README file and identify any external dependencies or resources that might be referenced but not explicitly linked:
 
@@ -176,10 +201,15 @@ Return as JSON with "dependencies" array.`;
         for (const dep of response.dependencies) {
           if (dep.url && !allReferences.has(dep.url)) {
             llmEnhancedReferences.add(dep.url);
-            this.addReference(allReferences, dep.url, {
-              file: relPath,
-              text: dep.description || 'Discovered by LLM analysis'
-            }, 'llm-analysis');
+            this.addReference(
+              allReferences,
+              dep.url,
+              {
+                file: relPath,
+                text: dep.description || 'Discovered by LLM analysis'
+              },
+              'llm-analysis'
+            );
           }
         }
       } catch (error) {
@@ -194,14 +224,14 @@ Return as JSON with "dependencies" array.`;
     for (const [url, data] of allReferences) {
       // Prepare context for potential LLM use
       const context = data.contexts
-        .map(c => `${c.file}${c.line ? `:${c.line}` : ''}: ${c.text}`)
+        .map((c) => `${c.file}${c.line ? `:${c.line}` : ''}: ${c.text}`)
         .join('\n');
       const firstContext = data.contexts[0]?.text || '';
 
       // Step 3: Try programmatic type categorization
       let type: DependencyType | null = this.determineDependencyType(url, firstContext);
       let typeConfidence = type ? 0.9 : 0.5; // High confidence for programmatic
-      
+
       // Step 4: If type couldn't be determined, use LLM fallback
       if (!type) {
         try {
@@ -222,7 +252,7 @@ Return as JSON with "dependencies" array.`;
           console.error(`LLM classification failed for ${url}:`, error);
         }
       }
-      
+
       // Default to 'other' if still not determined
       if (!type) {
         type = 'other';
@@ -231,7 +261,7 @@ Return as JSON with "dependencies" array.`;
 
       // Step 5: Try programmatic access method determination
       let accessMethod: AccessMethod | null = this.determineAccessMethod(url);
-      
+
       // Step 6: If access method couldn't be determined, use LLM fallback
       if (!accessMethod) {
         try {
@@ -269,7 +299,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
           accessMethod = 'http';
         }
       }
-      
+
       // Ensure we have a valid access method
       if (!accessMethod) {
         accessMethod = 'http';
@@ -295,7 +325,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
           checkFrequency: 'daily',
           ignoreChanges: false
         },
-        referencedIn: data.contexts.map(c => ({
+        referencedIn: data.contexts.map((c) => ({
           file: c.file,
           line: c.line,
           context: c.text
@@ -341,27 +371,29 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
   private determineAccessMethod(url: string): AccessMethod | null {
     // GitHub URLs
     if (url.includes('github.com')) return 'github-api';
-    
+
     // arXiv papers
     if (url.includes('arxiv.org')) return 'arxiv';
-    
+
     // OpenAPI/Swagger specs
-    if (url.includes('openapi') || 
-        url.includes('swagger') || 
-        url.endsWith('.yaml') || 
-        url.endsWith('.json') ||
-        url.includes('/api/spec') ||
-        url.includes('/api-docs')) {
+    if (
+      url.includes('openapi') ||
+      url.includes('swagger') ||
+      url.endsWith('.yaml') ||
+      url.endsWith('.json') ||
+      url.includes('/api/spec') ||
+      url.includes('/api-docs')
+    ) {
       return 'openapi';
     }
-    
+
     // Context7 documentation
     if (url.includes('context7')) return 'context7';
-    
+
     // Cannot determine programmatically - needs LLM
     return null;
   }
-  
+
   /**
    * Programmatically determine dependency type based on URL patterns and context
    * Returns null if cannot be determined programmatically
@@ -369,48 +401,58 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
   private determineDependencyType(url: string, context: string): DependencyType | null {
     const lowerUrl = url.toLowerCase();
     const lowerContext = context.toLowerCase();
-    
+
     // Research papers
-    if (lowerUrl.includes('arxiv.org') || 
-        lowerContext.includes('paper') || 
-        lowerContext.includes('research')) {
+    if (
+      lowerUrl.includes('arxiv.org') ||
+      lowerContext.includes('paper') ||
+      lowerContext.includes('research')
+    ) {
       return 'research-paper';
     }
-    
+
     // Schemas
-    if (lowerUrl.includes('schema') || 
-        lowerUrl.includes('openapi') || 
-        lowerUrl.includes('swagger') ||
-        lowerUrl.includes('graphql') ||
-        lowerUrl.includes('protobuf')) {
+    if (
+      lowerUrl.includes('schema') ||
+      lowerUrl.includes('openapi') ||
+      lowerUrl.includes('swagger') ||
+      lowerUrl.includes('graphql') ||
+      lowerUrl.includes('protobuf')
+    ) {
       return 'schema';
     }
-    
+
     // Documentation
-    if (lowerUrl.includes('/docs') || 
-        lowerUrl.includes('/documentation') ||
-        lowerUrl.includes('/guide') ||
-        lowerUrl.includes('/tutorial') ||
-        lowerUrl.includes('/reference') ||
-        lowerContext.includes('documentation') ||
-        lowerContext.includes('docs')) {
+    if (
+      lowerUrl.includes('/docs') ||
+      lowerUrl.includes('/documentation') ||
+      lowerUrl.includes('/guide') ||
+      lowerUrl.includes('/tutorial') ||
+      lowerUrl.includes('/reference') ||
+      lowerContext.includes('documentation') ||
+      lowerContext.includes('docs')
+    ) {
       return 'documentation';
     }
-    
+
     // Reference implementations (GitHub repos)
-    if (lowerUrl.includes('github.com') && 
-        (lowerContext.includes('example') || 
-         lowerContext.includes('implementation') ||
-         lowerContext.includes('reference'))) {
+    if (
+      lowerUrl.includes('github.com') &&
+      (lowerContext.includes('example') ||
+        lowerContext.includes('implementation') ||
+        lowerContext.includes('reference'))
+    ) {
       return 'reference-implementation';
     }
-    
+
     // API examples
-    if (lowerContext.includes('example') && 
-        (lowerContext.includes('api') || lowerContext.includes('endpoint'))) {
+    if (
+      lowerContext.includes('example') &&
+      (lowerContext.includes('api') || lowerContext.includes('endpoint'))
+    ) {
       return 'api-example';
     }
-    
+
     // Cannot determine programmatically - needs LLM
     return null;
   }
@@ -432,9 +474,12 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     }
   }
 
-  private parsePackageFile(filePath: string, content: string): { urls: string[]; repository?: string; homepage?: string; documentation?: string } {
+  private parsePackageFile(
+    filePath: string,
+    content: string
+  ): { urls: string[]; repository?: string; homepage?: string; documentation?: string } {
     const fileName = filePath.split('/').pop() || '';
-    
+
     if (fileName === 'package.json') {
       return parsePackageJson(content);
     }
@@ -447,23 +492,23 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     if (fileName === 'go.mod') {
       return parseGoMod(content);
     }
-    
+
     return { urls: [] };
   }
 
   private async findFiles(dir: string, pattern: RegExp): Promise<string[]> {
     const files: string[] = [];
-    
+
     try {
       const entries = await readdir(dir, { withFileTypes: true });
-      
+
       for (const entry of entries) {
         const fullPath = join(dir, entry.name);
-        
+
         if (this.shouldIgnore(entry.name)) {
           continue;
         }
-        
+
         if (entry.isDirectory()) {
           const subFiles = await this.findFiles(fullPath, pattern);
           files.push(...subFiles);
@@ -474,7 +519,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     } catch (error) {
       // Ignore errors (permission denied, etc.)
     }
-    
+
     return files;
   }
 
@@ -487,7 +532,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
   }
 
   private shouldIgnore(name: string): boolean {
-    return this.options.ignorePatterns.some(pattern => name.includes(pattern));
+    return this.options.ignorePatterns.some((pattern) => name.includes(pattern));
   }
 
   /**
@@ -495,11 +540,14 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
    * This is more efficient than full repository scan when only few files changed
    */
   async analyzeFiles(filePaths: string[]): Promise<DetectionResult> {
-    const allReferences: Map<string, {
-      url: string;
-      contexts: Array<{ file: string; line?: number; text: string }>;
-      detectionMethod: DetectionMethod;
-    }> = new Map();
+    const allReferences: Map<
+      string,
+      {
+        url: string;
+        contexts: Array<{ file: string; line?: number; text: string }>;
+        detectionMethod: DetectionMethod;
+      }
+    > = new Map();
 
     let filesScanned = 0;
     let llmCalls = 0;
@@ -511,13 +559,13 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
       const normalizedRepoPath = resolve(normalize(this.options.repoPath));
       const normalizedFilePath = normalize(filePath);
       const fullPath = resolve(normalizedRepoPath, normalizedFilePath);
-      
+
       // Ensure the resolved path is within the repository boundaries
       // Use path.sep for cross-platform compatibility
-      const repoPathWithSep = normalizedRepoPath.endsWith(sep) 
-        ? normalizedRepoPath 
+      const repoPathWithSep = normalizedRepoPath.endsWith(sep)
+        ? normalizedRepoPath
         : normalizedRepoPath + sep;
-      
+
       if (!fullPath.startsWith(repoPathWithSep) && fullPath !== normalizedRepoPath) {
         // Skip files outside the repository to prevent path traversal
         if (process.env['DEBUG']) {
@@ -525,7 +573,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
         }
         continue;
       }
-      
+
       try {
         const content = await readFile(fullPath, 'utf-8');
         const relativePath = relative(this.options.repoPath, fullPath);
@@ -536,40 +584,65 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
           // README file
           const references = parseReadme(content, relativePath);
           for (const ref of references) {
-            this.addReference(allReferences, ref.url, {
-              file: relativePath,
-              ...(ref.line !== undefined && { line: ref.line }),
-              text: ref.context
-            }, 'llm-analysis');
+            this.addReference(
+              allReferences,
+              ref.url,
+              {
+                file: relativePath,
+                ...(ref.line !== undefined && { line: ref.line }),
+                text: ref.context
+              },
+              'llm-analysis'
+            );
           }
         } else if (/^(package\.json|requirements\.txt|Cargo\.toml|go\.mod)$/i.test(fileName)) {
           // Package file
           const metadata = this.parsePackageFile(fullPath, content);
-          for (const url of [...(metadata.urls || []), metadata.repository, metadata.homepage, metadata.documentation].filter(Boolean)) {
-            this.addReference(allReferences, url!, {
-              file: relativePath,
-              text: 'Package metadata'
-            }, 'package-json');
+          for (const url of [
+            ...(metadata.urls || []),
+            metadata.repository,
+            metadata.homepage,
+            metadata.documentation
+          ].filter(Boolean)) {
+            this.addReference(
+              allReferences,
+              url!,
+              {
+                file: relativePath,
+                text: 'Package metadata'
+              },
+              'package-json'
+            );
           }
         } else if (/\.(ts|js|tsx|jsx|py|rs|go|java|kt|cs|rb|php)$/.test(fileName)) {
           // Source file
           const references = parseCodeComments(content, relativePath);
           for (const ref of references) {
-            this.addReference(allReferences, ref.url, {
-              file: ref.file,
-              line: ref.line,
-              text: ref.context
-            }, 'code-comment');
+            this.addReference(
+              allReferences,
+              ref.url,
+              {
+                file: ref.file,
+                line: ref.line,
+                text: ref.context
+              },
+              'code-comment'
+            );
           }
         } else if (/\.(md|txt|rst|adoc)$/.test(fileName)) {
           // Documentation file
           const references = parseReadme(content, relativePath);
           for (const ref of references) {
-            this.addReference(allReferences, ref.url, {
-              file: relativePath,
-              ...(ref.line !== undefined && { line: ref.line }),
-              text: ref.context
-            }, 'llm-analysis');
+            this.addReference(
+              allReferences,
+              ref.url,
+              {
+                file: relativePath,
+                ...(ref.line !== undefined && { line: ref.line }),
+                text: ref.context
+              },
+              'llm-analysis'
+            );
           }
         }
 
@@ -577,8 +650,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
       } catch (error) {
         // Skip files that can't be read - log but don't throw
         // Using console.warn since we don't have a logger instance here
-        const message =
-          error instanceof Error ? error.message : String(error);
+        const message = error instanceof Error ? error.message : String(error);
         console.warn(`Failed to analyze ${filePath}: ${message}`);
         if (process.env['DEBUG']) {
           // Log full error details when DEBUG is enabled
@@ -591,7 +663,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     const dependencies: DependencyEntry[] = [];
 
     for (const [url, refData] of allReferences.entries()) {
-      const contextText = refData.contexts.map(c => c.text).join(' ');
+      const contextText = refData.contexts.map((c) => c.text).join(' ');
 
       // Step 3: Programmatic type categorization
       let type = this.determineDependencyType(url, contextText);
@@ -602,19 +674,26 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
         try {
           const prompt = createClassificationPrompt(url, contextText);
           const response = await this.options.llmProvider.analyze('', prompt);
-          
+
           llmCalls++;
           totalTokens += response.usage?.totalTokens || 0;
           totalLatencyMs += Date.now() - startTime;
 
           // Use rawResponse for classification
           const responseText = (response.rawResponse || '').toLowerCase();
-          type = (responseText.includes('schema') ? 'schema' :
-                 responseText.includes('documentation') ? 'documentation' :
-                 responseText.includes('research') || responseText.includes('paper') ? 'research-paper' :
-                 responseText.includes('implementation') ? 'reference-implementation' :
-                 responseText.includes('example') ? 'api-example' :
-                 'other') as DependencyType;
+          type = (
+            responseText.includes('schema')
+              ? 'schema'
+              : responseText.includes('documentation')
+                ? 'documentation'
+                : responseText.includes('research') || responseText.includes('paper')
+                  ? 'research-paper'
+                  : responseText.includes('implementation')
+                    ? 'reference-implementation'
+                    : responseText.includes('example')
+                      ? 'api-example'
+                      : 'other'
+          ) as DependencyType;
         } catch {
           type = 'other';
         }
@@ -642,7 +721,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
         detectedAt: new Date().toISOString(),
         lastChecked: new Date().toISOString(),
         auth: undefined,
-        referencedIn: refData.contexts.map(ctx => ({
+        referencedIn: refData.contexts.map((ctx) => ({
           file: ctx.file,
           line: ctx.line,
           context: ctx.text

@@ -11,11 +11,13 @@ import type { DependencyChange } from '../utils/reporter.js';
 
 export interface Manifest {
   version: string;
-  dependencies: Array<DependencyConfig & {
-    name?: string;
-    type?: string;
-    lastChanged?: string;
-  }>;
+  dependencies: Array<
+    DependencyConfig & {
+      name?: string;
+      type?: string;
+      lastChanged?: string;
+    }
+  >;
 }
 
 export interface CheckActionResult {
@@ -61,7 +63,7 @@ export async function checkAction(
     rateLimitWarnings: [],
     updatedManifest: {
       ...manifest,
-      dependencies: manifest.dependencies.map(dep => ({ ...dep }))
+      dependencies: manifest.dependencies.map((dep) => ({ ...dep }))
     }
   };
 
@@ -72,7 +74,7 @@ export async function checkAction(
   }
 
   // Filter enabled dependencies
-  const enabledDeps = manifest.dependencies.filter(dep => {
+  const enabledDeps = manifest.dependencies.filter((dep) => {
     if (dep.monitoring?.enabled === false) {
       result.skipped++;
       return false;
@@ -89,11 +91,13 @@ export async function checkAction(
   // Reserve budget for all checks upfront
   const budgetNeeded = enabledDeps.length + 10; // Extra buffer for issue operations
   const budgetReservation = await rateLimitHandler.reserveBudget(budgetNeeded);
-  
+
   if (!budgetReservation.reserved) {
     console.warn(`Insufficient API quota: ${budgetReservation.reason}`);
     if (budgetReservation.waitTime) {
-      console.log(`Waiting ${Math.ceil(budgetReservation.waitTime / 1000)} seconds for rate limit reset...`);
+      console.log(
+        `Waiting ${Math.ceil(budgetReservation.waitTime / 1000)} seconds for rate limit reset...`
+      );
       await rateLimitHandler.waitIfNeeded();
     }
   }
@@ -104,8 +108,8 @@ export async function checkAction(
   // Process results
   for (const checkResult of checkResults) {
     if (!checkResult) continue;
-    
-    const depIndex = manifest.dependencies.findIndex(d => d.id === checkResult.dependency.id);
+
+    const depIndex = manifest.dependencies.findIndex((d) => d.id === checkResult.dependency.id);
 
     if (checkResult.error) {
       console.error(`Error checking ${checkResult.dependency.id}: ${checkResult.error}`);
@@ -177,7 +181,9 @@ export async function checkAction(
               severity: checkResult.severity,
               append: true
             });
-            console.log(`Updated existing issue #${existing.number} for ${checkResult.dependency.id}`);
+            console.log(
+              `Updated existing issue #${existing.number} for ${checkResult.dependency.id}`
+            );
           } else {
             // Create new issue
             const issueBody = reporter.generateIssueBody(change);

@@ -11,7 +11,7 @@ describe('GitHubRepoChecker', () => {
   beforeEach(() => {
     checker = new GitHubRepoChecker();
     vi.clearAllMocks();
-    
+
     // Default mock response for releases
     mockFetch.mockResolvedValue({
       ok: true,
@@ -51,15 +51,17 @@ describe('GitHubRepoChecker', () => {
         .mockResolvedValueOnce({
           ok: true,
           status: 200,
-          json: async () => [{
-            sha: 'abc123def456',
-            commit: {
-              message: 'Latest commit',
-              author: { date: '2024-01-01T00:00:00Z' }
+          json: async () => [
+            {
+              sha: 'abc123def456',
+              commit: {
+                message: 'Latest commit',
+                author: { date: '2024-01-01T00:00:00Z' }
+              }
             }
-          }]
+          ]
         });
-      
+
       const config = {
         url: 'https://github.com/owner/no-releases',
         accessMethod: 'github-api' as const

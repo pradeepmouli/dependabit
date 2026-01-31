@@ -71,15 +71,15 @@ export async function fetchCommits(
         date: commit.commit.author?.date || new Date().toISOString()
       }
     };
-    
+
     if (commit.commit.author?.email) {
       info.author.email = commit.commit.author.email;
     }
-    
+
     if (commit.html_url) {
       info.url = commit.html_url;
     }
-    
+
     return info;
   });
 }
@@ -108,12 +108,12 @@ export async function getCommitDiff(
         filename: file.filename,
         status: file.status as CommitFile['status']
       };
-      
+
       if (file.additions !== undefined) commitFile.additions = file.additions;
       if (file.deletions !== undefined) commitFile.deletions = file.deletions;
       if (file.changes !== undefined) commitFile.changes = file.changes;
       if (file.patch !== undefined) commitFile.patch = file.patch;
-      
+
       return commitFile;
     })
   };
@@ -170,15 +170,15 @@ export async function getCommitsBetween(
         date: commit.commit.author?.date || new Date().toISOString()
       }
     };
-    
+
     if (commit.commit.author?.email) {
       info.author.email = commit.commit.author.email;
     }
-    
+
     if (commit.html_url) {
       info.url = commit.html_url;
     }
-    
+
     return info;
   });
 }

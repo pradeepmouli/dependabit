@@ -63,12 +63,12 @@ export class RateLimitHandler {
    */
   async waitIfNeeded(): Promise<void> {
     const rateLimit = await this.checkRateLimit();
-    
+
     if (rateLimit.remaining === 0) {
       const waitTime = this.calculateWaitTime(rateLimit);
       if (waitTime > 0) {
         console.log(`Rate limited. Waiting ${Math.ceil(waitTime / 1000)} seconds until reset...`);
-        await new Promise(resolve => setTimeout(resolve, waitTime));
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
       }
     }
   }
@@ -113,7 +113,12 @@ export class RateLimitHandler {
     const response = await this.octokit.rest.rateLimit.get();
     const { resources } = response.data;
 
-    const createInfo = (resource: { limit: number; remaining: number; reset: number; used: number }): RateLimitInfo & { percentageRemaining: number } => ({
+    const createInfo = (resource: {
+      limit: number;
+      remaining: number;
+      reset: number;
+      used: number;
+    }): RateLimitInfo & { percentageRemaining: number } => ({
       limit: resource.limit,
       remaining: resource.remaining,
       reset: new Date(resource.reset * 1000),

@@ -93,7 +93,7 @@ export class SeverityClassifier {
     if (!version) {
       return null;
     }
-    
+
     // Remove 'v' prefix if present
     const cleaned = version.replace(/^v/, '');
 

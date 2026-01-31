@@ -4,13 +4,7 @@ import { z } from 'zod';
 export const ManifestVersionSchema = z.literal('1.0.0');
 
 // Access methods (HOW to retrieve/check dependency)
-export const AccessMethodSchema = z.enum([
-  'context7',
-  'arxiv',
-  'openapi',
-  'github-api',
-  'http'
-]);
+export const AccessMethodSchema = z.enum(['context7', 'arxiv', 'openapi', 'github-api', 'http']);
 
 // Dependency types (WHAT the dependency represents)
 export const DependencyTypeSchema = z.enum([
@@ -47,9 +41,7 @@ export const AuthConfigSchema = z
 // Monitoring rules
 export const MonitoringRulesSchema = z.object({
   enabled: z.boolean().default(true),
-  checkFrequency: z
-    .enum(['hourly', 'daily', 'weekly', 'monthly'])
-    .default('daily'),
+  checkFrequency: z.enum(['hourly', 'daily', 'weekly', 'monthly']).default('daily'),
   ignoreChanges: z.boolean().default(false),
   severityOverride: SeveritySchema.optional()
 });
@@ -136,15 +128,7 @@ export const DependencyManifestSchema = z.object({
 export const ScheduleSchema = z.object({
   interval: z.enum(['hourly', 'daily', 'weekly', 'monthly']),
   day: z
-    .enum([
-      'monday',
-      'tuesday',
-      'wednesday',
-      'thursday',
-      'friday',
-      'saturday',
-      'sunday'
-    ])
+    .enum(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'])
     .optional(),
   time: z
     .string()

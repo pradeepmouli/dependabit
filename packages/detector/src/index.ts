@@ -28,11 +28,7 @@ export {
 } from './parsers/package-files.js';
 
 // Diff Parser
-export type {
-  DiffParseResult,
-  ExtractedContent,
-  ChangedFilesResult
-} from './diff-parser.js';
+export type { DiffParseResult, ExtractedContent, ChangedFilesResult } from './diff-parser.js';
 export {
   parseDiff,
   extractAddedContent,

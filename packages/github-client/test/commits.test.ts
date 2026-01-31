@@ -48,7 +48,9 @@ describe('Commit Analysis Tests', () => {
         data: mockCommits
       });
 
-      const client = { getOctokit: () => ({ rest: { repos: { listCommits: mockListCommits } } }) } as any;
+      const client = {
+        getOctokit: () => ({ rest: { repos: { listCommits: mockListCommits } } })
+      } as any;
       const result = await fetchCommits(client, 'owner', 'repo', { since: '2024-01-01T00:00:00Z' });
 
       expect(result).toHaveLength(2);
@@ -64,7 +66,9 @@ describe('Commit Analysis Tests', () => {
     it('should handle empty commit list', async () => {
       mockListCommits.mockResolvedValue({ data: [] });
 
-      const client = { getOctokit: () => ({ rest: { repos: { listCommits: mockListCommits } } }) } as any;
+      const client = {
+        getOctokit: () => ({ rest: { repos: { listCommits: mockListCommits } } })
+      } as any;
       const result = await fetchCommits(client, 'owner', 'repo');
 
       expect(result).toHaveLength(0);
@@ -97,7 +101,9 @@ describe('Commit Analysis Tests', () => {
 
       mockGetCommit.mockResolvedValue({ data: mockCommitData });
 
-      const client = { getOctokit: () => ({ rest: { repos: { getCommit: mockGetCommit } } }) } as any;
+      const client = {
+        getOctokit: () => ({ rest: { repos: { getCommit: mockGetCommit } } })
+      } as any;
       const result = await getCommitDiff(client, 'owner', 'repo', 'abc123');
 
       expect(result.sha).toBe('abc123');
@@ -113,7 +119,9 @@ describe('Commit Analysis Tests', () => {
         data: { sha: 'abc123', files: [] }
       });
 
-      const client = { getOctokit: () => ({ rest: { repos: { getCommit: mockGetCommit } } }) } as any;
+      const client = {
+        getOctokit: () => ({ rest: { repos: { getCommit: mockGetCommit } } })
+      } as any;
       const result = await getCommitDiff(client, 'owner', 'repo', 'abc123');
 
       expect(result.files).toHaveLength(0);

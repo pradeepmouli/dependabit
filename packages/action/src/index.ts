@@ -6,6 +6,7 @@
 import * as core from '@actions/core';
 import { run as runGenerate } from './actions/generate.js';
 import { run as runUpdate } from './actions/update.js';
+import { run as runValidate } from './actions/validate.js';
 
 async function main(): Promise<void> {
   const action = core.getInput('action') || 'generate';
@@ -14,19 +15,19 @@ async function main(): Promise<void> {
     case 'generate':
       await runGenerate();
       break;
-    
+
     case 'update':
       await runUpdate();
       break;
-    
+
     case 'check':
       core.setFailed('Check action not yet implemented');
       break;
-    
+
     case 'validate':
-      core.setFailed('Validate action not yet implemented');
+      await runValidate();
       break;
-    
+
     default:
       core.setFailed(`Unknown action: ${action}`);
   }

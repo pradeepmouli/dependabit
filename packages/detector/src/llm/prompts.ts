@@ -65,8 +65,7 @@ export function createDetectionPrompt(
   filePath: string,
   content: string
 ): string {
-  return DETECTION_PROMPT_TEMPLATE
-    .replace('{contentType}', contentType)
+  return DETECTION_PROMPT_TEMPLATE.replace('{contentType}', contentType)
     .replace('{filePath}', filePath)
     .replace('{content}', content);
 }
@@ -98,11 +97,6 @@ Return JSON:
   "reasoning": "URL structure suggests API documentation"
 }`;
 
-export function createClassificationPrompt(
-  url: string,
-  context: string
-): string {
-  return CLASSIFICATION_PROMPT_TEMPLATE
-    .replace('{url}', url)
-    .replace('{context}', context);
+export function createClassificationPrompt(url: string, context: string): string {
+  return CLASSIFICATION_PROMPT_TEMPLATE.replace('{url}', url).replace('{context}', context);
 }

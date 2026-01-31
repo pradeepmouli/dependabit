@@ -43,21 +43,21 @@ export class GitHubCopilotProvider implements LLMProvider {
     try {
       // Combine system prompt and user prompt for CLI
       const fullPrompt = `${SYSTEM_PROMPT}\n\n${prompt}`;
-      
+
       // Escape the prompt for shell safety (basic escaping)
       const escapedPrompt = fullPrompt.replace(/"/g, '\\"').replace(/\$/g, '\\$');
-      
+
       // Use gh copilot suggest command to get AI response
       // The --yes flag auto-accepts the suggestion, --shell-out returns raw output
       const command = `echo "${escapedPrompt}" | gh copilot suggest --yes 2>&1`;
-      
+
       const { stdout, stderr } = await execAsync(command, {
         maxBuffer: 10 * 1024 * 1024, // 10MB buffer for large responses
         timeout: 60000 // 60 second timeout
       });
 
       const latencyMs = Date.now() - startTime;
-      
+
       if (stderr && !stdout) {
         throw new Error(`Copilot CLI error: ${stderr}`);
       }
@@ -65,7 +65,7 @@ export class GitHubCopilotProvider implements LLMProvider {
       // Try to parse the output as JSON
       // Copilot CLI may return the JSON directly or wrapped in markdown
       let content_text = stdout.trim();
-      
+
       // Remove markdown code blocks if present
       if (content_text.includes('```json')) {
         const jsonMatch = content_text.match(/```json\s*([\s\S]*?)```/);
@@ -108,7 +108,7 @@ export class GitHubCopilotProvider implements LLMProvider {
     } catch (error) {
       const latencyMs = Date.now() - startTime;
       console.error('Copilot CLI analysis failed:', error);
-      
+
       // Return empty result on error
       return {
         dependencies: [],
@@ -126,20 +126,16 @@ export class GitHubCopilotProvider implements LLMProvider {
 
   getSupportedModels(): string[] {
     // Copilot CLI uses GitHub's models, not directly specified
-    return [
-      'github-copilot',
-      'gpt-4',
-      'gpt-4-turbo'
-    ];
+    return ['github-copilot', 'gpt-4', 'gpt-4-turbo'];
   }
 
   async getRateLimit(): Promise<RateLimitInfo> {
     // Copilot CLI doesn't expose rate limits directly
     // Rate limiting is handled by GitHub's infrastructure
     return {
-      remaining: -1,  // Unknown
-      limit: -1,      // Unknown
-      resetAt: new Date(0)  // Unknown
+      remaining: -1, // Unknown
+      limit: -1, // Unknown
+      resetAt: new Date(0) // Unknown
     };
   }
 

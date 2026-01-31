@@ -21,7 +21,7 @@ const SKIP_PATTERNS = [
   /badge(s)?\..*\.svg/,
   /travis-ci\.(org|com)/,
   /circleci\.com/,
-  /github\.com\/.*\/actions/  // GitHub Actions badges
+  /github\.com\/.*\/actions/ // GitHub Actions badges
 ];
 
 /**
@@ -34,7 +34,7 @@ export function parseReadme(content: string, filePath = 'README.md'): ExtractedR
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (!line) continue; // Skip undefined or empty lines
-    
+
     const lineNumber = i + 1;
 
     // Extract markdown links [text](url)
@@ -126,12 +126,12 @@ function extractBareUrls(line: string): string[] {
 }
 
 function shouldSkipUrl(url: string): boolean {
-  return SKIP_PATTERNS.some(pattern => pattern.test(url));
+  return SKIP_PATTERNS.some((pattern) => pattern.test(url));
 }
 
 function deduplicateReferences(references: ExtractedReference[]): ExtractedReference[] {
   const seen = new Set<string>();
-  return references.filter(ref => {
+  return references.filter((ref) => {
     if (seen.has(ref.url)) {
       return false;
     }
@@ -143,13 +143,16 @@ function deduplicateReferences(references: ExtractedReference[]): ExtractedRefer
 /**
  * Extract GitHub repository mentions (owner/repo format)
  */
-export function extractGitHubReferences(content: string): Array<{ owner: string; repo: string; context: string }> {
+export function extractGitHubReferences(
+  content: string
+): Array<{ owner: string; repo: string; context: string }> {
   const references: Array<{ owner: string; repo: string; context: string }> = [];
   const lines = content.split('\n');
 
   for (const line of lines) {
     // Match owner/repo pattern not in URLs, with basic length and context constraints
-    const regex = /(?<!https?:\/\/github\.com\/)(?:^|[\s(])([a-zA-Z0-9_-]{2,}\/[a-zA-Z0-9_.-]{2,})(?=$|[\s),.;])/g;
+    const regex =
+      /(?<!https?:\/\/github\.com\/)(?:^|[\s(])([a-zA-Z0-9_-]{2,}\/[a-zA-Z0-9_.-]{2,})(?=$|[\s),.;])/g;
     let match;
 
     while ((match = regex.exec(line)) !== null) {
@@ -158,7 +161,7 @@ export function extractGitHubReferences(content: string): Array<{ owner: string;
         const parts = ownerRepo.split('/');
         const owner = parts[0];
         const repo = parts[1];
-        
+
         if (
           owner &&
           repo &&
@@ -166,7 +169,7 @@ export function extractGitHubReferences(content: string): Array<{ owner: string;
           repo.length >= 2 &&
           owner !== 'owner' &&
           repo !== 'repo' &&
-          !( /^\d+$/.test(owner) && /^\d+$/.test(repo) )
+          !(/^\d+$/.test(owner) && /^\d+$/.test(repo))
         ) {
           references.push({
             owner,

@@ -161,9 +161,7 @@ describe('ReleaseManager', () => {
 
   describe('compareReleases', () => {
     it('should detect new releases', () => {
-      const oldReleases = [
-        { tagName: 'v1.0.0', publishedAt: new Date('2024-01-01') }
-      ];
+      const oldReleases = [{ tagName: 'v1.0.0', publishedAt: new Date('2024-01-01') }];
 
       const newReleases = [
         { tagName: 'v1.1.0', publishedAt: new Date('2024-01-02') },
@@ -177,13 +175,9 @@ describe('ReleaseManager', () => {
     });
 
     it('should return empty when no new releases', () => {
-      const oldReleases = [
-        { tagName: 'v1.0.0', publishedAt: new Date('2024-01-01') }
-      ];
+      const oldReleases = [{ tagName: 'v1.0.0', publishedAt: new Date('2024-01-01') }];
 
-      const newReleases = [
-        { tagName: 'v1.0.0', publishedAt: new Date('2024-01-01') }
-      ];
+      const newReleases = [{ tagName: 'v1.0.0', publishedAt: new Date('2024-01-01') }];
 
       const result = releaseManager.compareReleases(oldReleases, newReleases);
 

@@ -14,9 +14,6 @@ export type { Severity } from './severity.js';
 
 export { normalizeHTML, normalizeURL } from './normalizer.js';
 
-export type {
-  Checker,
-  DependencySnapshot,
-  ChangeDetection,
-  AccessConfig
-} from './types.js';
+export { Scheduler } from './scheduler.js';
+
+export type { Checker, DependencySnapshot, ChangeDetection, AccessConfig } from './types.js';

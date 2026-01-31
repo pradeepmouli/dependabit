@@ -50,11 +50,7 @@ export class IssueManager {
     const { owner, repo, title, body, severity, dependency, assignee } = data;
 
     // Prepare labels
-    const labels = [
-      'dependabit',
-      `severity:${severity}`,
-      'dependency-update'
-    ];
+    const labels = ['dependabit', `severity:${severity}`, 'dependency-update'];
 
     // Create the issue
     const response = await this.octokit.rest.issues.create({
@@ -87,7 +83,7 @@ export class IssueManager {
     try {
       // Search for open issues with dependabit label and dependency ID
       const query = `repo:${owner}/${repo} is:issue is:open label:dependabit ${dependencyId}`;
-      
+
       const response = await this.octokit.rest.search.issuesAndPullRequests({
         q: query,
         per_page: 1
@@ -105,7 +101,7 @@ export class IssueManager {
       return {
         number: issue.number,
         url: issue.html_url,
-        labels: issue.labels.map(l => typeof l === 'string' ? l : l.name || '')
+        labels: issue.labels.map((l) => (typeof l === 'string' ? l : l.name || ''))
       };
     } catch (error) {
       console.error('Error finding existing issue:', error);
@@ -153,14 +149,10 @@ export class IssueManager {
       });
 
       const existingLabels = current.data.labels
-        .map(l => (typeof l === 'string' ? l : l.name))
+        .map((l) => (typeof l === 'string' ? l : l.name))
         .filter((l): l is string => !!l);
 
-      const severityLabels = [
-        'dependabit',
-        `severity:${severity}`,
-        'dependency-update'
-      ];
+      const severityLabels = ['dependabit', `severity:${severity}`, 'dependency-update'];
 
       const mergedLabels = Array.from(new Set([...existingLabels, ...severityLabels]));
 
@@ -172,7 +164,7 @@ export class IssueManager {
     return {
       number: response.data.number,
       url: response.data.html_url,
-      labels: response.data.labels.map(l => typeof l === 'string' ? l : l.name || '')
+      labels: response.data.labels.map((l) => (typeof l === 'string' ? l : l.name || ''))
     };
   }
 

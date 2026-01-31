@@ -8,7 +8,12 @@ import { join } from 'node:path';
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { Detector, GitHubCopilotProvider, extractDependencyChanges } from '@dependabit/detector';
-import { readManifest, writeManifest, mergeManifests, type DependencyManifest } from '@dependabit/manifest';
+import {
+  readManifest,
+  writeManifest,
+  mergeManifests,
+  type DependencyManifest
+} from '@dependabit/manifest';
 import { createGitHubClient, getCommitDiff } from '@dependabit/github-client';
 import { createLogger, withTiming } from '../logger.js';
 import { parseUpdateInputs } from '../utils/inputs.js';
@@ -74,11 +79,11 @@ export async function run(): Promise<void> {
     // Determine commits to analyze
     logger.startGroup('📊 Analyzing Commits');
     let commitsToAnalyze = inputs.commits;
-    
+
     if (commitsToAnalyze.length === 0) {
       // Auto-detect commits from the push event
       const headRef = process.env['GITHUB_SHA'];
-      
+
       if (headRef) {
         // For push events, get commits from the push payload
         const eventPath = process.env['GITHUB_EVENT_PATH'];
@@ -91,13 +96,13 @@ export async function run(): Promise<void> {
               logger.info('Detected commits from push event', { count: commitsToAnalyze.length });
             }
           } catch (error) {
-            logger.warning('Failed to parse GitHub event payload', { 
+            logger.warning('Failed to parse GitHub event payload', {
               error: String(error),
-              eventPath 
+              eventPath
             });
           }
         }
-        
+
         // Fallback: analyze the last commit
         if (commitsToAnalyze.length === 0) {
           commitsToAnalyze = [headRef];
@@ -112,7 +117,10 @@ export async function run(): Promise<void> {
       return;
     }
 
-    logger.info('Commits to analyze', { count: commitsToAnalyze.length, shas: commitsToAnalyze.slice(0, 5) });
+    logger.info('Commits to analyze', {
+      count: commitsToAnalyze.length,
+      shas: commitsToAnalyze.slice(0, 5)
+    });
     logger.endGroup();
 
     // Fetch and analyze commit diffs
@@ -127,7 +135,7 @@ export async function run(): Promise<void> {
       });
 
       const changes = extractDependencyChanges(diff.files);
-      
+
       // Track changed files
       for (const file of changes.changedFiles.relevantFiles) {
         if (!allChangedFiles.includes(file)) {
@@ -136,8 +144,8 @@ export async function run(): Promise<void> {
       }
 
       // Track URL changes
-      changes.addedUrls.forEach(url => allAddedUrls.add(url));
-      changes.removedUrls.forEach(url => allRemovedUrls.add(url));
+      changes.addedUrls.forEach((url) => allAddedUrls.add(url));
+      changes.removedUrls.forEach((url) => allRemovedUrls.add(url));
 
       logger.info('Commit analyzed', {
         sha: sha.substring(0, 7),
@@ -230,7 +238,7 @@ export async function run(): Promise<void> {
       before: existingManifest.dependencies.length,
       after: merged.dependencies.length,
       added: Math.max(0, dependenciesAdded),
-      manualPreserved: merged.dependencies.filter(d => d.detectionMethod === 'manual').length
+      manualPreserved: merged.dependencies.filter((d) => d.detectionMethod === 'manual').length
     });
     logger.endGroup();
 

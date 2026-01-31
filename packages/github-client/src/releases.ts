@@ -32,10 +32,7 @@ export class ReleaseManager {
   /**
    * Fetches the latest release from a repository
    */
-  async getLatestRelease(params: {
-    owner: string;
-    repo: string;
-  }): Promise<Release | null> {
+  async getLatestRelease(params: { owner: string; repo: string }): Promise<Release | null> {
     const { owner, repo } = params;
 
     try {
@@ -80,7 +77,7 @@ export class ReleaseManager {
         per_page: perPage
       });
 
-      return response.data.map(release => ({
+      return response.data.map((release) => ({
         tagName: release.tag_name,
         name: release.name || release.tag_name,
         publishedAt: new Date(release.published_at || release.created_at),
@@ -101,14 +98,14 @@ export class ReleaseManager {
    * Compares two sets of releases to find new ones
    */
   compareReleases(oldReleases: Release[], newReleases: Release[]): ReleaseComparison {
-    const oldTags = new Set(oldReleases.map(r => r.tagName));
-    const newTags = new Set(newReleases.map(r => r.tagName));
+    const oldTags = new Set(oldReleases.map((r) => r.tagName));
+    const newTags = new Set(newReleases.map((r) => r.tagName));
 
     // Find releases in new but not in old
-    const newOnes = newReleases.filter(r => !oldTags.has(r.tagName));
+    const newOnes = newReleases.filter((r) => !oldTags.has(r.tagName));
 
     // Find releases in old but not in new (removed/deleted)
-    const oldOnes = oldReleases.filter(r => !newTags.has(r.tagName));
+    const oldOnes = oldReleases.filter((r) => !newTags.has(r.tagName));
 
     return {
       newReleases: newOnes,

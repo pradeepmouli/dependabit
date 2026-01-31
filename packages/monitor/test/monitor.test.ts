@@ -11,14 +11,14 @@ describe('Monitor', () => {
   beforeEach(() => {
     monitor = new Monitor();
     vi.clearAllMocks();
-    
+
     // Mock successful fetch responses by default
     mockFetch.mockImplementation((url: string) => {
       // Fail for invalid URLs
       if (url.includes('invalid-url')) {
         return Promise.reject(new Error('Network error'));
       }
-      
+
       // Success response
       return Promise.resolve({
         ok: true,
@@ -31,7 +31,7 @@ describe('Monitor', () => {
           html_url: 'https://github.com/owner/repo/releases/v1.0.0'
         }),
         headers: {
-          get: (name: string) => name === 'content-type' ? 'text/html' : null
+          get: (name: string) => (name === 'content-type' ? 'text/html' : null)
         },
         text: async () => '<html><body>Test content</body></html>'
       });
@@ -57,7 +57,7 @@ describe('Monitor', () => {
 
     it('should handle errors gracefully', async () => {
       mockFetch.mockRejectedValue(new Error('Network error'));
-      
+
       const dependency = {
         id: 'test-id',
         url: 'https://invalid-url.com',
@@ -144,8 +144,8 @@ describe('Monitor', () => {
       const results = await monitor.checkAll(dependencies);
 
       expect(results).toHaveLength(2);
-      expect(results.some(r => !r.error)).toBe(true);
-      expect(results.some(r => r.error)).toBe(true);
+      expect(results.some((r) => !r.error)).toBe(true);
+      expect(results.some((r) => r.error)).toBe(true);
     });
 
     it('should respect monitoring rules', async () => {

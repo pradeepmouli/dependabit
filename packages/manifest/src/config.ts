@@ -52,9 +52,7 @@ export function getEffectiveMonitoringRules(
     return {
       enabled: override.monitoring.enabled ?? globalEnabled,
       checkFrequency:
-        override.monitoring.checkFrequency ??
-        override.schedule?.interval ??
-        globalCheckFrequency,
+        override.monitoring.checkFrequency ?? override.schedule?.interval ?? globalCheckFrequency,
       ignoreChanges: override.monitoring.ignoreChanges ?? false
     };
   }

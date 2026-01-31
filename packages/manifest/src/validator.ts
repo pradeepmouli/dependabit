@@ -24,9 +24,7 @@ export class ValidationError extends Error {
    * Get formatted error messages
    */
   getFormattedErrors(): string[] {
-    return this.errors.issues.map(
-      (issue) => `${issue.path.join('.')}: ${issue.message}`
-    );
+    return this.errors.issues.map((issue) => `${issue.path.join('.')}: ${issue.message}`);
   }
 }
 

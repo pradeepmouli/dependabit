@@ -33,15 +33,9 @@ describe('Logger Tests', () => {
       const logger = new Logger({ correlationId: 'test-123' });
       logger.info('Test message', { key: 'value' });
 
-      expect(core.info).toHaveBeenCalledWith(
-        expect.stringContaining('"level":"info"')
-      );
-      expect(core.info).toHaveBeenCalledWith(
-        expect.stringContaining('"message":"Test message"')
-      );
-      expect(core.info).toHaveBeenCalledWith(
-        expect.stringContaining('"correlationId":"test-123"')
-      );
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"level":"info"'));
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"message":"Test message"'));
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"correlationId":"test-123"'));
       expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"key":"value"'));
     });
 
@@ -49,9 +43,7 @@ describe('Logger Tests', () => {
       const logger = new Logger();
       logger.warning('Warning message');
 
-      expect(core.warning).toHaveBeenCalledWith(
-        expect.stringContaining('"level":"warning"')
-      );
+      expect(core.warning).toHaveBeenCalledWith(expect.stringContaining('"level":"warning"'));
       expect(core.warning).toHaveBeenCalledWith(
         expect.stringContaining('"message":"Warning message"')
       );
@@ -62,9 +54,7 @@ describe('Logger Tests', () => {
       logger.error('Error message');
 
       expect(core.error).toHaveBeenCalledWith(expect.stringContaining('"level":"error"'));
-      expect(core.error).toHaveBeenCalledWith(
-        expect.stringContaining('"message":"Error message"')
-      );
+      expect(core.error).toHaveBeenCalledWith(expect.stringContaining('"message":"Error message"'));
     });
 
     it('should only log debug when enabled', () => {
@@ -74,9 +64,7 @@ describe('Logger Tests', () => {
 
       const logger2 = new Logger({ enableDebug: true });
       logger2.debug('Debug message');
-      expect(core.debug).toHaveBeenCalledWith(
-        expect.stringContaining('"level":"debug"')
-      );
+      expect(core.debug).toHaveBeenCalledWith(expect.stringContaining('"level":"debug"'));
     });
 
     it('should start and end log groups', () => {
@@ -96,7 +84,7 @@ describe('Logger Tests', () => {
     });
 
     it('should create child logger with merged context', () => {
-      const parent = new Logger({ 
+      const parent = new Logger({
         correlationId: 'parent-123',
         context: { service: 'api' }
       });
@@ -104,12 +92,8 @@ describe('Logger Tests', () => {
 
       child.info('Test message');
 
-      expect(core.info).toHaveBeenCalledWith(
-        expect.stringContaining('"service":"api"')
-      );
-      expect(core.info).toHaveBeenCalledWith(
-        expect.stringContaining('"operation":"fetch"')
-      );
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"service":"api"'));
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"operation":"fetch"'));
     });
 
     it('should log LLM interactions', () => {
@@ -123,9 +107,7 @@ describe('Logger Tests', () => {
         latencyMs: 500
       });
 
-      expect(core.info).toHaveBeenCalledWith(
-        expect.stringContaining('"type":"llm_interaction"')
-      );
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"type":"llm_interaction"'));
       expect(core.info).toHaveBeenCalledWith(
         expect.stringContaining('"provider":"github-copilot"')
       );
@@ -146,9 +128,7 @@ describe('Logger Tests', () => {
         }
       });
 
-      expect(core.info).toHaveBeenCalledWith(
-        expect.stringContaining('"type":"api_call"')
-      );
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"type":"api_call"'));
       expect(core.info).toHaveBeenCalledWith(
         expect.stringContaining('"endpoint":"/repos/owner/repo"')
       );
@@ -165,12 +145,8 @@ describe('Logger Tests', () => {
       expect(core.info).toHaveBeenCalledWith(
         expect.stringContaining('"operation":"test-operation"')
       );
-      expect(core.info).toHaveBeenCalledWith(
-        expect.stringContaining('"durationMs":1234')
-      );
-      expect(core.info).toHaveBeenCalledWith(
-        expect.stringContaining('"result":"success"')
-      );
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"durationMs":1234'));
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"result":"success"'));
     });
   });
 
@@ -202,9 +178,7 @@ describe('Logger Tests', () => {
       expect(core.info).toHaveBeenCalledWith(
         expect.stringContaining('"operation":"test-operation"')
       );
-      expect(core.info).toHaveBeenCalledWith(
-        expect.stringContaining('"durationMs":')
-      );
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"durationMs":'));
     });
 
     it('should measure and log failed operation', async () => {
@@ -214,17 +188,13 @@ describe('Logger Tests', () => {
         throw error;
       });
 
-      await expect(withTiming(logger, 'test-operation', fn)).rejects.toThrow(
-        'Test error'
-      );
+      await expect(withTiming(logger, 'test-operation', fn)).rejects.toThrow('Test error');
 
       expect(fn).toHaveBeenCalled();
       expect(core.info).toHaveBeenCalledWith(
         expect.stringContaining('"operation":"test-operation"')
       );
-      expect(core.info).toHaveBeenCalledWith(
-        expect.stringContaining('"error":"Test error"')
-      );
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('"error":"Test error"'));
     });
   });
 });
