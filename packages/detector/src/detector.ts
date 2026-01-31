@@ -4,7 +4,7 @@
  */
 
 import { readdir, readFile } from 'node:fs/promises';
-import { join, relative, resolve, normalize } from 'node:path';
+import { join, relative, resolve, normalize, sep } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import type { LLMProvider } from './llm/client.js';
 import { createDetectionPrompt, createClassificationPrompt } from './llm/prompts.js';
@@ -507,13 +507,18 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     let totalLatencyMs = 0;
 
     for (const filePath of filePaths) {
-      const fullPath = join(this.options.repoPath, filePath);
-      
-      // Validate that the resolved path is within the repository boundaries
+      // Validate that the file path is safe before joining
       const normalizedRepoPath = resolve(normalize(this.options.repoPath));
-      const normalizedFullPath = resolve(normalize(fullPath));
+      const normalizedFilePath = normalize(filePath);
+      const fullPath = resolve(normalizedRepoPath, normalizedFilePath);
       
-      if (!normalizedFullPath.startsWith(normalizedRepoPath)) {
+      // Ensure the resolved path is within the repository boundaries
+      // Use path.sep for cross-platform compatibility
+      const repoPathWithSep = normalizedRepoPath.endsWith(sep) 
+        ? normalizedRepoPath 
+        : normalizedRepoPath + sep;
+      
+      if (!fullPath.startsWith(repoPathWithSep) && fullPath !== normalizedRepoPath) {
         // Skip files outside the repository to prevent path traversal
         if (process.env['DEBUG']) {
           console.warn(`Skipping file outside repository: ${filePath}`);

@@ -66,7 +66,7 @@ jobs:
           debug: 'true'
       
       - name: Commit updated manifest
-        if: success() && steps.update.outputs.changes_detected == 'true'
+        if: steps.update.outputs.changes_detected == 'true'
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
