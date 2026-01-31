@@ -23,11 +23,26 @@ export function normalizeHTML(html: string): string {
   let normalized = html;
 
   // Step 1: Remove script and style tags (with content)
-  normalized = normalized.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-  normalized = normalized.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '');
+  // Use a simpler, more secure approach - remove everything between opening and closing tags
+  // This handles variations like </script >, </script\n>, etc.
+  let prevLength = 0;
+  while (normalized.length !== prevLength) {
+    prevLength = normalized.length;
+    // Match <script...> then any content, then </script with any whitespace/attributes before >
+    normalized = normalized.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*[^>]*>/gi, '');
+  }
+  prevLength = 0;
+  while (normalized.length !== prevLength) {
+    prevLength = normalized.length;
+    normalized = normalized.replace(/<style\b[^>]*>[\s\S]*?<\/style\s*[^>]*>/gi, '');
+  }
 
-  // Step 2: Strip HTML comments
-  normalized = normalized.replace(/<!--[\s\S]*?-->/g, '');
+  // Step 2: Strip HTML comments - iterative to handle nested comments
+  prevLength = 0;
+  while (normalized.length !== prevLength) {
+    prevLength = normalized.length;
+    normalized = normalized.replace(/<!--[\s\S]*?-->/g, '');
+  }
 
   // Step 3: Normalize whitespace (collapse multiple spaces/newlines)
   normalized = normalized.replace(/\s+/g, ' ');
