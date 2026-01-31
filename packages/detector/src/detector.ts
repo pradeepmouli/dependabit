@@ -525,7 +525,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
               text: ref.context
             }, 'llm-analysis');
           }
-        } else if (/^(package\.json|requirements\.txt|Cargo\.toml|go\.mod)$/.test(fileName)) {
+        } else if (/^(package\.json|requirements\.txt|Cargo\.toml|go\.mod)$/i.test(fileName)) {
           // Package file
           const metadata = this.parsePackageFile(fullPath, content);
           for (const url of [...(metadata.urls || []), metadata.repository, metadata.homepage, metadata.documentation].filter(Boolean)) {
