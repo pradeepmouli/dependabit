@@ -1,14 +1,5 @@
 import type { Severity } from '@dependabit/manifest';
-
-export interface AgentAssignmentConfig {
-  enabled: boolean;
-  severityMapping: {
-    breaking?: string;
-    major?: string;
-    minor?: string;
-  };
-}
-
+import type { AgentAssignmentConfig } from './agent-config';
 /**
  * Route issue to appropriate AI agent based on severity
  *
