@@ -37,6 +37,7 @@ export class GitHubCopilotProvider implements LLMProvider {
 
     // Initialize Azure OpenAI client
     this.client = new AzureOpenAI({
+      endpoint: this.config.endpoint,
       apiKey: this.config.apiKey
     });
   }
