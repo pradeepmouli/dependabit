@@ -36,7 +36,7 @@ export function parseGenerateInputs(): GenerateActionInputs {
     llmModel: core.getInput('llm_model') || undefined,
     llmApiKey: core.getInput('llm_api_key') || process.env.GITHUB_TOKEN || process.env.AZURE_OPENAI_API_KEY,
     manifestPath: core.getInput('manifest_path') || '.dependabit/manifest.json',
-    enableDebug: core.getBooleanInput('debug') || false
+    enableDebug: core.getInput('debug') === 'true'
   };
 }
 
