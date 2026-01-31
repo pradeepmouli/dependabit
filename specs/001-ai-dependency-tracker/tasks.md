@@ -151,41 +151,41 @@
 
 ### Tests for User Story 3 (TDD - Write FIRST)
 
-- [ ] T060 [P] [US3] Write tests for GitHub repo checker in packages/monitor/tests/checkers/github-repo.test.ts
-- [ ] T061 [P] [US3] Write tests for documentation URL checker in packages/monitor/tests/checkers/url-content.test.ts
-- [ ] T062 [P] [US3] Write tests for OpenAPI spec checker in packages/monitor/tests/checkers/openapi.test.ts
-- [ ] T062a [P] [US3] Write tests for HTML normalizer in packages/monitor/tests/normalizer.test.ts
-- [ ] T062b [P] [US3] Write tests for Context7 checker in packages/monitor/tests/checkers/context7.test.ts
-- [ ] T062c [P] [US3] Write tests for arXiv checker in packages/monitor/tests/checkers/arxiv.test.ts
-- [ ] T063 [P] [US3] Write tests for state comparator in packages/monitor/tests/comparator.test.ts
-- [ ] T064 [P] [US3] Write tests for severity classifier in packages/monitor/tests/severity.test.ts
-- [ ] T065 [US3] Write tests for monitor orchestrator in packages/monitor/tests/monitor.test.ts
-- [ ] T066 [P] [US3] Write tests for issue creation in packages/github-client/tests/issues.test.ts
-- [ ] T067 [US3] Write integration test for check action in packages/action/tests/actions/check.test.ts
+- [X] T060 [P] [US3] Write tests for GitHub repo checker in packages/monitor/test/checkers/github-repo.test.ts
+- [X] T061 [P] [US3] Write tests for documentation URL checker in packages/monitor/test/checkers/url-content.test.ts
+- [X] T062 [P] [US3] Write tests for OpenAPI spec checker in packages/monitor/test/checkers/openapi.test.ts
+- [X] T062a [P] [US3] Write tests for HTML normalizer in packages/monitor/test/normalizer.test.ts
+- [X] T062b [P] [US3] Write tests for Context7 checker in packages/monitor/test/checkers/context7.test.ts
+- [X] T062c [P] [US3] Write tests for arXiv checker in packages/monitor/test/checkers/arxiv.test.ts
+- [X] T063 [P] [US3] Write tests for state comparator in packages/monitor/test/comparator.test.ts
+- [X] T064 [P] [US3] Write tests for severity classifier in packages/monitor/test/severity.test.ts
+- [X] T065 [US3] Write tests for monitor orchestrator in packages/monitor/test/monitor.test.ts
+- [X] T066 [P] [US3] Write tests for issue creation in packages/github-client/test/issues.test.ts
+- [X] T067 [US3] Write integration test for check action in packages/action/test/actions/check.test.ts
 
 ### Implementation for User Story 3
 
-- [ ] T068 [P] [US3] Implement GitHub repo checker in packages/monitor/src/checkers/github-repo.ts (releases API)
-- [ ] T069 [P] [US3] Implement documentation URL checker in packages/monitor/src/checkers/url-content.ts (SHA256 hashing with normalization)
+- [X] T068 [P] [US3] Implement GitHub repo checker in packages/monitor/src/checkers/github-repo.ts (releases API)
+- [X] T069 [P] [US3] Implement documentation URL checker in packages/monitor/src/checkers/url-content.ts (SHA256 hashing with normalization)
 - [ ] T070 [P] [US3] Implement OpenAPI spec checker in packages/monitor/src/checkers/openapi.ts (semantic diffing)
-- [ ] T070a [P] [US3] Implement HTML normalizer in packages/monitor/src/normalizer.ts (6-step normalization from research.md)
+- [X] T070a [P] [US3] Implement HTML normalizer in packages/monitor/src/normalizer.ts (6-step normalization from research.md)
 - [ ] T070b [P] [US3] Implement Context7 checker in packages/plugin-context7/src/checker.ts (Context7 API integration)
 - [ ] T070c [P] [US3] Implement arXiv checker in packages/plugin-arxiv/src/checker.ts (arXiv API version tracking)
-- [ ] T071 [US3] Export checkers from packages/monitor/src/checkers/index.ts
-- [ ] T072 [P] [US3] Implement state comparator in packages/monitor/src/comparator.ts (old vs new)
-- [ ] T073 [P] [US3] Implement severity classifier in packages/monitor/src/severity.ts (breaking/major/minor)
-- [ ] T074 [US3] Implement monitor orchestrator in packages/monitor/src/monitor.ts (coordinates all checks)
-- [ ] T075 [US3] Implement issue creation in packages/github-client/src/issues.ts (with severity labels)
-- [ ] T076 [US3] Implement release fetching in packages/github-client/src/releases.ts
-- [ ] T077 [US3] Implement rate limit handler in packages/github-client/src/rate-limit.ts
-- [ ] T078 [US3] Implement check action in packages/action/src/actions/check.ts
+- [X] T071 [US3] Export checkers from packages/monitor/src/checkers/index.ts
+- [X] T072 [P] [US3] Implement state comparator in packages/monitor/src/comparator.ts (old vs new)
+- [X] T073 [P] [US3] Implement severity classifier in packages/monitor/src/severity.ts (breaking/major/minor)
+- [X] T074 [US3] Implement monitor orchestrator in packages/monitor/src/monitor.ts (coordinates all checks)
+- [X] T075 [US3] Implement issue creation in packages/github-client/src/issues.ts (with severity labels)
+- [X] T076 [US3] Implement release fetching in packages/github-client/src/releases.ts
+- [X] T077 [US3] Implement rate limit handler in packages/github-client/src/rate-limit.ts
+- [X] T078 [US3] Implement check action in packages/action/src/actions/check.ts
 - [ ] T079 [US3] Create workflow template .github/workflows/dependabit-check.yml (scheduled cron)
 - [ ] T080 [US3] Add change history tracking to manifest updates
 - [ ] T081 [US3] Add AI agent assignment logic based on severity configuration
 - [ ] T082 [US3] Add issue templating with LLM-generated summaries
 - [ ] T083 [US3] Add logging for all API calls (endpoint, method, rate-limit, response code)
-- [ ] T083a [P] [US3] Write tests for summary reporter in packages/action/tests/utils/reporter.test.ts
-- [ ] T083b [P] [US3] Implement summary reporter in packages/action/src/utils/reporter.ts (generates change summary reports)
+- [X] T083a [P] [US3] Write tests for summary reporter in packages/action/test/utils/reporter.test.ts
+- [X] T083b [P] [US3] Implement summary reporter in packages/action/src/utils/reporter.ts (generates change summary reports)
 - [ ] T083c [P] [US3] Create summary template in contracts/summary-template.md
 
 **Checkpoint**: US3 complete - automated dependency monitoring with issue notifications
