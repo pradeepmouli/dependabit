@@ -8,7 +8,7 @@ import { join, relative } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import type { LLMProvider } from './llm/client.js';
 import { createDetectionPrompt, createClassificationPrompt } from './llm/prompts.js';
-import { parseReadme, extractGitHubReferences } from './parsers/readme.js';
+import { parseReadme } from './parsers/readme.js';
 import { parseCodeComments, extractSpecReferences } from './parsers/code-comments.js';
 import {
   parsePackageJson,
