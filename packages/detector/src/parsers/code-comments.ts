@@ -97,7 +97,7 @@ function getCommentStyle(extension: string): CommentStyle | null {
     tsx: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
     
     // Python
-    py: { singleLine: '#', multiLine: { start: '"""', end: '"""' } },
+    py: { singleLine: '#' },
     
     // Ruby
     rb: { singleLine: '#', multiLine: { start: '=begin', end: '=end' } },
