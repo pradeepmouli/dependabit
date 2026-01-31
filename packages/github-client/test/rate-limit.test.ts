@@ -1,6 +1,52 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { RateLimitHandler } from '../src/rate-limit.js';
 
+// Mock the octokit module
+vi.mock('octokit', () => {
+  const mockRateLimitGet = vi.fn().mockResolvedValue({
+    data: {
+      rate: {
+        limit: 5000,
+        remaining: 4000,
+        reset: Math.floor(Date.now() / 1000) + 3600,
+        used: 1000
+      },
+      resources: {
+        core: {
+          limit: 5000,
+          remaining: 4000,
+          reset: Math.floor(Date.now() / 1000) + 3600,
+          used: 1000
+        },
+        search: {
+          limit: 30,
+          remaining: 25,
+          reset: Math.floor(Date.now() / 1000) + 3600,
+          used: 5
+        },
+        graphql: {
+          limit: 5000,
+          remaining: 4500,
+          reset: Math.floor(Date.now() / 1000) + 3600,
+          used: 500
+        }
+      }
+    }
+  });
+
+  class MockOctokit {
+    rest = {
+      rateLimit: {
+        get: mockRateLimitGet
+      }
+    };
+  }
+
+  return {
+    Octokit: MockOctokit
+  };
+});
+
 describe('RateLimitHandler', () => {
   let handler: RateLimitHandler;
 

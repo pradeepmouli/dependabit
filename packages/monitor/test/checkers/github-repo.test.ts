@@ -1,12 +1,29 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { GitHubRepoChecker } from '../../src/checkers/github-repo.js';
 
+// Mock global fetch
+const mockFetch = vi.fn();
+global.fetch = mockFetch as any;
+
 describe('GitHubRepoChecker', () => {
   let checker: GitHubRepoChecker;
 
   beforeEach(() => {
     checker = new GitHubRepoChecker();
     vi.clearAllMocks();
+    
+    // Default mock response for releases
+    mockFetch.mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        tag_name: 'v1.0.0',
+        name: 'Release v1.0.0',
+        published_at: '2024-01-01T00:00:00Z',
+        body: 'Release notes',
+        html_url: 'https://github.com/owner/repo/releases/v1.0.0'
+      })
+    });
   });
 
   describe('fetch', () => {
@@ -25,6 +42,24 @@ describe('GitHubRepoChecker', () => {
     });
 
     it('should handle repositories without releases', async () => {
+      // Mock 404 response for no releases, then mock commits response
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: false,
+          status: 404
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: async () => [{
+            sha: 'abc123def456',
+            commit: {
+              message: 'Latest commit',
+              author: { date: '2024-01-01T00:00:00Z' }
+            }
+          }]
+        });
+      
       const config = {
         url: 'https://github.com/owner/no-releases',
         accessMethod: 'github-api' as const

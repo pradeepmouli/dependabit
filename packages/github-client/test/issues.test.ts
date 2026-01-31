@@ -1,6 +1,56 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { IssueManager } from '../src/issues.js';
 
+// Mock the octokit module
+vi.mock('octokit', () => {
+  const mockIssuesCreate = vi.fn().mockResolvedValue({
+    data: {
+      number: 123,
+      html_url: 'https://github.com/test-owner/test-repo/issues/123',
+      labels: []
+    }
+  });
+
+  const mockIssuesGet = vi.fn().mockResolvedValue({
+    data: {
+      number: 123,
+      body: 'Existing issue body',
+      labels: [{ name: 'existing-label' }]
+    }
+  });
+
+  const mockIssuesUpdate = vi.fn().mockResolvedValue({
+    data: {
+      number: 123,
+      html_url: 'https://github.com/test-owner/test-repo/issues/123',
+      labels: []
+    }
+  });
+
+  const mockSearchIssues = vi.fn().mockResolvedValue({
+    data: {
+      items: []
+    }
+  });
+
+  class MockOctokit {
+    rest = {
+      issues: {
+        create: mockIssuesCreate,
+        get: mockIssuesGet,
+        update: mockIssuesUpdate
+      },
+      search: {
+        issuesAndPullRequests: mockSearchIssues
+      }
+    };
+  }
+
+  return {
+    Octokit: MockOctokit
+  };
+});
+
 describe('IssueManager', () => {
   let issueManager: IssueManager;
 

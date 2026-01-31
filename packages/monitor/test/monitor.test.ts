@@ -1,12 +1,41 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Monitor } from '../src/monitor.js';
 
+// Mock global fetch to prevent real network calls
+const mockFetch = vi.fn();
+global.fetch = mockFetch as any;
+
 describe('Monitor', () => {
   let monitor: Monitor;
 
   beforeEach(() => {
     monitor = new Monitor();
     vi.clearAllMocks();
+    
+    // Mock successful fetch responses by default
+    mockFetch.mockImplementation((url: string) => {
+      // Fail for invalid URLs
+      if (url.includes('invalid-url')) {
+        return Promise.reject(new Error('Network error'));
+      }
+      
+      // Success response
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: async () => ({
+          tag_name: 'v1.0.0',
+          name: 'Release v1.0.0',
+          published_at: '2024-01-01T00:00:00Z',
+          body: 'Release notes',
+          html_url: 'https://github.com/owner/repo/releases/v1.0.0'
+        }),
+        headers: {
+          get: (name: string) => name === 'content-type' ? 'text/html' : null
+        },
+        text: async () => '<html><body>Test content</body></html>'
+      });
+    });
   });
 
   describe('checkDependency', () => {
@@ -27,6 +56,8 @@ describe('Monitor', () => {
     });
 
     it('should handle errors gracefully', async () => {
+      mockFetch.mockRejectedValue(new Error('Network error'));
+      
       const dependency = {
         id: 'test-id',
         url: 'https://invalid-url.com',

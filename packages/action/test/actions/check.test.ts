@@ -1,6 +1,72 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { checkAction } from '../../src/actions/check.js';
 
+// Mock the Monitor module
+vi.mock('@dependabit/monitor', () => {
+  class MockMonitor {
+    checkAll = vi.fn().mockResolvedValue([
+      {
+        dependency: {
+          id: 'dep1',
+          url: 'https://github.com/owner/repo1',
+          type: 'reference-implementation',
+          accessMethod: 'github-api',
+          currentStateHash: 'hash1',
+          monitoring: { enabled: true }
+        },
+        hasChanged: false,
+        newSnapshot: {
+          stateHash: 'hash1',
+          fetchedAt: new Date()
+        }
+      }
+    ]);
+  }
+  
+  return {
+    Monitor: MockMonitor
+  };
+});
+
+// Mock the IssueManager module
+vi.mock('@dependabit/github-client', () => {
+  class MockIssueManager {
+    createIssue = vi.fn().mockResolvedValue({
+      number: 123,
+      url: 'https://github.com/owner/repo/issues/123',
+      labels: ['dependabit', 'severity:major']
+    });
+    
+    findExistingIssue = vi.fn().mockResolvedValue(null);
+    
+    updateIssue = vi.fn().mockResolvedValue({
+      number: 123,
+      url: 'https://github.com/owner/repo/issues/123',
+      labels: ['dependabit', 'severity:major']
+    });
+  }
+  
+  class MockRateLimitHandler {
+    checkRateLimit = vi.fn().mockResolvedValue({
+      limit: 5000,
+      remaining: 4000,
+      reset: new Date(Date.now() + 3600000),
+      used: 1000
+    });
+    
+    waitIfNeeded = vi.fn().mockResolvedValue(undefined);
+    
+    reserveBudget = vi.fn().mockResolvedValue({
+      reserved: true
+    });
+  }
+  
+  return {
+    IssueManager: MockIssueManager,
+    RateLimitHandler: MockRateLimitHandler
+  };
+});
+
 describe('Check Action', () => {
   beforeEach(() => {
     vi.clearAllMocks();

@@ -1,6 +1,80 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ReleaseManager } from '../src/releases.js';
 
+// Mock the octokit module
+vi.mock('octokit', () => {
+  const mockGetLatestRelease = vi.fn().mockImplementation((params: any) => {
+    // Return 404 for specific repos
+    if (params.repo === 'no-releases') {
+      const error: any = new Error('Not Found');
+      error.status = 404;
+      return Promise.reject(error);
+    }
+    return Promise.resolve({
+      data: {
+        tag_name: 'v1.0.0',
+        name: 'Release v1.0.0',
+        published_at: '2024-01-01T00:00:00Z',
+        created_at: '2024-01-01T00:00:00Z',
+        body: 'Release notes',
+        html_url: 'https://github.com/test-owner/test-repo/releases/v1.0.0',
+        prerelease: false,
+        draft: false
+      }
+    });
+  });
+
+  const mockListReleases = vi.fn().mockImplementation((params: any) => {
+    // Return empty for specific repos
+    if (params.repo === 'no-releases') {
+      const error: any = new Error('Not Found');
+      error.status = 404;
+      return Promise.reject(error);
+    }
+    return Promise.resolve({
+      data: [
+        {
+          tag_name: 'v1.0.0',
+          name: 'Release v1.0.0',
+          published_at: '2024-01-01T00:00:00Z',
+          created_at: '2024-01-01T00:00:00Z',
+          body: 'Release notes',
+          html_url: 'https://github.com/test-owner/test-repo/releases/v1.0.0',
+          prerelease: false,
+          draft: false
+        }
+      ]
+    });
+  });
+
+  const mockGetReleaseByTag = vi.fn().mockResolvedValue({
+    data: {
+      tag_name: 'v1.0.0',
+      name: 'Release v1.0.0',
+      published_at: '2024-01-01T00:00:00Z',
+      created_at: '2024-01-01T00:00:00Z',
+      body: 'Release notes',
+      html_url: 'https://github.com/test-owner/test-repo/releases/v1.0.0',
+      prerelease: false,
+      draft: false
+    }
+  });
+
+  class MockOctokit {
+    rest = {
+      repos: {
+        getLatestRelease: mockGetLatestRelease,
+        listReleases: mockListReleases,
+        getReleaseByTag: mockGetReleaseByTag
+      }
+    };
+  }
+
+  return {
+    Octokit: MockOctokit
+  };
+});
+
 describe('ReleaseManager', () => {
   let releaseManager: ReleaseManager;
 
