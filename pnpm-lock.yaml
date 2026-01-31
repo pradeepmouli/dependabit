@@ -100,6 +100,9 @@ importers:
       '@actions/core':
         specifier: ^1.11.1
         version: 1.11.1
+      '@dependabit/manifest':
+        specifier: workspace:*
+        version: link:../manifest
       zod:
         specifier: ^4.3.6
         version: 4.3.6

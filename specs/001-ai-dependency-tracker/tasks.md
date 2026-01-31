@@ -91,12 +91,17 @@
 ### Implementation for User Story 1
 
 - [ ] T033 [P] [US1] Implement LLM provider interface in packages/detector/src/llm/client.ts
-- [ ] T034 [US1] Implement GitHub Copilot provider in packages/detector/src/llm/copilot.ts (@azure/openai integration)
+- [ ] T034 [US1] Implement GitHub Copilot CLI provider in packages/detector/src/llm/copilot.ts (gh copilot suggest integration)
 - [ ] T035 [P] [US1] Implement detection prompts in packages/detector/src/llm/prompts.ts
 - [ ] T036 [P] [US1] Implement README parser in packages/detector/src/parsers/readme.ts (extract URLs, references)
 - [ ] T037 [P] [US1] Implement code comment parser in packages/detector/src/parsers/code-comments.ts
 - [ ] T038 [P] [US1] Implement package file parser in packages/detector/src/parsers/package-files.ts (package.json, requirements.txt)
-- [ ] T039 [US1] Implement detector orchestrator in packages/detector/src/detector.ts (coordinates parsers + LLM)
+- [ ] T039 [US1] Implement hybrid detector orchestrator in packages/detector/src/detector.ts (programmatic + LLM fallback)
+- [ ] T039a [US1] Implement programmatic type categorization (research-paper, schema, documentation, reference-implementation, api-example)
+- [ ] T039b [US1] Implement LLM fallback for type categorization (Step 4)
+- [ ] T039c [US1] Implement LLM 2nd pass for document analysis (Step 2)
+- [ ] T039d [US1] Implement programmatic access method determination (github-api, arxiv, openapi, context7)
+- [ ] T039e [US1] Implement LLM fallback for access method determination (Step 6)
 - [ ] T040 [US1] Export detector APIs from packages/detector/src/index.ts
 - [ ] T041 [US1] Implement generate action in packages/action/src/actions/generate.ts
 - [ ] T042 [US1] Implement action input parsing in packages/action/src/utils/inputs.ts

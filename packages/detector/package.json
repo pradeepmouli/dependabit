@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
+    "@dependabit/manifest": "workspace:*",
     "zod": "^4.3.6"
   },
   "devDependencies": {
