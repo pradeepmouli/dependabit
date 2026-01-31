@@ -32,7 +32,7 @@ export class RateLimitHandler {
 
   constructor(auth?: string) {
     this.octokit = new Octokit({
-      auth: auth || process.env.GITHUB_TOKEN
+      auth: auth || process.env['GITHUB_TOKEN']
     });
   }
 
@@ -113,7 +113,7 @@ export class RateLimitHandler {
     const response = await this.octokit.rest.rateLimit.get();
     const { resources } = response.data;
 
-    const createInfo = (resource: typeof resources.core): RateLimitInfo & { percentageRemaining: number } => ({
+    const createInfo = (resource: { limit: number; remaining: number; reset: number; used: number }): RateLimitInfo & { percentageRemaining: number } => ({
       limit: resource.limit,
       remaining: resource.remaining,
       reset: new Date(resource.reset * 1000),
@@ -124,7 +124,7 @@ export class RateLimitHandler {
     const status: RateLimitStatus = {
       core: createInfo(resources.core),
       search: createInfo(resources.search),
-      graphql: createInfo(resources.graphql)
+      graphql: createInfo(resources.graphql || { limit: 0, remaining: 0, reset: 0, used: 0 })
     };
 
     this.lastCheck = status;

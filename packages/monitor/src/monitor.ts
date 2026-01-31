@@ -26,7 +26,7 @@ export interface CheckResult {
   dependency: DependencyConfig;
   hasChanged: boolean;
   changes?: ChangeDetection;
-  severity?: 'breaking' | 'major' | 'minor';
+  severity?: 'breaking' | 'major' | 'minor' | undefined;
   newSnapshot?: DependencySnapshot;
   error?: string;
 }

@@ -3,7 +3,7 @@
  * Generic comparison logic for dependency state snapshots
  */
 
-import { DependencySnapshot, ChangeDetection } from './types.js';
+import type { DependencySnapshot, ChangeDetection } from './types.js';
 
 export class StateComparator {
   /**

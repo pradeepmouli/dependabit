@@ -3,7 +3,7 @@
  */
 
 export interface DependencySnapshot {
-  version?: string;
+  version?: string | undefined;
   stateHash: string;
   fetchedAt: Date;
   metadata?: Record<string, unknown>;
@@ -12,8 +12,8 @@ export interface DependencySnapshot {
 export interface ChangeDetection {
   hasChanged: boolean;
   changes: string[];
-  oldVersion?: string;
-  newVersion?: string;
+  oldVersion?: string | undefined;
+  newVersion?: string | undefined;
   diff?: unknown;
   severity?: 'breaking' | 'major' | 'minor';
 }

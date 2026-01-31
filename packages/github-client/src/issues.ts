@@ -22,7 +22,7 @@ export interface IssueResult {
   number: number;
   url: string;
   labels: string[];
-  assignees?: string[];
+  assignees?: string[] | undefined;
 }
 
 export interface UpdateIssueData {
@@ -39,7 +39,7 @@ export class IssueManager {
 
   constructor(auth?: string) {
     this.octokit = new Octokit({
-      auth: auth || process.env.GITHUB_TOKEN
+      auth: auth || process.env['GITHUB_TOKEN']
     });
   }
 
@@ -63,14 +63,14 @@ export class IssueManager {
       title,
       body: this.formatIssueBody(body, dependency),
       labels,
-      assignees: assignee ? [assignee] : undefined
+      ...(assignee && { assignees: [assignee] })
     });
 
     return {
       number: response.data.number,
       url: response.data.html_url,
       labels,
-      assignees: assignee ? [assignee] : undefined
+      ...(assignee && { assignees: [assignee] })
     };
   }
 
@@ -98,6 +98,10 @@ export class IssueManager {
       }
 
       const issue = response.data.items[0];
+      if (!issue) {
+        return null;
+      }
+
       return {
         number: issue.number,
         url: issue.html_url,
@@ -128,19 +132,28 @@ export class IssueManager {
     }
 
     // Update labels if severity changed
-    const labels = severity ? [
-      'dependabit',
-      `severity:${severity}`,
-      'dependency-update'
-    ] : undefined;
-
-    const response = await this.octokit.rest.issues.update({
+    const updateParams: {
+      owner: string;
+      repo: string;
+      issue_number: number;
+      body: string;
+      labels?: string[];
+    } = {
       owner,
       repo,
       issue_number: issueNumber,
-      body: finalBody,
-      labels
-    });
+      body: finalBody
+    };
+
+    if (severity) {
+      updateParams.labels = [
+        'dependabit',
+        `severity:${severity}`,
+        'dependency-update'
+      ];
+    }
+
+    const response = await this.octokit.rest.issues.update(updateParams);
 
     return {
       number: response.data.number,

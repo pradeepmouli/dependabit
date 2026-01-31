@@ -9,7 +9,7 @@ export interface Release {
   tagName: string;
   name: string;
   publishedAt: Date;
-  body?: string;
+  body?: string | undefined;
   htmlUrl: string;
   prerelease?: boolean;
   draft?: boolean;
@@ -25,7 +25,7 @@ export class ReleaseManager {
 
   constructor(auth?: string) {
     this.octokit = new Octokit({
-      auth: auth || process.env.GITHUB_TOKEN
+      auth: auth || process.env['GITHUB_TOKEN']
     });
   }
 

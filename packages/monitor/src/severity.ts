@@ -3,7 +3,7 @@
  * Classifies dependency changes into breaking, major, or minor severity levels
  */
 
-import { ChangeDetection } from './types.js';
+import type { ChangeDetection } from './types.js';
 
 export type Severity = 'breaking' | 'major' | 'minor';
 
@@ -90,6 +90,10 @@ export class SeverityClassifier {
    * Parses a version string into [major, minor, patch]
    */
   private parseVersion(version: string): [number, number, number] | null {
+    if (!version) {
+      return null;
+    }
+    
     // Remove 'v' prefix if present
     const cleaned = version.replace(/^v/, '');
 
@@ -100,9 +104,9 @@ export class SeverityClassifier {
     }
 
     return [
-      parseInt(match[1], 10),
-      parseInt(match[2], 10),
-      parseInt(match[3], 10)
+      parseInt(match[1] || '0', 10),
+      parseInt(match[2] || '0', 10),
+      parseInt(match[3] || '0', 10)
     ];
   }
 }

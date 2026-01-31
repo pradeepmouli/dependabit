@@ -6,14 +6,14 @@
 export interface DependencyChange {
   dependency: {
     id: string;
-    name?: string;
+    name?: string | undefined;
     url: string;
-    type?: string;
+    type?: string | undefined;
   };
   severity: 'breaking' | 'major' | 'minor';
   changes: string[];
-  oldVersion?: string;
-  newVersion?: string;
+  oldVersion?: string | undefined;
+  newVersion?: string | undefined;
   releaseNotes?: string;
   diff?: string;
   contentDiff?: string;

@@ -41,8 +41,8 @@ export async function checkAction(
   }
 ): Promise<CheckActionResult> {
   const {
-    owner = process.env.GITHUB_REPOSITORY_OWNER || '',
-    repo = process.env.GITHUB_REPOSITORY?.split('/')[1] || '',
+    owner = process.env['GITHUB_REPOSITORY_OWNER'] || '',
+    repo = process.env['GITHUB_REPOSITORY']?.split('/')[1] || '',
     createIssues = true,
     dryRun = false
   } = options || {};
@@ -83,8 +83,9 @@ export async function checkAction(
   const checkResults = await monitor.checkAll(enabledDeps);
 
   // Process results
-  for (let i = 0; i < checkResults.length; i++) {
-    const checkResult = checkResults[i];
+  for (const checkResult of checkResults) {
+    if (!checkResult) continue;
+    
     const depIndex = manifest.dependencies.findIndex(d => d.id === checkResult.dependency.id);
 
     if (checkResult.error) {
@@ -97,11 +98,14 @@ export async function checkAction(
 
     // Update manifest with new state
     if (checkResult.newSnapshot && depIndex >= 0) {
-      result.updatedManifest.dependencies[depIndex].currentStateHash = checkResult.newSnapshot.stateHash;
-      result.updatedManifest.dependencies[depIndex].lastChecked = checkResult.newSnapshot.fetchedAt.toISOString();
+      const dep = result.updatedManifest.dependencies[depIndex];
+      if (dep) {
+        dep.currentStateHash = checkResult.newSnapshot.stateHash;
+        dep.lastChecked = checkResult.newSnapshot.fetchedAt.toISOString();
 
-      if (checkResult.newSnapshot.version) {
-        result.updatedManifest.dependencies[depIndex].currentVersion = checkResult.newSnapshot.version;
+        if (checkResult.newSnapshot.version) {
+          dep.currentVersion = checkResult.newSnapshot.version;
+        }
       }
     }
 
@@ -110,9 +114,9 @@ export async function checkAction(
       const change: DependencyChange = {
         dependency: {
           id: checkResult.dependency.id,
-          name: checkResult.dependency.name,
+          ...(checkResult.dependency.name && { name: checkResult.dependency.name }),
           url: checkResult.dependency.url,
-          type: checkResult.dependency.type
+          ...(checkResult.dependency.type && { type: checkResult.dependency.type })
         },
         severity: checkResult.severity,
         changes: checkResult.changes.changes,
@@ -124,7 +128,10 @@ export async function checkAction(
 
       // Update lastChanged timestamp
       if (depIndex >= 0) {
-        result.updatedManifest.dependencies[depIndex].lastChanged = new Date().toISOString();
+        const dep = result.updatedManifest.dependencies[depIndex];
+        if (dep) {
+          dep.lastChanged = new Date().toISOString();
+        }
       }
 
       // Create issue if enabled

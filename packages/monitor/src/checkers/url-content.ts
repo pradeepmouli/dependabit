@@ -3,7 +3,7 @@
  * Monitors documentation URLs for content changes using SHA256 hashing
  */
 
-import { Checker, DependencySnapshot, ChangeDetection, AccessConfig } from '../types.js';
+import type { Checker, DependencySnapshot, ChangeDetection, AccessConfig } from '../types.js';
 import { normalizeHTML } from '../normalizer.js';
 import crypto from 'node:crypto';
 

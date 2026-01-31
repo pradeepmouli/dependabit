@@ -3,7 +3,7 @@
  * Monitors GitHub repositories for new releases and changes
  */
 
-import { Checker, DependencySnapshot, ChangeDetection, AccessConfig } from '../types.js';
+import type { Checker, DependencySnapshot, ChangeDetection, AccessConfig } from '../types.js';
 import crypto from 'node:crypto';
 
 export class GitHubRepoChecker implements Checker {
@@ -15,11 +15,12 @@ export class GitHubRepoChecker implements Checker {
 
     // Extract owner and repo from GitHub URL
     const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
-    if (!match) {
+    if (!match || !match[1] || !match[2]) {
       throw new Error(`Invalid GitHub URL: ${url}`);
     }
 
-    const [, owner, repo] = match;
+    const owner = match[1];
+    const repo = match[2];
     const cleanRepo = repo.replace(/\.git$/, '');
 
     try {
@@ -99,7 +100,7 @@ export class GitHubRepoChecker implements Checker {
       };
     }>;
 
-    if (commits.length === 0) {
+    if (commits.length === 0 || !commits[0]) {
       throw new Error('No commits found in repository');
     }
 
