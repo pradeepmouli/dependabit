@@ -71,6 +71,9 @@ export class TokenAuthHandler {
 
   /**
    * Get current token
+   * 
+   * @warning This method exposes the raw token value. Use with caution and avoid
+   * logging or displaying the token. Prefer using authenticate() for auth operations.
    */
   getToken(): string {
     return this.token;

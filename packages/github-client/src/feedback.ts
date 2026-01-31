@@ -82,13 +82,24 @@ export class FeedbackListener {
         (typeof l === 'string' ? l : l.name)
       );
 
-      if (labelNames.includes(this.truePositiveLabel)) {
+      const hasTrue = labelNames.includes(this.truePositiveLabel);
+      const hasFalse = labelNames.includes(this.falsePositiveLabel);
+
+      // Handle issues with both labels as a special case (log warning but count as true positive)
+      if (hasTrue && hasFalse) {
+        console.warn(`Issue #${issue.number} has both true-positive and false-positive labels. Counting as true-positive.`);
         truePositives.push({
           number: issue.number,
           title: issue.title,
           created_at: issue.created_at
         });
-      } else if (labelNames.includes(this.falsePositiveLabel)) {
+      } else if (hasTrue) {
+        truePositives.push({
+          number: issue.number,
+          title: issue.title,
+          created_at: issue.created_at
+        });
+      } else if (hasFalse) {
         falsePositives.push({
           number: issue.number,
           title: issue.title,

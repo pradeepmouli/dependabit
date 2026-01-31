@@ -4,6 +4,7 @@
  */
 
 export interface OperationMetrics {
+  operationId?: string | undefined;
   name: string;
   startTime: number;
   endTime?: number | undefined;
@@ -51,6 +52,7 @@ export class PerformanceTracker {
     const operationId = `${name}-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
     
     const metrics: OperationMetrics = {
+      operationId,
       name,
       startTime: Date.now(),
       status: 'running',
@@ -108,7 +110,7 @@ export class PerformanceTracker {
    */
   getOperation(operationId: string): OperationMetrics | undefined {
     return this.operations.get(operationId) || 
-           this.completedOperations.find(op => `${op.name}-${op.startTime}` === operationId);
+           this.completedOperations.find(op => op.operationId === operationId);
   }
 
   /**
