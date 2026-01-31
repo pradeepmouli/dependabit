@@ -16,9 +16,20 @@ import {
 } from '../utils/outputs.js';
 
 /**
- * Main entry point for the generate action
+ * Main entry point for the generate action wrapped for error handling
  */
 export async function run(): Promise<void> {
+  try {
+    await generateAction();
+  } catch (error) {
+    core.setFailed(error instanceof Error ? error.message : String(error));
+  }
+}
+
+/**
+ * Generate action implementation
+ */
+async function generateAction(): Promise<void> {
   const logger = createLogger({ enableDebug: true });
 
   try {

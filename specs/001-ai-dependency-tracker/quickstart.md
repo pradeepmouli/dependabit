@@ -293,8 +293,8 @@ Edit `.dependabit/manifest.json` to add entries:
       "currentStateHash": "",
       "detectionMethod": "manual",
       "detectionConfidence": 1.0,
-      "detectedAt": "2026-01-31T00:00:00Z",
-      "lastChecked": "2026-01-31T00:00:00Z",
+      "detectedAt": "2024-01-15T00:00:00Z",
+      "lastChecked": "2024-01-15T00:00:00Z",
       "referencedIn": [
         {
           "file": "README.md",

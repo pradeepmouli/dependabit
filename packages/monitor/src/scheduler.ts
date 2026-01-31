@@ -116,7 +116,10 @@ export class Scheduler {
   getNextCheckTime(dependency: DependencyEntry, config: DependabitConfig): Date {
     const rules = getEffectiveMonitoringRules(config, dependency.url);
     const lastChecked = new Date(dependency.lastChecked);
-    const intervalMs = this.getIntervalMs(rules.checkFrequency);
+    
+    // Determine frequency to use (dependency's own monitoring rules take precedence)
+    const checkFrequency = dependency.monitoring?.checkFrequency || rules.checkFrequency;
+    const intervalMs = this.getIntervalMs(checkFrequency);
 
     return new Date(lastChecked.getTime() + intervalMs);
   }
@@ -147,12 +150,22 @@ export class Scheduler {
     };
 
     for (const dep of dependencies) {
+      // Check dependency's own monitoring rules first
+      if (dep.monitoring) {
+        if (!dep.monitoring.enabled || dep.monitoring.ignoreChanges) {
+          summary.disabled++;
+          continue;
+        }
+      }
+
       const rules = getEffectiveMonitoringRules(config, dep.url);
 
       if (!rules.enabled || rules.ignoreChanges) {
         summary.disabled++;
       } else {
-        summary[rules.checkFrequency]++;
+        // Use dependency-level frequency if available, otherwise use rules
+        const checkFrequency = dep.monitoring?.checkFrequency || rules.checkFrequency;
+        summary[checkFrequency]++;
       }
     }
 

@@ -5,6 +5,7 @@ import {
   type DependencyManifest,
   type DependabitConfig
 } from '@dependabit/manifest';
+import * as core from '@actions/core';
 
 /**
  * Validation result
@@ -15,6 +16,33 @@ export interface ValidationResult {
   warnings: string[];
   manifest?: DependencyManifest;
   config: DependabitConfig | undefined;
+}
+
+/**
+ * Main entry point for the validate action wrapped for error handling
+ */
+export async function run(): Promise<void> {
+  try {
+    const manifestPath = core.getInput('manifest-path') || '.dependabit/manifest.json';
+    const configPath = core.getInput('config-path') || '';
+
+    console.log('Starting validation...');
+    const result = await validateAction(manifestPath, configPath || undefined);
+
+    // Output the formatted result
+    const formatted = formatValidationErrors(result);
+    console.log('\n' + formatted);
+
+    if (!result.valid) {
+      core.setFailed(`Validation failed with ${result.errors.length} errors`);
+    } else {
+      core.setOutput('valid', 'true');
+      core.setOutput('errors', JSON.stringify(result.errors));
+      core.setOutput('warnings', JSON.stringify(result.warnings));
+    }
+  } catch (error) {
+    core.setFailed(error instanceof Error ? error.message : String(error));
+  }
 }
 
 /**
@@ -119,6 +147,15 @@ function validateBusinessRules(
 
   if (duplicateUrls.length > 0) {
     warnings.push(`Duplicate URLs found: ${duplicateUrls.join(', ')}`);
+  }
+
+  // Validate URL formats explicitly
+  for (const dep of manifest.dependencies) {
+    try {
+      new URL(dep.url);
+    } catch {
+      errors.push(`Dependency ${dep.name}: invalid URL format: ${dep.url}`);
+    }
   }
 
   // Validate timestamps order
