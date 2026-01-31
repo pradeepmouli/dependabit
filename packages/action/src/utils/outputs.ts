@@ -113,17 +113,41 @@ export async function createDependencyListSummary(
 /**
  * Set outputs for the update action
  */
+function countDependencyDiffs(
+  existingManifest: DependencyManifest,
+  updatedManifest: DependencyManifest
+): { added: number; removed: number } {
+  const existingSet = new Set(existingManifest.dependencies.map(dep => JSON.stringify(dep)));
+  const updatedSet = new Set(updatedManifest.dependencies.map(dep => JSON.stringify(dep)));
+
+  let added = 0;
+  for (const dep of updatedSet) {
+    if (!existingSet.has(dep)) {
+      added++;
+    }
+  }
+
+  let removed = 0;
+  for (const dep of existingSet) {
+    if (!updatedSet.has(dep)) {
+      removed++;
+    }
+  }
+
+  return { added, removed };
+}
+
 export function setUpdateOutputs(
   updatedManifest: DependencyManifest,
   existingManifest: DependencyManifest,
   filesChanged: number
 ): void {
-  const dependenciesAdded = updatedManifest.dependencies.length - existingManifest.dependencies.length;
-  const changesDetected = dependenciesAdded !== 0;
+  const { added, removed } = countDependencyDiffs(existingManifest, updatedManifest);
+  const changesDetected = added > 0 || removed > 0;
 
   core.setOutput('changes_detected', changesDetected);
-  core.setOutput('dependencies_added', Math.max(0, dependenciesAdded));
-  core.setOutput('dependencies_removed', Math.max(0, -dependenciesAdded));
+  core.setOutput('dependencies_added', added);
+  core.setOutput('dependencies_removed', removed);
   core.setOutput('total_dependencies', updatedManifest.dependencies.length);
   core.setOutput('files_analyzed', filesChanged);
 }
