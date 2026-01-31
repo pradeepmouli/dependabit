@@ -76,7 +76,6 @@ export async function run(): Promise<void> {
     
     if (commitsToAnalyze.length === 0) {
       // Auto-detect commits from the push event
-      const baseRef = process.env['GITHUB_BASE_REF'];
       const headRef = process.env['GITHUB_SHA'];
       
       if (headRef) {
