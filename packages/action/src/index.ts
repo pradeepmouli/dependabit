@@ -5,6 +5,7 @@
 
 import * as core from '@actions/core';
 import { run as runGenerate } from './actions/generate.js';
+import { run as runUpdate } from './actions/update.js';
 
 async function main(): Promise<void> {
   const action = core.getInput('action') || 'generate';
@@ -15,7 +16,7 @@ async function main(): Promise<void> {
       break;
     
     case 'update':
-      core.setFailed('Update action not yet implemented');
+      await runUpdate();
       break;
     
     case 'check':

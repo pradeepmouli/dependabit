@@ -489,4 +489,150 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
   private shouldIgnore(name: string): boolean {
     return this.options.ignorePatterns.some(pattern => name.includes(pattern));
   }
+
+  /**
+   * Analyze only specific files for dependencies (for incremental updates)
+   * This is more efficient than full repository scan when only few files changed
+   */
+  async analyzeFiles(filePaths: string[]): Promise<DetectionResult> {
+    const allReferences: Map<string, {
+      url: string;
+      contexts: Array<{ file: string; line?: number; text: string }>;
+      detectionMethod: DetectionMethod;
+    }> = new Map();
+
+    let filesScanned = 0;
+    let llmCalls = 0;
+    let totalTokens = 0;
+    let totalLatencyMs = 0;
+
+    for (const filePath of filePaths) {
+      const fullPath = join(this.options.repoPath, filePath);
+      
+      try {
+        const content = await readFile(fullPath, 'utf-8');
+        const relativePath = relative(this.options.repoPath, fullPath);
+        const fileName = filePath.split('/').pop() || '';
+
+        // Parse based on file type
+        if (/^README/i.test(fileName)) {
+          // README file
+          const references = parseReadme(content, relativePath);
+          for (const ref of references) {
+            this.addReference(allReferences, ref.url, {
+              file: relativePath,
+              ...(ref.line !== undefined && { line: ref.line }),
+              text: ref.context
+            }, 'llm-analysis');
+          }
+        } else if (/^(package\.json|requirements\.txt|Cargo\.toml|go\.mod)$/.test(fileName)) {
+          // Package file
+          const metadata = this.parsePackageFile(fullPath, content);
+          for (const url of [...(metadata.urls || []), metadata.repository, metadata.homepage, metadata.documentation].filter(Boolean)) {
+            this.addReference(allReferences, url!, {
+              file: relativePath,
+              text: 'Package metadata'
+            }, 'package-json');
+          }
+        } else if (/\.(ts|js|tsx|jsx|py|rs|go|java|kt|cs|rb|php)$/.test(fileName)) {
+          // Source file
+          const references = parseCodeComments(content, relativePath);
+          for (const ref of references) {
+            this.addReference(allReferences, ref.url, {
+              file: ref.file,
+              line: ref.line,
+              text: ref.context
+            }, 'code-comment');
+          }
+        } else if (/\.(md|txt|rst|adoc)$/.test(fileName)) {
+          // Documentation file
+          const references = parseReadme(content, relativePath);
+          for (const ref of references) {
+            this.addReference(allReferences, ref.url, {
+              file: relativePath,
+              ...(ref.line !== undefined && { line: ref.line }),
+              text: ref.context
+            }, 'llm-analysis');
+          }
+        }
+
+        filesScanned++;
+      } catch (error) {
+        // Skip files that can't be read
+        console.warn(`Failed to analyze ${filePath}:`, error);
+      }
+    }
+
+    // Create dependency entries
+    const dependencies: DependencyEntry[] = [];
+
+    for (const [url, refData] of allReferences.entries()) {
+      const mainContext = refData.contexts[0];
+      const contextText = refData.contexts.map(c => c.text).join(' ');
+
+      // Step 3: Programmatic type categorization
+      let type = this.categorizeType(url, contextText);
+
+      // Step 4: LLM fallback for type categorization (if needed)
+      if (!type && refData.contexts.length > 0) {
+        const startTime = Date.now();
+        try {
+          const prompt = createClassificationPrompt(url, contextText);
+          const response = await this.options.llmProvider.complete(prompt);
+          
+          llmCalls++;
+          totalTokens += response.usage?.totalTokens || 0;
+          totalLatencyMs += Date.now() - startTime;
+
+          type = (response.content.toLowerCase().includes('schema') ? 'schema' :
+                 response.content.toLowerCase().includes('documentation') ? 'documentation' :
+                 response.content.toLowerCase().includes('research') || response.content.toLowerCase().includes('paper') ? 'research-paper' :
+                 response.content.toLowerCase().includes('implementation') ? 'reference-implementation' :
+                 response.content.toLowerCase().includes('example') ? 'api-example' :
+                 'other') as DependencyType;
+        } catch {
+          type = 'other';
+        }
+      }
+
+      if (!type) {
+        type = 'other';
+      }
+
+      // Step 5: Programmatic access method determination
+      const accessMethod = this.determineAccessMethod(url);
+
+      const dependency: DependencyEntry = {
+        id: randomUUID(),
+        url,
+        type,
+        accessMethod,
+        name: this.extractName(url),
+        currentStateHash: `sha256:pending`,
+        detectionMethod: refData.detectionMethod,
+        detectionConfidence: refData.detectionMethod === 'manual' ? 1.0 : 0.85,
+        detectedAt: new Date().toISOString(),
+        lastChecked: new Date().toISOString(),
+        auth: undefined,
+        referencedIn: refData.contexts.map(ctx => ({
+          file: ctx.file,
+          line: ctx.line,
+          context: ctx.text
+        }))
+      };
+
+      dependencies.push(dependency);
+    }
+
+    return {
+      dependencies,
+      statistics: {
+        filesScanned,
+        urlsFound: allReferences.size,
+        llmCalls,
+        totalTokens,
+        totalLatencyMs
+      }
+    };
+  }
 }
