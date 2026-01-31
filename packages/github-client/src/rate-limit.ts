@@ -89,21 +89,71 @@ export class RateLimitHandler {
   }
 
   /**
-   * Attempts to reserve API call budget
+   * Attempts to reserve API call budget with proactive checking
    */
-  async reserveBudget(callsNeeded: number): Promise<BudgetReservation> {
+  async reserveBudget(callsNeeded: number, options?: {
+    safetyMargin?: number; // Additional buffer (default: 10% of calls needed)
+    maxWaitTime?: number; // Max time to wait in ms
+  }): Promise<BudgetReservation> {
+    const safetyMargin = options?.safetyMargin ?? Math.ceil(callsNeeded * 0.1);
+    const totalNeeded = callsNeeded + safetyMargin;
+    
     const rateLimit = await this.checkRateLimit();
 
-    if (rateLimit.remaining >= callsNeeded) {
-      return { reserved: true };
+    if (rateLimit.remaining >= totalNeeded) {
+      return { 
+        reserved: true 
+      };
     }
 
     const waitTime = this.calculateWaitTime(rateLimit);
+    
+    // Check if wait time exceeds maximum allowed
+    if (options?.maxWaitTime && waitTime > options.maxWaitTime) {
+      return {
+        reserved: false,
+        reason: `Wait time (${Math.ceil(waitTime / 1000)}s) exceeds maximum (${Math.ceil(options.maxWaitTime / 1000)}s)`,
+        waitTime
+      };
+    }
+
     return {
       reserved: false,
-      reason: `Insufficient API quota. Need ${callsNeeded}, have ${rateLimit.remaining}`,
+      reason: `Insufficient API quota. Need ${callsNeeded} + ${safetyMargin} margin, have ${rateLimit.remaining}`,
       waitTime
     };
+  }
+
+  /**
+   * Proactively check if operation can proceed without hitting rate limit
+   */
+  async canProceed(estimatedCalls: number, options?: {
+    threshold?: number; // Minimum remaining calls (default: 100)
+    safetyMargin?: number;
+  }): Promise<{ canProceed: boolean; reason?: string }> {
+    const threshold = options?.threshold ?? 100;
+    const safetyMargin = options?.safetyMargin ?? Math.ceil(estimatedCalls * 0.1);
+    const totalNeeded = estimatedCalls + safetyMargin;
+
+    const rateLimit = await this.checkRateLimit();
+
+    // Check if we have enough remaining calls
+    if (rateLimit.remaining < totalNeeded) {
+      return {
+        canProceed: false,
+        reason: `Insufficient quota: need ${totalNeeded}, have ${rateLimit.remaining}`
+      };
+    }
+
+    // Check if we'd drop below threshold
+    if (rateLimit.remaining - totalNeeded < threshold) {
+      return {
+        canProceed: false,
+        reason: `Operation would leave only ${rateLimit.remaining - totalNeeded} calls (threshold: ${threshold})`
+      };
+    }
+
+    return { canProceed: true };
   }
 
   /**

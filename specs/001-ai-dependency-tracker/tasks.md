@@ -236,10 +236,10 @@
 - [X] T094 [P] Implement secret resolution in packages/action/src/utils/secrets.ts
 - [ ] T095 [P] Write E2E test for full workflow in tests/e2e/full-workflow.spec.ts
 - [ ] T096 [P] Create test fixtures in tests/e2e/fixtures/sample-repo/
-- [ ] T097 [P] Add error categorization and remediation messages in packages/action/src/utils/errors.ts
-- [ ] T098 [P] Implement performance metrics tracking (operation durations, API quotas)
-- [ ] T098a [P] Implement proactive rate-limit checking with budget reservation in packages/github-client/src/rate-limit.ts (enhance T077)
-- [ ] T099 [P] Add manifest size checks and warnings (target <1MB, fail >10MB)
+- [X] T097 [P] Add error categorization and remediation messages in packages/action/src/utils/errors.ts
+- [X] T098 [P] Implement performance metrics tracking (operation durations, API quotas)
+- [X] T098a [P] Implement proactive rate-limit checking with budget reservation in packages/github-client/src/rate-limit.ts (enhance T077)
+- [X] T099 [P] Add manifest size checks and warnings (target <1MB, fail >10MB)
 - [X] T099a [P] Write tests for false positive feedback loop in packages/github-client/tests/feedback.test.ts
 - [X] T099b [P] Implement false positive feedback listener in packages/github-client/src/feedback.ts (monitors issue labels)
 - [X] T099c [P] Write tests for false positive metrics calculator in packages/action/tests/utils/metrics.test.ts
