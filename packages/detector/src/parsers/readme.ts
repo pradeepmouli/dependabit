@@ -144,15 +144,23 @@ export function extractGitHubReferences(content: string): Array<{ owner: string;
   const lines = content.split('\n');
 
   for (const line of lines) {
-    // Match owner/repo pattern not in URLs
-    const regex = /(?<!https?:\/\/github\.com\/)([a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+)(?!\/)/g;
+    // Match owner/repo pattern not in URLs, with basic length and context constraints
+    const regex = /(?<!https?:\/\/github\.com\/)(?:^|[\s(])([a-zA-Z0-9_-]{2,}\/[a-zA-Z0-9_.-]{2,})(?=$|[\s),.;])/g;
     let match;
 
     while ((match = regex.exec(line)) !== null) {
       const [_, ownerRepo] = match;
       const [owner, repo] = ownerRepo.split('/');
       
-      if (owner && repo && owner !== 'owner' && repo !== 'repo') {
+      if (
+        owner &&
+        repo &&
+        owner.length >= 2 &&
+        repo.length >= 2 &&
+        owner !== 'owner' &&
+        repo !== 'repo' &&
+        !( /^\d+$/.test(owner) && /^\d+$/.test(repo) )
+      ) {
         references.push({
           owner,
           repo,
