@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { Monitor } from '../../src/monitor.js';
+import { Monitor } from '../src/monitor.js';
 
 describe('Monitor', () => {
   let monitor: Monitor;

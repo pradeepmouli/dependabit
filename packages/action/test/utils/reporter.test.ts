@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { SummaryReporter } from '../../../src/utils/reporter.js';
+import { describe, it, expect, beforeEach } from 'vitest';
+import { SummaryReporter } from '../../src/utils/reporter.js';
 
 describe('SummaryReporter', () => {
   let reporter: SummaryReporter;

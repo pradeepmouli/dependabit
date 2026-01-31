@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ReleaseManager } from '../../src/releases.js';
+import { ReleaseManager } from '../src/releases.js';
 
 describe('ReleaseManager', () => {
   let releaseManager: ReleaseManager;

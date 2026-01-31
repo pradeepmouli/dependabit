@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { checkAction } from '../../../src/actions/check.js';
+import { checkAction } from '../../src/actions/check.js';
 
 describe('Check Action', () => {
   beforeEach(() => {

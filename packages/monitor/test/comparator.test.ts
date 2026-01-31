@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { StateComparator } from '../../src/comparator.js';
+import { StateComparator } from '../src/comparator.js';
 
 describe('StateComparator', () => {
   let comparator: StateComparator;

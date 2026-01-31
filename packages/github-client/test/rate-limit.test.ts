@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { RateLimitHandler } from '../../src/rate-limit.js';
+import { RateLimitHandler } from '../src/rate-limit.js';
 
 describe('RateLimitHandler', () => {
   let handler: RateLimitHandler;

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { IssueManager } from '../../src/issues.js';
+import { IssueManager } from '../src/issues.js';
 
 describe('IssueManager', () => {
   let issueManager: IssueManager;

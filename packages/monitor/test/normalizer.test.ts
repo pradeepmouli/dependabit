@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { normalizeHTML } from '../../src/normalizer.js';
+import { normalizeHTML } from '../src/normalizer.js';
 
 describe('HTML Normalizer', () => {
   describe('normalizeHTML', () => {

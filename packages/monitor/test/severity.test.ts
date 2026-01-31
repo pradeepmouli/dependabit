@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { SeverityClassifier } from '../../src/severity.js';
+import { SeverityClassifier } from '../src/severity.js';
 
 describe('SeverityClassifier', () => {
   let classifier: SeverityClassifier;
