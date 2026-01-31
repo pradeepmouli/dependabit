@@ -6,6 +6,7 @@
 import * as core from '@actions/core';
 import { join } from 'node:path';
 import { existsSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import { Detector, GitHubCopilotProvider, extractDependencyChanges } from '@dependabit/detector';
 import { readManifest, writeManifest, mergeManifests, type DependencyManifest } from '@dependabit/manifest';
 import { createGitHubClient, getCommitDiff } from '@dependabit/github-client';
@@ -83,7 +84,8 @@ export async function run(): Promise<void> {
         const eventPath = process.env['GITHUB_EVENT_PATH'];
         if (eventPath) {
           try {
-            const event = JSON.parse(await import('node:fs').then(fs => fs.promises.readFile(eventPath, 'utf-8')));
+            const eventContent = await readFile(eventPath, 'utf-8');
+            const event = JSON.parse(eventContent);
             if (event.commits && Array.isArray(event.commits)) {
               commitsToAnalyze = event.commits.map((c: any) => c.id || c.sha);
               logger.info('Detected commits from push event', { count: commitsToAnalyze.length });

@@ -6,6 +6,8 @@ on:
       - main
       - master
     paths:
+      # Trigger on relevant source and documentation files
+      # Lock files are excluded to avoid triggering on dependency updates themselves
       - '**.md'
       - '**.ts'
       - '**.js'
@@ -62,10 +64,9 @@ jobs:
           llm_provider: github-copilot
           llm_api_key: ${{ secrets.GITHUB_TOKEN }}
           debug: 'true'
-        continue-on-error: true
       
       - name: Commit updated manifest
-        if: steps.update.outputs.changes_detected == 'true'
+        if: success() && steps.update.outputs.changes_detected == 'true'
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"

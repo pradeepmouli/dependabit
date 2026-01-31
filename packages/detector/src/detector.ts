@@ -4,7 +4,7 @@
  */
 
 import { readdir, readFile } from 'node:fs/promises';
-import { join, relative } from 'node:path';
+import { join, relative, resolve, normalize } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import type { LLMProvider } from './llm/client.js';
 import { createDetectionPrompt, createClassificationPrompt } from './llm/prompts.js';
@@ -508,6 +508,18 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
 
     for (const filePath of filePaths) {
       const fullPath = join(this.options.repoPath, filePath);
+      
+      // Validate that the resolved path is within the repository boundaries
+      const normalizedRepoPath = resolve(normalize(this.options.repoPath));
+      const normalizedFullPath = resolve(normalize(fullPath));
+      
+      if (!normalizedFullPath.startsWith(normalizedRepoPath)) {
+        // Skip files outside the repository to prevent path traversal
+        if (process.env['DEBUG']) {
+          console.warn(`Skipping file outside repository: ${filePath}`);
+        }
+        continue;
+      }
       
       try {
         const content = await readFile(fullPath, 'utf-8');

@@ -98,17 +98,18 @@ export function extractAddedContent(
 
   // Extract package dependencies based on file type
   if (filename) {
-    if (filename === 'package.json') {
+    const lowerFilename = filename.toLowerCase();
+    if (lowerFilename === 'package.json') {
       const depMatches = content.matchAll(PACKAGE_DEP_PATTERNS.packageJson);
       for (const match of depMatches) {
         if (match[1]) packageDeps.push(match[1]);
       }
-    } else if (filename === 'requirements.txt') {
+    } else if (lowerFilename === 'requirements.txt') {
       const depMatches = content.matchAll(PACKAGE_DEP_PATTERNS.requirementsTxt);
       for (const match of depMatches) {
         if (match[1]) packageDeps.push(match[1]);
       }
-    } else if (filename === 'Cargo.toml') {
+    } else if (lowerFilename === 'cargo.toml') {
       const depMatches = content.matchAll(PACKAGE_DEP_PATTERNS.cargoToml);
       for (const match of depMatches) {
         if (match[1]) packageDeps.push(match[1]);
@@ -135,6 +136,10 @@ export function extractRemovedContent(
 
 /**
  * Identify files relevant for dependency analysis
+ * 
+ * Note: Filenames in relevantFiles preserve their original case from the commit.
+ * Case-insensitive matching is used for identification, but original casing is maintained
+ * for consistency with file system operations.
  */
 export function getChangedFiles(files: CommitFile[]): ChangedFilesResult {
   const relevantFiles: string[] = [];
