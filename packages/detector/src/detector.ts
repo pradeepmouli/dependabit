@@ -143,8 +143,49 @@ export class Detector {
       filesScanned++;
     }
 
-    // Step 2: LLM analysis for documents not fully parsed (future enhancement)
-    // Currently all document parsing is programmatic, no LLM needed
+    // Step 2: LLM 2nd pass for documents not fully parsed in step 1
+    // Analyze README files for dependency context that parsers might have missed
+    const llmEnhancedReferences = new Set<string>();
+    
+    for (const file of readmeFiles.slice(0, 5)) { // Limit to 5 READMEs for LLM analysis
+      try {
+        const content = await readFile(file, 'utf-8');
+        const relPath = relative(this.options.repoPath, file);
+        
+        // Use LLM to extract additional context from README
+        const detectionPrompt = `Analyze this README file and identify any external dependencies or resources that might be referenced but not explicitly linked:
+
+File: ${relPath}
+Content:
+${content.slice(0, 5000)}
+
+Identify:
+1. Documentation sites mentioned but not linked
+2. Tools or libraries referenced in text
+3. API services mentioned
+4. Research papers or specifications cited
+
+Return as JSON with "dependencies" array.`;
+
+        const response = await this.options.llmProvider.analyze(content, detectionPrompt);
+        llmCalls++;
+        totalTokens += response.usage.totalTokens;
+        totalLatencyMs += response.usage.latencyMs;
+
+        // Add LLM-discovered references
+        for (const dep of response.dependencies) {
+          if (dep.url && !allReferences.has(dep.url)) {
+            llmEnhancedReferences.add(dep.url);
+            this.addReference(allReferences, dep.url, {
+              file: relPath,
+              text: dep.description || 'Discovered by LLM analysis'
+            }, 'llm-analysis');
+          }
+        }
+      } catch (error) {
+        console.error(`LLM document analysis failed for ${file}:`, error);
+      }
+    }
 
     // Steps 3-6: Categorize dependencies (programmatic first, LLM fallback)
     const dependencies: DependencyEntry[] = [];
@@ -191,9 +232,46 @@ export class Detector {
       // Step 5: Try programmatic access method determination
       let accessMethod: AccessMethod | null = this.determineAccessMethod(url);
       
-      // Step 6: If access method couldn't be determined, use LLM fallback (future enhancement)
+      // Step 6: If access method couldn't be determined, use LLM fallback
       if (!accessMethod) {
-        // For now, default to 'http' - LLM access method determination can be added if needed
+        try {
+          const accessMethodPrompt = `Determine the best access method for this URL: ${url}
+
+Context: ${firstContext}
+
+Choose ONE of these access methods:
+- "github-api": For GitHub repositories
+- "arxiv": For arXiv papers
+- "openapi": For API specifications
+- "context7": For Context7 documentation
+- "http": For general web resources
+
+Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
+
+          const response = await this.options.llmProvider.analyze('', accessMethodPrompt);
+          llmCalls++;
+          totalTokens += response.usage.totalTokens;
+          totalLatencyMs += response.usage.latencyMs;
+
+          // Parse LLM response for access method
+          const content = response.rawResponse || '{}';
+          try {
+            const parsed = JSON.parse(content);
+            if (parsed.accessMethod) {
+              accessMethod = parsed.accessMethod as AccessMethod;
+            }
+          } catch {
+            // If parsing fails, fall back to http
+            accessMethod = 'http';
+          }
+        } catch (error) {
+          console.error(`LLM access method determination failed for ${url}:`, error);
+          accessMethod = 'http';
+        }
+      }
+      
+      // Ensure we have a valid access method
+      if (!accessMethod) {
         accessMethod = 'http';
       }
 

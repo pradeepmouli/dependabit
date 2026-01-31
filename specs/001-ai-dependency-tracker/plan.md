@@ -201,6 +201,74 @@ docs/
 
 **Structure Decision**: Monorepo with 5 packages following existing pnpm workspace pattern. Each package represents a distinct responsibility: detection (LLM), manifest (storage), monitoring (change detection), github-client (API), action (GitHub Actions integration). The `action` package depends on all others and serves as the GitHub Action entry point. E2E tests at workspace root validate full workflows.
 
+## Hybrid Detection Architecture
+
+**LLM Integration Strategy**: Programmatic-first with LLM fallback for ambiguous cases
+
+The detector package implements a 7-step hybrid approach that minimizes LLM usage while maintaining high accuracy:
+
+### Step 1: Programmatic Parsing
+- **README Parser**: Extracts markdown links, bare URLs, reference-style links
+- **Code Comment Parser**: Multi-language support (TS/JS/Python/Go/Rust/Java/C/C++/PHP/Ruby/Shell)
+- **Package File Parser**: Metadata from package.json, requirements.txt, Cargo.toml, go.mod
+- **Filtering**: Excludes package manager URLs (npm, PyPI, crates.io) - handled by dependabot
+
+### Step 2: LLM 2nd Pass for Document Analysis
+- Analyzes README files for dependencies not explicitly linked
+- Identifies tools, libraries, API services, research papers mentioned in text
+- Discovers documentation sites referenced but not linked
+- Limited to 5 README files for performance
+
+### Step 3: Programmatic Type Categorization
+Determines dependency type using URL/context pattern matching:
+- `research-paper`: arXiv URLs, "paper"/"research" keywords
+- `schema`: OpenAPI, Swagger, GraphQL, Protobuf patterns
+- `documentation`: /docs, /guide, /tutorial, /reference URLs
+- `reference-implementation`: GitHub repos with "example"/"implementation" context
+- `api-example`: API examples in context
+- **Confidence**: 0.9 for programmatic matches
+
+### Step 4: LLM Fallback for Type Categorization
+- Only invoked when Step 3 returns null
+- Uses GitHub Copilot CLI (`gh copilot suggest`)
+- Prompts LLM to classify dependency type
+- **Confidence**: 0.5 for LLM matches
+
+### Step 5: Programmatic Access Method Determination
+Determines access method using URL pattern matching:
+- `github-api`: github.com URLs
+- `arxiv`: arxiv.org URLs
+- `openapi`: OpenAPI/Swagger/API specification patterns
+- `context7`: Context7 documentation URLs
+- Returns null if cannot determine programmatically
+
+### Step 6: LLM Fallback for Access Method
+- Only invoked when Step 5 returns null
+- Uses GitHub Copilot CLI to determine best access method
+- Parses JSON response with access method and confidence
+- Defaults to `http` on parsing failure
+
+### Step 7: Manifest Entry Creation
+- Generates UUID for each dependency
+- Combines programmatic and LLM metadata
+- Includes detection method, confidence, timestamps
+- Records all file references with line numbers
+
+### GitHub Copilot CLI Integration
+- **Command**: `gh copilot suggest` via shell execution
+- **Authentication**: Native GitHub authentication (no API keys)
+- **Response Parsing**: Handles plain JSON and markdown-wrapped responses
+- **Token Estimation**: Approximates usage (CLI doesn't provide exact metrics)
+- **Error Handling**: Graceful fallback to defaults on CLI failures
+
+### Benefits of Hybrid Approach
+- ⚡ **Performance**: Most categorization is programmatic (no API latency)
+- 💰 **Cost-Effective**: Minimizes LLM API calls (~10-20% of dependencies)
+- 🎯 **Accuracy**: Programmatic matches have 0.9 confidence vs 0.5 for LLM
+- 🔋 **Efficiency**: LLM used only for ambiguous edge cases
+- 🔐 **Security**: Native GitHub authentication, no API key management
+- 🚀 **Simplicity**: gh CLI pre-installed on GitHub Actions runners
+
 ## Complexity Tracking
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
