@@ -118,12 +118,17 @@ export class GitHubCopilotProvider implements LLMProvider {
   }
 
   async getRateLimit(): Promise<RateLimitInfo> {
-    // Note: Azure OpenAI doesn't expose rate limits via SDK
-    // This is a placeholder implementation
+    // Note: Azure OpenAI doesn't expose rate limits via SDK, so we cannot
+    // provide real rate limit information here. This implementation does NOT
+    // perform any actual rate limiting and only returns sentinel values to
+    // indicate that rate limit data is unknown. Callers should not rely on
+    // this method for enforcing provider rate limits.
     return {
-      remaining: 1000,
-      limit: 1000,
-      resetAt: new Date(Date.now() + 3600000) // 1 hour from now
+      // Use -1 to indicate "unknown" values rather than realistic numbers.
+      remaining: -1,
+      limit: -1,
+      // Use the Unix epoch as a sentinel "no reset time available".
+      resetAt: new Date(0)
     };
   }
 
