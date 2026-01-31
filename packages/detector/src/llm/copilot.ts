@@ -70,9 +70,9 @@ export class GitHubCopilotProvider implements LLMProvider {
       try {
         parsed = JSON.parse(content_text);
       } catch (parseError) {
-        console.error('Failed to parse LLM response:', content_text);
-        // Return empty result on parse failure
-        parsed = { dependencies: [] };
+        console.error('Failed to parse LLM response:', content_text, parseError);
+        // Propagate parse failure so callers know the LLM response was invalid
+        throw new Error('Failed to parse LLM response as JSON.');
       }
 
       const usage: LLMUsageMetadata = {
