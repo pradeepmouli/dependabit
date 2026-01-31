@@ -570,7 +570,6 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     const dependencies: DependencyEntry[] = [];
 
     for (const [url, refData] of allReferences.entries()) {
-      const mainContext = refData.contexts[0];
       const contextText = refData.contexts.map(c => c.text).join(' ');
 
       // Step 3: Programmatic type categorization
