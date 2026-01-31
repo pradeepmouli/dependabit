@@ -59,7 +59,10 @@ export async function checkAction(
     issuesCreated: 0,
     errors: 0,
     rateLimitWarnings: [],
-    updatedManifest: { ...manifest }
+    updatedManifest: {
+      ...manifest,
+      dependencies: manifest.dependencies.map(dep => ({ ...dep }))
+    }
   };
 
   // Check rate limit before starting
