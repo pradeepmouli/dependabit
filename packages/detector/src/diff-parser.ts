@@ -28,7 +28,7 @@ const URL_PATTERN = /https?:\/\/[^\s<>"{}|\\^`[\]]+/gi;
 const PACKAGE_DEP_PATTERNS = {
   packageJson: /"([^"]+)":\s*"[\^~]?[\d.]+"/g,
   requirementsTxt: /^([a-zA-Z0-9_-]+)[>=<~!]=.*/gm,
-  cargoToml: /^([a-zA-Z0-9_-]+)\s*=.*/gm
+  cargoToml: /^(?!\s*(?:name|version|authors|edition|description|license|workspace|build|default-run|repository|homepage|documentation|readme|keywords|categories|exclude|include|publish|resolver)\s*=)\s*([a-zA-Z0-9_-]+)\s*=.*/gm
 };
 
 // File extensions relevant for dependency analysis
