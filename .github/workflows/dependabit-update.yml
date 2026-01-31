@@ -70,8 +70,12 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add .dependabit/manifest.json
-          git commit -m "chore: update dependency manifest [skip ci]" || echo "No changes to commit"
-          git push
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update dependency manifest [skip ci]"
+            git push
+          fi
       
       - name: Summary
         if: always()
