@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { parseDiff, extractAddedContent, extractRemovedContent, getChangedFiles } from '../src/diff-parser.js';
+import {
+  parseDiff,
+  extractAddedContent,
+  extractRemovedContent,
+  getChangedFiles
+} from '../src/diff-parser.js';
 
 describe('Diff Parser Tests', () => {
   describe('parseDiff', () => {
@@ -122,10 +127,7 @@ describe('Diff Parser Tests', () => {
     });
 
     it('should extract dependencies from package.json deletions', () => {
-      const deletions = [
-        '    "old-package": "^1.0.0",',
-        '    "deprecated-lib": "^2.0.0"'
-      ];
+      const deletions = ['    "old-package": "^1.0.0",', '    "deprecated-lib": "^2.0.0"'];
 
       const result = extractRemovedContent(deletions, 'package.json');
 

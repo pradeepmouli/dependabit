@@ -23,7 +23,13 @@ export interface DetectedDependency {
   url: string;
   name: string;
   description?: string;
-  type: 'reference-implementation' | 'schema' | 'documentation' | 'research-paper' | 'api-example' | 'other';
+  type:
+    | 'reference-implementation'
+    | 'schema'
+    | 'documentation'
+    | 'research-paper'
+    | 'api-example'
+    | 'other';
   confidence: number; // 0.0 - 1.0
   reasoning?: string; // Why this was detected as a dependency
 }
@@ -73,10 +79,7 @@ export interface LLMProvider {
 /**
  * Create an LLM provider instance
  */
-export function createLLMProvider(
-  providerName: string,
-  config: LLMProviderConfig
-): LLMProvider {
+export function createLLMProvider(providerName: string, config: LLMProviderConfig): LLMProvider {
   // Implementation will be in specific provider files
   throw new Error(`Provider ${providerName} not yet implemented`);
 }

@@ -11,13 +11,13 @@ describe('URLContentChecker', () => {
   beforeEach(() => {
     checker = new URLContentChecker();
     vi.clearAllMocks();
-    
+
     // Default mock response for HTTP content
     mockFetch.mockResolvedValue({
       ok: true,
       status: 200,
       headers: {
-        get: (name: string) => name === 'content-type' ? 'text/html' : null
+        get: (name: string) => (name === 'content-type' ? 'text/html' : null)
       },
       text: async () => '<html><body>Test content</body></html>'
     });
@@ -52,7 +52,7 @@ describe('URLContentChecker', () => {
 
     it('should throw error for unreachable URLs', async () => {
       mockFetch.mockRejectedValue(new Error('Network error'));
-      
+
       const config = {
         url: 'https://invalid-url-that-does-not-exist.com',
         accessMethod: 'http' as const

@@ -116,10 +116,7 @@ version: "2"
         }
       };
 
-      const rules = getEffectiveMonitoringRules(
-        config,
-        'https://github.com/microsoft/TypeScript'
-      );
+      const rules = getEffectiveMonitoringRules(config, 'https://github.com/microsoft/TypeScript');
 
       expect(rules.enabled).toBe(true);
       expect(rules.checkFrequency).toBe('daily');
@@ -149,10 +146,7 @@ version: "2"
         ]
       };
 
-      const rules = getEffectiveMonitoringRules(
-        config,
-        'https://github.com/microsoft/TypeScript'
-      );
+      const rules = getEffectiveMonitoringRules(config, 'https://github.com/microsoft/TypeScript');
 
       expect(rules.checkFrequency).toBe('hourly');
     });
@@ -181,10 +175,7 @@ version: "2"
         ]
       };
 
-      const rules = getEffectiveMonitoringRules(
-        config,
-        'https://github.com/microsoft/TypeScript'
-      );
+      const rules = getEffectiveMonitoringRules(config, 'https://github.com/microsoft/TypeScript');
 
       expect(rules.enabled).toBe(true);
       expect(rules.checkFrequency).toBe('hourly');

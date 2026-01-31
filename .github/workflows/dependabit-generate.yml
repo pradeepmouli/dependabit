@@ -26,29 +26,29 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     name: Generate Dependency Manifest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
+
       - name: Setup GitHub CLI (required for Copilot CLI)
         run: |
           # GitHub CLI is pre-installed on GitHub Actions runners
           # Verify it's available and authenticated
           gh --version
           gh auth status
-      
+
       - name: Install dependencies and build action
         run: |
           corepack enable
           pnpm install
           pnpm build
-      
+
       - name: Generate manifest
         id: generate
         uses: ./packages/action
@@ -60,7 +60,7 @@ jobs:
           llm_model: ${{ inputs.llm_model }}
           llm_api_key: ${{ secrets.GITHUB_TOKEN }}
           debug: 'true'
-      
+
       - name: Commit manifest
         if: success()
         run: |
@@ -69,7 +69,7 @@ jobs:
           git add .dependabit/manifest.json
           git commit -m "chore: generate dependency manifest [skip ci]" || echo "No changes to commit"
           git push
-      
+
       - name: Summary
         if: always()
         run: |

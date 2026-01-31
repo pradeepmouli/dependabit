@@ -14,19 +14,19 @@ async function main(): Promise<void> {
     case 'generate':
       await runGenerate();
       break;
-    
+
     case 'update':
       await runUpdate();
       break;
-    
+
     case 'check':
       core.setFailed('Check action not yet implemented');
       break;
-    
+
     case 'validate':
       core.setFailed('Validate action not yet implemented');
       break;
-    
+
     default:
       core.setFailed(`Unknown action: ${action}`);
   }

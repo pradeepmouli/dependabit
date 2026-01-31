@@ -28,15 +28,31 @@ const URL_PATTERN = /https?:\/\/[^\s<>"{}|\\^`[\]]+/gi;
 const PACKAGE_DEP_PATTERNS = {
   packageJson: /"([^"]+)":\s*"[\^~]?[\d.]+"/g,
   requirementsTxt: /^([a-zA-Z0-9_-]+)[>=<~!]=.*/gm,
-  cargoToml: /^(?!\s*(?:name|version|authors|edition|description|license|workspace|build|default-run|repository|homepage|documentation|readme|keywords|categories|exclude|include|publish|resolver)\s*=)\s*([a-zA-Z0-9_-]+)\s*=.*/gm
+  cargoToml:
+    /^(?!\s*(?:name|version|authors|edition|description|license|workspace|build|default-run|repository|homepage|documentation|readme|keywords|categories|exclude|include|publish|resolver)\s*=)\s*([a-zA-Z0-9_-]+)\s*=.*/gm
 };
 
 // File extensions relevant for dependency analysis
 const RELEVANT_EXTENSIONS = [
-  '.md', '.txt', '.rst', '.adoc',  // Documentation
-  '.ts', '.js', '.py', '.rs', '.go', '.java', '.cpp', '.c', '.h',  // Code
-  '.json', '.toml', '.yaml', '.yml',  // Config
-  '.html', '.xml'  // Markup
+  '.md',
+  '.txt',
+  '.rst',
+  '.adoc', // Documentation
+  '.ts',
+  '.js',
+  '.py',
+  '.rs',
+  '.go',
+  '.java',
+  '.cpp',
+  '.c',
+  '.h', // Code
+  '.json',
+  '.toml',
+  '.yaml',
+  '.yml', // Config
+  '.html',
+  '.xml' // Markup
 ];
 
 // Package manifest files
@@ -81,10 +97,7 @@ export function parseDiff(patch: string): DiffParseResult {
 /**
  * Extract meaningful content from added lines
  */
-export function extractAddedContent(
-  additions: string[],
-  filename?: string
-): ExtractedContent {
+export function extractAddedContent(additions: string[], filename?: string): ExtractedContent {
   const urls: string[] = [];
   const packageDeps: string[] = [];
 
@@ -126,17 +139,14 @@ export function extractAddedContent(
 /**
  * Extract meaningful content from removed lines
  */
-export function extractRemovedContent(
-  deletions: string[],
-  filename?: string
-): ExtractedContent {
+export function extractRemovedContent(deletions: string[], filename?: string): ExtractedContent {
   // Use the same logic as extractAddedContent
   return extractAddedContent(deletions, filename);
 }
 
 /**
  * Identify files relevant for dependency analysis
- * 
+ *
  * Note: Filenames in relevantFiles preserve their original case from the commit.
  * Case-insensitive matching is used for identification, but original casing is maintained
  * for consistency with file system operations.
@@ -152,9 +162,9 @@ export function getChangedFiles(files: CommitFile[]): ChangedFilesResult {
 
     // Check if it's a package manifest file (case-insensitive comparison)
     const isPackageFile = PACKAGE_MANIFEST_FILES.some(
-      manifestFile => manifestFile.toLowerCase() === basename
+      (manifestFile) => manifestFile.toLowerCase() === basename
     );
-    
+
     if (isPackageFile) {
       packageFiles.push(file.filename);
       relevantFiles.push(file.filename);
@@ -162,18 +172,18 @@ export function getChangedFiles(files: CommitFile[]): ChangedFilesResult {
     }
 
     // Check if it's a documentation file
-    if (basename.startsWith('readme') || 
-        filename.includes('/docs/') || 
-        filename.includes('/documentation/')) {
+    if (
+      basename.startsWith('readme') ||
+      filename.includes('/docs/') ||
+      filename.includes('/documentation/')
+    ) {
       documentationFiles.push(file.filename);
       relevantFiles.push(file.filename);
       continue;
     }
 
     // Check if it has a relevant extension
-    const hasRelevantExtension = RELEVANT_EXTENSIONS.some(ext => 
-      filename.endsWith(ext)
-    );
+    const hasRelevantExtension = RELEVANT_EXTENSIONS.some((ext) => filename.endsWith(ext));
 
     if (hasRelevantExtension) {
       relevantFiles.push(file.filename);

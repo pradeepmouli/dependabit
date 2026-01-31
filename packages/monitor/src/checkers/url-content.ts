@@ -31,7 +31,11 @@ export class URLContentChecker implements Checker {
       let normalizedContent: string;
 
       // Apply HTML normalization if content is HTML
-      if (contentType.includes('text/html') || content.trim().startsWith('<!DOCTYPE') || content.trim().startsWith('<html')) {
+      if (
+        contentType.includes('text/html') ||
+        content.trim().startsWith('<!DOCTYPE') ||
+        content.trim().startsWith('<html')
+      ) {
         normalizedContent = normalizeHTML(content);
       } else {
         // For non-HTML content (markdown, plain text, etc.), just normalize whitespace
@@ -39,10 +43,7 @@ export class URLContentChecker implements Checker {
       }
 
       // Generate SHA256 hash of normalized content
-      const stateHash = crypto
-        .createHash('sha256')
-        .update(normalizedContent)
-        .digest('hex');
+      const stateHash = crypto.createHash('sha256').update(normalizedContent).digest('hex');
 
       return {
         stateHash,

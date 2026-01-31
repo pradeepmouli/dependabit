@@ -10,7 +10,7 @@ export interface SchedulerOptions {
 
 /**
  * Scheduler for per-dependency monitoring
- * 
+ *
  * Determines which dependencies should be checked based on:
  * - Check frequency (hourly, daily, weekly, monthly)
  * - Last checked timestamp
@@ -21,7 +21,7 @@ export interface SchedulerOptions {
 export class Scheduler {
   /**
    * Check if a dependency should be checked now
-   * 
+   *
    * @param dependency Dependency entry
    * @param config Configuration
    * @param currentTime Current time (defaults to now)
@@ -71,7 +71,7 @@ export class Scheduler {
 
   /**
    * Filter dependencies that should be checked
-   * 
+   *
    * @param dependencies Array of dependencies
    * @param config Configuration
    * @param currentTime Current time (defaults to now)
@@ -82,20 +82,16 @@ export class Scheduler {
     config: DependabitConfig,
     currentTime: Date = new Date()
   ): DependencyEntry[] {
-    return dependencies.filter((dep) =>
-      this.shouldCheckDependency(dep, config, currentTime)
-    );
+    return dependencies.filter((dep) => this.shouldCheckDependency(dep, config, currentTime));
   }
 
   /**
    * Get interval in milliseconds for a check frequency
-   * 
+   *
    * @param frequency Check frequency
    * @returns Interval in milliseconds
    */
-  private getIntervalMs(
-    frequency: 'hourly' | 'daily' | 'weekly' | 'monthly'
-  ): number {
+  private getIntervalMs(frequency: 'hourly' | 'daily' | 'weekly' | 'monthly'): number {
     switch (frequency) {
       case 'hourly':
         return 60 * 60 * 1000; // 1 hour
@@ -112,15 +108,12 @@ export class Scheduler {
 
   /**
    * Get next check time for a dependency
-   * 
+   *
    * @param dependency Dependency entry
    * @param config Configuration
    * @returns Next check time
    */
-  getNextCheckTime(
-    dependency: DependencyEntry,
-    config: DependabitConfig
-  ): Date {
+  getNextCheckTime(dependency: DependencyEntry, config: DependabitConfig): Date {
     const rules = getEffectiveMonitoringRules(config, dependency.url);
     const lastChecked = new Date(dependency.lastChecked);
     const intervalMs = this.getIntervalMs(rules.checkFrequency);
@@ -130,7 +123,7 @@ export class Scheduler {
 
   /**
    * Get schedule summary for all dependencies
-   * 
+   *
    * @param dependencies Array of dependencies
    * @param config Configuration
    * @returns Schedule summary grouped by frequency

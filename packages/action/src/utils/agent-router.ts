@@ -11,18 +11,15 @@ export interface AgentAssignmentConfig {
 
 /**
  * Route issue to appropriate AI agent based on severity
- * 
+ *
  * Uses severity-to-agent mapping from configuration to determine
  * which AI agent should be assigned to handle the issue.
- * 
+ *
  * @param severity Change severity (breaking, major, minor)
  * @param config Agent assignment configuration
  * @returns Agent name (e.g., 'copilot', 'claude') or null if not configured
  */
-export function routeToAgent(
-  severity: Severity,
-  config: AgentAssignmentConfig
-): string | null {
+export function routeToAgent(severity: Severity, config: AgentAssignmentConfig): string | null {
   if (!config.enabled) {
     return null;
   }
@@ -33,10 +30,10 @@ export function routeToAgent(
 
 /**
  * Generate assignee label for issue
- * 
+ *
  * Creates a label in format "assigned:agent" that can be used
  * to trigger agent-specific workflows or assign the issue.
- * 
+ *
  * @param agent Agent name or null
  * @returns Label string or null
  */
@@ -50,9 +47,9 @@ export function getAssigneeLabel(agent: string | null): string | null {
 
 /**
  * Get all configured agents
- * 
+ *
  * Returns list of unique agent names configured in the severity mapping
- * 
+ *
  * @param config Agent assignment configuration
  * @returns Array of agent names
  */

@@ -21,7 +21,7 @@ describe('Validate Action', () => {
   describe('validateAction', () => {
     it('should validate a valid manifest successfully', async () => {
       const { readManifest, validateManifest } = await import('@dependabit/manifest');
-      
+
       const validManifest: DependencyManifest = {
         version: '1.0.0',
         generatedAt: new Date().toISOString(),
@@ -74,7 +74,7 @@ describe('Validate Action', () => {
 
     it('should detect schema validation errors', async () => {
       const { readManifest, validateManifest } = await import('@dependabit/manifest');
-      
+
       const invalidManifest = {
         version: '2.0.0', // Invalid version
         dependencies: []
@@ -94,7 +94,7 @@ describe('Validate Action', () => {
 
     it('should detect duplicate dependency IDs', async () => {
       const { readManifest, validateManifest } = await import('@dependabit/manifest');
-      
+
       const duplicateManifest: DependencyManifest = {
         version: '1.0.0',
         generatedAt: new Date().toISOString(),
@@ -141,9 +141,9 @@ describe('Validate Action', () => {
         ],
         statistics: {
           totalDependencies: 2,
-          byType: {'reference-implementation': 2},
-          byAccessMethod: {'github-api': 2},
-          byDetectionMethod: {'manual': 2},
+          byType: { 'reference-implementation': 2 },
+          byAccessMethod: { 'github-api': 2 },
+          byDetectionMethod: { manual: 2 },
           averageConfidence: 1.0
         }
       };
@@ -154,12 +154,14 @@ describe('Validate Action', () => {
       const result = await validateAction('.dependabit/manifest.json');
 
       expect(result.valid).toBe(false);
-      expect(result.errors.some(e => e.includes('duplicate') || e.includes('Duplicate'))).toBe(true);
+      expect(result.errors.some((e) => e.includes('duplicate') || e.includes('Duplicate'))).toBe(
+        true
+      );
     });
 
     it('should detect invalid URLs', async () => {
       const { readManifest, validateManifest } = await import('@dependabit/manifest');
-      
+
       const invalidUrlManifest: any = {
         version: '1.0.0',
         generatedAt: new Date().toISOString(),
@@ -192,9 +194,9 @@ describe('Validate Action', () => {
         ],
         statistics: {
           totalDependencies: 1,
-          byType: {'reference-implementation': 1},
-          byAccessMethod: {'github-api': 1},
-          byDetectionMethod: {'manual': 1},
+          byType: { 'reference-implementation': 1 },
+          byAccessMethod: { 'github-api': 1 },
+          byDetectionMethod: { manual: 1 },
           averageConfidence: 1.0
         }
       };
@@ -207,12 +209,12 @@ describe('Validate Action', () => {
       const result = await validateAction('.dependabit/manifest.json');
 
       expect(result.valid).toBe(false);
-      expect(result.errors.some(e => e.includes('URL') || e.includes('url'))).toBe(true);
+      expect(result.errors.some((e) => e.includes('URL') || e.includes('url'))).toBe(true);
     });
 
     it('should validate with config file when provided', async () => {
       const { readManifest, readConfig, validateManifest } = await import('@dependabit/manifest');
-      
+
       const manifest: DependencyManifest = {
         version: '1.0.0',
         generatedAt: new Date().toISOString(),

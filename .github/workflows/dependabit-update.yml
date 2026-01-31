@@ -29,31 +29,31 @@ jobs:
   update:
     runs-on: ubuntu-latest
     name: Update Dependency Manifest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 10 # Fetch recent commits for analysis
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
+
       - name: Setup GitHub CLI (required for Copilot CLI)
         run: |
           # GitHub CLI is pre-installed on GitHub Actions runners
           # Verify it's available and authenticated
           gh --version
           gh auth status
-      
+
       - name: Install dependencies and build action
         run: |
           corepack enable
           pnpm install
           pnpm build
-      
+
       - name: Update manifest
         id: update
         uses: ./packages/action
@@ -64,7 +64,7 @@ jobs:
           llm_provider: github-copilot
           llm_api_key: ${{ secrets.GITHUB_TOKEN }}
           debug: 'true'
-      
+
       - name: Commit updated manifest
         if: steps.update.outputs.changes_detected == 'true'
         run: |
@@ -77,7 +77,7 @@ jobs:
             git commit -m "chore: update dependency manifest [skip ci]"
             git push
           fi
-      
+
       - name: Summary
         if: always()
         run: |

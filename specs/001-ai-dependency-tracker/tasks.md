@@ -200,21 +200,21 @@
 
 ### Tests for User Story 4 (TDD - Write FIRST)
 
-- [ ] T084 [P] [US4] Write tests for manifest validation in packages/action/tests/actions/validate.test.ts
-- [ ] T084a [P] [US4] Write tests for AI agent config parser in packages/action/tests/utils/agent-config.test.ts
-- [ ] T084b [P] [US4] Write tests for agent router in packages/action/tests/utils/agent-router.test.ts
-- [ ] T085 [P] [US4] Write tests for config override logic in packages/manifest/tests/config.test.ts
-- [ ] T086 [US4] Write tests for per-dependency schedule in packages/monitor/tests/scheduler.test.ts
+- [X] T084 [P] [US4] Write tests for manifest validation in packages/action/tests/actions/validate.test.ts
+- [X] T084a [P] [US4] Write tests for AI agent config parser in packages/action/tests/utils/agent-config.test.ts
+- [X] T084b [P] [US4] Write tests for agent router in packages/action/tests/utils/agent-router.test.ts
+- [X] T085 [P] [US4] Write tests for config override logic in packages/manifest/tests/config.test.ts
+- [X] T086 [US4] Write tests for per-dependency schedule in packages/monitor/tests/scheduler.test.ts
 
 ### Implementation for User Story 4
 
-- [ ] T087 [US4] Implement validate action in packages/action/src/actions/validate.ts (schema + business rules)
-- [ ] T087a [P] [US4] Implement AI agent config parser in packages/action/src/utils/agent-config.ts (parse severity-to-agent mapping from config.yml)
-- [ ] T087b [P] [US4] Implement agent router in packages/action/src/utils/agent-router.ts (assign issues based on severity rules)
-- [ ] T088 [US4] Implement config override resolution in packages/manifest/src/config.ts (global + per-dependency)
-- [ ] T089 [US4] Implement scheduler in packages/monitor/src/scheduler.ts (respect checkFrequency)
+- [X] T087 [US4] Implement validate action in packages/action/src/actions/validate.ts (schema + business rules)
+- [X] T087a [P] [US4] Implement AI agent config parser in packages/action/src/utils/agent-config.ts (parse severity-to-agent mapping from config.yml)
+- [X] T087b [P] [US4] Implement agent router in packages/action/src/utils/agent-router.ts (assign issues based on severity rules)
+- [X] T088 [US4] Implement config override resolution in packages/manifest/src/config.ts (global + per-dependency)
+- [X] T089 [US4] Implement scheduler in packages/monitor/src/scheduler.ts (respect checkFrequency)
 - [ ] T090 [US4] Add validation step to update/check workflows
-- [ ] T091 [US4] Create .dependabit/config.yml example in quickstart.md
+- [X] T091 [US4] Create .dependabit/config.yml example in quickstart.md
 - [ ] T092 [US4] Add CLI-friendly output for validation errors
 
 **Checkpoint**: US4 complete - full manual control and customization available

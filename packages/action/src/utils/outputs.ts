@@ -56,11 +56,7 @@ export async function createGenerateSummary(
     ])
     .addRaw('\n')
     .addHeading('📊 Dependencies by Type', 3)
-    .addList(
-      Object.entries(manifest.statistics.byType).map(
-        ([type, count]) => `${type}: ${count}`
-      )
-    )
+    .addList(Object.entries(manifest.statistics.byType).map(([type, count]) => `${type}: ${count}`))
     .addRaw('\n')
     .addHeading('🔧 Dependencies by Access Method', 3)
     .addList(
@@ -94,19 +90,19 @@ export async function createDependencyListSummary(
         { data: 'Confidence', header: true },
         { data: 'URL', header: true }
       ],
-      ...dependencies.slice(0, 20).map(dep => [
-        dep.name,
-        dep.type,
-        `${(dep.confidence * 100).toFixed(0)}%`,
-        `[Link](${dep.url})`
-      ])
+      ...dependencies
+        .slice(0, 20)
+        .map((dep) => [
+          dep.name,
+          dep.type,
+          `${(dep.confidence * 100).toFixed(0)}%`,
+          `[Link](${dep.url})`
+        ])
     ])
     .write();
 
   if (dependencies.length > 20) {
-    await core.summary
-      .addRaw(`\n_...and ${dependencies.length - 20} more dependencies_\n`)
-      .write();
+    await core.summary.addRaw(`\n_...and ${dependencies.length - 20} more dependencies_\n`).write();
   }
 }
 
@@ -117,8 +113,8 @@ function countDependencyDiffs(
   existingManifest: DependencyManifest,
   updatedManifest: DependencyManifest
 ): { added: number; removed: number } {
-  const existingSet = new Set(existingManifest.dependencies.map(dep => JSON.stringify(dep)));
-  const updatedSet = new Set(updatedManifest.dependencies.map(dep => JSON.stringify(dep)));
+  const existingSet = new Set(existingManifest.dependencies.map((dep) => JSON.stringify(dep)));
+  const updatedSet = new Set(updatedManifest.dependencies.map((dep) => JSON.stringify(dep)));
 
   let added = 0;
   for (const dep of updatedSet) {
@@ -165,7 +161,8 @@ export async function createUpdateSummary(
     urlsRemoved: number;
   }
 ): Promise<void> {
-  const dependenciesAdded = updatedManifest.dependencies.length - existingManifest.dependencies.length;
+  const dependenciesAdded =
+    updatedManifest.dependencies.length - existingManifest.dependencies.length;
   const changesDetected = dependenciesAdded !== 0;
 
   await core.summary
@@ -182,20 +179,23 @@ export async function createUpdateSummary(
       ['URLs Removed', stats.urlsRemoved.toString()],
       ['Dependencies Before', existingManifest.dependencies.length.toString()],
       ['Dependencies After', updatedManifest.dependencies.length.toString()],
-      ['Net Change', dependenciesAdded >= 0 ? `+${dependenciesAdded}` : dependenciesAdded.toString()],
+      [
+        'Net Change',
+        dependenciesAdded >= 0 ? `+${dependenciesAdded}` : dependenciesAdded.toString()
+      ],
       ['Changes Detected', changesDetected ? '✅ Yes' : '❌ No']
     ])
     .write();
 
   if (dependenciesAdded > 0) {
     const newDeps = updatedManifest.dependencies
-      .filter(dep => !existingManifest.dependencies.some(existing => existing.url === dep.url))
+      .filter((dep) => !existingManifest.dependencies.some((existing) => existing.url === dep.url))
       .slice(0, 10);
 
     if (newDeps.length > 0) {
       await core.summary
         .addHeading('🆕 New Dependencies', 3)
-        .addList(newDeps.map(dep => `**${dep.name}**: ${dep.url} (${dep.type})`))
+        .addList(newDeps.map((dep) => `**${dep.name}**: ${dep.url} (${dep.type})`))
         .write();
     }
   }

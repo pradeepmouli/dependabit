@@ -19,12 +19,12 @@ export interface ValidationResult {
 
 /**
  * Validate manifest file with comprehensive checks
- * 
+ *
  * Performs:
  * - Schema validation (Zod)
  * - Business rule validation (duplicate IDs, valid URLs, timestamp order)
  * - Optional config validation
- * 
+ *
  * @param manifestPath Path to manifest.json
  * @param configPath Optional path to config.yml
  * @returns Validation result with errors and warnings
@@ -166,14 +166,10 @@ function validateBusinessRules(
   }
 
   // Check for low confidence detections
-  const lowConfidence = manifest.dependencies.filter(
-    (dep) => dep.detectionConfidence < 0.5
-  );
+  const lowConfidence = manifest.dependencies.filter((dep) => dep.detectionConfidence < 0.5);
 
   if (lowConfidence.length > 0) {
-    warnings.push(
-      `${lowConfidence.length} dependencies have low detection confidence (<0.5)`
-    );
+    warnings.push(`${lowConfidence.length} dependencies have low detection confidence (<0.5)`);
   }
 
   // Check manifest size
@@ -181,13 +177,9 @@ function validateBusinessRules(
   const sizeInMB = manifestSize / (1024 * 1024);
 
   if (sizeInMB > 10) {
-    errors.push(
-      `Manifest size (${sizeInMB.toFixed(2)}MB) exceeds maximum (10MB)`
-    );
+    errors.push(`Manifest size (${sizeInMB.toFixed(2)}MB) exceeds maximum (10MB)`);
   } else if (sizeInMB > 5) {
-    warnings.push(
-      `Manifest size (${sizeInMB.toFixed(2)}MB) is large (target: <1MB, warn: >5MB)`
-    );
+    warnings.push(`Manifest size (${sizeInMB.toFixed(2)}MB) is large (target: <1MB, warn: >5MB)`);
   }
 
   console.log(`✓ Business rule validation completed`);
@@ -219,9 +211,7 @@ function validateManifestConfigCompatibility(
     for (const ignoredUrl of config.ignore.urls) {
       const found = manifest.dependencies.some((dep) => dep.url === ignoredUrl);
       if (found) {
-        warnings.push(
-          `Dependency ${ignoredUrl} is in manifest but marked as ignored in config`
-        );
+        warnings.push(`Dependency ${ignoredUrl} is in manifest but marked as ignored in config`);
       }
     }
   }

@@ -22,7 +22,7 @@ vi.mock('@dependabit/monitor', () => {
       }
     ]);
   }
-  
+
   return {
     Monitor: MockMonitor
   };
@@ -36,16 +36,16 @@ vi.mock('@dependabit/github-client', () => {
       url: 'https://github.com/owner/repo/issues/123',
       labels: ['dependabit', 'severity:major']
     });
-    
+
     findExistingIssue = vi.fn().mockResolvedValue(null);
-    
+
     updateIssue = vi.fn().mockResolvedValue({
       number: 123,
       url: 'https://github.com/owner/repo/issues/123',
       labels: ['dependabit', 'severity:major']
     });
   }
-  
+
   class MockRateLimitHandler {
     checkRateLimit = vi.fn().mockResolvedValue({
       limit: 5000,
@@ -53,14 +53,14 @@ vi.mock('@dependabit/github-client', () => {
       reset: new Date(Date.now() + 3600000),
       used: 1000
     });
-    
+
     waitIfNeeded = vi.fn().mockResolvedValue(undefined);
-    
+
     reserveBudget = vi.fn().mockResolvedValue({
       reserved: true
     });
   }
-  
+
   return {
     IssueManager: MockIssueManager,
     RateLimitHandler: MockRateLimitHandler

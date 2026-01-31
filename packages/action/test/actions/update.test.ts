@@ -12,16 +12,16 @@ const mockGetInput = vi.mocked(core.getInput);
 describe('Update Action Integration Tests', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    
+
     // Set up default input mocks
     mockGetInput.mockImplementation((name: string) => {
       const inputs: Record<string, string> = {
-        'action': 'update',
-        'repo_path': '/test/repo',
-        'manifest_path': '.dependabit/manifest.json',
-        'commits': '',
-        'llm_provider': 'github-copilot',
-        'llm_api_key': 'test-token'
+        action: 'update',
+        repo_path: '/test/repo',
+        manifest_path: '.dependabit/manifest.json',
+        commits: '',
+        llm_provider: 'github-copilot',
+        llm_api_key: 'test-token'
       };
       return inputs[name] || '';
     });
@@ -60,10 +60,10 @@ describe('Update Action Integration Tests', () => {
   it('should complete within time limit', async () => {
     // Test for SC-002: complete within 2 minutes
     const startTime = Date.now();
-    
+
     // Simulate update action (will be implemented)
     // await run();
-    
+
     const duration = Date.now() - startTime;
     expect(duration).toBeLessThan(2 * 60 * 1000); // 2 minutes
   });

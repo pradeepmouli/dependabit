@@ -14,10 +14,7 @@ export interface CommentReference {
 /**
  * Parse code files and extract references from comments
  */
-export function parseCodeComments(
-  content: string,
-  filePath: string
-): CommentReference[] {
+export function parseCodeComments(content: string, filePath: string): CommentReference[] {
   const references: CommentReference[] = [];
   const extension = getFileExtension(filePath);
   const commentStyle = getCommentStyle(extension);
@@ -32,7 +29,7 @@ export function parseCodeComments(
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (!line) continue;
-    
+
     const lineNumber = i + 1;
 
     // Check for multi-line comment start/end
@@ -98,38 +95,38 @@ function getCommentStyle(extension: string): CommentStyle | null {
     ts: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
     jsx: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
     tsx: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
-    
+
     // Python
     py: { singleLine: '#' },
-    
+
     // Ruby
     rb: { singleLine: '#', multiLine: { start: '=begin', end: '=end' } },
-    
+
     // Go
     go: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
-    
+
     // Rust
     rs: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
-    
+
     // C/C++
     c: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
     cpp: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
     h: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
-    
+
     // Java/Kotlin
     java: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
     kt: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
-    
+
     // C#
     cs: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
-    
+
     // PHP
     php: { singleLine: '//', multiLine: { start: '/*', end: '*/' } },
-    
+
     // Shell
     sh: { singleLine: '#' },
     bash: { singleLine: '#' },
-    
+
     // YAML
     yml: { singleLine: '#' },
     yaml: { singleLine: '#' }

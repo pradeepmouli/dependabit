@@ -9,14 +9,18 @@ import { Detector, GitHubCopilotProvider } from '@dependabit/detector';
 import { writeManifest, type DependencyManifest } from '@dependabit/manifest';
 import { createLogger, withTiming } from '../logger.js';
 import { parseGenerateInputs } from '../utils/inputs.js';
-import { setGenerateOutputs, createGenerateSummary, createDependencyListSummary } from '../utils/outputs.js';
+import {
+  setGenerateOutputs,
+  createGenerateSummary,
+  createDependencyListSummary
+} from '../utils/outputs.js';
 
 /**
  * Main entry point for the generate action
  */
 export async function run(): Promise<void> {
   const logger = createLogger({ enableDebug: true });
-  
+
   try {
     logger.startGroup('📋 Parsing Action Inputs');
     const inputs = parseGenerateInputs();
@@ -64,10 +68,10 @@ export async function run(): Promise<void> {
     // Create manifest
     logger.startGroup('📄 Creating Manifest');
     const manifest = await createManifest(inputs.repoPath, result.dependencies, inputs.llmProvider);
-    
+
     const manifestPath = join(inputs.repoPath, inputs.manifestPath);
     await writeManifest(manifestPath, manifest);
-    
+
     logger.info('Manifest written', {
       path: manifestPath,
       dependencyCount: manifest.dependencies.length
@@ -83,7 +87,7 @@ export async function run(): Promise<void> {
     logger.startGroup('📝 Creating Summary');
     await createGenerateSummary(manifest, result.statistics);
     await createDependencyListSummary(
-      manifest.dependencies.map(dep => ({
+      manifest.dependencies.map((dep) => ({
         name: dep.name,
         url: dep.url,
         type: dep.type,
@@ -98,7 +102,7 @@ export async function run(): Promise<void> {
       error: error instanceof Error ? error.message : String(error),
       stack: error instanceof Error ? error.stack : undefined
     });
-    
+
     core.setFailed(error instanceof Error ? error.message : String(error));
   }
 }

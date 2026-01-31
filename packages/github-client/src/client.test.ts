@@ -72,11 +72,11 @@ describe('GitHubClient Tests', () => {
 
     it('should throw error when rate limit is exceeded', async () => {
       const client = new GitHubClient({ rateLimitMinRemaining: 10 });
-      
+
       // This test is tricky with mocks, so we'll test the behavior when remaining is low
       // In a real scenario, this would wait or throw
       const checkResult = client.checkRateLimit();
-      
+
       // Since our mock has 4900 remaining, this should not throw
       await expect(checkResult).resolves.not.toThrow();
     });

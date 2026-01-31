@@ -28,9 +28,9 @@ export class GitHubRepoChecker implements Checker {
       const apiUrl = `https://api.github.com/repos/${owner}/${cleanRepo}/releases/latest`;
       const response = await fetch(apiUrl, {
         headers: {
-          'Accept': 'application/vnd.github+json',
+          Accept: 'application/vnd.github+json',
           'User-Agent': 'dependabit',
-          ...(config.auth?.secret && { 'Authorization': `Bearer ${config.auth.secret}` })
+          ...(config.auth?.secret && { Authorization: `Bearer ${config.auth.secret}` })
         }
       });
 
@@ -43,7 +43,7 @@ export class GitHubRepoChecker implements Checker {
         throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
       }
 
-      const release = await response.json() as {
+      const release = (await response.json()) as {
         tag_name: string;
         name: string;
         published_at: string;
@@ -78,13 +78,17 @@ export class GitHubRepoChecker implements Checker {
   /**
    * Fallback: Fetch latest commit when no releases exist
    */
-  private async fetchLatestCommit(owner: string, repo: string, token?: string): Promise<DependencySnapshot> {
+  private async fetchLatestCommit(
+    owner: string,
+    repo: string,
+    token?: string
+  ): Promise<DependencySnapshot> {
     const apiUrl = `https://api.github.com/repos/${owner}/${repo}/commits?per_page=1`;
     const response = await fetch(apiUrl, {
       headers: {
-        'Accept': 'application/vnd.github+json',
+        Accept: 'application/vnd.github+json',
         'User-Agent': 'dependabit',
-        ...(token && { 'Authorization': `Bearer ${token}` })
+        ...(token && { Authorization: `Bearer ${token}` })
       }
     });
 
@@ -92,7 +96,7 @@ export class GitHubRepoChecker implements Checker {
       throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
     }
 
-    const commits = await response.json() as Array<{
+    const commits = (await response.json()) as Array<{
       sha: string;
       commit: {
         message: string;

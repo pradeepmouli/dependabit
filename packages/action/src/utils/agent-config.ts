@@ -14,9 +14,9 @@ export interface AgentAssignmentConfig {
 
 /**
  * Parse AI agent assignment configuration from config
- * 
+ *
  * Extracts severity-to-agent mapping from config.yml:
- * 
+ *
  * ```yaml
  * issues:
  *   aiAgentAssignment:
@@ -25,7 +25,7 @@ export interface AgentAssignmentConfig {
  *     major: claude
  *     minor: copilot
  * ```
- * 
+ *
  * @param config Dependabit configuration
  * @returns Agent assignment configuration
  */

@@ -1,9 +1,6 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname } from 'node:path';
-import {
-  type DependencyManifest,
-  type DependencyEntry
-} from './schema.js';
+import { type DependencyManifest, type DependencyEntry } from './schema.js';
 import { validateManifest, validateDependencyEntry } from './validator.js';
 
 /**
@@ -18,10 +15,7 @@ export async function readManifest(path: string): Promise<DependencyManifest> {
 /**
  * Write a manifest to file
  */
-export async function writeManifest(
-  path: string,
-  manifest: DependencyManifest
-): Promise<void> {
+export async function writeManifest(path: string, manifest: DependencyManifest): Promise<void> {
   // Validate before writing
   validateManifest(manifest);
 
@@ -50,7 +44,7 @@ export async function updateDependency(
 
   // Update the dependency in place
   Object.assign(dep, updates);
-  
+
   // Validate the merged dependency
   validateDependencyEntry(dep);
 
@@ -139,7 +133,7 @@ export function mergeManifests(
   // Create a deep copy of the updated manifest to avoid mutations
   const merged: DependencyManifest = {
     ...updated,
-    dependencies: updated.dependencies.map(dep => ({
+    dependencies: updated.dependencies.map((dep) => ({
       ...dep,
       changeHistory: dep.changeHistory ? [...dep.changeHistory] : [],
       referencedIn: dep.referencedIn ? [...dep.referencedIn] : []
@@ -148,9 +142,7 @@ export function mergeManifests(
 
   if (preserveManual) {
     // Find manual entries in existing manifest
-    const manualEntries = existing.dependencies.filter(
-      (dep) => dep.detectionMethod === 'manual'
-    );
+    const manualEntries = existing.dependencies.filter((dep) => dep.detectionMethod === 'manual');
 
     // Add manual entries that aren't in the updated manifest
     for (const manualEntry of manualEntries) {
@@ -171,9 +163,7 @@ export function mergeManifests(
   if (preserveHistory) {
     // Preserve change history for matching dependencies
     merged.dependencies = merged.dependencies.map((dep) => {
-      const existingDep = existing.dependencies.find(
-        (d) => d.id === dep.id || d.url === dep.url
-      );
+      const existingDep = existing.dependencies.find((d) => d.id === dep.id || d.url === dep.url);
 
       if (existingDep && existingDep.changeHistory && existingDep.changeHistory.length > 0) {
         return {

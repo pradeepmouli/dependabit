@@ -272,6 +272,164 @@ Update workflow:
     PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
 ```
 
+## Manual Manifest Management
+
+Dependabit supports manual editing of the manifest file for cases where automatic detection fails or you need custom monitoring rules.
+
+### Adding Dependencies Manually
+
+Edit `.dependabit/manifest.json` to add entries:
+
+```json
+{
+  "dependencies": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "url": "https://example.com/custom-api",
+      "type": "documentation",
+      "accessMethod": "http",
+      "name": "Custom API Documentation",
+      "description": "Internal API reference",
+      "currentStateHash": "",
+      "detectionMethod": "manual",
+      "detectionConfidence": 1.0,
+      "detectedAt": "2026-01-31T00:00:00Z",
+      "lastChecked": "2026-01-31T00:00:00Z",
+      "referencedIn": [
+        {
+          "file": "README.md",
+          "line": 42,
+          "context": "See API docs"
+        }
+      ],
+      "changeHistory": [],
+      "monitoring": {
+        "enabled": true,
+        "checkFrequency": "weekly",
+        "ignoreChanges": false
+      }
+    }
+  ]
+}
+```
+
+### Validating the Manifest
+
+After manual edits, validate your manifest to catch errors:
+
+#### Option 1: Add Validation Workflow
+
+Create `.github/workflows/dependabit-validate.yml`:
+
+```yaml
+name: Validate Dependabit Manifest
+
+on:
+  pull_request:
+    paths:
+      - '.dependabit/**'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate manifest
+        uses: pradeepmouli/dependabit@v1
+        with:
+          action: validate
+          manifest-path: .dependabit/manifest.json
+          config-path: .dependabit/config.yml
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+#### Option 2: Add to Existing Workflows
+
+Add validation step to update/check workflows:
+
+```yaml
+- name: Validate before processing
+  uses: pradeepmouli/dependabit@v1
+  with:
+    action: validate
+    manifest-path: .dependabit/manifest.json
+    config-path: .dependabit/config.yml
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+### Validation Checks
+
+The validation action performs comprehensive checks:
+
+**Schema Validation**
+- ✅ Manifest version compatibility
+- ✅ Required fields present
+- ✅ Valid data types
+- ✅ Zod schema compliance
+
+**Business Rules**
+- ✅ No duplicate dependency IDs
+- ✅ Valid URL formats
+- ✅ Timestamp ordering (detectedAt ≤ lastChecked ≤ lastChanged)
+- ✅ Statistics consistency
+- ✅ Manifest size limits (<10MB)
+
+**Config Compatibility**
+- ✅ Dependency overrides match manifest entries
+- ✅ Valid agent assignments
+- ✅ Proper secret references
+
+### Per-Dependency Scheduling
+
+Control monitoring frequency for individual dependencies:
+
+```yaml
+# In .dependabit/config.yml
+dependencies:
+  - url: "https://github.com/critical/repo"
+    monitoring:
+      enabled: true
+      checkFrequency: hourly  # Check every hour
+      ignoreChanges: false
+
+  - url: "https://stable-docs.example.com"
+    monitoring:
+      enabled: true
+      checkFrequency: monthly  # Check once a month
+      ignoreChanges: false
+
+  - url: "https://frozen-api.example.com"
+    monitoring:
+      enabled: true
+      checkFrequency: daily
+      ignoreChanges: true  # Monitor but don't create issues
+```
+
+### AI Agent Assignment
+
+Route issues to specific AI agents based on severity:
+
+```yaml
+# In .dependabit/config.yml
+issues:
+  labels:
+    - dependabit
+    - dependency-update
+  aiAgentAssignment:
+    enabled: true
+    breaking: copilot  # Breaking changes → GitHub Copilot
+    major: claude      # Major changes → Claude
+    minor: copilot     # Minor changes → GitHub Copilot
+```
+
+When changes are detected, issues will be labeled with:
+- `severity:breaking`, `severity:major`, or `severity:minor`
+- `assigned:copilot` or `assigned:claude`
+
+This allows GitHub Actions workflows to route issues to appropriate agents for automated handling.
+
 ## Troubleshooting
 
 ### Manifest Not Generated

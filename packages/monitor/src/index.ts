@@ -16,9 +16,4 @@ export { normalizeHTML, normalizeURL } from './normalizer.js';
 
 export { Scheduler } from './scheduler.js';
 
-export type {
-  Checker,
-  DependencySnapshot,
-  ChangeDetection,
-  AccessConfig
-} from './types.js';
+export type { Checker, DependencySnapshot, ChangeDetection, AccessConfig } from './types.js';

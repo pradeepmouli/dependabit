@@ -31,8 +31,9 @@ export interface CheckActionInputs {
  */
 export function parseGenerateInputs(): GenerateActionInputs {
   const llmModelInput = core.getInput('llm_model');
-  const llmApiKeyInput = core.getInput('llm_api_key') || process.env['GITHUB_TOKEN'] || process.env['OPENAI_API_KEY'];
-  
+  const llmApiKeyInput =
+    core.getInput('llm_api_key') || process.env['GITHUB_TOKEN'] || process.env['OPENAI_API_KEY'];
+
   return {
     repoPath: core.getInput('repo_path') || process.cwd(),
     llmProvider: (core.getInput('llm_provider') || 'github-copilot') as 'github-copilot',
@@ -48,8 +49,8 @@ export function parseGenerateInputs(): GenerateActionInputs {
  */
 export function parseUpdateInputs(): UpdateActionInputs {
   const commitsInput = core.getInput('commits');
-  const commits = commitsInput ? commitsInput.split(',').map(c => c.trim()) : [];
-  
+  const commits = commitsInput ? commitsInput.split(',').map((c) => c.trim()) : [];
+
   return {
     repoPath: core.getInput('repo_path') || process.cwd(),
     manifestPath: core.getInput('manifest_path') || '.dependabit/manifest.json',
@@ -62,8 +63,10 @@ export function parseUpdateInputs(): UpdateActionInputs {
  */
 export function parseCheckInputs(): CheckActionInputs {
   const labelsInput = core.getInput('issue_labels');
-  const labels = labelsInput ? labelsInput.split(',').map(l => l.trim()) : ['dependabit', 'dependency-update'];
-  
+  const labels = labelsInput
+    ? labelsInput.split(',').map((l) => l.trim())
+    : ['dependabit', 'dependency-update'];
+
   return {
     manifestPath: core.getInput('manifest_path') || '.dependabit/manifest.json',
     createIssues: core.getBooleanInput('create_issues') !== false,
