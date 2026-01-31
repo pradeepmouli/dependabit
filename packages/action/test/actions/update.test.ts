@@ -8,7 +8,6 @@ vi.mock('@dependabit/detector');
 vi.mock('@dependabit/manifest');
 
 const mockGetInput = vi.mocked(core.getInput);
-const mockSetOutput = vi.mocked(core.setOutput);
 
 describe('Update Action Integration Tests', () => {
   beforeEach(() => {
