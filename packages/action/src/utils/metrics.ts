@@ -111,8 +111,12 @@ export class MetricsCalculator {
       sumX2 += x * x;
     });
 
-    const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+    const denominator = n * sumX2 - sumX * sumX;
+    if (denominator === 0) {
+      return { direction: 'no-data', slope: 0 };
+    }
 
+    const slope = (n * sumXY - sumX * sumY) / denominator;
     // Determine direction based on slope
     let direction: Trend['direction'];
     if (Math.abs(slope) < 0.001) {
