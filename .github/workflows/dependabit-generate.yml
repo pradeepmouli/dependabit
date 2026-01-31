@@ -36,6 +36,12 @@ jobs:
         with:
           node-version: '20'
       
+      - name: Install dependencies and build action
+        run: |
+          corepack enable
+          pnpm install
+          pnpm build
+      
       - name: Generate manifest
         id: generate
         uses: ./packages/action
