@@ -46,6 +46,8 @@ export async function run(): Promise<void> {
       core.setOutput('changes_detected', false);
       core.setOutput('dependencies_added', 0);
       core.setOutput('dependencies_removed', 0);
+      core.setOutput('total_dependencies', 0);
+      core.setOutput('files_analyzed', 0);
       return;
     }
 
