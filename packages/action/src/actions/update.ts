@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import { existsSync } from 'node:fs';
 import { Detector, GitHubCopilotProvider, extractDependencyChanges } from '@dependabit/detector';
 import { readManifest, writeManifest, mergeManifests, type DependencyManifest } from '@dependabit/manifest';
-import { createGitHubClient, fetchCommits, getCommitDiff } from '@dependabit/github-client';
+import { createGitHubClient, getCommitDiff } from '@dependabit/github-client';
 import { createLogger, withTiming } from '../logger.js';
 import { parseUpdateInputs } from '../utils/inputs.js';
 import { setUpdateOutputs, createUpdateSummary } from '../utils/outputs.js';
