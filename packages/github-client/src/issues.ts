@@ -146,11 +146,25 @@ export class IssueManager {
     };
 
     if (severity) {
-      updateParams.labels = [
+      const current = await this.octokit.rest.issues.get({
+        owner,
+        repo,
+        issue_number: issueNumber
+      });
+
+      const existingLabels = current.data.labels
+        .map(l => (typeof l === 'string' ? l : l.name))
+        .filter((l): l is string => !!l);
+
+      const severityLabels = [
         'dependabit',
         `severity:${severity}`,
         'dependency-update'
       ];
+
+      const mergedLabels = Array.from(new Set([...existingLabels, ...severityLabels]));
+
+      updateParams.labels = mergedLabels;
     }
 
     const response = await this.octokit.rest.issues.update(updateParams);
