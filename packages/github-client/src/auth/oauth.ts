@@ -13,9 +13,9 @@ export interface OAuthAuth {
   type: 'oauth';
   token: string;
   tokenType: string;
-  scope?: string;
-  expiresIn?: number;
-  refreshToken?: string;
+  scope?: string | undefined;
+  expiresIn?: number | undefined;
+  refreshToken?: string | undefined;
 }
 
 interface TokenResponse {
