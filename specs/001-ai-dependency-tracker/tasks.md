@@ -245,7 +245,7 @@
 - [X] T099c [P] Write tests for false positive metrics calculator in packages/action/tests/utils/metrics.test.ts
 - [X] T099d [P] Implement false positive rate calculator in packages/action/src/utils/metrics.ts (30-day rolling window)
 - [ ] T099e [P] Create E2E test for false positive validation in tests/e2e/false-positive-validation.spec.ts
-- [ ] T100 [P] Create comprehensive README for each package
+- [X] T100 [P] Create comprehensive README for each package
 - [ ] T101 [P] Add JSDoc comments for all public APIs
 - [ ] T102 [P] Generate TypeDoc documentation
 - [ ] T103 [P] Create docs/ai-dependency-tracker/architecture.md
@@ -253,9 +253,9 @@
 - [ ] T104a [P] Create contracts/plugin-api.md (define plugin registration API)
 - [ ] T105 [P] Create docs/ai-dependency-tracker/troubleshooting.md
 - [ ] T106 Bundle action with @vercel/ncc for single-file distribution
-- [ ] T107 Add action branding in action.yml (icon, color)
+- [X] T107 Add action branding in action.yml (icon, color)
 - [ ] T108 Test action in private repo before publishing
-- [ ] T109 Create CHANGELOG.md for initial release
+- [X] T109 Create CHANGELOG.md for initial release
 - [ ] T110 Tag v1.0.0 release
 
 ---
