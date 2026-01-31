@@ -58,49 +58,40 @@ describe('Detector', () => {
 
   describe('classifyDependencyType', () => {
     it('should classify GitHub repos as reference-implementation', () => {
-      const url = 'https://github.com/microsoft/TypeScript';
       expect(true).toBe(true);
     });
 
     it('should classify arXiv URLs as research-paper', () => {
-      const url = 'https://arxiv.org/abs/1706.03762';
       expect(true).toBe(true);
     });
 
     it('should classify OpenAPI specs as schema', () => {
-      const url = 'https://api.example.com/openapi.yaml';
       expect(true).toBe(true);
     });
 
     it('should classify documentation sites as documentation', () => {
-      const url = 'https://docs.example.com/guide';
       expect(true).toBe(true);
     });
 
     it('should use LLM for ambiguous URLs', () => {
-      const url = 'https://example.com/some-resource';
       expect(true).toBe(true);
     });
   });
 
   describe('determineAccessMethod', () => {
     it('should use github-api for GitHub URLs', () => {
-      const url = 'https://github.com/owner/repo';
       expect(true).toBe(true);
     });
 
     it('should use arxiv for arXiv URLs', () => {
-      const url = 'https://arxiv.org/abs/1234.5678';
       expect(true).toBe(true);
     });
 
     it('should use openapi for OpenAPI spec URLs', () => {
-      const url = 'https://api.example.com/openapi.json';
       expect(true).toBe(true);
     });
 
     it('should use http as fallback', () => {
-      const url = 'https://example.com/docs';
       expect(true).toBe(true);
     });
   });
