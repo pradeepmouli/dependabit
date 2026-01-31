@@ -88,7 +88,10 @@ export async function run(): Promise<void> {
               logger.info('Detected commits from push event', { count: commitsToAnalyze.length });
             }
           } catch (error) {
-            logger.warning('Failed to parse event payload', { error: String(error) });
+            logger.warning('Failed to parse GitHub event payload', { 
+              error: String(error),
+              eventPath 
+            });
           }
         }
         

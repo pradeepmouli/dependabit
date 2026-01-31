@@ -558,8 +558,11 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
 
         filesScanned++;
       } catch (error) {
-        // Skip files that can't be read
-        console.warn(`Failed to analyze ${filePath}:`, error);
+        // Skip files that can't be read - log but don't throw
+        // Using console.warn since we don't have a logger instance here
+        if (process.env['DEBUG']) {
+          console.warn(`Failed to analyze ${filePath}:`, error);
+        }
       }
     }
 
