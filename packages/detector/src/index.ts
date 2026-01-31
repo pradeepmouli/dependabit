@@ -27,6 +27,21 @@ export {
   parseGoMod
 } from './parsers/package-files.js';
 
+// Diff Parser
+export type {
+  DiffParseResult,
+  ExtractedContent,
+  ChangedFilesResult
+} from './diff-parser.js';
+export {
+  parseDiff,
+  extractAddedContent,
+  extractRemovedContent,
+  getChangedFiles,
+  parseCommitDiffs,
+  extractDependencyChanges
+} from './diff-parser.js';
+
 // Detector
 export type { DetectorOptions, DetectionResult } from './detector.js';
 export { Detector } from './detector.js';
