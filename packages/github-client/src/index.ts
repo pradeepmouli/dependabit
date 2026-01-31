@@ -3,6 +3,7 @@
  */
 
 export * from './client.js';
+export * from './commits.js';
 export { IssueManager } from './issues.js';
 export type { IssueData, IssueResult, UpdateIssueData } from './issues.js';
 export { ReleaseManager } from './releases.js';

@@ -109,3 +109,94 @@ export async function createDependencyListSummary(
       .write();
   }
 }
+
+/**
+ * Set outputs for the update action
+ */
+function countDependencyDiffs(
+  existingManifest: DependencyManifest,
+  updatedManifest: DependencyManifest
+): { added: number; removed: number } {
+  const existingSet = new Set(existingManifest.dependencies.map(dep => JSON.stringify(dep)));
+  const updatedSet = new Set(updatedManifest.dependencies.map(dep => JSON.stringify(dep)));
+
+  let added = 0;
+  for (const dep of updatedSet) {
+    if (!existingSet.has(dep)) {
+      added++;
+    }
+  }
+
+  let removed = 0;
+  for (const dep of existingSet) {
+    if (!updatedSet.has(dep)) {
+      removed++;
+    }
+  }
+
+  return { added, removed };
+}
+
+export function setUpdateOutputs(
+  updatedManifest: DependencyManifest,
+  existingManifest: DependencyManifest,
+  filesChanged: number
+): void {
+  const { added, removed } = countDependencyDiffs(existingManifest, updatedManifest);
+  const changesDetected = added > 0 || removed > 0;
+
+  core.setOutput('changes_detected', changesDetected);
+  core.setOutput('dependencies_added', added);
+  core.setOutput('dependencies_removed', removed);
+  core.setOutput('total_dependencies', updatedManifest.dependencies.length);
+  core.setOutput('files_analyzed', filesChanged);
+}
+
+/**
+ * Create a summary report for the update action
+ */
+export async function createUpdateSummary(
+  existingManifest: DependencyManifest,
+  updatedManifest: DependencyManifest,
+  stats: {
+    commitsAnalyzed: number;
+    filesChanged: number;
+    urlsAdded: number;
+    urlsRemoved: number;
+  }
+): Promise<void> {
+  const dependenciesAdded = updatedManifest.dependencies.length - existingManifest.dependencies.length;
+  const changesDetected = dependenciesAdded !== 0;
+
+  await core.summary
+    .addHeading('🔄 Manifest Update Complete')
+    .addRaw('\n')
+    .addTable([
+      [
+        { data: 'Metric', header: true },
+        { data: 'Value', header: true }
+      ],
+      ['Commits Analyzed', stats.commitsAnalyzed.toString()],
+      ['Files Changed', stats.filesChanged.toString()],
+      ['URLs Added', stats.urlsAdded.toString()],
+      ['URLs Removed', stats.urlsRemoved.toString()],
+      ['Dependencies Before', existingManifest.dependencies.length.toString()],
+      ['Dependencies After', updatedManifest.dependencies.length.toString()],
+      ['Net Change', dependenciesAdded >= 0 ? `+${dependenciesAdded}` : dependenciesAdded.toString()],
+      ['Changes Detected', changesDetected ? '✅ Yes' : '❌ No']
+    ])
+    .write();
+
+  if (dependenciesAdded > 0) {
+    const newDeps = updatedManifest.dependencies
+      .filter(dep => !existingManifest.dependencies.some(existing => existing.url === dep.url))
+      .slice(0, 10);
+
+    if (newDeps.length > 0) {
+      await core.summary
+        .addHeading('🆕 New Dependencies', 3)
+        .addList(newDeps.map(dep => `**${dep.name}**: ${dep.url} (${dep.type})`))
+        .write();
+    }
+  }
+}
