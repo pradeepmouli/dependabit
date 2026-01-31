@@ -48,7 +48,7 @@ export class PerformanceTracker {
    * Start tracking an operation
    */
   startOperation(name: string, metadata?: Record<string, unknown>): string {
-    const operationId = `${name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const operationId = `${name}-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
     
     const metrics: OperationMetrics = {
       name,
