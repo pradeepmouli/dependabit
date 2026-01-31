@@ -9,7 +9,7 @@ import { randomUUID } from 'node:crypto';
 import type { LLMProvider } from './llm/client.js';
 import { createDetectionPrompt, createClassificationPrompt } from './llm/prompts.js';
 import { parseReadme } from './parsers/readme.js';
-import { parseCodeComments, extractSpecReferences } from './parsers/code-comments.js';
+import { parseCodeComments } from './parsers/code-comments.js';
 import {
   parsePackageJson,
   parseRequirementsTxt,
