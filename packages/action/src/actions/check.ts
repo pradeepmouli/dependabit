@@ -77,6 +77,10 @@ export async function checkAction(
       result.skipped++;
       return false;
     }
+    if (dep.monitoring?.ignoreChanges === true) {
+      result.skipped++;
+      return false;
+    }
     return true;
   });
 
