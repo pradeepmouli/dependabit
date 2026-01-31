@@ -1,9 +1,9 @@
 /**
- * GitHub Copilot / Azure OpenAI Provider Implementation
- * Integrates with GitHub Copilot via Azure OpenAI SDK
+ * GitHub Copilot / OpenAI Provider Implementation
+ * Integrates with OpenAI API
  */
 
-import { AzureOpenAI } from '@azure/openai';
+import OpenAI from 'openai';
 import type {
   LLMProvider,
   LLMProviderConfig,
@@ -15,15 +15,15 @@ import type {
 import { SYSTEM_PROMPT } from './prompts.js';
 
 export class GitHubCopilotProvider implements LLMProvider {
-  private client: AzureOpenAI;
+  private client: OpenAI;
   private config: Required<LLMProviderConfig>;
   private model: string;
 
   constructor(config: LLMProviderConfig = {}) {
     // Default configuration
     this.config = {
-      apiKey: config.apiKey || process.env['GITHUB_TOKEN'] || process.env['AZURE_OPENAI_API_KEY'] || '',
-      endpoint: config.endpoint || process.env['AZURE_OPENAI_ENDPOINT'] || 'https://api.openai.com',
+      apiKey: config.apiKey || process.env['GITHUB_TOKEN'] || process.env['OPENAI_API_KEY'] || '',
+      endpoint: config.endpoint || process.env['OPENAI_BASE_URL'] || 'https://api.openai.com/v1',
       model: config.model || 'gpt-4',
       maxTokens: config.maxTokens || 4000,
       temperature: config.temperature || 0.3
@@ -32,13 +32,13 @@ export class GitHubCopilotProvider implements LLMProvider {
     this.model = this.config.model;
 
     if (!this.config.apiKey) {
-      throw new Error('API key required: set GITHUB_TOKEN or AZURE_OPENAI_API_KEY environment variable');
+      throw new Error('API key required: set GITHUB_TOKEN or OPENAI_API_KEY environment variable');
     }
 
-    // Initialize Azure OpenAI client
-    this.client = new AzureOpenAI({
-      endpoint: this.config.endpoint,
-      apiKey: this.config.apiKey
+    // Initialize OpenAI client
+    this.client = new OpenAI({
+      apiKey: this.config.apiKey,
+      baseURL: this.config.endpoint
     });
   }
 
@@ -65,7 +65,8 @@ export class GitHubCopilotProvider implements LLMProvider {
         throw new Error('No response from LLM');
       }
 
-      const content_text = response.choices[0].message?.content || '{}';
+      const firstChoice = response.choices[0];
+      const content_text = firstChoice?.message?.content || '{}';
       let parsed: { dependencies: DetectedDependency[] };
 
       try {

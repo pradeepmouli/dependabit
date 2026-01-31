@@ -31,6 +31,8 @@ export function parseCodeComments(
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+    if (!line) continue;
+    
     const lineNumber = i + 1;
 
     // Check for multi-line comment start/end
@@ -80,7 +82,8 @@ export function parseCodeComments(
 
 function getFileExtension(filePath: string): string {
   const match = filePath.match(/\.([^.]+)$/);
-  return match ? match[1].toLowerCase() : '';
+  const ext = match?.[1];
+  return ext ? ext.toLowerCase() : '';
 }
 
 interface CommentStyle {

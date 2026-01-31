@@ -33,6 +33,8 @@ export function parseReadme(content: string, filePath = 'README.md'): ExtractedR
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+    if (!line) continue; // Skip undefined or empty lines
+    
     const lineNumber = i + 1;
 
     // Extract markdown links [text](url)
@@ -85,10 +87,11 @@ function extractMarkdownLinks(line: string): Array<{ url: string; text: string }
   let match;
 
   while ((match = regex.exec(line)) !== null) {
-    links.push({
-      text: match[1],
-      url: match[2]
-    });
+    const text = match[1];
+    const url = match[2];
+    if (text !== undefined && url !== undefined) {
+      links.push({ text, url });
+    }
   }
 
   return links;
@@ -100,10 +103,11 @@ function extractReferenceLinks(line: string): Array<{ url: string; text: string 
   const match = regex.exec(line);
 
   if (match) {
-    links.push({
-      text: match[1],
-      url: match[2]
-    });
+    const text = match[1];
+    const url = match[2];
+    if (text !== undefined && url !== undefined) {
+      links.push({ text, url });
+    }
   }
 
   return links;
@@ -149,23 +153,27 @@ export function extractGitHubReferences(content: string): Array<{ owner: string;
     let match;
 
     while ((match = regex.exec(line)) !== null) {
-      const [_, ownerRepo] = match;
-      const [owner, repo] = ownerRepo.split('/');
-      
-      if (
-        owner &&
-        repo &&
-        owner.length >= 2 &&
-        repo.length >= 2 &&
-        owner !== 'owner' &&
-        repo !== 'repo' &&
-        !( /^\d+$/.test(owner) && /^\d+$/.test(repo) )
-      ) {
-        references.push({
-          owner,
-          repo,
-          context: line.trim()
-        });
+      const ownerRepo = match[1];
+      if (ownerRepo) {
+        const parts = ownerRepo.split('/');
+        const owner = parts[0];
+        const repo = parts[1];
+        
+        if (
+          owner &&
+          repo &&
+          owner.length >= 2 &&
+          repo.length >= 2 &&
+          owner !== 'owner' &&
+          repo !== 'repo' &&
+          !( /^\d+$/.test(owner) && /^\d+$/.test(repo) )
+        ) {
+          references.push({
+            owner,
+            repo,
+            context: line.trim()
+          });
+        }
       }
     }
   }

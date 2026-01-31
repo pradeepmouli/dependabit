@@ -30,11 +30,14 @@ export interface CheckActionInputs {
  * Parse inputs for the generate action
  */
 export function parseGenerateInputs(): GenerateActionInputs {
+  const llmModelInput = core.getInput('llm_model');
+  const llmApiKeyInput = core.getInput('llm_api_key') || process.env['GITHUB_TOKEN'] || process.env['OPENAI_API_KEY'];
+  
   return {
     repoPath: core.getInput('repo_path') || process.cwd(),
     llmProvider: (core.getInput('llm_provider') || 'github-copilot') as 'github-copilot',
-    llmModel: core.getInput('llm_model') || undefined,
-    llmApiKey: core.getInput('llm_api_key') || process.env.GITHUB_TOKEN || process.env.AZURE_OPENAI_API_KEY,
+    ...(llmModelInput && { llmModel: llmModelInput }),
+    ...(llmApiKeyInput && { llmApiKey: llmApiKeyInput }),
     manifestPath: core.getInput('manifest_path') || '.dependabit/manifest.json',
     enableDebug: core.getInput('debug') === 'true'
   };

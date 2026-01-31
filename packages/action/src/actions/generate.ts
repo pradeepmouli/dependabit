@@ -31,8 +31,8 @@ export async function run(): Promise<void> {
     // Initialize LLM provider
     logger.startGroup('🤖 Initializing LLM Provider');
     const llmProvider = new GitHubCopilotProvider({
-      apiKey: inputs.llmApiKey,
-      model: inputs.llmModel || 'gpt-4'
+      ...(inputs.llmApiKey && { apiKey: inputs.llmApiKey }),
+      ...(inputs.llmModel && { model: inputs.llmModel })
     });
     logger.info('LLM provider initialized', {
       provider: inputs.llmProvider,
@@ -112,10 +112,10 @@ async function createManifest(
   llmProvider: string
 ): Promise<DependencyManifest> {
   // Get repository info from GitHub context or git
-  const owner = process.env.GITHUB_REPOSITORY?.split('/')[0] || 'unknown';
-  const name = process.env.GITHUB_REPOSITORY?.split('/')[1] || 'unknown';
-  const branch = process.env.GITHUB_REF_NAME || 'main';
-  const commit = process.env.GITHUB_SHA || 'unknown';
+  const owner = process.env['GITHUB_REPOSITORY']?.split('/')[0] || 'unknown';
+  const name = process.env['GITHUB_REPOSITORY']?.split('/')[1] || 'unknown';
+  const branch = process.env['GITHUB_REF_NAME'] || 'main';
+  const commit = process.env['GITHUB_SHA'] || 'unknown';
 
   // Calculate statistics
   const byType: Record<string, number> = {};

@@ -20,7 +20,7 @@ export function parsePackageJson(content: string): PackageMetadata {
     const urls: string[] = [];
 
     // Extract repository URL
-    let repository: string | undefined;
+    let repository: string | undefined = undefined;
     if (typeof pkg.repository === 'string') {
       repository = pkg.repository;
     } else if (pkg.repository && pkg.repository.url) {
@@ -28,10 +28,10 @@ export function parsePackageJson(content: string): PackageMetadata {
     }
 
     // Extract homepage
-    const homepage = pkg.homepage;
+    const homepage: string | undefined = pkg.homepage;
 
     // Extract documentation (not standard but sometimes present)
-    const documentation = pkg.documentation || pkg.docs;
+    const documentation: string | undefined = pkg.documentation || pkg.docs;
 
     // Extract URLs from description
     if (pkg.description) {
@@ -43,9 +43,9 @@ export function parsePackageJson(content: string): PackageMetadata {
     // Those are handled by dependabot
 
     return {
-      repository,
-      homepage,
-      documentation,
+      ...(repository !== undefined && { repository }),
+      ...(homepage !== undefined && { homepage }),
+      ...(documentation !== undefined && { documentation }),
       urls
     };
   } catch (error) {
@@ -79,9 +79,9 @@ export function parseRequirementsTxt(content: string): PackageMetadata {
  */
 export function parseCargoToml(content: string): PackageMetadata {
   const urls: string[] = [];
-  let repository: string | undefined;
-  let homepage: string | undefined;
-  let documentation: string | undefined;
+  let repository: string | undefined = undefined;
+  let homepage: string | undefined = undefined;
+  let documentation: string | undefined = undefined;
 
   const lines = content.split('\n');
   let inPackageSection = false;
@@ -99,13 +99,13 @@ export function parseCargoToml(content: string): PackageMetadata {
 
     if (inPackageSection) {
       const repoMatch = /repository\s*=\s*"([^"]+)"/.exec(line);
-      if (repoMatch) repository = repoMatch[1];
+      if (repoMatch && repoMatch[1]) repository = repoMatch[1];
 
       const homepageMatch = /homepage\s*=\s*"([^"]+)"/.exec(line);
-      if (homepageMatch) homepage = homepageMatch[1];
+      if (homepageMatch && homepageMatch[1]) homepage = homepageMatch[1];
 
       const docMatch = /documentation\s*=\s*"([^"]+)"/.exec(line);
-      if (docMatch) documentation = docMatch[1];
+      if (docMatch && docMatch[1]) documentation = docMatch[1];
     }
 
     // Extract URLs from comments
@@ -116,9 +116,9 @@ export function parseCargoToml(content: string): PackageMetadata {
   }
 
   return {
-    repository,
-    homepage,
-    documentation,
+    ...(repository !== undefined && { repository }),
+    ...(homepage !== undefined && { homepage }),
+    ...(documentation !== undefined && { documentation }),
     urls
   };
 }

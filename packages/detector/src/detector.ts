@@ -92,7 +92,7 @@ export class Detector {
       for (const ref of references) {
         this.addReference(allReferences, ref.url, {
           file: relative(this.options.repoPath, file),
-          line: ref.line,
+          ...(ref.line !== undefined && { line: ref.line }),
           text: ref.context
         }, 'llm-analysis');
       }
@@ -159,8 +159,10 @@ export class Detector {
 
         if (response.dependencies.length > 0) {
           const dep = response.dependencies[0];
-          type = dep.type as DependencyType;
-          confidence = dep.confidence;
+          if (dep) {
+            type = dep.type as DependencyType;
+            confidence = dep.confidence;
+          }
         }
 
         // Determine access method based on URL
@@ -242,7 +244,10 @@ export class Detector {
       const urlObj = new URL(url);
       const pathParts = urlObj.pathname.split('/').filter(Boolean);
       if (pathParts.length > 0) {
-        return pathParts[pathParts.length - 1].replace(/\.[^.]+$/, '');
+        const lastPart = pathParts[pathParts.length - 1];
+        if (lastPart) {
+          return lastPart.replace(/\.[^.]+$/, '');
+        }
       }
       return urlObj.hostname;
     } catch {
