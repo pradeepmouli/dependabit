@@ -130,18 +130,18 @@ export class SummaryReporter {
     }
 
     if (change.changes.includes('content')) {
-      summary += 'Content updated\n';
+      summary += 'content updated\n';
       if (change.contentDiff) {
         summary += `Changes: ${change.contentDiff}\n`;
       }
     }
 
     if (change.changes.includes('metadata')) {
-      summary += 'Metadata updated\n';
+      summary += 'metadata updated\n';
     }
 
     if (change.changes.includes('version')) {
-      summary += 'Version updated\n';
+      summary += 'version updated\n';
     }
 
     return summary.trim();
