@@ -70,6 +70,15 @@ export class Detector {
 
   /**
    * Detect all external dependencies in the repository
+   * 
+   * Implementation follows a hybrid approach:
+   * 1. Programmatic parsing of repository files (README, code comments, package files)
+   * 2. LLM analysis only for documents not fully parsed in step 1 (future enhancement)
+   * 3. Programmatic type categorization based on URL patterns and context
+   * 4. LLM fallback for uncategorized dependencies
+   * 5. Programmatic access method determination based on URL patterns
+   * 6. LLM fallback for access methods that can't be determined (future enhancement)
+   * 7. Manifest entry creation with references and versioning
    */
   async detectDependencies(): Promise<DetectionResult> {
     const allReferences: Map<string, {
@@ -83,7 +92,8 @@ export class Detector {
     let totalTokens = 0;
     let totalLatencyMs = 0;
 
-    // 1. Parse README files
+    // Step 1: Parse repository for dependencies (programmatic)
+    // 1a. Parse README files
     const readmeFiles = await this.findFiles(this.options.repoPath, /^README/i);
     for (const file of readmeFiles) {
       const content = await readFile(file, 'utf-8');
@@ -100,7 +110,7 @@ export class Detector {
       filesScanned++;
     }
 
-    // 2. Parse package files for metadata (NOT dependencies)
+    // 1b. Parse package files for metadata (NOT dependencies)
     const packageFiles = await this.findPackageFiles(this.options.repoPath);
     for (const file of packageFiles) {
       const content = await readFile(file, 'utf-8');
@@ -116,7 +126,7 @@ export class Detector {
       filesScanned++;
     }
 
-    // 3. Parse code comments from source files
+    // 1c. Parse code comments from source files
     const sourceFiles = await this.findSourceFiles(this.options.repoPath);
     for (const file of sourceFiles.slice(0, 50)) { // Limit to 50 files for performance
       const content = await readFile(file, 'utf-8');
@@ -133,74 +143,89 @@ export class Detector {
       filesScanned++;
     }
 
-    // 4. Use LLM to analyze aggregated content and classify dependencies
+    // Step 2: LLM analysis for documents not fully parsed (future enhancement)
+    // Currently all document parsing is programmatic, no LLM needed
+
+    // Steps 3-6: Categorize dependencies (programmatic first, LLM fallback)
     const dependencies: DependencyEntry[] = [];
     const now = new Date().toISOString();
 
     for (const [url, data] of allReferences) {
-      // Prepare context for LLM
+      // Prepare context for potential LLM use
       const context = data.contexts
         .map(c => `${c.file}${c.line ? `:${c.line}` : ''}: ${c.text}`)
         .join('\n');
+      const firstContext = data.contexts[0]?.text || '';
 
-      // Classify the dependency using LLM
-      const classificationPrompt = createClassificationPrompt(url, context);
+      // Step 3: Try programmatic type categorization
+      let type: DependencyType | null = this.determineDependencyType(url, firstContext);
+      let typeConfidence = type ? 0.9 : 0.5; // High confidence for programmatic
       
-      try {
-        const response = await this.options.llmProvider.analyze('', classificationPrompt);
-        llmCalls++;
-        totalTokens += response.usage.totalTokens;
-        totalLatencyMs += response.usage.latencyMs;
+      // Step 4: If type couldn't be determined, use LLM fallback
+      if (!type) {
+        try {
+          const classificationPrompt = createClassificationPrompt(url, context);
+          const response = await this.options.llmProvider.analyze('', classificationPrompt);
+          llmCalls++;
+          totalTokens += response.usage.totalTokens;
+          totalLatencyMs += response.usage.latencyMs;
 
-        // Parse LLM classification
-        let type: DependencyType = 'other';
-        let accessMethod: AccessMethod = 'http';
-        let confidence = 0.5;
-
-        if (response.dependencies.length > 0) {
-          const dep = response.dependencies[0];
-          if (dep) {
-            type = dep.type as DependencyType;
-            confidence = dep.confidence;
+          if (response.dependencies.length > 0) {
+            const dep = response.dependencies[0];
+            if (dep) {
+              type = dep.type as DependencyType;
+              typeConfidence = dep.confidence;
+            }
           }
+        } catch (error) {
+          console.error(`LLM classification failed for ${url}:`, error);
         }
-
-        // Determine access method based on URL
-        accessMethod = this.determineAccessMethod(url);
-
-        // Create dependency entry
-        const entry: DependencyEntry = {
-          id: randomUUID(),
-          url,
-          type,
-          accessMethod,
-          name: this.extractName(url),
-          description: data.contexts[0]?.text || '',
-          currentVersion: undefined,
-          currentStateHash: '', // Will be populated by monitor
-          detectionMethod: data.detectionMethod,
-          detectionConfidence: confidence,
-          detectedAt: now,
-          lastChecked: now,
-          auth: undefined,
-          monitoring: {
-            enabled: true,
-            checkFrequency: 'daily',
-            ignoreChanges: false
-          },
-          referencedIn: data.contexts.map(c => ({
-            file: c.file,
-            line: c.line,
-            context: c.text
-          })),
-          changeHistory: []
-        };
-
-        dependencies.push(entry);
-      } catch (error) {
-        console.error(`Failed to classify ${url}:`, error);
-        // Continue with next URL
       }
+      
+      // Default to 'other' if still not determined
+      if (!type) {
+        type = 'other';
+        typeConfidence = 0.3;
+      }
+
+      // Step 5: Try programmatic access method determination
+      let accessMethod: AccessMethod | null = this.determineAccessMethod(url);
+      
+      // Step 6: If access method couldn't be determined, use LLM fallback (future enhancement)
+      if (!accessMethod) {
+        // For now, default to 'http' - LLM access method determination can be added if needed
+        accessMethod = 'http';
+      }
+
+      // Step 7: Create manifest entry with references and versioning
+      const entry: DependencyEntry = {
+        id: randomUUID(),
+        url,
+        type,
+        accessMethod,
+        name: this.extractName(url),
+        description: firstContext,
+        currentVersion: undefined,
+        currentStateHash: '', // Will be populated by monitor
+        detectionMethod: data.detectionMethod,
+        detectionConfidence: typeConfidence,
+        detectedAt: now,
+        lastChecked: now,
+        auth: undefined,
+        monitoring: {
+          enabled: true,
+          checkFrequency: 'daily',
+          ignoreChanges: false
+        },
+        referencedIn: data.contexts.map(c => ({
+          file: c.file,
+          line: c.line,
+          context: c.text
+        })),
+        changeHistory: []
+      };
+
+      dependencies.push(entry);
     }
 
     return {
@@ -231,11 +256,85 @@ export class Detector {
     map.get(url)!.contexts.push(context);
   }
 
-  private determineAccessMethod(url: string): AccessMethod {
+  /**
+   * Programmatically determine access method based on URL patterns
+   * Returns null if cannot be determined programmatically
+   */
+  private determineAccessMethod(url: string): AccessMethod | null {
+    // GitHub URLs
     if (url.includes('github.com')) return 'github-api';
+    
+    // arXiv papers
     if (url.includes('arxiv.org')) return 'arxiv';
-    if (url.includes('openapi') || url.endsWith('.yaml') || url.endsWith('.json')) return 'openapi';
-    return 'http';
+    
+    // OpenAPI/Swagger specs
+    if (url.includes('openapi') || 
+        url.includes('swagger') || 
+        url.endsWith('.yaml') || 
+        url.endsWith('.json') ||
+        url.includes('/api/spec') ||
+        url.includes('/api-docs')) {
+      return 'openapi';
+    }
+    
+    // Context7 documentation
+    if (url.includes('context7')) return 'context7';
+    
+    // Cannot determine programmatically - needs LLM
+    return null;
+  }
+  
+  /**
+   * Programmatically determine dependency type based on URL patterns and context
+   * Returns null if cannot be determined programmatically
+   */
+  private determineDependencyType(url: string, context: string): DependencyType | null {
+    const lowerUrl = url.toLowerCase();
+    const lowerContext = context.toLowerCase();
+    
+    // Research papers
+    if (lowerUrl.includes('arxiv.org') || 
+        lowerContext.includes('paper') || 
+        lowerContext.includes('research')) {
+      return 'research-paper';
+    }
+    
+    // Schemas
+    if (lowerUrl.includes('schema') || 
+        lowerUrl.includes('openapi') || 
+        lowerUrl.includes('swagger') ||
+        lowerUrl.includes('graphql') ||
+        lowerUrl.includes('protobuf')) {
+      return 'schema';
+    }
+    
+    // Documentation
+    if (lowerUrl.includes('/docs') || 
+        lowerUrl.includes('/documentation') ||
+        lowerUrl.includes('/guide') ||
+        lowerUrl.includes('/tutorial') ||
+        lowerUrl.includes('/reference') ||
+        lowerContext.includes('documentation') ||
+        lowerContext.includes('docs')) {
+      return 'documentation';
+    }
+    
+    // Reference implementations (GitHub repos)
+    if (lowerUrl.includes('github.com') && 
+        (lowerContext.includes('example') || 
+         lowerContext.includes('implementation') ||
+         lowerContext.includes('reference'))) {
+      return 'reference-implementation';
+    }
+    
+    // API examples
+    if (lowerContext.includes('example') && 
+        (lowerContext.includes('api') || lowerContext.includes('endpoint'))) {
+      return 'api-example';
+    }
+    
+    // Cannot determine programmatically - needs LLM
+    return null;
   }
 
   private extractName(url: string): string {
