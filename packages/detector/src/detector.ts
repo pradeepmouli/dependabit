@@ -571,24 +571,26 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
       const contextText = refData.contexts.map(c => c.text).join(' ');
 
       // Step 3: Programmatic type categorization
-      let type = this.categorizeType(url, contextText);
+      let type = this.determineDependencyType(url, contextText);
 
       // Step 4: LLM fallback for type categorization (if needed)
       if (!type && refData.contexts.length > 0) {
         const startTime = Date.now();
         try {
           const prompt = createClassificationPrompt(url, contextText);
-          const response = await this.options.llmProvider.complete(prompt);
+          const response = await this.options.llmProvider.analyze('', prompt);
           
           llmCalls++;
           totalTokens += response.usage?.totalTokens || 0;
           totalLatencyMs += Date.now() - startTime;
 
-          type = (response.content.toLowerCase().includes('schema') ? 'schema' :
-                 response.content.toLowerCase().includes('documentation') ? 'documentation' :
-                 response.content.toLowerCase().includes('research') || response.content.toLowerCase().includes('paper') ? 'research-paper' :
-                 response.content.toLowerCase().includes('implementation') ? 'reference-implementation' :
-                 response.content.toLowerCase().includes('example') ? 'api-example' :
+          // Use rawResponse for classification
+          const responseText = (response.rawResponse || '').toLowerCase();
+          type = (responseText.includes('schema') ? 'schema' :
+                 responseText.includes('documentation') ? 'documentation' :
+                 responseText.includes('research') || responseText.includes('paper') ? 'research-paper' :
+                 responseText.includes('implementation') ? 'reference-implementation' :
+                 responseText.includes('example') ? 'api-example' :
                  'other') as DependencyType;
         } catch {
           type = 'other';
@@ -600,7 +602,10 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
       }
 
       // Step 5: Programmatic access method determination
-      const accessMethod = this.determineAccessMethod(url);
+      let accessMethod = this.determineAccessMethod(url);
+      if (!accessMethod) {
+        accessMethod = 'http'; // Default fallback
+      }
 
       const dependency: DependencyEntry = {
         id: randomUUID(),
@@ -618,7 +623,8 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
           file: ctx.file,
           line: ctx.line,
           context: ctx.text
-        }))
+        })),
+        changeHistory: []
       };
 
       dependencies.push(dependency);

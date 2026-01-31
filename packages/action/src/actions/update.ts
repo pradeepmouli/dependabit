@@ -35,6 +35,9 @@ export async function run(): Promise<void> {
       throw new Error('GITHUB_REPOSITORY environment variable not set');
     }
     const [owner, repo] = repository.split('/');
+    if (!owner || !repo) {
+      throw new Error(`Invalid GITHUB_REPOSITORY format: ${repository}`);
+    }
 
     // Check if manifest exists
     const manifestPath = join(inputs.repoPath, inputs.manifestPath);
@@ -85,7 +88,7 @@ export async function run(): Promise<void> {
               logger.info('Detected commits from push event', { count: commitsToAnalyze.length });
             }
           } catch (error) {
-            logger.warn('Failed to parse event payload', { error: String(error) });
+            logger.warning('Failed to parse event payload', { error: String(error) });
           }
         }
         
@@ -190,8 +193,8 @@ export async function run(): Promise<void> {
       repository: {
         owner,
         name: repo,
-        branch: process.env['GITHUB_REF_NAME'] || existingManifest.repository.branch,
-        commit: process.env['GITHUB_SHA'] || existingManifest.repository.commit
+        branch: process.env['GITHUB_REF_NAME'] || existingManifest.repository.branch || 'main',
+        commit: process.env['GITHUB_SHA'] || existingManifest.repository.commit || 'unknown'
       },
       dependencies: newDependencies
     };

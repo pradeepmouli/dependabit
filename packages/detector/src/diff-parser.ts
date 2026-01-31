@@ -101,17 +101,17 @@ export function extractAddedContent(
     if (filename === 'package.json') {
       const depMatches = content.matchAll(PACKAGE_DEP_PATTERNS.packageJson);
       for (const match of depMatches) {
-        packageDeps.push(match[1]);
+        if (match[1]) packageDeps.push(match[1]);
       }
     } else if (filename === 'requirements.txt') {
       const depMatches = content.matchAll(PACKAGE_DEP_PATTERNS.requirementsTxt);
       for (const match of depMatches) {
-        packageDeps.push(match[1]);
+        if (match[1]) packageDeps.push(match[1]);
       }
     } else if (filename === 'Cargo.toml') {
       const depMatches = content.matchAll(PACKAGE_DEP_PATTERNS.cargoToml);
       for (const match of depMatches) {
-        packageDeps.push(match[1]);
+        if (match[1]) packageDeps.push(match[1]);
       }
     }
   }
@@ -145,8 +145,12 @@ export function getChangedFiles(files: CommitFile[]): ChangedFilesResult {
     const filename = file.filename.toLowerCase();
     const basename = filename.split('/').pop() || '';
 
-    // Check if it's a package manifest file
-    if (PACKAGE_MANIFEST_FILES.includes(basename)) {
+    // Check if it's a package manifest file (case-insensitive comparison)
+    const isPackageFile = PACKAGE_MANIFEST_FILES.some(
+      manifestFile => manifestFile.toLowerCase() === basename
+    );
+    
+    if (isPackageFile) {
       packageFiles.push(file.filename);
       relevantFiles.push(file.filename);
       continue;
