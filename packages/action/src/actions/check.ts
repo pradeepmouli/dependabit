@@ -86,6 +86,18 @@ export async function checkAction(
 
   console.log(`Checking ${enabledDeps.length} dependencies (${result.skipped} skipped)...`);
 
+  // Reserve budget for all checks upfront
+  const budgetNeeded = enabledDeps.length + 10; // Extra buffer for issue operations
+  const budgetReservation = await rateLimitHandler.reserveBudget(budgetNeeded);
+  
+  if (!budgetReservation.reserved) {
+    console.warn(`Insufficient API quota: ${budgetReservation.reason}`);
+    if (budgetReservation.waitTime) {
+      console.log(`Waiting ${Math.ceil(budgetReservation.waitTime / 1000)} seconds for rate limit reset...`);
+      await rateLimitHandler.waitIfNeeded();
+    }
+  }
+
   // Check all dependencies
   const checkResults = await monitor.checkAll(enabledDeps);
 
@@ -144,6 +156,9 @@ export async function checkAction(
       // Create issue if enabled
       if (createIssues && !dryRun && owner && repo) {
         try {
+          // Check rate limit before creating issue
+          await rateLimitHandler.waitIfNeeded();
+
           // Check if issue already exists
           const existing = await issueManager.findExistingIssue({
             owner,

@@ -5,7 +5,6 @@
 
 import { GitHubRepoChecker } from './checkers/github-repo.js';
 import { URLContentChecker } from './checkers/url-content.js';
-import { StateComparator } from './comparator.js';
 import { SeverityClassifier } from './severity.js';
 import type { Checker, AccessConfig, DependencySnapshot, ChangeDetection } from './types.js';
 
@@ -33,7 +32,6 @@ export interface CheckResult {
 
 export class Monitor {
   private checkers: Map<string, Checker>;
-  private comparator: StateComparator;
   private classifier: SeverityClassifier;
 
   constructor() {
@@ -41,7 +39,6 @@ export class Monitor {
     this.checkers.set('github-api', new GitHubRepoChecker());
     this.checkers.set('http', new URLContentChecker());
 
-    this.comparator = new StateComparator();
     this.classifier = new SeverityClassifier();
   }
 
