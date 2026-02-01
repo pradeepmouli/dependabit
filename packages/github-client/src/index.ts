@@ -10,3 +10,6 @@ export { ReleaseManager } from './releases.js';
 export type { Release, ReleaseComparison } from './releases.js';
 export { RateLimitHandler } from './rate-limit.js';
 export type { RateLimitInfo, RateLimitStatus, BudgetReservation } from './rate-limit.js';
+export * from './auth.js';
+export { FeedbackListener } from './feedback.js';
+export type { FeedbackConfig, FeedbackData, FeedbackRate } from './feedback.js';

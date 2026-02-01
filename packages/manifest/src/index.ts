@@ -11,3 +11,6 @@ export * from './manifest.js';
 
 // Export config operations
 export * from './config.js';
+
+// Export size checking
+export * from './size-check.js';
