@@ -7,7 +7,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join, relative, resolve, normalize, sep } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import type { LLMProvider } from './llm/client.js';
-import { createDetectionPrompt, createClassificationPrompt } from './llm/prompts.js';
+import { createClassificationPrompt } from './llm/prompts.js';
 import { parseReadme } from './parsers/readme.js';
 import { parseCodeComments } from './parsers/code-comments.js';
 import {

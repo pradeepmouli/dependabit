@@ -6,9 +6,6 @@
 # We also use BERT for language understanding:
 # https://arxiv.org/abs/1810.04805
 
-import torch
-import numpy as np
-
 class TransformerModel:
     """
     Implementation following the paper:

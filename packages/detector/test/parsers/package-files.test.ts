@@ -26,30 +26,25 @@ describe('PackageFileParser', () => {
 
   describe('parseRequirementsTxt', () => {
     it('should extract GitHub repository URLs from comments', () => {
-      const content = '# See https://github.com/owner/repo\nflask>=2.0.0';
       expect(true).toBe(true);
     });
 
     it('should skip PyPI packages', () => {
-      const content = 'flask>=2.0.0\nrequests==2.28.0';
       // Expected: Return empty (dependabot handles this)
       expect(true).toBe(true);
     });
 
     it('should extract documentation URLs from comments', () => {
-      const content = '# API docs: https://api.example.com';
       expect(true).toBe(true);
     });
   });
 
   describe('parseCargoToml', () => {
     it('should extract repository URLs', () => {
-      const content = '[package]\nrepository = "https://github.com/owner/repo"';
       expect(true).toBe(true);
     });
 
     it('should skip crates.io dependencies', () => {
-      const content = '[dependencies]\nserde = "1.0"';
       // Expected: Return empty (dependabot handles this)
       expect(true).toBe(true);
     });
