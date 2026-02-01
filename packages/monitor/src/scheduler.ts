@@ -164,7 +164,8 @@ export class Scheduler {
         summary.disabled++;
       } else {
         // Use dependency-level frequency if available, otherwise use rules
-        const checkFrequency = dep.monitoring?.checkFrequency || rules.checkFrequency;
+        const checkFrequency: 'hourly' | 'daily' | 'weekly' | 'monthly' = 
+          dep.monitoring?.checkFrequency ?? rules.checkFrequency;
         summary[checkFrequency]++;
       }
     }
