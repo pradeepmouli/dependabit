@@ -1,15 +1,46 @@
 # dependabit
 
-dependabot for resources, related projects, and knowledge
+![Dependabit logo](docs/assets/dependabit-logo.svg)
 
-## Getting Started
+Dependabit is a Dependabot-inspired toolkit for tracking resources, related projects, and the knowledge that keeps them healthy. It is built for teams that want dependable updates, clear auditability, and a repeatable workflow across multiple packages.
+
+## Table of Contents
+
+- [Why dependabit](#why-dependabit)
+- [Key capabilities](#key-capabilities)
+- [How it works](#how-it-works)
+- [Quick start](#quick-start)
+- [Scripts](#scripts)
+- [Project layout](#project-layout)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Why dependabit
+
+- **Stay current** with dependency insights that are tailored to resources and cross-project ecosystems.
+- **Reduce risk** through automated checks and a consistent review workflow.
+- **Move faster** with a shared workspace and tooling that scales to multiple packages.
+
+## Key capabilities
+
+- Workspace-ready tooling built on pnpm.
+- Automated linting, formatting, and testing hooks.
+- Documentation-first workflow for repeatable maintenance.
+- Structured workspace guides and examples to keep onboarding simple.
+
+## How it works
+
+Dependabit uses a pnpm workspace to group packages, scripts, and shared configuration. It keeps dependencies discoverable and aligns contributors on repeatable update and review steps.
+
+## Quick start
 
 ### Prerequisites
 
 - Node.js >= 20.0.0
 - pnpm >= 10.0.0
 
-### Installation
+### Install
 
 ```bash
 git clone https://github.com/pradeepmouli/dependabit.git
@@ -17,37 +48,30 @@ cd dependabit
 pnpm install
 ```
 
-### Development
+### Develop
 
 ```bash
-# Start development
 pnpm run dev
-
-# Run tests
-pnpm run test
-
-# Lint and format
-pnpm run lint
-pnpm run format
 ```
 
-## Project Structure
+## Scripts
 
-This project uses pnpm workspaces for managing multiple packages:
+```bash
+pnpm run lint
+pnpm run format
+pnpm test
+```
+
+## Project layout
 
 ```
 dependabit/
-├── packages/
-│   └── [your packages here]
-├── docs/
-├── .github/workflows/
+├── docs/                 # Guides and references
+├── packages/             # Workspace packages
+├── src/                  # Shared application code
 ├── package.json
 └── README.md
 ```
-
-## Creating Your First Package
-
-See [docs/WORKSPACE.md](docs/WORKSPACE.md) for detailed instructions on adding packages.
 
 ## Documentation
 
@@ -58,13 +82,8 @@ See [docs/WORKSPACE.md](docs/WORKSPACE.md) for detailed instructions on adding p
 
 ## Contributing
 
-Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
-MIT - See [LICENSE](LICENSE) for details
-
----
-
-**Author**: Pradeep Mouli
-**Created**: January 29, 2026
+MIT - See [LICENSE](LICENSE) for details.
