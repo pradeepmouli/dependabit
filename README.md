@@ -2,38 +2,46 @@
 
 ![Dependabit logo](docs/assets/dependabit-logo.svg)
 
-Dependabit is a Dependabot-inspired toolkit for tracking resources, related projects, and the knowledge that keeps them healthy. It is built for teams that want dependable updates, clear auditability, and a repeatable workflow across multiple packages.
+Dependabit is a Dependabot-inspired toolkit for tracking external resources, related projects, and knowledge dependencies with AI-assisted detection and monitoring. It is built as a pnpm workspace with GitHub Actions entry points, core packages, and plugins for common sources.
 
 ## Table of Contents
 
-- [Why dependabit](#why-dependabit)
-- [Key capabilities](#key-capabilities)
-- [How it works](#how-it-works)
-- [Quick start](#quick-start)
+- [What dependabit provides](#what-dependabit-provides)
+- [Workspace packages](#workspace-packages)
+- [Plugins](#plugins)
+- [Getting started](#getting-started)
 - [Scripts](#scripts)
-- [Project layout](#project-layout)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 - [License](#license)
 
-## Why dependabit
+## What dependabit provides
 
-- **Stay current** with dependency insights that are tailored to resources and cross-project ecosystems.
-- **Reduce risk** through automated checks and a consistent review workflow.
-- **Move faster** with a shared workspace and tooling that scales to multiple packages.
+- GitHub Actions to generate, update, check, and validate dependency manifests.
+- LLM-assisted detection and structured manifests for external resources.
+- Monitoring and change detection for releases, documentation, and APIs.
+- Plugin integrations for GitHub, HTTP resources, OpenAPI specs, arXiv, and Context7.
 
-## Key capabilities
+## Workspace packages
 
-- Workspace-ready tooling built on pnpm.
-- Automated linting, formatting, and testing hooks.
-- Documentation-first workflow for repeatable maintenance.
-- Structured workspace guides and examples to keep onboarding simple.
+- `@dependabit/action` - GitHub Action entry points for dependency tracking workflows.
+- `@dependabit/detector` - LLM-based dependency detection.
+- `@dependabit/manifest` - Manifest schema and validation.
+- `@dependabit/monitor` - Change detection and monitoring logic.
+- `@dependabit/github-client` - GitHub API wrapper with auth and rate limiting.
+- `@company/core` - Shared core utilities.
+- `@company/utils` - Shared string and array utilities.
+- `@company/test-utils` - Shared Vitest helpers and fixtures.
 
-## How it works
+## Plugins
 
-Dependabit uses a pnpm workspace to group packages, scripts, and shared configuration. It keeps dependencies discoverable and aligns contributors on repeatable update and review steps.
+- `@dependabit/plugin-github` - GitHub file, tag, and release tracking.
+- `@dependabit/plugin-http` - HTTP resource tracking with content hashing.
+- `@dependabit/plugin-openapi` - OpenAPI spec fetching and diffing.
+- `@dependabit/plugin-arxiv` - arXiv paper tracking.
+- `@dependabit/plugin-context7` - Context7 API tracking.
 
-## Quick start
+## Getting started
 
 ### Prerequisites
 
@@ -60,17 +68,6 @@ pnpm run dev
 pnpm run lint
 pnpm run format
 pnpm test
-```
-
-## Project layout
-
-```
-dependabit/
-├── docs/                 # Guides and references
-├── packages/             # Workspace packages
-├── src/                  # Shared application code
-├── package.json
-└── README.md
 ```
 
 ## Documentation
