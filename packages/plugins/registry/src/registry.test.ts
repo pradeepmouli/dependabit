@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
   PluginRegistry,
   globalRegistry,
@@ -80,7 +80,7 @@ describe('Plugin Registry Tests', () => {
     });
 
     it('should call destroy when unregistering plugin with destroy method', async () => {
-      const plugin = createMockPlugin('http', { withInit: true });
+      const plugin = createMockPlugin('http');
       plugin.destroy = vi.fn(async () => {});
       registry.register(plugin);
 

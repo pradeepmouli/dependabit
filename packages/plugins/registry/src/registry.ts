@@ -104,8 +104,9 @@ export class PluginRegistry {
   clear(): void {
     for (const plugin of this.plugins.values()) {
       if (typeof plugin.destroy === 'function') {
-        plugin.destroy().catch(() => {
-          // Ignore errors during plugin destruction to avoid unhandled rejections
+        plugin.destroy().catch((error) => {
+          // Log errors during plugin destruction but don't propagate to avoid unhandled rejections
+          console.error(`Error destroying plugin ${plugin.metadata.name}:`, error);
         });
       }
     }
