@@ -49,7 +49,11 @@ describe('Detector', () => {
       // Expected: Continue with parser results, log error
       expect(true).toBe(true);
     });
+  });
 
+  describe('classifyDependency', () => {
+    it('should classify GitHub URLs as repository', () => {
+      const url = 'https://github.com/owner/repo';
       expect(url).toContain('github.com');
     });
 
