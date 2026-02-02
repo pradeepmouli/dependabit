@@ -6,5 +6,10 @@
   },
   "include": ["src"],
   "exclude": ["src/**/*.test.ts", "src/**/*.spec.ts"],
-  "references": []
+  "references": [
+    { "path": "../detector" },
+    { "path": "../github-client" },
+    { "path": "../manifest" },
+    { "path": "../monitor" }
+  ]
 }
