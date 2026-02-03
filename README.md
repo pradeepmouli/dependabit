@@ -190,7 +190,8 @@ dependabit/
 ├── specs/                # Feature specifications
 ├── docs/                 # Documentation
 ├── .github/workflows/    # CI/CD workflows
-└── tests/                # E2E tests
+├── e2e/                  # E2E tests
+└── test-fixtures/        # Test fixtures for E2E/integration tests
 ```
 
 ## Development
