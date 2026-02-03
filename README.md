@@ -84,8 +84,12 @@ jobs:
           git config user.name "dependabit[bot]"
           git config user.email "dependabit[bot]@users.noreply.github.com"
           git add .dependabit/
-          git commit -m "chore: initialize dependabit manifest"
-          git push
+          if git status --porcelain .dependabit/ | grep .; then
+            git commit -m "chore: initialize dependabit manifest"
+            git push
+          else
+            echo "No manifest changes to commit; skipping commit and push."
+          fi
 ```
 
 #### 2. Auto-Update on Push
