@@ -454,6 +454,6 @@ For security issues, please see [SECURITY.md](SECURITY.md).
 
 **Author**: Pradeep Mouli  
 **Created**: January 29, 2026  
-**Status**: Production Ready - v1.0.0
+**Status**: Early Access - v0.1.0
 
 **Made with ❤️ for developers who care about external dependencies**
