@@ -134,35 +134,42 @@ jobs:
 Create `.dependabit/config.yml` to customize behavior:
 
 ```yaml
-version: 1
+version: "1"
 
 # Global settings
 schedule:
   interval: daily
   time: "02:00"
 
-# AI agent assignment rules
-agents:
-  breaking:
-    assignee: "@copilot"
-    labels: ["critical", "breaking-change"]
-  major:
-    assignee: "@claude"
-    labels: ["enhancement"]
-  minor:
-    labels: ["maintenance"]
+# Issue handling & AI agent assignment rules
+issues:
+  aiAgentAssignment:
+    breaking:
+      assignee: "@copilot"
+      labels:
+        - critical
+        - breaking-change
+    major:
+      assignee: "@claude"
+      labels:
+        - enhancement
+    minor:
+      labels:
+        - maintenance
 
 # Per-dependency overrides
 dependencies:
   - url: "https://github.com/important/repo"
     schedule:
       interval: hourly
-    ignore_changes: false
+    monitoring:
+      ignoreChanges: false
   
   - url: "https://stable-docs.example.com"
     schedule:
       interval: weekly
-    ignore_changes: false
+    monitoring:
+      ignoreChanges: false
 ```
 
 ## Project Structure
