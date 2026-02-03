@@ -20,7 +20,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@actions/core": "^1.11.1",
+    "@actions/core": "^3.0.0",
     "@actions/github": "^6.0.0",
     "@dependabit/detector": "workspace:*",
     "@dependabit/manifest": "workspace:*",
