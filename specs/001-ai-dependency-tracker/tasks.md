@@ -123,21 +123,21 @@
 
 ### Tests for User Story 2 (TDD - Write FIRST)
 
-- [ ] T048 [P] [US2] Write tests for commit analysis in packages/github-client/tests/commits.test.ts
-- [ ] T049 [P] [US2] Write tests for diff parsing in packages/detector/tests/diff-parser.test.ts
-- [ ] T050 [US2] Write tests for manifest merge strategy in packages/manifest/tests/merge.test.ts
-- [ ] T051 [US2] Write integration test for update action in packages/action/tests/actions/update.test.ts
+- [X] T048 [P] [US2] Write tests for commit analysis in packages/github-client/tests/commits.test.ts
+- [X] T049 [P] [US2] Write tests for diff parsing in packages/detector/tests/diff-parser.test.ts
+- [X] T050 [US2] Write tests for manifest merge strategy in packages/manifest/tests/merge.test.ts
+- [X] T051 [US2] Write integration test for update action in packages/action/tests/actions/update.test.ts
 
 ### Implementation for User Story 2
 
-- [ ] T052 [P] [US2] Implement commit fetching in packages/github-client/src/commits.ts
-- [ ] T053 [P] [US2] Implement diff parser in packages/detector/src/diff-parser.ts (extract changed files)
-- [ ] T054 [US2] Implement selective re-analysis in packages/detector/src/detector.ts (only changed files)
-- [ ] T055 [US2] Implement manifest merge logic in packages/manifest/src/manifest.ts (preserve manual entries)
-- [ ] T056 [US2] Implement update action in packages/action/src/actions/update.ts
-- [ ] T057 [US2] Create workflow template .github/workflows/dependabit-update.yml (trigger on push)
-- [ ] T058 [US2] Add comparison logging (old vs new manifest)
-- [ ] T059 [US2] Add graceful handling for merge conflicts (prefer manual edits)
+- [X] T052 [P] [US2] Implement commit fetching in packages/github-client/src/commits.ts
+- [X] T053 [P] [US2] Implement diff parser in packages/detector/src/diff-parser.ts (extract changed files)
+- [X] T054 [US2] Implement selective re-analysis in packages/detector/src/detector.ts (only changed files)
+- [X] T055 [US2] Implement manifest merge logic in packages/manifest/src/manifest.ts (preserve manual entries)
+- [X] T056 [US2] Implement update action in packages/action/src/actions/update.ts
+- [X] T057 [US2] Create workflow template .github/workflows/dependabit-update.yml (trigger on push)
+- [X] T058 [US2] Add comparison logging (old vs new manifest)
+- [X] T059 [US2] Add graceful handling for merge conflicts (prefer manual edits)
 
 **Checkpoint**: US2 complete - manifest stays current automatically
 
@@ -348,12 +348,12 @@ Each phase completion requires:
 ## Task Statistics
 
 - **Total Tasks**: 153 (136 original + 17 discovered during implementation)
-- **Completed Tasks**: 105 (69%)
-- **Pending Tasks**: 48 (31%)
+- **Completed Tasks**: 117 (76%)
+- **Pending Tasks**: 36 (24%)
 - **Phase 1 (Setup)**: 15 tasks - 14 completed (93%)
 - **Phase 2 (Foundational)**: 20 tasks - 15 completed (75%)
 - **Phase 3 (US1 - MVP)**: 22 tasks - 21 completed (95%) ✅
-- **Phase 4 (US2)**: 12 tasks - 0 completed (0%)
+- **Phase 4 (US2)**: 12 tasks - 12 completed (100%) ✅
 - **Phase 5 (US3)**: 33 tasks - 24 completed (73%)
 - **Phase 6 (US4)**: 13 tasks - 11 completed (85%)
 - **Phase 7 (Polish)**: 21 tasks - 20 completed (95%)
@@ -364,7 +364,7 @@ Each phase completion requires:
 **Implementation Status**: 
 - ✅ **Phase 1 & 2**: Nearly complete (infrastructure ready)
 - ✅ **Phase 3 (US1)**: Complete - Manifest generation MVP ready
-- ⏸️ **Phase 4 (US2)**: Not started (auto-updates pending)
+- ✅ **Phase 4 (US2)**: Complete - Auto-updates on push ready
 - ✅ **Phase 5 & 6**: Mostly complete (US3 & US4 implemented)
 - ✅ **Phase 7**: Complete (production ready)
 
