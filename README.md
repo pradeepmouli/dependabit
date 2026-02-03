@@ -71,7 +71,7 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Generate manifest
-        uses: pradeepmouli/dependabit@v1
+        uses: pradeepmouli/dependabit/packages/action@v1
         with:
           action: generate
           github-token: ${{ secrets.GITHUB_TOKEN }}
