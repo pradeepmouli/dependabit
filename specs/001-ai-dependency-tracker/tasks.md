@@ -91,12 +91,17 @@
 ### Implementation for User Story 1
 
 - [ ] T033 [P] [US1] Implement LLM provider interface in packages/detector/src/llm/client.ts
-- [ ] T034 [US1] Implement GitHub Copilot provider in packages/detector/src/llm/copilot.ts (@azure/openai integration)
+- [ ] T034 [US1] Implement GitHub Copilot CLI provider in packages/detector/src/llm/copilot.ts (gh copilot suggest integration)
 - [ ] T035 [P] [US1] Implement detection prompts in packages/detector/src/llm/prompts.ts
 - [ ] T036 [P] [US1] Implement README parser in packages/detector/src/parsers/readme.ts (extract URLs, references)
 - [ ] T037 [P] [US1] Implement code comment parser in packages/detector/src/parsers/code-comments.ts
 - [ ] T038 [P] [US1] Implement package file parser in packages/detector/src/parsers/package-files.ts (package.json, requirements.txt)
-- [ ] T039 [US1] Implement detector orchestrator in packages/detector/src/detector.ts (coordinates parsers + LLM)
+- [ ] T039 [US1] Implement hybrid detector orchestrator in packages/detector/src/detector.ts (programmatic + LLM fallback)
+- [ ] T039a [US1] Implement programmatic type categorization (research-paper, schema, documentation, reference-implementation, api-example)
+- [ ] T039b [US1] Implement LLM fallback for type categorization (Step 4)
+- [ ] T039c [US1] Implement LLM 2nd pass for document analysis (Step 2)
+- [ ] T039d [US1] Implement programmatic access method determination (github-api, arxiv, openapi, context7)
+- [ ] T039e [US1] Implement LLM fallback for access method determination (Step 6)
 - [ ] T040 [US1] Export detector APIs from packages/detector/src/index.ts
 - [ ] T041 [US1] Implement generate action in packages/action/src/actions/generate.ts
 - [ ] T042 [US1] Implement action input parsing in packages/action/src/utils/inputs.ts
@@ -146,41 +151,41 @@
 
 ### Tests for User Story 3 (TDD - Write FIRST)
 
-- [ ] T060 [P] [US3] Write tests for GitHub repo checker in packages/monitor/tests/checkers/github-repo.test.ts
-- [ ] T061 [P] [US3] Write tests for documentation URL checker in packages/monitor/tests/checkers/url-content.test.ts
-- [ ] T062 [P] [US3] Write tests for OpenAPI spec checker in packages/monitor/tests/checkers/openapi.test.ts
-- [ ] T062a [P] [US3] Write tests for HTML normalizer in packages/monitor/tests/normalizer.test.ts
-- [ ] T062b [P] [US3] Write tests for Context7 checker in packages/monitor/tests/checkers/context7.test.ts
-- [ ] T062c [P] [US3] Write tests for arXiv checker in packages/monitor/tests/checkers/arxiv.test.ts
-- [ ] T063 [P] [US3] Write tests for state comparator in packages/monitor/tests/comparator.test.ts
-- [ ] T064 [P] [US3] Write tests for severity classifier in packages/monitor/tests/severity.test.ts
-- [ ] T065 [US3] Write tests for monitor orchestrator in packages/monitor/tests/monitor.test.ts
-- [ ] T066 [P] [US3] Write tests for issue creation in packages/github-client/tests/issues.test.ts
-- [ ] T067 [US3] Write integration test for check action in packages/action/tests/actions/check.test.ts
+- [X] T060 [P] [US3] Write tests for GitHub repo checker in packages/monitor/test/checkers/github-repo.test.ts
+- [X] T061 [P] [US3] Write tests for documentation URL checker in packages/monitor/test/checkers/url-content.test.ts
+- [X] T062 [P] [US3] Write tests for OpenAPI spec checker in packages/monitor/test/checkers/openapi.test.ts
+- [X] T062a [P] [US3] Write tests for HTML normalizer in packages/monitor/test/normalizer.test.ts
+- [X] T062b [P] [US3] Write tests for Context7 checker in packages/monitor/test/checkers/context7.test.ts
+- [X] T062c [P] [US3] Write tests for arXiv checker in packages/monitor/test/checkers/arxiv.test.ts
+- [X] T063 [P] [US3] Write tests for state comparator in packages/monitor/test/comparator.test.ts
+- [X] T064 [P] [US3] Write tests for severity classifier in packages/monitor/test/severity.test.ts
+- [X] T065 [US3] Write tests for monitor orchestrator in packages/monitor/test/monitor.test.ts
+- [X] T066 [P] [US3] Write tests for issue creation in packages/github-client/test/issues.test.ts
+- [X] T067 [US3] Write integration test for check action in packages/action/test/actions/check.test.ts
 
 ### Implementation for User Story 3
 
-- [ ] T068 [P] [US3] Implement GitHub repo checker in packages/monitor/src/checkers/github-repo.ts (releases API)
-- [ ] T069 [P] [US3] Implement documentation URL checker in packages/monitor/src/checkers/url-content.ts (SHA256 hashing with normalization)
+- [X] T068 [P] [US3] Implement GitHub repo checker in packages/monitor/src/checkers/github-repo.ts (releases API)
+- [X] T069 [P] [US3] Implement documentation URL checker in packages/monitor/src/checkers/url-content.ts (SHA256 hashing with normalization)
 - [ ] T070 [P] [US3] Implement OpenAPI spec checker in packages/monitor/src/checkers/openapi.ts (semantic diffing)
-- [ ] T070a [P] [US3] Implement HTML normalizer in packages/monitor/src/normalizer.ts (6-step normalization from research.md)
+- [X] T070a [P] [US3] Implement HTML normalizer in packages/monitor/src/normalizer.ts (6-step normalization from research.md)
 - [ ] T070b [P] [US3] Implement Context7 checker in packages/plugin-context7/src/checker.ts (Context7 API integration)
 - [ ] T070c [P] [US3] Implement arXiv checker in packages/plugin-arxiv/src/checker.ts (arXiv API version tracking)
-- [ ] T071 [US3] Export checkers from packages/monitor/src/checkers/index.ts
-- [ ] T072 [P] [US3] Implement state comparator in packages/monitor/src/comparator.ts (old vs new)
-- [ ] T073 [P] [US3] Implement severity classifier in packages/monitor/src/severity.ts (breaking/major/minor)
-- [ ] T074 [US3] Implement monitor orchestrator in packages/monitor/src/monitor.ts (coordinates all checks)
-- [ ] T075 [US3] Implement issue creation in packages/github-client/src/issues.ts (with severity labels)
-- [ ] T076 [US3] Implement release fetching in packages/github-client/src/releases.ts
-- [ ] T077 [US3] Implement rate limit handler in packages/github-client/src/rate-limit.ts
-- [ ] T078 [US3] Implement check action in packages/action/src/actions/check.ts
+- [X] T071 [US3] Export checkers from packages/monitor/src/checkers/index.ts
+- [X] T072 [P] [US3] Implement state comparator in packages/monitor/src/comparator.ts (old vs new)
+- [X] T073 [P] [US3] Implement severity classifier in packages/monitor/src/severity.ts (breaking/major/minor)
+- [X] T074 [US3] Implement monitor orchestrator in packages/monitor/src/monitor.ts (coordinates all checks)
+- [X] T075 [US3] Implement issue creation in packages/github-client/src/issues.ts (with severity labels)
+- [X] T076 [US3] Implement release fetching in packages/github-client/src/releases.ts
+- [X] T077 [US3] Implement rate limit handler in packages/github-client/src/rate-limit.ts
+- [X] T078 [US3] Implement check action in packages/action/src/actions/check.ts
 - [ ] T079 [US3] Create workflow template .github/workflows/dependabit-check.yml (scheduled cron)
 - [ ] T080 [US3] Add change history tracking to manifest updates
 - [ ] T081 [US3] Add AI agent assignment logic based on severity configuration
 - [ ] T082 [US3] Add issue templating with LLM-generated summaries
 - [ ] T083 [US3] Add logging for all API calls (endpoint, method, rate-limit, response code)
-- [ ] T083a [P] [US3] Write tests for summary reporter in packages/action/tests/utils/reporter.test.ts
-- [ ] T083b [P] [US3] Implement summary reporter in packages/action/src/utils/reporter.ts (generates change summary reports)
+- [X] T083a [P] [US3] Write tests for summary reporter in packages/action/test/utils/reporter.test.ts
+- [X] T083b [P] [US3] Implement summary reporter in packages/action/src/utils/reporter.ts (generates change summary reports)
 - [ ] T083c [P] [US3] Create summary template in contracts/summary-template.md
 
 **Checkpoint**: US3 complete - automated dependency monitoring with issue notifications
@@ -195,21 +200,21 @@
 
 ### Tests for User Story 4 (TDD - Write FIRST)
 
-- [ ] T084 [P] [US4] Write tests for manifest validation in packages/action/tests/actions/validate.test.ts
-- [ ] T084a [P] [US4] Write tests for AI agent config parser in packages/action/tests/utils/agent-config.test.ts
-- [ ] T084b [P] [US4] Write tests for agent router in packages/action/tests/utils/agent-router.test.ts
-- [ ] T085 [P] [US4] Write tests for config override logic in packages/manifest/tests/config.test.ts
-- [ ] T086 [US4] Write tests for per-dependency schedule in packages/monitor/tests/scheduler.test.ts
+- [X] T084 [P] [US4] Write tests for manifest validation in packages/action/tests/actions/validate.test.ts
+- [X] T084a [P] [US4] Write tests for AI agent config parser in packages/action/tests/utils/agent-config.test.ts
+- [X] T084b [P] [US4] Write tests for agent router in packages/action/tests/utils/agent-router.test.ts
+- [X] T085 [P] [US4] Write tests for config override logic in packages/manifest/tests/config.test.ts
+- [X] T086 [US4] Write tests for per-dependency schedule in packages/monitor/tests/scheduler.test.ts
 
 ### Implementation for User Story 4
 
-- [ ] T087 [US4] Implement validate action in packages/action/src/actions/validate.ts (schema + business rules)
-- [ ] T087a [P] [US4] Implement AI agent config parser in packages/action/src/utils/agent-config.ts (parse severity-to-agent mapping from config.yml)
-- [ ] T087b [P] [US4] Implement agent router in packages/action/src/utils/agent-router.ts (assign issues based on severity rules)
-- [ ] T088 [US4] Implement config override resolution in packages/manifest/src/config.ts (global + per-dependency)
-- [ ] T089 [US4] Implement scheduler in packages/monitor/src/scheduler.ts (respect checkFrequency)
+- [X] T087 [US4] Implement validate action in packages/action/src/actions/validate.ts (schema + business rules)
+- [X] T087a [P] [US4] Implement AI agent config parser in packages/action/src/utils/agent-config.ts (parse severity-to-agent mapping from config.yml)
+- [X] T087b [P] [US4] Implement agent router in packages/action/src/utils/agent-router.ts (assign issues based on severity rules)
+- [X] T088 [US4] Implement config override resolution in packages/manifest/src/config.ts (global + per-dependency)
+- [X] T089 [US4] Implement scheduler in packages/monitor/src/scheduler.ts (respect checkFrequency)
 - [ ] T090 [US4] Add validation step to update/check workflows
-- [ ] T091 [US4] Create .dependabit/config.yml example in quickstart.md
+- [X] T091 [US4] Create .dependabit/config.yml example in quickstart.md
 - [ ] T092 [US4] Add CLI-friendly output for validation errors
 
 **Checkpoint**: US4 complete - full manual control and customization available
@@ -220,27 +225,27 @@
 
 **Purpose**: Production readiness, documentation, observability, security
 
-- [ ] T092a [P] Write tests for token authentication in packages/github-client/tests/auth/token.test.ts
-- [ ] T092b [P] Write tests for OAuth authentication in packages/github-client/tests/auth/oauth.test.ts
-- [ ] T092c [P] Write tests for basic authentication in packages/github-client/tests/auth/basic.test.ts
-- [ ] T092d [P] Write tests for secret resolver in packages/action/tests/utils/secrets.test.ts
-- [ ] T093 [P] Implement authentication support in packages/github-client/src/auth.ts (token, basic, OAuth via secrets)
-- [ ] T093a [P] Implement token auth handler in packages/github-client/src/auth/token.ts
-- [ ] T093b [P] Implement OAuth handler in packages/github-client/src/auth/oauth.ts
-- [ ] T093c [P] Implement basic auth handler in packages/github-client/src/auth/basic.ts
-- [ ] T094 [P] Implement secret resolution in packages/action/src/utils/secrets.ts
+- [X] T092a [P] Write tests for token authentication in packages/github-client/tests/auth/token.test.ts
+- [X] T092b [P] Write tests for OAuth authentication in packages/github-client/tests/auth/oauth.test.ts
+- [X] T092c [P] Write tests for basic authentication in packages/github-client/tests/auth/basic.test.ts
+- [X] T092d [P] Write tests for secret resolver in packages/action/tests/utils/secrets.test.ts
+- [X] T093 [P] Implement authentication support in packages/github-client/src/auth.ts (token, basic, OAuth via secrets)
+- [X] T093a [P] Implement token auth handler in packages/github-client/src/auth/token.ts
+- [X] T093b [P] Implement OAuth handler in packages/github-client/src/auth/oauth.ts
+- [X] T093c [P] Implement basic auth handler in packages/github-client/src/auth/basic.ts
+- [X] T094 [P] Implement secret resolution in packages/action/src/utils/secrets.ts
 - [ ] T095 [P] Write E2E test for full workflow in tests/e2e/full-workflow.spec.ts
 - [ ] T096 [P] Create test fixtures in tests/e2e/fixtures/sample-repo/
-- [ ] T097 [P] Add error categorization and remediation messages in packages/action/src/utils/errors.ts
-- [ ] T098 [P] Implement performance metrics tracking (operation durations, API quotas)
-- [ ] T098a [P] Implement proactive rate-limit checking with budget reservation in packages/github-client/src/rate-limit.ts (enhance T077)
-- [ ] T099 [P] Add manifest size checks and warnings (target <1MB, fail >10MB)
-- [ ] T099a [P] Write tests for false positive feedback loop in packages/github-client/tests/feedback.test.ts
-- [ ] T099b [P] Implement false positive feedback listener in packages/github-client/src/feedback.ts (monitors issue labels)
-- [ ] T099c [P] Write tests for false positive metrics calculator in packages/action/tests/utils/metrics.test.ts
-- [ ] T099d [P] Implement false positive rate calculator in packages/action/src/utils/metrics.ts (30-day rolling window)
+- [X] T097 [P] Add error categorization and remediation messages in packages/action/src/utils/errors.ts
+- [X] T098 [P] Implement performance metrics tracking (operation durations, API quotas)
+- [X] T098a [P] Implement proactive rate-limit checking with budget reservation in packages/github-client/src/rate-limit.ts (enhance T077)
+- [X] T099 [P] Add manifest size checks and warnings (target <1MB, fail >10MB)
+- [X] T099a [P] Write tests for false positive feedback loop in packages/github-client/tests/feedback.test.ts
+- [X] T099b [P] Implement false positive feedback listener in packages/github-client/src/feedback.ts (monitors issue labels)
+- [X] T099c [P] Write tests for false positive metrics calculator in packages/action/tests/utils/metrics.test.ts
+- [X] T099d [P] Implement false positive rate calculator in packages/action/src/utils/metrics.ts (30-day rolling window)
 - [ ] T099e [P] Create E2E test for false positive validation in tests/e2e/false-positive-validation.spec.ts
-- [ ] T100 [P] Create comprehensive README for each package
+- [X] T100 [P] Create comprehensive README for each package
 - [ ] T101 [P] Add JSDoc comments for all public APIs
 - [ ] T102 [P] Generate TypeDoc documentation
 - [ ] T103 [P] Create docs/ai-dependency-tracker/architecture.md
@@ -248,9 +253,9 @@
 - [ ] T104a [P] Create contracts/plugin-api.md (define plugin registration API)
 - [ ] T105 [P] Create docs/ai-dependency-tracker/troubleshooting.md
 - [ ] T106 Bundle action with @vercel/ncc for single-file distribution
-- [ ] T107 Add action branding in action.yml (icon, color)
+- [X] T107 Add action branding in action.yml (icon, color)
 - [ ] T108 Test action in private repo before publishing
-- [ ] T109 Create CHANGELOG.md for initial release
+- [X] T109 Create CHANGELOG.md for initial release
 - [ ] T110 Tag v1.0.0 release
 
 ---

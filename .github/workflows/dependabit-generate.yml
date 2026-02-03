@@ -1,0 +1,83 @@
+name: Dependabit - Generate Manifest
+
+on:
+  workflow_dispatch: # Manual trigger
+    inputs:
+      llm_provider:
+        description: 'LLM Provider'
+        required: false
+        default: 'github-copilot'
+        type: choice
+        options:
+          - github-copilot
+          - claude
+          - openai
+      llm_model:
+        description: 'LLM Model (optional)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    name: Generate Dependency Manifest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup GitHub CLI (required for Copilot CLI)
+        run: |
+          # GitHub CLI is pre-installed on GitHub Actions runners
+          # Verify it's available and authenticated
+          gh --version
+          gh auth status
+
+      - name: Install dependencies and build action
+        run: |
+          corepack enable
+          pnpm install
+          pnpm build
+
+      - name: Generate manifest
+        id: generate
+        uses: ./packages/action
+        with:
+          action: generate
+          repo_path: .
+          manifest_path: .dependabit/manifest.json
+          llm_provider: ${{ inputs.llm_provider || 'github-copilot' }}
+          llm_model: ${{ inputs.llm_model }}
+          llm_api_key: ${{ secrets.GITHUB_TOKEN }}
+          debug: 'true'
+
+      - name: Commit manifest
+        if: success()
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add .dependabit/manifest.json
+          git commit -m "chore: generate dependency manifest [skip ci]" || echo "No changes to commit"
+          git push
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Manifest Generation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Dependencies Found**: ${{ steps.generate.outputs.dependency_count }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Files Scanned**: ${{ steps.generate.outputs.files_scanned }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **LLM Calls**: ${{ steps.generate.outputs.llm_calls }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Average Confidence**: ${{ steps.generate.outputs.average_confidence }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Manifest saved to: \`${{ steps.generate.outputs.manifest_path }}\`" >> $GITHUB_STEP_SUMMARY

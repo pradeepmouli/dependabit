@@ -1,0 +1,97 @@
+name: Dependabit - Auto Update Manifest
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      # Trigger on relevant source and documentation files
+      # Lock files are excluded to avoid triggering on dependency updates themselves
+      - '**.md'
+      - '**.ts'
+      - '**.js'
+      - '**.py'
+      - '**.rs'
+      - '**.go'
+      - 'package.json'
+      - 'requirements.txt'
+      - 'Cargo.toml'
+      - 'go.mod'
+  workflow_dispatch: # Manual trigger
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    name: Update Dependency Manifest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 10 # Fetch recent commits for analysis
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup GitHub CLI (required for Copilot CLI)
+        run: |
+          # GitHub CLI is pre-installed on GitHub Actions runners
+          # Verify it's available and authenticated
+          gh --version
+          gh auth status
+
+      - name: Install dependencies and build action
+        run: |
+          corepack enable
+          pnpm install
+          pnpm build
+
+      - name: Update manifest
+        id: update
+        uses: ./packages/action
+        with:
+          action: update
+          repo_path: .
+          manifest_path: .dependabit/manifest.json
+          llm_provider: github-copilot
+          llm_api_key: ${{ secrets.GITHUB_TOKEN }}
+          debug: 'true'
+
+      - name: Commit updated manifest
+        if: steps.update.outputs.changes_detected == 'true'
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add .dependabit/manifest.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update dependency manifest [skip ci]"
+            git push
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Manifest Update Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.update.outputs.changes_detected }}" == "true" ]; then
+            echo "✅ **Changes detected and manifest updated**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Dependencies Added**: ${{ steps.update.outputs.dependencies_added }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Dependencies Removed**: ${{ steps.update.outputs.dependencies_removed }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Total Dependencies**: ${{ steps.update.outputs.total_dependencies }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Files Analyzed**: ${{ steps.update.outputs.files_analyzed }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ No changes detected in dependencies" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Manifest location: \`.dependabit/manifest.json\`" >> $GITHUB_STEP_SUMMARY

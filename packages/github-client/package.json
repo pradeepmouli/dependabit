@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@actions/github": "^6.0.0",
+    "octokit": "^5.0.5",
     "zod": "^4.3.6"
   },
   "devDependencies": {
