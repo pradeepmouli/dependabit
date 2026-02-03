@@ -357,7 +357,7 @@ Each phase completion requires:
 - **Phase 5 (US3)**: 33 tasks - 24 completed (73%)
 - **Phase 6 (US4)**: 13 tasks - 11 completed (85%)
 - **Phase 7 (Polish)**: 21 tasks - 20 completed (95%)
-- **Additional Tasks**: 17 tasks - discovered and completed during implementation
+- **Additional Tasks**: 17 tasks - represented by the lettered sub-tasks (e.g., T006a–e, T039a–e, etc.) that were discovered and completed during implementation (see task list above)
 
 **Parallelizable Tasks**: 87 tasks marked [P] (57%)
 
