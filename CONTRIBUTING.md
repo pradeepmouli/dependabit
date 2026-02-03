@@ -1,4 +1,4 @@
-# Contributing to TypeScript Template
+# Contributing to Dependabit
 
 Thank you for your interest in contributing! This document provides guidelines and instructions for contributing to this project.
 
@@ -10,15 +10,15 @@ We are committed to providing a welcoming and inclusive environment. Please be r
 
 ### Prerequisites
 
-- Node.js >= 18.0.0
-- pnpm >= 8.0.0
+- Node.js >= 20.0.0
+- pnpm >= 10.0.0
 
 ### Development Setup
 
 1. **Fork and clone the repository**
    ```bash
-   git clone https://github.com/your-username/template-ts.git
-   cd template-ts
+   git clone https://github.com/your-username/dependabit.git
+   cd dependabit
    ```
 
 2. **Install dependencies**
