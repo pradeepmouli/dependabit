@@ -32,7 +32,7 @@
 - [X] T006d [P] Initialize @dependabit/plugin-http package with package.json, tsconfig.json, README.md
 - [X] T006e [P] Initialize @dependabit/plugin-github package with package.json, tsconfig.json, README.md
 - [X] T007 Configure pnpm workspace in root pnpm-workspace.yaml to include packages/*
-- [ ] T008 [P] Install shared dependencies (@actions/core, @actions/github, zod, vitest)
+- [X] T008 [P] Install shared dependencies (@actions/core, @actions/github, zod, vitest)
 - [X] T009 Create shared tsconfig.base.json for consistent TypeScript settings across packages
 - [X] T010 [P] Set up .editorconfig rules specific to action code (2 spaces, semicolons, single quotes)
 
