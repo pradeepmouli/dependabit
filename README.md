@@ -75,7 +75,7 @@ jobs:
         with:
           action: generate
           repo_path: .
-          manifest_path: .dependabit/manifest.yml
+          manifest_path: .dependabit/manifest.json
           llm_provider: github-copilot
           llm_api_key: ${{ secrets.DEPENDABIT_LLM_API_KEY }}
       
