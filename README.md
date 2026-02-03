@@ -74,8 +74,10 @@ jobs:
         uses: pradeepmouli/dependabit/packages/action@v1
         with:
           action: generate
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          llm-provider: github-copilot
+          repo_path: .
+          manifest_path: .dependabit/manifest.yml
+          llm_provider: github-copilot
+          llm_api_key: ${{ secrets.DEPENDABIT_LLM_API_KEY }}
       
       - name: Commit manifest
         run: |
