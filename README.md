@@ -153,18 +153,9 @@ schedule:
 # Issue handling & AI agent assignment rules
 issues:
   aiAgentAssignment:
-    breaking:
-      assignee: "@copilot"
-      labels:
-        - critical
-        - breaking-change
-    major:
-      assignee: "@claude"
-      labels:
-        - enhancement
-    minor:
-      labels:
-        - maintenance
+    breaking: "@copilot"
+    major: "@claude"
+    minor: "@copilot"
 
 # Per-dependency overrides
 dependencies:
