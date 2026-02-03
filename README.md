@@ -126,32 +126,9 @@ jobs:
           git push
 ```
 
-#### 3. Monitor for Changes
+#### 3. Monitor for Changes (coming soon)
 
-Create `.github/workflows/dependabit-check.yml`:
-
-```yaml
-name: Check Dependencies
-
-on:
-  schedule:
-    - cron: '0 2 * * *'  # Daily at 2 AM UTC
-  workflow_dispatch:
-
-jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Check dependencies
-        uses: pradeepmouli/dependabit@v1
-        with:
-          action: check
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          create-issues: true
-```
-
+> Note: The `check` GitHub Action workflow is not yet available. This section will be updated with a ready-to-use example once the `check` action has been implemented.
 ### Configuration
 
 Create `.dependabit/config.yml` to customize behavior:
