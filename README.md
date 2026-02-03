@@ -1,9 +1,17 @@
-# Dependabit
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9c9f4d77-7c2b-400c-9b2f-08b3767fcad7" alt="Dependabit Logo" width="600">
+</p>
 
-**AI-Powered Dependency Tracking for External Resources**
+<h1 align="center">Dependabit</h1>
 
-[![Tests](https://github.com/pradeepmouli/dependabit/workflows/Tests/badge.svg)](https://github.com/pradeepmouli/dependabit/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<p align="center">
+  <strong>AI-Powered Dependency Tracking for External Resources</strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/pradeepmouli/dependabit/actions"><img src="https://github.com/pradeepmouli/dependabit/workflows/Tests/badge.svg" alt="Tests"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+</p>
 
 Dependabit automatically discovers, tracks, and monitors external dependencies referenced in your codebase using LLM-powered analysis. Unlike traditional dependency managers that only track package manifests, Dependabit finds informational dependencies like GitHub repos, documentation sites, API references, research papers, and more.
 
