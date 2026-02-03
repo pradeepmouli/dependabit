@@ -64,20 +64,41 @@ name: Generate Dependency Manifest
 on:
   workflow_dispatch:  # Manual trigger for initial setup
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Setup GitHub CLI (required for Copilot)
+        run: |
+          gh --version
+          gh auth status
+      
+      - name: Install dependencies and build
+        run: |
+          corepack enable
+          pnpm install
+          pnpm build
+      
       - name: Generate manifest
-        uses: pradeepmouli/dependabit/packages/action@v1
+        uses: ./packages/action  # Use local action after building
         with:
           action: generate
           repo_path: .
           manifest_path: .dependabit/manifest.json
           llm_provider: github-copilot
-          llm_api_key: ${{ secrets.DEPENDABIT_LLM_API_KEY }}
+          llm_api_key: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Commit manifest
         run: |
@@ -110,20 +131,41 @@ on:
       - 'package.json'
       - 'requirements.txt'
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
       
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Setup GitHub CLI (required for Copilot)
+        run: |
+          gh --version
+          gh auth status
+      
+      - name: Install dependencies and build
+        run: |
+          corepack enable
+          pnpm install
+          pnpm build
+      
       - name: Update manifest
-        uses: pradeepmouli/dependabit/packages/action@v1
+        uses: ./packages/action  # Use local action after building
         with:
           action: update
           repo_path: .
           manifest_path: .dependabit/manifest.json
+          llm_provider: github-copilot
+          llm_api_key: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Commit changes
         run: |
