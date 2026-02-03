@@ -50,7 +50,7 @@ Dependabit automatically discovers, tracks, and monitors external dependencies r
 - GitHub repository with Actions enabled
 - GitHub Copilot access (or alternative LLM provider)
 
-### Installation
+### For Development
 
 Add Dependabit to your repository by creating workflow files:
 
@@ -208,11 +208,39 @@ dependabit/
 ### Setup
 
 ```bash
+# Clone the repository
 git clone https://github.com/pradeepmouli/dependabit.git
 cd dependabit
+
+# Install dependencies
 pnpm install
 pnpm run build
 ```
+dependabit/
+├── packages/
+│   ├── core/              # Core dependency tracking logic
+│   ├── manifest/          # Manifest schema and validation
+│   ├── github-client/     # GitHub API client
+│   ├── plugins/           # Resource-specific plugins
+│   │   ├── plugin-github/     # GitHub releases and files
+│   │   ├── plugin-arxiv/      # ArXiv papers
+│   │   ├── plugin-openapi/    # OpenAPI specifications
+│   │   ├── plugin-http/       # Generic HTTP resources
+│   │   └── plugin-context7/   # Context7 integration
+│   └── utils/             # Shared utilities
+├── docs/                  # Documentation
+├── specs/                 # Feature specifications
+└── .github/workflows/     # GitHub Actions workflows
+```
+
+## Documentation
+
+- **[Setup Guide](scripts/SETUP.md)** - Development environment setup
+- **[Workspace Guide](docs/WORKSPACE.md)** - Managing monorepo packages
+- **[Development Workflow](docs/DEVELOPMENT.md)** - Development process and best practices
+- **[Testing Guide](docs/TESTING.md)** - Testing infrastructure and guidelines
+- **[Examples](docs/EXAMPLES.md)** - Usage examples and patterns
+- **[Auto Update](docs/AUTO_UPDATE.md)** - Automatic update workflow
 
 ### Running Tests
 
@@ -375,7 +403,11 @@ Discover dependencies not captured in package.json (CDN links, direct includes, 
 
 See the existing documentation for more details.
 
-## Documentation
+### In Progress 🚧
+- [ ] Initial manifest generation (LLM-powered dependency discovery)
+- [ ] Automatic manifest updates on push
+- [ ] Complete plugin implementations (ArXiv, OpenAPI, Context7)
+- [ ] GitHub Action workflow templates
 
 - [Workspace Management](docs/WORKSPACE.md)
 - [Development Workflow](docs/DEVELOPMENT.md)
