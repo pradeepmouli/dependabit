@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/pradeepmouli/dependabit/actions/workflows/ci.yml"><img src="https://github.com/pradeepmouli/dependabit/actions/workflows/ci.yml/badge.svg" alt="Tests"></a>
+  <a href="https://github.com/pradeepmouli/dependabit/actions/workflows/ci.yml"><img src="https://github.com/pradeepmouli/dependabit/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
 </p>
 
@@ -113,14 +113,17 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       
       - name: Update manifest
-        uses: pradeepmouli/dependabit@v1
+        uses: pradeepmouli/dependabit/packages/action@v1
         with:
           action: update
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repo_path: .
+          manifest_path: .dependabit/manifest.json
       
       - name: Commit changes
         run: |
@@ -370,16 +373,15 @@ Discover dependencies not captured in package.json (CDN links, direct includes, 
 - System learns from feedback over time
 - Adjust confidence thresholds in config
 
-See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) for more details.
+See the existing documentation for more details.
 
 ## Documentation
 
-- [Architecture Guide](docs/ai-dependency-tracker/architecture.md)
-- [LLM Integration](docs/ai-dependency-tracker/llm-integration.md)
-- [Plugin Development](specs/001-ai-dependency-tracker/contracts/plugin-api.md)
 - [Workspace Management](docs/WORKSPACE.md)
+- [Development Workflow](docs/DEVELOPMENT.md)
 - [Testing Guide](docs/TESTING.md)
-- [Contributing Guidelines](CONTRIBUTING.md)
+- [Auto-Update Guide](docs/AUTO_UPDATE.md)
+- [Examples](docs/EXAMPLES.md)
 
 ## Roadmap
 
