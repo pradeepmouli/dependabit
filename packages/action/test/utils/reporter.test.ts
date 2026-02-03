@@ -30,7 +30,7 @@ describe('SummaryReporter', () => {
       expect(summary).toContain('Test Dependency');
       expect(summary).toContain('v1.0.0');
       expect(summary).toContain('v1.1.0');
-      expect(summary).toContain('major');
+      expect(summary).toContain('Major');
     });
 
     it('should handle multiple changes', () => {
@@ -53,8 +53,8 @@ describe('SummaryReporter', () => {
 
       expect(summary).toContain('Dep 1');
       expect(summary).toContain('Dep 2');
-      expect(summary).toContain('breaking');
-      expect(summary).toContain('minor');
+      expect(summary).toContain('Breaking');
+      expect(summary).toContain('Minor');
     });
 
     it('should format breaking changes prominently', () => {
