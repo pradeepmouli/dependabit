@@ -13,12 +13,19 @@ When upstream changes occur (new releases, breaking changes, deprecations, docum
 
 ## Features
 
-- **🤖 AI-Powered Discovery** - Uses LLMs (GitHub Copilot, Claude, etc.) to analyze your codebase and discover external dependencies referenced in READMEs, docs, code comments, and configuration files
-- **📋 Automatic Manifest Generation** - Creates and maintains a structured manifest of all external dependencies at `.dependabit/manifest.json`
-- **🔄 Continuous Monitoring** - Periodically checks tracked resources for changes using multiple detection strategies (GitHub Releases API, content hashing, semantic versioning)
-- **📬 Smart Notifications** - Opens GitHub issues when changes are detected, with configurable severity levels (breaking/major/minor) and optional AI agent assignment
-- **🔌 Plugin Architecture** - Extensible plugin system for different resource types (GitHub, ArXiv, OpenAPI, HTTP endpoints, Context7)
-- **⚙️ Flexible Configuration** - Dependabot-style configuration for check frequency, monitoring rules, and authentication
+### Core Infrastructure ✓
+- **📋 Manifest Schema & Validation** - Structured manifest format at `.dependabit/manifest.json` with comprehensive validation
+- **🔄 Change Detection System** - Monitors tracked resources using GitHub Releases API, content hashing, and semantic versioning
+- **📬 Smart Notifications** - Creates GitHub issues when changes are detected, with configurable severity levels (breaking/major/minor)
+- **🤖 AI Agent Assignment** - Routes issues to AI agents (Copilot, Claude, etc.) based on configurable severity rules
+- **🔌 Plugin Architecture** - Extensible plugin system for different resource types
+- **🔐 Authentication Support** - Multiple auth methods (GitHub token, OAuth, basic auth) via secrets
+- **⚙️ Flexible Configuration** - Dependabot-style configuration for check frequency, monitoring rules, and custom schedules
+
+### In Development 🚧
+- **AI-Powered Discovery** - LLM-based analysis to discover external dependencies in code, docs, and comments
+- **Automatic Manifest Updates** - Auto-update manifest on push to detect added/removed dependencies
+- **Complete Plugin Suite** - Full implementations for ArXiv, OpenAPI, Context7, and HTTP endpoints
 
 ## Installation
 
@@ -45,20 +52,20 @@ pnpm run build
 
 *(Coming soon - workflow templates in development)*
 
-## Quick Start
+## Current Status
 
-1. **Generate a manifest** - Run the discovery action on your repository:
-   ```bash
-   pnpm run generate-manifest
-   ```
+Dependabit is under active development. The core monitoring and notification infrastructure is complete, including:
+- Manifest schema and validation
+- Change detection for GitHub releases and web content
+- Issue creation with severity classification
+- AI agent assignment routing
+- Configurable monitoring schedules
 
-2. **Review the manifest** - Check `.dependabit/manifest.json` for discovered dependencies
+**What's working now:** If you manually create a manifest at `.dependabit/manifest.json`, the monitoring system can detect changes and create issues.
 
-3. **Configure monitoring** - Set up check frequency and rules in `.dependabit/config.yml`
+**In development:** Automatic manifest generation using LLM analysis of your codebase.
 
-4. **Enable change detection** - The GitHub Action will periodically check for updates and create issues
-
-See [docs/EXAMPLES.md](docs/EXAMPLES.md) for detailed usage examples.
+See [specs/001-ai-dependency-tracker/](specs/001-ai-dependency-tracker/) for the full feature specification and [tasks.md](specs/001-ai-dependency-tracker/tasks.md) for implementation progress.
 
 ## Project Structure
 
@@ -119,15 +126,28 @@ See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for plugin development guidelines
 
 ## Roadmap
 
-- [x] Core dependency tracking infrastructure
-- [x] Plugin system architecture
-- [x] GitHub, ArXiv, OpenAPI, and HTTP plugins
+### Completed ✓
+- [x] Manifest schema and validation system
+- [x] Change detection infrastructure (GitHub, URL content monitoring)
+- [x] Issue creation and severity classification
+- [x] AI agent assignment and routing
+- [x] Authentication support (token, OAuth, basic)
+- [x] Plugin architecture foundation
+- [x] Monitoring scheduler with configurable frequency
+- [x] False positive tracking and metrics
+- [x] HTML content normalization for change detection
+
+### In Progress 🚧
+- [ ] Initial manifest generation (LLM-powered dependency discovery)
+- [ ] Automatic manifest updates on push
+- [ ] Complete plugin implementations (ArXiv, OpenAPI, Context7)
 - [ ] GitHub Action workflow templates
-- [ ] Automatic manifest generation on push
-- [ ] Scheduled change detection and issue creation
-- [ ] AI agent assignment integration
+
+### Planned 📋
 - [ ] Web UI for manifest visualization and management
 - [ ] Additional plugins (npm, PyPI, Docker, etc.)
+- [ ] Enhanced LLM integration for dependency analysis
+- [ ] Comprehensive E2E testing suite
 
 ## Contributing
 
