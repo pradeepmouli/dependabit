@@ -4,23 +4,28 @@ import { checkAction } from '../../src/actions/check.js';
 // Mock the Monitor module
 vi.mock('@dependabit/monitor', () => {
   class MockMonitor {
-    checkAll = vi.fn().mockResolvedValue([
-      {
-        dependency: {
-          id: 'dep1',
-          url: 'https://github.com/owner/repo1',
-          type: 'reference-implementation',
-          accessMethod: 'github-api',
-          currentStateHash: 'hash1',
-          monitoring: { enabled: true }
-        },
-        hasChanged: false,
-        newSnapshot: {
-          stateHash: 'hash1',
-          fetchedAt: new Date()
-        }
-      }
-    ]);
+    checkAll = vi.fn().mockImplementation((dependencies) => {
+      // Return error for invalid URLs
+      return Promise.resolve(
+        dependencies.map((dep) => {
+          if (dep.url === 'https://invalid-url.com') {
+            return {
+              dependency: dep,
+              hasChanged: false,
+              error: 'Failed to fetch URL content: connect ENOTFOUND invalid-url.com'
+            };
+          }
+          return {
+            dependency: dep,
+            hasChanged: false,
+            newSnapshot: {
+              stateHash: dep.currentStateHash,
+              fetchedAt: new Date()
+            }
+          };
+        })
+      );
+    });
   }
 
   return {

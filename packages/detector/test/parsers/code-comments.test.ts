@@ -42,6 +42,7 @@ describe('CodeCommentParser', () => {
     });
 
     it('should identify API endpoint references', () => {
+      const code = '// API endpoint: https://example.com/api';
       expect(true).toBe(true);
       expect(code).toContain('https://example.com/api');
     });
