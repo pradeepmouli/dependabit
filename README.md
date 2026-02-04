@@ -64,21 +64,45 @@ name: Generate Dependency Manifest
 on:
   workflow_dispatch:  # Manual trigger for initial setup
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup GitHub CLI (required for Copilot CLI)
+        run: |
+          # GitHub CLI is pre-installed on GitHub Actions runners
+          # Verify it's available and authenticated
+          gh --version
+          gh auth status
+
+      - name: Install dependencies and build action
+        run: |
+          corepack enable
+          pnpm install
+          pnpm build
+
       - name: Generate manifest
-        uses: pradeepmouli/dependabit/packages/action@v1
+        id: generate
+        uses: ./packages/action  # Use local action after building
         with:
           action: generate
           repo_path: .
           manifest_path: .dependabit/manifest.json
           llm_provider: github-copilot
-          llm_api_key: ${{ secrets.DEPENDABIT_LLM_API_KEY }}
-      
+          llm_api_key: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Commit manifest
         run: |
           git config user.name "dependabit[bot]"
@@ -110,21 +134,47 @@ on:
       - 'package.json'
       - 'requirements.txt'
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
-      
+        with:
+          fetch-depth: 10 # Fetch recent commits for analysis
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup GitHub CLI (required for Copilot CLI)
+        run: |
+          # GitHub CLI is pre-installed on GitHub Actions runners
+          # Verify it's available and authenticated
+          gh --version
+          gh auth status
+
+      - name: Install dependencies and build action
+        run: |
+          corepack enable
+          pnpm install
+          pnpm build
+
       - name: Update manifest
-        uses: pradeepmouli/dependabit/packages/action@v1
+        id: update
+        uses: ./packages/action  # Use local action after building
         with:
           action: update
           repo_path: .
           manifest_path: .dependabit/manifest.json
-      
+          llm_provider: github-copilot
+          llm_api_key: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Commit changes
         run: |
           git config user.name "dependabit[bot]"
@@ -138,6 +188,7 @@ jobs:
 #### 3. Monitor for Changes (coming soon)
 
 > Note: The `check` GitHub Action workflow is not yet available. This section will be updated with a ready-to-use example once the `check` action has been implemented.
+
 ### Configuration
 
 Create `.dependabit/config.yml` to customize behavior:
@@ -164,7 +215,7 @@ dependencies:
       interval: hourly
     monitoring:
       ignoreChanges: false
-  
+
   - url: "https://stable-docs.example.com"
     schedule:
       interval: weekly
@@ -206,6 +257,8 @@ cd dependabit
 # Install dependencies
 pnpm install
 pnpm run build
+```
+
 ```
 dependabit/
 ├── packages/
@@ -468,8 +521,8 @@ For security issues, please see [SECURITY.md](SECURITY.md).
 
 ---
 
-**Author**: Pradeep Mouli  
-**Created**: January 29, 2026  
+**Author**: Pradeep Mouli
+**Created**: January 29, 2026
 **Status**: Early Access - v0.1.0
 
 **Made with ❤️ for developers who care about external dependencies**
