@@ -13,7 +13,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "clean": "rm -rf dist",
+    "build:action": "tsc -p tsconfig.json && ncc build dist/index.js -o action-dist --source-map --license licenses.txt",
+    "clean": "rm -rf dist action-dist",
     "dev": "tsx watch src/index.ts",
     "type-check": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.0.10",
+    "@vercel/ncc": "^0.38.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
