@@ -82,7 +82,9 @@ jobs:
 
       - name: Setup GitHub CLI (required for Copilot)
         run: |
+          # GitHub CLI is pre-installed on GitHub Actions runners
           gh --version
+          # Verify it's available and authenticated
           gh auth status
 
       - name: Install dependencies and build
