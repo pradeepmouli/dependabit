@@ -48,7 +48,7 @@ The CLI should provide commands that mirror the GitHub Action capabilities:
 **Tasks**:
 1. [ ] Create CLI package structure with TypeScript and commander.js
 2. [ ] Implement generate command that mirrors GitHub Action functionality
-3. [ ] Implement update command with file-watching capabilities
+3. [ ] Implement update command
 4. [ ] Implement validate command for manifest verification
 5. [ ] Add CLI-specific logging and progress indicators
 6. [ ] Write CLI documentation and usage examples
