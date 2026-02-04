@@ -80,20 +80,21 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Setup GitHub CLI (required for Copilot)
+      - name: Setup GitHub CLI (required for Copilot CLI)
         run: |
           # GitHub CLI is pre-installed on GitHub Actions runners
-          gh --version
           # Verify it's available and authenticated
+          gh --version
           gh auth status
 
-      - name: Install dependencies and build
+      - name: Install dependencies and build action
         run: |
           corepack enable
           pnpm install
           pnpm build
 
       - name: Generate manifest
+        id: generate
         uses: ./packages/action  # Use local action after building
         with:
           action: generate
@@ -143,26 +144,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 10 # Fetch recent commits for analysis
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Setup GitHub CLI (required for Copilot)
+      - name: Setup GitHub CLI (required for Copilot CLI)
         run: |
           # GitHub CLI is pre-installed on GitHub Actions runners
           # Verify it's available and authenticated
           gh --version
           gh auth status
 
-      - name: Install dependencies and build
+      - name: Install dependencies and build action
         run: |
           corepack enable
           pnpm install
           pnpm build
 
       - name: Update manifest
+        id: update
         uses: ./packages/action  # Use local action after building
         with:
           action: update
