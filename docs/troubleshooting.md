@@ -398,6 +398,6 @@ What actually happens
 
 ### Support Resources
 
-- **Documentation**: `docs/ai-dependency-tracker/`
+- **Documentation**: `docs/`
 - **Issues**: https://github.com/pradeepmouli/dependabit/issues
 - **Discussions**: https://github.com/pradeepmouli/dependabit/discussions
