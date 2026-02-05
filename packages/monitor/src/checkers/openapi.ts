@@ -130,6 +130,17 @@ export class OpenAPIChecker implements Checker {
   /**
    * Simple YAML parser for OpenAPI specs
    * Handles common patterns without external dependency
+   * 
+   * LIMITATIONS:
+   * - Only supports 2-space and 4-space indentation (not tabs or other spacing)
+   * - Does not handle multi-line string values
+   * - Does not support nested objects within paths/schemas beyond basic structure
+   * - Ignores inline comments
+   * - Does not support YAML anchors and references
+   * - Designed for basic OpenAPI/Swagger spec parsing only
+   * 
+   * For complex YAML files or production use, consider using a proper YAML parsing library
+   * like 'yaml' or 'js-yaml'.
    */
   private parseYAML(content: string): OpenAPIDocument {
     // For complex YAML, we'll do a simplified parse
