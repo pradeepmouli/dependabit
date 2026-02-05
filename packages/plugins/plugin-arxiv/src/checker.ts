@@ -64,7 +64,7 @@ export interface ArxivChangeDetection {
  * arXiv checker implementation
  */
 export class ArxivChecker {
-  private apiUrl = 'http://export.arxiv.org/api/query';
+  private apiUrl = 'https://export.arxiv.org/api/query';
 
   /**
    * Extract arXiv ID from URL or string
