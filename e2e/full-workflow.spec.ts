@@ -8,8 +8,9 @@
 import { describe, it, expect, beforeAll, afterEach } from 'vitest';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const FIXTURES_DIR = path.join(__dirname, 'fixtures', 'sample-repo');
+const FIXTURES_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'fixtures', 'sample-repo');
 const MANIFEST_PATH = path.join(FIXTURES_DIR, '.dependabit', 'manifest.json');
 
 describe('Full Workflow E2E Tests', () => {
