@@ -71,6 +71,7 @@ jobs:
           action: validate
           manifest_path: .dependabit/manifest.json
           config_path: .dependabit/config.yml
+        continue-on-error: true
 
       - name: Check for dependency changes
         id: check

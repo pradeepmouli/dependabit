@@ -5,6 +5,7 @@
 
 import type { Checker, DependencySnapshot, ChangeDetection, AccessConfig } from '../types.js';
 import crypto from 'node:crypto';
+import { parse as parseYAML } from 'yaml';
 
 /**
  * OpenAPI document structure (partial, for what we need)
@@ -87,8 +88,8 @@ export class OpenAPIChecker implements Checker {
       // Parse the OpenAPI spec
       let spec: OpenAPIDocument;
       if (contentType.includes('yaml') || url.endsWith('.yaml') || url.endsWith('.yml')) {
-        // Simple YAML parsing for common OpenAPI fields
-        spec = this.parseYAML(content);
+        // Parse YAML using standard yaml library
+        spec = parseYAML(content) as OpenAPIDocument;
       } else {
         spec = JSON.parse(content) as OpenAPIDocument;
       }
@@ -125,77 +126,6 @@ export class OpenAPIChecker implements Checker {
     } catch (error) {
       throw new Error(`Failed to fetch OpenAPI spec: ${(error as Error).message}`);
     }
-  }
-
-  /**
-   * Simple YAML parser for OpenAPI specs
-   * Handles common patterns without external dependency
-   */
-  private parseYAML(content: string): OpenAPIDocument {
-    // For complex YAML, we'll do a simplified parse
-    // This handles basic OpenAPI/Swagger YAML structure
-    const lines = content.split('\n');
-    const result: OpenAPIDocument = {};
-
-    let currentPath = '';
-    let inPaths = false;
-    let inInfo = false;
-    let inComponents = false;
-    let inSchemas = false;
-
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith('#')) continue;
-
-      // Top-level keys
-      if (line.match(/^openapi:/)) {
-        result.openapi = trimmed.split(':')[1]?.trim().replace(/["']/g, '');
-      } else if (line.match(/^swagger:/)) {
-        result.swagger = trimmed.split(':')[1]?.trim().replace(/["']/g, '');
-      } else if (line.match(/^info:/)) {
-        inInfo = true;
-        inPaths = false;
-        inComponents = false;
-        result.info = {};
-      } else if (line.match(/^paths:/)) {
-        inPaths = true;
-        inInfo = false;
-        inComponents = false;
-        result.paths = {};
-      } else if (line.match(/^components:/)) {
-        inComponents = true;
-        inInfo = false;
-        inPaths = false;
-        result.components = {};
-      } else if (inInfo && line.match(/^\s+version:/)) {
-        result.info = result.info || {};
-        result.info.version = trimmed.split(':')[1]?.trim().replace(/["']/g, '');
-      } else if (inInfo && line.match(/^\s+title:/)) {
-        result.info = result.info || {};
-        result.info.title = trimmed.split(':')[1]?.trim().replace(/["']/g, '');
-      } else if (inPaths && line.match(/^\s{2}\/[^:]+:/)) {
-        // Path definition (2-space indent)
-        currentPath = trimmed.replace(':', '');
-        result.paths = result.paths || {};
-        result.paths[currentPath] = {};
-      } else if (inPaths && currentPath && line.match(/^\s{4}(get|post|put|patch|delete|options|head):/)) {
-        const method = trimmed.replace(':', '') as keyof PathItem;
-        if (result.paths && result.paths[currentPath]) {
-          (result.paths[currentPath] as Record<string, unknown>)[method] = {};
-        }
-      } else if (inComponents && line.match(/^\s{2}schemas:/)) {
-        inSchemas = true;
-        result.components = result.components || {};
-        result.components.schemas = {};
-      } else if (inSchemas && line.match(/^\s{4}\w+:/)) {
-        const schemaName = trimmed.replace(':', '');
-        result.components = result.components || {};
-        result.components.schemas = result.components.schemas || {};
-        result.components.schemas[schemaName] = {};
-      }
-    }
-
-    return result;
   }
 
   /**
