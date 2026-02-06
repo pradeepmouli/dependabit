@@ -7,6 +7,7 @@ export type { DependencyConfig, CheckResult } from './monitor.js';
 
 export { GitHubRepoChecker } from './checkers/github-repo.js';
 export { URLContentChecker } from './checkers/url-content.js';
+export { OpenAPIChecker } from './checkers/openapi.js';
 
 export { StateComparator } from './comparator.js';
 export { SeverityClassifier } from './severity.js';
