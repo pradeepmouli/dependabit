@@ -8,7 +8,8 @@ export const PluginMetadataSchema = z.object({
   version: z.string(),
   description: z.string().optional(),
   accessMethod: z.string(),
-  supportedTypes: z.array(z.string()).optional()
+  supportedTypes: z.array(z.string()).optional(),
+  apiVersion: z.string().optional()
 });
 
 export type PluginMetadata = z.infer<typeof PluginMetadataSchema>;
