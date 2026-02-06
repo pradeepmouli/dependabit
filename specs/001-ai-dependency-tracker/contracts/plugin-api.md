@@ -112,7 +112,7 @@ interface PluginCheckResult {
 ### Registering a Plugin
 
 ```typescript
-import { registerPlugin, type Plugin } from '@dependabit/plugins/registry';
+import { registerPlugin, type Plugin } from '@dependabit/plugins';
 
 const myPlugin: Plugin = {
   metadata: {
