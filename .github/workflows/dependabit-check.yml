@@ -71,11 +71,10 @@ jobs:
           action: validate
           manifest_path: .dependabit/manifest.json
           config_path: .dependabit/config.yml
-        continue-on-error: true
 
       - name: Check for dependency changes
         id: check
-        if: steps.manifest_check.outputs.exists == 'true'
+        if: steps.manifest_check.outputs.exists == 'true' && steps.validate.outcome == 'success'
         uses: ./packages/action
         with:
           action: check
