@@ -1,0 +1,276 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2024-01-15T00:00:00.000Z",
+  "generatedBy": {
+    "action": "dependabit",
+    "version": "1.0.0",
+    "llmProvider": "github-copilot"
+  },
+  "repository": {
+    "owner": "test",
+    "name": "sample-repo",
+    "branch": "main",
+    "commit": "abc123def456"
+  },
+  "dependencies": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440001",
+      "url": "https://react.dev/reference",
+      "type": "documentation",
+      "accessMethod": "http",
+      "name": "React Documentation",
+      "description": "Official React documentation",
+      "currentStateHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "detectionMethod": "llm-analysis",
+      "detectionConfidence": 0.95,
+      "detectedAt": "2026-01-30T00:00:00.000Z",
+      "lastChecked": "2026-01-30T00:00:00.000Z",
+      "referencedIn": [
+        {
+          "file": "README.md",
+          "line": 12,
+          "context": "React Documentation: https://react.dev/reference"
+        }
+      ],
+      "changeHistory": []
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440002",
+      "url": "https://arxiv.org/abs/1706.03762",
+      "type": "research-paper",
+      "accessMethod": "arxiv",
+      "name": "Attention Is All You Need",
+      "description": "The transformer architecture paper",
+      "currentVersion": "v7",
+      "currentStateHash": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+      "detectionMethod": "llm-analysis",
+      "detectionConfidence": 0.98,
+      "detectedAt": "2026-01-30T00:00:00.000Z",
+      "lastChecked": "2026-01-30T00:00:00.000Z",
+      "referencedIn": [
+        {
+          "file": "README.md",
+          "line": 18,
+          "context": "Attention Is All You Need: https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "file": "src/api.ts",
+          "line": 42,
+          "context": "Reference: Attention Is All You Need"
+        }
+      ],
+      "changeHistory": []
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440003",
+      "url": "https://github.com/vercel/ai",
+      "type": "reference-implementation",
+      "accessMethod": "github-api",
+      "name": "Vercel AI SDK",
+      "description": "AI SDK examples from Vercel",
+      "currentVersion": "v3.0.0",
+      "currentStateHash": "b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3",
+      "detectionMethod": "llm-analysis",
+      "detectionConfidence": 0.92,
+      "detectedAt": "2026-01-30T00:00:00.000Z",
+      "lastChecked": "2026-01-30T00:00:00.000Z",
+      "referencedIn": [
+        {
+          "file": "README.md",
+          "line": 24,
+          "context": "Vercel AI SDK Examples: https://github.com/vercel/ai"
+        }
+      ],
+      "changeHistory": []
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440004",
+      "url": "https://docs.github.com/en/rest",
+      "type": "documentation",
+      "accessMethod": "http",
+      "name": "GitHub REST API",
+      "description": "GitHub REST API documentation",
+      "currentStateHash": "c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4",
+      "detectionMethod": "code-comment",
+      "detectionConfidence": 0.99,
+      "detectedAt": "2026-01-30T00:00:00.000Z",
+      "lastChecked": "2026-01-30T00:00:00.000Z",
+      "referencedIn": [
+        {
+          "file": "README.md",
+          "line": 22,
+          "context": "GitHub REST API: https://docs.github.com/en/rest"
+        },
+        {
+          "file": "src/api.ts",
+          "line": 30,
+          "context": "Authentication pattern from GitHub API docs"
+        }
+      ],
+      "changeHistory": []
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440005",
+      "url": "https://vitest.dev/guide/",
+      "type": "documentation",
+      "accessMethod": "http",
+      "name": "Vitest Guide",
+      "description": "Vitest testing framework documentation",
+      "currentStateHash": "d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5",
+      "detectionMethod": "llm-analysis",
+      "detectionConfidence": 0.88,
+      "detectedAt": "2026-01-30T00:00:00.000Z",
+      "lastChecked": "2026-01-30T00:00:00.000Z",
+      "referencedIn": [
+        {
+          "file": "README.md",
+          "line": 14,
+          "context": "Vitest Guide: https://vitest.dev/guide/"
+        },
+        {
+          "file": "README.md",
+          "line": 40,
+          "context": "See the Vitest documentation"
+        }
+      ],
+      "changeHistory": []
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440006",
+      "url": "https://spec.openapis.org/oas/v3.1.0",
+      "type": "schema",
+      "accessMethod": "openapi",
+      "name": "OpenAPI Specification",
+      "description": "OpenAPI 3.1.0 specification",
+      "currentVersion": "3.1.0",
+      "currentStateHash": "e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6",
+      "detectionMethod": "llm-analysis",
+      "detectionConfidence": 0.90,
+      "detectedAt": "2026-01-30T00:00:00.000Z",
+      "lastChecked": "2026-01-30T00:00:00.000Z",
+      "referencedIn": [
+        {
+          "file": "README.md",
+          "line": 28,
+          "context": "OpenAPI Specification: https://spec.openapis.org/oas/v3.1.0"
+        }
+      ],
+      "changeHistory": []
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440007",
+      "url": "https://www.typescriptlang.org/docs/",
+      "type": "documentation",
+      "accessMethod": "http",
+      "name": "TypeScript Handbook",
+      "description": "TypeScript official documentation",
+      "currentStateHash": "f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1",
+      "detectionMethod": "llm-analysis",
+      "detectionConfidence": 0.94,
+      "detectedAt": "2026-01-30T00:00:00.000Z",
+      "lastChecked": "2026-01-30T00:00:00.000Z",
+      "referencedIn": [
+        {
+          "file": "README.md",
+          "line": 13,
+          "context": "TypeScript Handbook: https://www.typescriptlang.org/docs/"
+        }
+      ],
+      "changeHistory": []
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440008",
+      "url": "https://github.com/TanStack/query",
+      "type": "reference-implementation",
+      "accessMethod": "github-api",
+      "name": "TanStack Query",
+      "description": "Powerful data synchronization library",
+      "currentVersion": "v5.0.0",
+      "currentStateHash": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+      "detectionMethod": "code-comment",
+      "detectionConfidence": 0.97,
+      "detectedAt": "2026-01-30T00:00:00.000Z",
+      "lastChecked": "2026-01-30T00:00:00.000Z",
+      "referencedIn": [
+        {
+          "file": "README.md",
+          "line": 25,
+          "context": "TanStack Query: https://github.com/TanStack/query"
+        },
+        {
+          "file": "src/api.ts",
+          "line": 5,
+          "context": "patterns from https://tanstack.com/query/latest/docs"
+        }
+      ],
+      "changeHistory": []
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440009",
+      "url": "https://platform.openai.com/docs/api-reference",
+      "type": "documentation",
+      "accessMethod": "http",
+      "name": "OpenAI API Reference",
+      "description": "OpenAI API documentation",
+      "currentStateHash": "b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3",
+      "detectionMethod": "code-comment",
+      "detectionConfidence": 0.96,
+      "detectedAt": "2026-01-30T00:00:00.000Z",
+      "lastChecked": "2026-01-30T00:00:00.000Z",
+      "referencedIn": [
+        {
+          "file": "README.md",
+          "line": 23,
+          "context": "OpenAI API Reference: https://platform.openai.com/docs/api-reference"
+        },
+        {
+          "file": "src/api.ts",
+          "line": 23,
+          "context": "See OpenAI API Reference for authentication patterns"
+        }
+      ],
+      "changeHistory": []
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440010",
+      "url": "https://github.com/reactjs/rfcs",
+      "type": "reference-implementation",
+      "accessMethod": "github-api",
+      "name": "React RFCs",
+      "description": "React Request for Comments repository",
+      "currentStateHash": "c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4",
+      "detectionMethod": "llm-analysis",
+      "detectionConfidence": 0.85,
+      "detectedAt": "2026-01-30T00:00:00.000Z",
+      "lastChecked": "2026-01-30T00:00:00.000Z",
+      "referencedIn": [
+        {
+          "file": "README.md",
+          "line": 45,
+          "context": "React Server Components RFC"
+        }
+      ],
+      "changeHistory": []
+    }
+  ],
+  "statistics": {
+    "totalDependencies": 10,
+    "byType": {
+      "documentation": 5,
+      "reference-implementation": 3,
+      "research-paper": 1,
+      "schema": 1
+    },
+    "byAccessMethod": {
+      "http": 5,
+      "github-api": 3,
+      "arxiv": 1,
+      "openapi": 1
+    },
+    "byDetectionMethod": {
+      "llm-analysis": 6,
+      "code-comment": 4
+    },
+    "averageConfidence": 0.934
+  }
+}

@@ -54,6 +54,16 @@ jobs:
           pnpm install
           pnpm build
 
+      - name: Validate existing manifest (if exists)
+        id: validate
+        if: hashFiles('.dependabit/manifest.json') != ''
+        uses: ./packages/action
+        with:
+          action: validate
+          manifest_path: .dependabit/manifest.json
+          config_path: .dependabit/config.yml
+        continue-on-error: true
+
       - name: Update manifest
         id: update
         uses: ./packages/action
@@ -64,6 +74,16 @@ jobs:
           llm_provider: github-copilot
           llm_api_key: ${{ secrets.GITHUB_TOKEN }}
           debug: 'true'
+
+      - name: Validate updated manifest
+        id: post_validate
+        if: steps.update.outputs.changes_detected == 'true'
+        uses: ./packages/action
+        with:
+          action: validate
+          manifest_path: .dependabit/manifest.json
+          config_path: .dependabit/config.yml
+        continue-on-error: true
 
       - name: Commit updated manifest
         if: steps.update.outputs.changes_detected == 'true'
