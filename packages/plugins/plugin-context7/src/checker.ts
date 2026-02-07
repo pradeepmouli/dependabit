@@ -148,17 +148,25 @@ export class Context7Checker {
       });
       const stateHash = crypto.createHash('sha256').update(stateContent).digest('hex');
 
+      const metadata: Context7Snapshot['metadata'] = {
+        libraryId: parsed.library.id,
+        libraryName: parsed.library.name,
+        lastUpdated: parsed.library.lastUpdated
+      };
+      
+      if (parsed.library.description !== undefined) {
+        metadata.description = parsed.library.description;
+      }
+      
+      if (parsed.content?.hash !== undefined) {
+        metadata.contentHash = parsed.content.hash;
+      }
+      
       return {
         version: parsed.library.version,
         stateHash,
         fetchedAt: new Date(),
-        metadata: {
-          libraryId: parsed.library.id,
-          libraryName: parsed.library.name,
-          lastUpdated: parsed.library.lastUpdated,
-          description: parsed.library.description,
-          contentHash: parsed.content?.hash
-        }
+        metadata
       };
     } catch (error) {
       // Fallback to simple URL check if API fails
@@ -246,13 +254,18 @@ export class Context7Checker {
       changes.push('lastUpdated');
     }
 
-    return {
+    const result: Context7ChangeDetection = {
       hasChanged: changes.length > 0,
       changes,
       oldVersion: prev.version,
-      newVersion: curr.version,
-      severity: changes.length > 0 ? severity : undefined
+      newVersion: curr.version
     };
+    
+    if (changes.length > 0) {
+      result.severity = severity;
+    }
+    
+    return result;
   }
 }
 

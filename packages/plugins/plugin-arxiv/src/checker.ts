@@ -258,13 +258,18 @@ export class ArxivChecker {
       severity = 'minor';
     }
 
-    return {
+    const result: ArxivChangeDetection = {
       hasChanged: changes.length > 0,
       changes,
       oldVersion: prev.version,
-      newVersion: curr.version,
-      severity: changes.length > 0 ? severity : undefined
+      newVersion: curr.version
     };
+    
+    if (changes.length > 0) {
+      result.severity = severity;
+    }
+    
+    return result;
   }
 }
 
