@@ -1,8 +1,8 @@
 /**
- * E2E Tests for Full Dependabit Workflow
+ * E2E tests for Dependabit manifest validation and inspection
  *
- * Tests the complete flow: generate -> validate -> update -> check
- * Uses the sample-repo fixture with known dependencies
+ * Validates and inspects a pre-generated manifest.json fixture for a sample repository,
+ * including schema, dependency metadata, change history, and performance-related expectations.
  */
 
 import { describe, it, expect, beforeAll, afterEach } from 'vitest';
