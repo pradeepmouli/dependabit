@@ -236,11 +236,11 @@ export class Context7Checker {
 
         // Only classify if both versions are valid semver
         if (prevVersion && currVersion) {
-          const majorDiff = semver.diff(prevVersion, currVersion);
+          const diffType = semver.diff(prevVersion, currVersion);
           
-          if (majorDiff === 'major' || majorDiff === 'premajor') {
+          if (diffType === 'major' || diffType === 'premajor') {
             severity = 'breaking'; // Major version change
-          } else if (majorDiff === 'minor' || majorDiff === 'preminor') {
+          } else if (diffType === 'minor' || diffType === 'preminor') {
             severity = 'major'; // Minor version change
           } else {
             severity = 'minor'; // Patch or prerelease change
