@@ -25,7 +25,7 @@ inputs:
   config_path:
     description: 'Path to config file (relative to repo_path)'
     required: false
-    default: '.dependabit/config.yml'
+    default: ''
 
   llm_provider:
     description: 'LLM provider: github-copilot, claude, openai'
