@@ -178,11 +178,16 @@ export class OpenAPIChecker implements Checker {
     let severity: 'breaking' | 'major' | 'minor' = 'minor';
 
     // Extract endpoints and schemas from metadata
-    const prevEndpoints = ((prev.metadata?.['endpoints']) as Record<string, string[]>) || {};
-    const currEndpoints = ((curr.metadata?.['endpoints']) as Record<string, string[]>) || {};
-    const prevSchemas = ((prev.metadata?.['schemas']) as Record<string, unknown>) || {};
-    const currSchemas = ((curr.metadata?.['schemas']) as Record<string, unknown>) || {};
+    let prevEndpoints = ((prev.metadata?.['endpoints']) as Record<string, string[]>) || {};
+    let currEndpoints = ((curr.metadata?.['endpoints']) as Record<string, string[]>) || {};
+    let prevSchemas = ((prev.metadata?.['schemas']) as Record<string, unknown>) || {};
+    let currSchemas = ((curr.metadata?.['schemas']) as Record<string, unknown>) || {};
 
+    // If the state hashes match but previous metadata is missing, avoid spurious diffs
+    if (prev.stateHash !== undefined && curr.stateHash !== undefined && prev.stateHash === curr.stateHash) {
+      prevEndpoints = currEndpoints;
+      prevSchemas = currSchemas;
+    }
     const diff: OpenAPIDiff = {
       addedEndpoints: [],
       removedEndpoints: [],
