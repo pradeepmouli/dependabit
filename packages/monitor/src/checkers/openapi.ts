@@ -70,12 +70,21 @@ export class OpenAPIChecker implements Checker {
     const { url } = config;
 
     try {
-      const response = await fetch(url, {
-        headers: {
-          Accept: 'application/json, application/yaml, text/yaml, */*',
-          'User-Agent': 'dependabit-monitor/1.0',
-          ...(config.auth?.secret && { Authorization: `Bearer ${config.auth.secret}` })
+      const headers: Record<string, string> = {
+        Accept: 'application/json, application/yaml, text/yaml, */*',
+        'User-Agent': 'dependabit-monitor/1.0'
+      };
+
+      if (config.auth?.secret) {
+        if (config.auth.type === 'token' || config.auth.type === 'oauth') {
+          headers.Authorization = `Bearer ${config.auth.secret}`;
+        } else if (config.auth.type === 'basic') {
+          headers.Authorization = `Basic ${config.auth.secret}`;
         }
+      }
+
+      const response = await fetch(url, {
+        headers
       });
 
       if (!response.ok) {
