@@ -88,33 +88,15 @@ describe('Full Workflow E2E Tests', () => {
     });
 
     it('should fail validation for manifest with invalid UUID', () => {
-      // Create a manifest with invalid UUID
+      // Start from a known-good manifest and mutate only the UUID field
+      const baseManifest = JSON.parse(originalManifest);
       const invalidManifest = {
-        version: '1.0.0',
-        generatedAt: new Date().toISOString(),
-        generatedBy: 'test',
-        repository: { url: 'https://github.com/test/repo' },
-        dependencies: [
-          {
-            id: 'not-a-valid-uuid', // Invalid UUID format
-            url: 'https://example.com',
-            type: 'documentation',
-            accessMethod: 'http',
-            name: 'Test Dependency',
-            currentStateHash: 'hash123',
-            detectionMethod: 'manual',
-            detectionConfidence: 1.0,
-            detectedAt: new Date().toISOString(),
-            lastChecked: new Date().toISOString(),
-            referencedIn: [],
-            changeHistory: [],
-          },
-        ],
-        statistics: {
-          totalDependencies: 1,
-          byType: { documentation: 1 },
-          byAccessMethod: { http: 1 },
-        },
+        ...baseManifest,
+        dependencies: baseManifest.dependencies.map((dep: any, index: number) =>
+          index === 0
+            ? { ...dep, id: 'not-a-valid-uuid' } // Invalid UUID format on first dependency
+            : dep
+        ),
       };
 
       const invalidPath = path.join(FIXTURES_DIR, '.dependabit', 'invalid-uuid-test.json');
