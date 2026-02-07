@@ -85,7 +85,7 @@ jobs:
           severity_filter: ${{ inputs.severity_filter || 'minor' }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           debug: 'true'
-        continue-on-error: true
+        continue-on-error: true  # Check action not yet implemented
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

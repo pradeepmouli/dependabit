@@ -9,6 +9,7 @@ import { describe, it, expect, beforeAll, afterEach } from 'vitest';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validateManifest, ValidationError } from '@dependabit/manifest';
 
 const FIXTURES_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'fixtures', 'sample-repo');
 const MANIFEST_PATH = path.join(FIXTURES_DIR, '.dependabit', 'manifest.json');
@@ -86,49 +87,118 @@ describe('Full Workflow E2E Tests', () => {
       expect(accessCount).toBe(manifest.dependencies.length);
     });
 
-    it('should fail validation for invalid manifest', () => {
-      // Create an invalid manifest with missing required fields
+    it('should fail validation for manifest with invalid UUID', () => {
+      // Create a manifest with invalid UUID
       const invalidManifest = {
         version: '1.0.0',
+        generatedAt: new Date().toISOString(),
+        generatedBy: 'test',
+        repository: { url: 'https://github.com/test/repo' },
         dependencies: [
           {
-            id: 'invalid-id', // Not a UUID
-            url: 'not-a-url', // Invalid URL
-            // Missing required fields like type, accessMethod, name, etc.
+            id: 'not-a-valid-uuid', // Invalid UUID format
+            url: 'https://example.com',
+            type: 'documentation',
+            accessMethod: 'http',
+            name: 'Test Dependency',
+            currentStateHash: 'hash123',
+            detectionMethod: 'manual',
+            detectionConfidence: 1.0,
+            detectedAt: new Date().toISOString(),
+            lastChecked: new Date().toISOString(),
+            referencedIn: [],
+            changeHistory: [],
           },
         ],
+        statistics: {
+          totalDependencies: 1,
+          byType: { documentation: 1 },
+          byAccessMethod: { http: 1 },
+        },
       };
 
-      const invalidPath = path.join(FIXTURES_DIR, '.dependabit', 'invalid-test.json');
+      const invalidPath = path.join(FIXTURES_DIR, '.dependabit', 'invalid-uuid-test.json');
       fs.writeFileSync(invalidPath, JSON.stringify(invalidManifest));
 
       try {
-        // Import and invoke real validation
+        // Call real validation function - should throw ValidationError
         const parsed = JSON.parse(fs.readFileSync(invalidPath, 'utf8'));
-        
-        // This should throw a validation error because the manifest is invalid
-        expect(() => {
-          // Basic checks that would fail in real validation
-          const dep = parsed.dependencies[0];
-          
-          // Check UUID format
-          const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-          if (!uuidRegex.test(dep.id)) {
-            throw new Error('Invalid UUID format');
-          }
-          
-          // Check URL format
-          try {
-            new URL(dep.url);
-          } catch {
-            throw new Error('Invalid URL format');
-          }
-          
-          // Check required fields
-          if (!dep.type || !dep.accessMethod || !dep.name) {
-            throw new Error('Missing required fields');
-          }
-        }).toThrow();
+        expect(() => validateManifest(parsed)).toThrow(ValidationError);
+      } finally {
+        fs.unlinkSync(invalidPath);
+      }
+    });
+
+    it('should fail validation for manifest with invalid URL', () => {
+      // Create a manifest with invalid URL
+      const invalidManifest = {
+        version: '1.0.0',
+        generatedAt: new Date().toISOString(),
+        generatedBy: 'test',
+        repository: { url: 'https://github.com/test/repo' },
+        dependencies: [
+          {
+            id: '12345678-1234-1234-1234-123456789012', // Valid UUID
+            url: 'not-a-valid-url', // Invalid URL
+            type: 'documentation',
+            accessMethod: 'http',
+            name: 'Test Dependency',
+            currentStateHash: 'hash123',
+            detectionMethod: 'manual',
+            detectionConfidence: 1.0,
+            detectedAt: new Date().toISOString(),
+            lastChecked: new Date().toISOString(),
+            referencedIn: [],
+            changeHistory: [],
+          },
+        ],
+        statistics: {
+          totalDependencies: 1,
+          byType: { documentation: 1 },
+          byAccessMethod: { http: 1 },
+        },
+      };
+
+      const invalidPath = path.join(FIXTURES_DIR, '.dependabit', 'invalid-url-test.json');
+      fs.writeFileSync(invalidPath, JSON.stringify(invalidManifest));
+
+      try {
+        // Call real validation function - should throw ValidationError
+        const parsed = JSON.parse(fs.readFileSync(invalidPath, 'utf8'));
+        expect(() => validateManifest(parsed)).toThrow(ValidationError);
+      } finally {
+        fs.unlinkSync(invalidPath);
+      }
+    });
+
+    it('should fail validation for manifest with missing required fields', () => {
+      // Create a manifest missing required fields
+      const invalidManifest = {
+        version: '1.0.0',
+        generatedAt: new Date().toISOString(),
+        generatedBy: 'test',
+        repository: { url: 'https://github.com/test/repo' },
+        dependencies: [
+          {
+            id: '12345678-1234-1234-1234-123456789012', // Valid UUID
+            url: 'https://example.com', // Valid URL
+            // Missing required fields: type, accessMethod, name, etc.
+          },
+        ],
+        statistics: {
+          totalDependencies: 1,
+          byType: { documentation: 1 },
+          byAccessMethod: { http: 1 },
+        },
+      };
+
+      const invalidPath = path.join(FIXTURES_DIR, '.dependabit', 'invalid-missing-test.json');
+      fs.writeFileSync(invalidPath, JSON.stringify(invalidManifest));
+
+      try {
+        // Call real validation function - should throw ValidationError
+        const parsed = JSON.parse(fs.readFileSync(invalidPath, 'utf8'));
+        expect(() => validateManifest(parsed)).toThrow(ValidationError);
       } finally {
         fs.unlinkSync(invalidPath);
       }
