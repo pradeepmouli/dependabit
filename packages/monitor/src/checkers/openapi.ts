@@ -169,10 +169,10 @@ export class OpenAPIChecker implements Checker {
     let severity: 'breaking' | 'major' | 'minor' = 'minor';
 
     // Extract endpoints and schemas from metadata
-    const prevEndpoints = (prev.metadata?.endpoints as Record<string, string[]>) || {};
-    const currEndpoints = (curr.metadata?.endpoints as Record<string, string[]>) || {};
-    const prevSchemas = (prev.metadata?.schemas as Record<string, unknown>) || {};
-    const currSchemas = (curr.metadata?.schemas as Record<string, unknown>) || {};
+    const prevEndpoints = ((prev.metadata?.['endpoints']) as Record<string, string[]>) || {};
+    const currEndpoints = ((curr.metadata?.['endpoints']) as Record<string, string[]>) || {};
+    const prevSchemas = ((prev.metadata?.['schemas']) as Record<string, unknown>) || {};
+    const currSchemas = ((curr.metadata?.['schemas']) as Record<string, unknown>) || {};
 
     const diff: OpenAPIDiff = {
       addedEndpoints: [],
@@ -181,9 +181,15 @@ export class OpenAPIChecker implements Checker {
       addedSchemas: [],
       removedSchemas: [],
       modifiedSchemas: [],
-      versionChanged: prev.version !== curr.version,
-      oldVersion: prev.version,
-      newVersion: curr.version
+      versionChanged: prev.version !== curr.version
+    };
+    
+    if (prev.version !== undefined) {
+      diff.oldVersion = prev.version;
+    }
+    
+    if (curr.version !== undefined) {
+      diff.newVersion = curr.version;
     };
 
     // Compare endpoints
@@ -260,13 +266,18 @@ export class OpenAPIChecker implements Checker {
       changes.push('content');
     }
 
-    return {
+    const result: ChangeDetection = {
       hasChanged: changes.length > 0,
       changes,
       oldVersion: prev.version,
       newVersion: curr.version,
-      severity: changes.length > 0 ? severity : undefined,
       diff
     };
+    
+    if (changes.length > 0) {
+      result.severity = severity;
+    }
+    
+    return result;
   }
 }
