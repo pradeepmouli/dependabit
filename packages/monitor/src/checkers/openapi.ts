@@ -77,9 +77,9 @@ export class OpenAPIChecker implements Checker {
 
       if (config.auth?.secret) {
         if (config.auth.type === 'token' || config.auth.type === 'oauth') {
-          headers.Authorization = `Bearer ${config.auth.secret}`;
+          headers['Authorization'] = `Bearer ${config.auth.secret}`;
         } else if (config.auth.type === 'basic') {
-          headers.Authorization = `Basic ${config.auth.secret}`;
+          headers['Authorization'] = `Basic ${config.auth.secret}`;
         }
       }
 
