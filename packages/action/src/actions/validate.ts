@@ -23,8 +23,8 @@ export interface ValidationResult {
  */
 export async function run(): Promise<void> {
   try {
-    const manifestPath = core.getInput('manifest-path') || '.dependabit/manifest.json';
-    const configPath = core.getInput('config-path') || '';
+    const manifestPath = core.getInput('manifest_path') || '.dependabit/manifest.json';
+    const configPath = core.getInput('config_path') || '';
 
     console.log('Starting validation...');
     const result = await validateAction(manifestPath, configPath || undefined);

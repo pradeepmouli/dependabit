@@ -551,7 +551,7 @@ Run validation:
 
 ## Support & Documentation
 
-- **Full Documentation**: `docs/ai-dependency-tracker/`
+- **Full Documentation**: `docs/`
 - **Architecture**: `specs/001-ai-dependency-tracker/plan.md`
 - **Data Model**: `specs/001-ai-dependency-tracker/data-model.md`
 - **Issues**: https://github.com/pradeepmouli/dependabit/issues
