@@ -8,6 +8,7 @@
 
 import crypto from 'node:crypto';
 import { z } from 'zod';
+import semver from 'semver';
 
 /**
  * Context7 API configuration
@@ -227,18 +228,25 @@ export class Context7Checker {
     if (prev.version !== curr.version) {
       changes.push('version');
 
-      // Determine severity based on version change
+      // Determine severity based on version change using semver
       if (prev.version && curr.version) {
-        const prevParts = prev.version.split('.').map(Number);
-        const currParts = curr.version.split('.').map(Number);
+        // Clean and parse versions - semver handles 'v' prefixes automatically
+        const prevVersion = semver.coerce(prev.version);
+        const currVersion = semver.coerce(curr.version);
 
-        if (prevParts[0] !== currParts[0]) {
-          severity = 'breaking'; // Major version change
-        } else if (prevParts[1] !== currParts[1]) {
-          severity = 'major'; // Minor version change
-        } else {
-          severity = 'minor'; // Patch change
+        // Only classify if both versions are valid semver
+        if (prevVersion && currVersion) {
+          const diffType = semver.diff(prevVersion, currVersion);
+          
+          if (diffType === 'major' || diffType === 'premajor') {
+            severity = 'breaking'; // Major version change
+          } else if (diffType === 'minor' || diffType === 'preminor') {
+            severity = 'major'; // Minor version change
+          } else {
+            severity = 'minor'; // Patch or prerelease change
+          }
         }
+        // If versions are not valid semver, leave severity as 'minor' (conservative default)
       }
     }
 
