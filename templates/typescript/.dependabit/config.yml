@@ -1,0 +1,29 @@
+version: "1"
+
+# Global settings
+schedule:
+  interval: daily
+  time: "02:00"
+
+# Issue handling & AI agent assignment rules
+issues:
+  aiAgentAssignment:
+    breaking: "@copilot"
+    major: "@claude"
+    minor: "@copilot"
+
+# Per-dependency overrides (examples)
+dependencies:
+  # Example: Monitor an important repository hourly
+  # - url: "https://github.com/important/repo"
+  #   schedule:
+  #     interval: hourly
+  #   monitoring:
+  #     ignoreChanges: false
+
+  # Example: Monitor stable documentation weekly
+  # - url: "https://stable-docs.example.com"
+  #   schedule:
+  #     interval: weekly
+  #   monitoring:
+  #     ignoreChanges: false

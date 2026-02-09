@@ -50,6 +50,17 @@ Dependabit automatically discovers, tracks, and monitors external dependencies r
 - GitHub repository with Actions enabled
 - GitHub Copilot access (or alternative LLM provider)
 
+### Bootstrap Templates
+
+Ready-to-use templates are available in the [`templates/`](./templates/) directory:
+
+- **[TypeScript Template](./templates/typescript/)** - Complete setup for TypeScript projects
+  - Includes all three workflow files (generate, update, check)
+  - Example configuration file
+  - Detailed setup instructions
+
+Simply copy the template files to your repository and run the generate workflow to get started!
+
 ### For Development
 
 Add Dependabit to your repository by creating workflow files:
