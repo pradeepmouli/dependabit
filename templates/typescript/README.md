@@ -117,9 +117,10 @@ schedule:
 
 issues:
   aiAgentAssignment:
-    breaking: "@copilot"
-    major: "@claude"
-    minor: "@copilot"
+    # Replace with actual GitHub usernames for issue assignments
+    breaking: "@copilot"  # GitHub username for breaking changes
+    major: "@claude"      # GitHub username for major changes
+    minor: "@copilot"     # GitHub username for minor changes
 
 dependencies:
   # Per-dependency overrides
