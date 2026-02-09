@@ -176,7 +176,7 @@ Possibly! Dependabit should **not** track dependencies already handled by Depend
 ### Why use both tools instead of one comprehensive tool?
 
 **Separation of concerns:**
-- Package dependencies are well-solved by Dependabot/Renovate
+- Package dependencies are well-handled by Dependabot/Renovate
 - External references need LLM-powered discovery
 - Different update cadences and workflows
 - Avoids reinventing Dependabot's excellent package management
