@@ -230,18 +230,27 @@ describe('Full Workflow E2E Tests', () => {
       const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
 
       // GitHub repos should use github-api (but not docs.github.com)
-      const githubDeps = manifest.dependencies.filter(
-        (dep: { url: string }) =>
-          dep.url.includes('github.com') && !dep.url.includes('docs.github.com')
-      );
+      const githubDeps = manifest.dependencies.filter((dep: { url: string }) => {
+        try {
+          const urlObj = new URL(dep.url);
+          return urlObj.hostname === 'github.com' && !urlObj.pathname.startsWith('/docs');
+        } catch {
+          return false;
+        }
+      });
       for (const dep of githubDeps) {
         expect(dep.accessMethod).toBe('github-api');
       }
 
       // arXiv papers should use arxiv
-      const arxivDeps = manifest.dependencies.filter((dep: { url: string }) =>
-        dep.url.includes('arxiv.org')
-      );
+      const arxivDeps = manifest.dependencies.filter((dep: { url: string }) => {
+        try {
+          const urlObj = new URL(dep.url);
+          return urlObj.hostname === 'arxiv.org';
+        } catch {
+          return false;
+        }
+      });
       for (const dep of arxivDeps) {
         expect(dep.accessMethod).toBe('arxiv');
       }
