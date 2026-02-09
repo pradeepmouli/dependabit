@@ -341,6 +341,16 @@ describe('Full Workflow E2E Tests', () => {
 });
 
 describe('False Positive Validation (SC-005)', () => {
+  let originalManifest: string;
+
+  beforeAll(() => {
+    originalManifest = fs.readFileSync(MANIFEST_PATH, 'utf8');
+  });
+
+  afterEach(() => {
+    fs.writeFileSync(MANIFEST_PATH, originalManifest);
+  });
+
   it('should have metadata to track false positives', () => {
     const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
 
