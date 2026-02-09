@@ -29,7 +29,7 @@ describe('TokenAuthHandler', () => {
       const token = 'ghp_testtoken123';
       const handler = new TokenAuthHandler(token);
       const auth = await handler.authenticate();
-      
+
       expect(auth).toEqual({
         type: 'token',
         token: token
@@ -40,7 +40,7 @@ describe('TokenAuthHandler', () => {
       const token = 'ghp_validtoken123456';
       const handler = new TokenAuthHandler(token);
       const auth = await handler.authenticate();
-      
+
       expect(auth.token).toBe(token);
     });
 
@@ -48,7 +48,7 @@ describe('TokenAuthHandler', () => {
       const token = 'github_pat_validtoken123456';
       const handler = new TokenAuthHandler(token);
       const auth = await handler.authenticate();
-      
+
       expect(auth.token).toBe(token);
     });
   });
@@ -67,8 +67,8 @@ describe('TokenAuthHandler', () => {
 
     it('should accept various GitHub token prefixes', () => {
       const validPrefixes = ['ghp_', 'gho_', 'ghu_', 'ghs_', 'ghr_', 'github_pat_'];
-      
-      validPrefixes.forEach(prefix => {
+
+      validPrefixes.forEach((prefix) => {
         const handler = new TokenAuthHandler(`${prefix}test123`);
         expect(handler.validate()).toBe(true);
       });

@@ -154,15 +154,15 @@ export class Context7Checker {
         libraryName: parsed.library.name,
         lastUpdated: parsed.library.lastUpdated
       };
-      
+
       if (parsed.library.description !== undefined) {
         metadata.description = parsed.library.description;
       }
-      
+
       if (parsed.content?.hash !== undefined) {
         metadata.contentHash = parsed.content.hash;
       }
-      
+
       return {
         version: parsed.library.version,
         stateHash,
@@ -217,10 +217,7 @@ export class Context7Checker {
   /**
    * Compare two Context7 snapshots to detect changes
    */
-  async compare(
-    prev: Context7Snapshot,
-    curr: Context7Snapshot
-  ): Promise<Context7ChangeDetection> {
+  async compare(prev: Context7Snapshot, curr: Context7Snapshot): Promise<Context7ChangeDetection> {
     const changes: string[] = [];
     let severity: 'breaking' | 'major' | 'minor' = 'minor';
 
@@ -237,7 +234,7 @@ export class Context7Checker {
         // Only classify if both versions are valid semver
         if (prevVersion && currVersion) {
           const diffType = semver.diff(prevVersion, currVersion);
-          
+
           if (diffType === 'major' || diffType === 'premajor') {
             severity = 'breaking'; // Major version change
           } else if (diffType === 'minor' || diffType === 'preminor') {
@@ -268,11 +265,11 @@ export class Context7Checker {
       oldVersion: prev.version,
       newVersion: curr.version
     };
-    
+
     if (changes.length > 0) {
       result.severity = severity;
     }
-    
+
     return result;
   }
 }

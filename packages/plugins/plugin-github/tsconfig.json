@@ -6,8 +6,5 @@
   },
   "include": ["src"],
   "exclude": ["src/**/*.test.ts", "src/**/*.spec.ts"],
-  "references": [
-    { "path": "../../github-client" },
-    { "path": "../../manifest" }
-  ]
+  "references": [{ "path": "../../github-client" }, { "path": "../../manifest" }]
 }

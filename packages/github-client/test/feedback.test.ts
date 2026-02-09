@@ -7,7 +7,7 @@ describe('FeedbackListener', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    
+
     // Mock IssueManager
     mockIssueManager = {
       listIssues: vi.fn(),
@@ -51,17 +51,17 @@ describe('FeedbackListener', () => {
 
     it('should filter by date range', async () => {
       const mockIssues = [
-        { 
-          number: 1, 
-          labels: ['false-positive'], 
-          title: 'Old issue', 
-          created_at: '2025-12-01T00:00:00Z' 
+        {
+          number: 1,
+          labels: ['false-positive'],
+          title: 'Old issue',
+          created_at: '2025-12-01T00:00:00Z'
         },
-        { 
-          number: 2, 
-          labels: ['false-positive'], 
-          title: 'Recent issue', 
-          created_at: '2026-01-25T00:00:00Z' 
+        {
+          number: 2,
+          labels: ['false-positive'],
+          title: 'Recent issue',
+          created_at: '2026-01-25T00:00:00Z'
         }
       ];
 
@@ -136,17 +136,17 @@ describe('FeedbackListener', () => {
     it('should get feedback from last 30 days', async () => {
       const now = new Date('2026-01-31');
       const mockIssues = [
-        { 
-          number: 1, 
-          labels: ['false-positive'], 
-          title: 'Recent', 
-          created_at: '2026-01-20T00:00:00Z' 
+        {
+          number: 1,
+          labels: ['false-positive'],
+          title: 'Recent',
+          created_at: '2026-01-20T00:00:00Z'
         },
-        { 
-          number: 2, 
-          labels: ['false-positive'], 
-          title: 'Old', 
-          created_at: '2025-12-15T00:00:00Z' 
+        {
+          number: 2,
+          labels: ['false-positive'],
+          title: 'Old',
+          created_at: '2025-12-15T00:00:00Z'
         }
       ];
 

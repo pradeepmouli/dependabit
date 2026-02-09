@@ -10,8 +10,8 @@ export default defineConfig({
       '@dependabit/detector': resolve(__dirname, './packages/detector/dist'),
       '@dependabit/github-client': resolve(__dirname, './packages/github-client/dist'),
       '@dependabit/monitor': resolve(__dirname, './packages/monitor/dist'),
-      '@dependabit/utils': resolve(__dirname, './packages/utils/dist'),
-    },
+      '@dependabit/utils': resolve(__dirname, './packages/utils/dist')
+    }
   },
   test: {
     globals: true,

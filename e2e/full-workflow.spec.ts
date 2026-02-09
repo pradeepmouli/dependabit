@@ -11,7 +11,11 @@ import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateManifest, ValidationError } from '@dependabit/manifest';
 
-const FIXTURES_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'fixtures', 'sample-repo');
+const FIXTURES_DIR = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  'fixtures',
+  'sample-repo'
+);
 const MANIFEST_PATH = path.join(FIXTURES_DIR, '.dependabit', 'manifest.json');
 
 describe('Full Workflow E2E Tests', () => {
@@ -96,7 +100,7 @@ describe('Full Workflow E2E Tests', () => {
           index === 0
             ? { ...dep, id: 'not-a-valid-uuid' } // Invalid UUID format on first dependency
             : dep
-        ),
+        )
       };
 
       const invalidPath = path.join(FIXTURES_DIR, '.dependabit', 'invalid-uuid-test.json');
@@ -131,14 +135,14 @@ describe('Full Workflow E2E Tests', () => {
             detectedAt: new Date().toISOString(),
             lastChecked: new Date().toISOString(),
             referencedIn: [],
-            changeHistory: [],
-          },
+            changeHistory: []
+          }
         ],
         statistics: {
           totalDependencies: 1,
           byType: { documentation: 1 },
-          byAccessMethod: { http: 1 },
-        },
+          byAccessMethod: { http: 1 }
+        }
       };
 
       const invalidPath = path.join(FIXTURES_DIR, '.dependabit', 'invalid-url-test.json');
@@ -163,15 +167,15 @@ describe('Full Workflow E2E Tests', () => {
         dependencies: [
           {
             id: '12345678-1234-1234-1234-123456789012', // Valid UUID
-            url: 'https://example.com', // Valid URL
+            url: 'https://example.com' // Valid URL
             // Missing required fields: type, accessMethod, name, etc.
-          },
+          }
         ],
         statistics: {
           totalDependencies: 1,
           byType: { documentation: 1 },
-          byAccessMethod: { http: 1 },
-        },
+          byAccessMethod: { http: 1 }
+        }
       };
 
       const invalidPath = path.join(FIXTURES_DIR, '.dependabit', 'invalid-missing-test.json');
@@ -192,8 +196,9 @@ describe('Full Workflow E2E Tests', () => {
       const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
 
       // Check that README references are captured
-      const readmeDeps = manifest.dependencies.filter((dep: { referencedIn: Array<{ file: string }> }) =>
-        dep.referencedIn.some((ref: { file: string }) => ref.file === 'README.md')
+      const readmeDeps = manifest.dependencies.filter(
+        (dep: { referencedIn: Array<{ file: string }> }) =>
+          dep.referencedIn.some((ref: { file: string }) => ref.file === 'README.md')
       );
 
       expect(readmeDeps.length).toBeGreaterThan(0);
@@ -258,7 +263,7 @@ describe('Full Workflow E2E Tests', () => {
         'https://www.typescriptlang.org/docs/',
         'https://github.com/TanStack/query',
         'https://platform.openai.com/docs/api-reference',
-        'https://github.com/reactjs/rfcs',
+        'https://github.com/reactjs/rfcs'
       ];
 
       const detectedUrls = manifest.dependencies.map((dep: { url: string }) => dep.url);
@@ -306,7 +311,7 @@ describe('Full Workflow E2E Tests', () => {
         detectedAt: new Date().toISOString(),
         lastChecked: new Date().toISOString(),
         referencedIn: [],
-        changeHistory: [],
+        changeHistory: []
       };
 
       manifest.dependencies.push(manualDep);
@@ -350,7 +355,7 @@ describe('False Positive Validation (SC-005)', () => {
         oldVersion: '1.0.0',
         newVersion: '1.0.1',
         severity: 'minor',
-        falsePositive: true,
+        falsePositive: true
       });
 
       fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2));

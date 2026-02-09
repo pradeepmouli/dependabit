@@ -133,7 +133,9 @@ export class ArxivChecker {
     const updated = getTagContent('updated', entry);
 
     // Extract authors
-    const authorMatches = entry.matchAll(/<author[^>]*>[\s\S]*?<name>([^<]+)<\/name>[\s\S]*?<\/author>/gi);
+    const authorMatches = entry.matchAll(
+      /<author[^>]*>[\s\S]*?<name>([^<]+)<\/name>[\s\S]*?<\/author>/gi
+    );
     const authors = Array.from(authorMatches).map((m) => m[1]?.trim() || '');
 
     // Extract PDF link
@@ -264,11 +266,11 @@ export class ArxivChecker {
       oldVersion: prev.version,
       newVersion: curr.version
     };
-    
+
     if (changes.length > 0) {
       result.severity = severity;
     }
-    
+
     return result;
   }
 }

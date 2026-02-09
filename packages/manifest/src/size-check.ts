@@ -25,10 +25,9 @@ export function checkManifestSize(
   const warnThreshold = (options?.warnThreshold ?? 1) * 1024 * 1024; // Convert MB to bytes
   const errorThreshold = (options?.errorThreshold ?? 10) * 1024 * 1024;
 
-  const sizeBytes = typeof content === 'string' 
-    ? Buffer.byteLength(content, 'utf8')
-    : content.length;
-  
+  const sizeBytes =
+    typeof content === 'string' ? Buffer.byteLength(content, 'utf8') : content.length;
+
   const sizeMB = sizeBytes / (1024 * 1024);
 
   if (sizeBytes >= errorThreshold) {
@@ -102,11 +101,11 @@ export function canAddEntry(
 } {
   const currentSize = validateManifestObject(currentManifest, options);
   const entrySize = estimateEntrySize(newEntry);
-  
+
   // Estimate new size (accounting for JSON formatting)
   const estimatedBytes = currentSize.sizeBytes + entrySize + 100; // Add buffer for formatting
   const estimatedSizeMB = estimatedBytes / (1024 * 1024);
-  
+
   const errorThreshold = (options?.errorThreshold ?? 10) * 1024 * 1024;
   const canAdd = estimatedBytes < errorThreshold;
 
@@ -117,7 +116,7 @@ export function canAddEntry(
     currentSize,
     estimatedSize: {
       ...estimatedResult,
-      message: canAdd 
+      message: canAdd
         ? estimatedResult.message
         : `Adding entry would exceed size limit (estimated: ${estimatedSizeMB.toFixed(2)}MB)`
     }

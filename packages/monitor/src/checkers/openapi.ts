@@ -147,7 +147,16 @@ export class OpenAPIChecker implements Checker {
 
     for (const [path, pathItem] of Object.entries(spec.paths)) {
       const methods: string[] = [];
-      const httpMethods = ['get', 'post', 'put', 'patch', 'delete', 'options', 'head', 'trace'] as const;
+      const httpMethods = [
+        'get',
+        'post',
+        'put',
+        'patch',
+        'delete',
+        'options',
+        'head',
+        'trace'
+      ] as const;
 
       for (const method of httpMethods) {
         if (pathItem[method]) {
@@ -178,13 +187,17 @@ export class OpenAPIChecker implements Checker {
     let severity: 'breaking' | 'major' | 'minor' = 'minor';
 
     // Extract endpoints and schemas from metadata
-    let prevEndpoints = ((prev.metadata?.['endpoints']) as Record<string, string[]>) || {};
-    let currEndpoints = ((curr.metadata?.['endpoints']) as Record<string, string[]>) || {};
-    let prevSchemas = ((prev.metadata?.['schemas']) as Record<string, unknown>) || {};
-    let currSchemas = ((curr.metadata?.['schemas']) as Record<string, unknown>) || {};
+    let prevEndpoints = (prev.metadata?.['endpoints'] as Record<string, string[]>) || {};
+    let currEndpoints = (curr.metadata?.['endpoints'] as Record<string, string[]>) || {};
+    let prevSchemas = (prev.metadata?.['schemas'] as Record<string, unknown>) || {};
+    let currSchemas = (curr.metadata?.['schemas'] as Record<string, unknown>) || {};
 
     // If the state hashes match but previous metadata is missing, avoid spurious diffs
-    if (prev.stateHash !== undefined && curr.stateHash !== undefined && prev.stateHash === curr.stateHash) {
+    if (
+      prev.stateHash !== undefined &&
+      curr.stateHash !== undefined &&
+      prev.stateHash === curr.stateHash
+    ) {
       prevEndpoints = currEndpoints;
       prevSchemas = currSchemas;
     }
@@ -197,14 +210,14 @@ export class OpenAPIChecker implements Checker {
       modifiedSchemas: [],
       versionChanged: prev.version !== curr.version
     };
-    
+
     if (prev.version !== undefined) {
       diff.oldVersion = prev.version;
     }
-    
+
     if (curr.version !== undefined) {
       diff.newVersion = curr.version;
-    };
+    }
 
     // Compare endpoints
     const prevEndpointKeys = Object.keys(prevEndpoints);
@@ -287,11 +300,11 @@ export class OpenAPIChecker implements Checker {
       newVersion: curr.version,
       diff
     };
-    
+
     if (changes.length > 0) {
       result.severity = severity;
     }
-    
+
     return result;
   }
 }
