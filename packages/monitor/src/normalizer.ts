@@ -115,7 +115,7 @@ export function normalizeURL(url: string): string {
     });
 
     return urlObj.toString();
-  } catch (error) {
+  } catch  {
     // If URL parsing fails, return original
     return url;
   }

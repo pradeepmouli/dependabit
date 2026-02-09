@@ -143,3 +143,13 @@ Developers can manually add, edit, or remove entries in the manifest file and co
 - Change detection for external resources can be accomplished through API calls, content hashing, or version checks
 - GitHub repository has appropriate permissions for creating issues and committing manifest updates
 - Dependabot or similar tools handle package manifest dependencies (npm, PyPI, Cargo); this system complements by tracking informational references
+
+## GitHub Issues
+
+- Phase 1: Setup - #7
+- Phase 2: Foundational Infrastructure - #8
+- Phase 3: Initial Manifest Generation (US1 - MVP) - #9
+- Phase 4: Automatic Manifest Updates (US2) - #10
+- Phase 5: Change Detection and Issue Creation (US3) - #11
+- Phase 6: Manual Manifest Management (US4) - #12
+- Phase 7: Polish & Production Readiness - #13

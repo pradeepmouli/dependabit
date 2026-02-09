@@ -12,11 +12,11 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "build:action": "tsc -p tsconfig.json && ncc build dist/index.js -o action-dist --source-map --license licenses.txt",
+    "build": "tsgo -p tsconfig.json",
+    "build:action": "tsgo -p tsconfig.json && ncc build dist/index.js -o action-dist --source-map --license licenses.txt",
     "clean": "rm -rf dist action-dist",
     "dev": "tsx watch src/index.ts",
-    "type-check": "tsc --noEmit -p tsconfig.json",
+    "type-check": "tsgo --noEmit -p tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest"
   },

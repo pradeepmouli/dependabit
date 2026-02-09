@@ -516,7 +516,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
           files.push(fullPath);
         }
       }
-    } catch (error) {
+    } catch  {
       // Ignore errors (permission denied, etc.)
     }
 
