@@ -21,17 +21,17 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@actions/core": "^1.11.1",
-    "@actions/github": "^6.0.0",
+    "@actions/core": "^3.0.0",
+    "@actions/github": "^9.0.0",
     "@dependabit/detector": "workspace:*",
+    "@dependabit/github-client": "workspace:*",
     "@dependabit/manifest": "workspace:*",
     "@dependabit/monitor": "workspace:*",
-    "@dependabit/github-client": "workspace:*",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/node": "^25.0.10",
-    "@vercel/ncc": "^0.38.3",
+    "@types/node": "^25.2.2",
+    "@vercel/ncc": "^0.38.4",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
