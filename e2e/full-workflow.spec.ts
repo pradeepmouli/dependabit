@@ -224,9 +224,10 @@ describe('Full Workflow E2E Tests', () => {
     it('should assign correct access methods', () => {
       const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
 
-      // GitHub repos should use github-api
-      const githubDeps = manifest.dependencies.filter((dep: { url: string }) =>
-        dep.url.includes('github.com')
+      // GitHub repos should use github-api (but not docs.github.com)
+      const githubDeps = manifest.dependencies.filter(
+        (dep: { url: string }) =>
+          dep.url.includes('github.com') && !dep.url.includes('docs.github.com')
       );
       for (const dep of githubDeps) {
         expect(dep.accessMethod).toBe('github-api');
@@ -340,6 +341,10 @@ describe('False Positive Validation (SC-005)', () => {
 
     // Add a false positive to change history
     if (manifest.dependencies.length > 0) {
+      const initialFpCount = manifest.dependencies[0].changeHistory.filter(
+        (ch: { falsePositive?: boolean }) => ch.falsePositive === true
+      ).length;
+
       manifest.dependencies[0].changeHistory.push({
         detectedAt: new Date().toISOString(),
         oldVersion: '1.0.0',
@@ -355,7 +360,7 @@ describe('False Positive Validation (SC-005)', () => {
         (ch: { falsePositive?: boolean }) => ch.falsePositive === true
       ).length;
 
-      expect(fpCount).toBe(1);
+      expect(fpCount).toBe(initialFpCount + 1);
     }
   });
 });

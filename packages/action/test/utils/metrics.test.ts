@@ -59,13 +59,14 @@ describe('MetricsCalculator', () => {
 
   describe('calculateRollingAverage', () => {
     it('should calculate 30-day rolling average', () => {
+      const referenceDate = new Date('2026-01-25');
       const dataPoints = [
         { date: '2026-01-01', falsePositiveRate: 0.1 },
         { date: '2026-01-10', falsePositiveRate: 0.15 },
         { date: '2026-01-20', falsePositiveRate: 0.05 }
       ];
 
-      const average = calculator.calculateRollingAverage(dataPoints);
+      const average = calculator.calculateRollingAverage(dataPoints, 30, referenceDate);
 
       expect(average).toBeCloseTo(0.1, 2); // (0.1 + 0.15 + 0.05) / 3
     });
