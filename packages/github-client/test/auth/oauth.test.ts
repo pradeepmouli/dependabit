@@ -44,7 +44,7 @@ describe('OAuthHandler', () => {
         redirectUri: 'http://localhost:3000/callback'
       };
       const handler = new OAuthHandler(config);
-      
+
       // Mock the token exchange
       vi.spyOn(handler as any, 'exchangeCodeForToken').mockResolvedValue({
         access_token: 'gho_accesstoken123',
@@ -53,7 +53,7 @@ describe('OAuthHandler', () => {
       });
 
       const auth = await handler.authenticate('test_code');
-      
+
       expect(auth).toEqual({
         type: 'oauth',
         token: 'gho_accesstoken123',
@@ -69,7 +69,7 @@ describe('OAuthHandler', () => {
         redirectUri: 'http://localhost:3000/callback'
       };
       const handler = new OAuthHandler(config);
-      
+
       await expect(handler.authenticate('')).rejects.toThrow('Authorization code is required');
     });
 
@@ -80,7 +80,7 @@ describe('OAuthHandler', () => {
         redirectUri: 'http://localhost:3000/callback'
       };
       const handler = new OAuthHandler(config);
-      
+
       vi.spyOn(handler as any, 'exchangeCodeForToken').mockRejectedValue(
         new Error('Invalid authorization code')
       );
@@ -97,9 +97,9 @@ describe('OAuthHandler', () => {
         redirectUri: 'http://localhost:3000/callback'
       };
       const handler = new OAuthHandler(config);
-      
+
       const url = handler.getAuthorizationUrl(['repo', 'user']);
-      
+
       expect(url).toContain('https://github.com/login/oauth/authorize');
       expect(url).toContain('client_id=test_client');
       expect(url).toContain('redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback');
@@ -113,9 +113,9 @@ describe('OAuthHandler', () => {
         redirectUri: 'http://localhost:3000/callback'
       };
       const handler = new OAuthHandler(config);
-      
+
       const url = handler.getAuthorizationUrl(['repo'], 'random_state_123');
-      
+
       expect(url).toContain('state=random_state_123');
     });
   });
@@ -128,7 +128,7 @@ describe('OAuthHandler', () => {
         redirectUri: 'http://localhost:3000/callback'
       };
       const handler = new OAuthHandler(config);
-      
+
       vi.spyOn(handler as any, 'performTokenRefresh').mockResolvedValue({
         access_token: 'gho_newtoken456',
         token_type: 'bearer',
@@ -136,7 +136,7 @@ describe('OAuthHandler', () => {
       });
 
       const result = await handler.refreshToken('refresh_token_123');
-      
+
       expect(result).toEqual({
         type: 'oauth',
         token: 'gho_newtoken456',
@@ -152,7 +152,7 @@ describe('OAuthHandler', () => {
         redirectUri: 'http://localhost:3000/callback'
       };
       const handler = new OAuthHandler(config);
-      
+
       await expect(handler.refreshToken('')).rejects.toThrow('Refresh token is required');
     });
   });
@@ -165,7 +165,7 @@ describe('OAuthHandler', () => {
         redirectUri: 'http://localhost:3000/callback'
       };
       const handler = new OAuthHandler(config);
-      
+
       expect(handler.validate()).toBe(true);
     });
 
@@ -176,7 +176,7 @@ describe('OAuthHandler', () => {
         redirectUri: 'invalid-uri'
       };
       const handler = new OAuthHandler(config);
-      
+
       expect(handler.validate()).toBe(false);
     });
   });
@@ -189,7 +189,7 @@ describe('OAuthHandler', () => {
         redirectUri: 'http://localhost:3000/callback'
       };
       const handler = new OAuthHandler(config);
-      
+
       expect(handler.getType()).toBe('oauth');
     });
   });

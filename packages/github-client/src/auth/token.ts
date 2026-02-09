@@ -44,7 +44,7 @@ export class TokenAuthHandler {
    */
   validate(): boolean {
     // Check if token starts with valid GitHub prefix or is an API key
-    const hasValidPrefix = this.GITHUB_TOKEN_PREFIXES.some(prefix =>
+    const hasValidPrefix = this.GITHUB_TOKEN_PREFIXES.some((prefix) =>
       this.token.startsWith(prefix)
     );
 
@@ -71,7 +71,7 @@ export class TokenAuthHandler {
 
   /**
    * Get current token
-   * 
+   *
    * @warning This method exposes the raw token value. Use with caution and avoid
    * logging or displaying the token. Prefer using authenticate() for auth operations.
    */

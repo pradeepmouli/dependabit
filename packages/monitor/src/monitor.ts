@@ -5,6 +5,7 @@
 
 import { GitHubRepoChecker } from './checkers/github-repo.js';
 import { URLContentChecker } from './checkers/url-content.js';
+import { OpenAPIChecker } from './checkers/openapi.js';
 import { SeverityClassifier } from './severity.js';
 import type { Checker, AccessConfig, DependencySnapshot, ChangeDetection } from './types.js';
 
@@ -38,6 +39,7 @@ export class Monitor {
     this.checkers = new Map();
     this.checkers.set('github-api', new GitHubRepoChecker());
     this.checkers.set('http', new URLContentChecker());
+    this.checkers.set('openapi', new OpenAPIChecker());
 
     this.classifier = new SeverityClassifier();
   }

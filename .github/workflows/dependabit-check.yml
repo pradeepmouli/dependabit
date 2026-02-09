@@ -1,0 +1,122 @@
+name: Dependabit - Check Dependencies
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Manual trigger
+    inputs:
+      force_check:
+        description: 'Force check all dependencies (ignore schedules)'
+        required: false
+        default: 'false'
+        type: boolean
+      severity_filter:
+        description: 'Minimum severity to report'
+        required: false
+        default: 'minor'
+        type: choice
+        options:
+          - minor
+          - major
+          - breaking
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    name: Check for Dependency Changes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup GitHub CLI (required for Copilot CLI)
+        run: |
+          # GitHub CLI is pre-installed on GitHub Actions runners
+          # Verify it's available and authenticated
+          gh --version
+          gh auth status
+
+      - name: Install dependencies and build action
+        run: |
+          corepack enable
+          pnpm install
+          pnpm build
+
+      - name: Check manifest exists
+        id: manifest_check
+        run: |
+          if [ -f ".dependabit/manifest.json" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Manifest found at .dependabit/manifest.json"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "::warning::No manifest found. Run the generate workflow first."
+          fi
+
+      - name: Validate manifest before checking
+        id: validate
+        if: steps.manifest_check.outputs.exists == 'true'
+        uses: ./packages/action
+        with:
+          action: validate
+          manifest_path: .dependabit/manifest.json
+          config_path: .dependabit/config.yml
+
+      - name: Check for dependency changes
+        id: check
+        if: steps.manifest_check.outputs.exists == 'true' && steps.validate.outcome == 'success'
+        uses: ./packages/action
+        with:
+          action: check
+          repo_path: .
+          manifest_path: .dependabit/manifest.json
+          config_path: .dependabit/config.yml
+          force_check: ${{ inputs.force_check || 'false' }}
+          severity_filter: ${{ inputs.severity_filter || 'minor' }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          debug: 'true'
+        continue-on-error: true # Check action not yet implemented
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        if: always() && steps.manifest_check.outputs.exists == 'true'
+        run: |
+          echo "### Dependency Check Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Dependencies Checked**: ${{ steps.check.outputs.dependencies_checked || '0' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Changes Detected**: ${{ steps.check.outputs.changes_detected || '0' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Issues Created**: ${{ steps.check.outputs.issues_created || '0' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "#### Changes by Severity" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Severity | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔴 Breaking | ${{ steps.check.outputs.breaking_changes || '0' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🟠 Major | ${{ steps.check.outputs.major_changes || '0' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🟢 Minor | ${{ steps.check.outputs.minor_changes || '0' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.check.outputs.rate_limit_remaining }}" != "" ]; then
+            echo "**Rate Limit Remaining**: ${{ steps.check.outputs.rate_limit_remaining }}" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: No manifest warning
+        if: steps.manifest_check.outputs.exists == 'false'
+        run: |
+          echo "### ⚠️ No Manifest Found" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "No dependency manifest was found at \`.dependabit/manifest.json\`." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**To get started:**" >> $GITHUB_STEP_SUMMARY
+          echo "1. Run the **Dependabit - Generate Manifest** workflow" >> $GITHUB_STEP_SUMMARY
+          echo "2. Or manually create a manifest using the dependabit CLI" >> $GITHUB_STEP_SUMMARY
