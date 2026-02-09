@@ -39,27 +39,6 @@
           "newVersion": "1.0.1",
           "severity": "minor",
           "falsePositive": true
-        },
-        {
-          "detectedAt": "2026-02-09T00:17:52.481Z",
-          "oldVersion": "1.0.0",
-          "newVersion": "1.0.1",
-          "severity": "minor",
-          "falsePositive": true
-        },
-        {
-          "detectedAt": "2026-02-09T00:18:55.680Z",
-          "oldVersion": "1.0.0",
-          "newVersion": "1.0.1",
-          "severity": "minor",
-          "falsePositive": true
-        },
-        {
-          "detectedAt": "2026-02-09T00:21:03.207Z",
-          "oldVersion": "1.0.0",
-          "newVersion": "1.0.1",
-          "severity": "minor",
-          "falsePositive": true
         }
       ]
     },
