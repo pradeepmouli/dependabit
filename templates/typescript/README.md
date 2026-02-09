@@ -12,9 +12,32 @@ This template provides the necessary files to bootstrap Dependabit onto any Type
 - **Configuration**:
   - `.dependabit/config.yml` - Example Dependabit configuration
 
+- **Helper Script**:
+  - `bootstrap.sh` - Automated setup script
+
 ## Quick Start
 
-### 1. Copy Files to Your Repository
+### Option 1: Using the Bootstrap Script (Recommended)
+
+The easiest way to set up Dependabit:
+
+```bash
+# From the dependabit repository
+cd templates/typescript
+./bootstrap.sh /path/to/your/repository
+
+# Or if you're already in your repository
+cd /path/to/your/repository
+/path/to/dependabit/templates/typescript/bootstrap.sh .
+```
+
+The script will:
+- Create necessary directories
+- Copy all workflow files
+- Copy the configuration file (if it doesn't exist)
+- Show you the next steps
+
+### Option 2: Manual Setup
 
 Copy the contents of this template to your TypeScript repository:
 
