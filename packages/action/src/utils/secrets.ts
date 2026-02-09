@@ -89,9 +89,7 @@ export class SecretResolver {
   /**
    * Resolve per-dependency authentication configuration
    */
-  async resolveDependencyAuth(
-    config: DependencyAuthConfig
-  ): Promise<Record<string, string>> {
+  async resolveDependencyAuth(config: DependencyAuthConfig): Promise<Record<string, string>> {
     const result: Record<string, string> = {};
 
     for (const [domain, authConfig] of Object.entries(config)) {

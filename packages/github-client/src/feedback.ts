@@ -78,8 +78,8 @@ export class FeedbackListener {
       }
 
       const labels = issue.labels || [];
-      const labelNames = labels.map((l: string | { name: string }) => 
-        (typeof l === 'string' ? l : l.name)
+      const labelNames = labels.map((l: string | { name: string }) =>
+        typeof l === 'string' ? l : l.name
       );
 
       const hasTrue = labelNames.includes(this.truePositiveLabel);
@@ -87,7 +87,9 @@ export class FeedbackListener {
 
       // Handle issues with both labels as a special case (log warning but count as true positive)
       if (hasTrue && hasFalse) {
-        console.warn(`Issue #${issue.number} has both true-positive and false-positive labels. Counting as true-positive.`);
+        console.warn(
+          `Issue #${issue.number} has both true-positive and false-positive labels. Counting as true-positive.`
+        );
         truePositives.push({
           number: issue.number,
           title: issue.title,
@@ -153,13 +155,12 @@ export class FeedbackListener {
   async monitorIssue(issueNumber: number): Promise<boolean> {
     const issue = await this.issueManager.getIssue(issueNumber);
     const labels = issue.labels || [];
-    const labelNames = labels.map((l: string | { name: string }) => 
-      (typeof l === 'string' ? l : l.name)
+    const labelNames = labels.map((l: string | { name: string }) =>
+      typeof l === 'string' ? l : l.name
     );
 
     return (
-      labelNames.includes(this.truePositiveLabel) ||
-      labelNames.includes(this.falsePositiveLabel)
+      labelNames.includes(this.truePositiveLabel) || labelNames.includes(this.falsePositiveLabel)
     );
   }
 }

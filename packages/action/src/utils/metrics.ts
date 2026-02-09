@@ -74,7 +74,7 @@ export class MetricsCalculator {
     startDate.setDate(startDate.getDate() - days);
 
     // Filter data points within the window
-    const windowData = dataPoints.filter(point => {
+    const windowData = dataPoints.filter((point) => {
       const pointDate = new Date(point.date);
       return pointDate >= startDate && pointDate <= endDate;
     });
@@ -145,10 +145,7 @@ export class MetricsCalculator {
   /**
    * Generate comprehensive metrics report
    */
-  generateReport(
-    currentFeedback: FeedbackSummary,
-    history: DataPoint[]
-  ): MetricsReport {
+  generateReport(currentFeedback: FeedbackSummary, history: DataPoint[]): MetricsReport {
     const currentRate = this.calculateFalsePositiveRate(currentFeedback);
     const rollingAverage = this.calculateRollingAverage(history);
     const trend = this.getTrend(history);

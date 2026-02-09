@@ -91,23 +91,26 @@ export class RateLimitHandler {
   /**
    * Attempts to reserve API call budget with proactive checking
    */
-  async reserveBudget(callsNeeded: number, options?: {
-    safetyMargin?: number; // Additional buffer (default: 10% of calls needed)
-    maxWaitTime?: number; // Max time to wait in ms
-  }): Promise<BudgetReservation> {
+  async reserveBudget(
+    callsNeeded: number,
+    options?: {
+      safetyMargin?: number; // Additional buffer (default: 10% of calls needed)
+      maxWaitTime?: number; // Max time to wait in ms
+    }
+  ): Promise<BudgetReservation> {
     const safetyMargin = options?.safetyMargin ?? Math.ceil(callsNeeded * 0.1);
     const totalNeeded = callsNeeded + safetyMargin;
-    
+
     const rateLimit = await this.checkRateLimit();
 
     if (rateLimit.remaining >= totalNeeded) {
-      return { 
-        reserved: true 
+      return {
+        reserved: true
       };
     }
 
     const waitTime = this.calculateWaitTime(rateLimit);
-    
+
     // Check if wait time exceeds maximum allowed
     if (options?.maxWaitTime && waitTime > options.maxWaitTime) {
       return {
@@ -127,10 +130,13 @@ export class RateLimitHandler {
   /**
    * Proactively check if operation can proceed without hitting rate limit
    */
-  async canProceed(estimatedCalls: number, options?: {
-    threshold?: number; // Minimum remaining calls (default: 100)
-    safetyMargin?: number;
-  }): Promise<{ canProceed: boolean; reason?: string }> {
+  async canProceed(
+    estimatedCalls: number,
+    options?: {
+      threshold?: number; // Minimum remaining calls (default: 100)
+      safetyMargin?: number;
+    }
+  ): Promise<{ canProceed: boolean; reason?: string }> {
     const threshold = options?.threshold ?? 100;
     const safetyMargin = options?.safetyMargin ?? Math.ceil(estimatedCalls * 0.1);
     const totalNeeded = estimatedCalls + safetyMargin;

@@ -23,17 +23,14 @@ export interface ApiResponse<T> {
  * See OpenAI API Reference for authentication patterns:
  * https://platform.openai.com/docs/api-reference/authentication
  */
-export async function fetchData<T>(
-  url: string,
-  config?: ApiConfig
-): Promise<ApiResponse<T>> {
+export async function fetchData<T>(url: string, config?: ApiConfig): Promise<ApiResponse<T>> {
   const response = await fetch(url, {
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
       // Authentication pattern from GitHub API docs
       // https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api
     },
-    signal: AbortSignal.timeout(config?.timeout ?? 30000),
+    signal: AbortSignal.timeout(config?.timeout ?? 30000)
   });
 
   const data = await response.json();
@@ -41,7 +38,7 @@ export async function fetchData<T>(
   return {
     data: data as T,
     status: response.status,
-    headers: Object.fromEntries(response.headers.entries()),
+    headers: Object.fromEntries(response.headers.entries())
   };
 }
 

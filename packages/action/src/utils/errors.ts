@@ -215,10 +215,7 @@ export class ErrorCategorizer {
    * Check if error is retryable
    */
   isRetryable(categorizedError: CategorizedError): boolean {
-    return [
-      ErrorCategory.NETWORK,
-      ErrorCategory.RATE_LIMIT
-    ].includes(categorizedError.category);
+    return [ErrorCategory.NETWORK, ErrorCategory.RATE_LIMIT].includes(categorizedError.category);
   }
 
   /**
@@ -239,10 +236,7 @@ export class ErrorCategorizer {
 /**
  * Create a categorized error from an exception
  */
-export function categorizeError(
-  error: Error,
-  context?: Record<string, unknown>
-): CategorizedError {
+export function categorizeError(error: Error, context?: Record<string, unknown>): CategorizedError {
   const categorizer = new ErrorCategorizer();
   return categorizer.categorize(error, context);
 }

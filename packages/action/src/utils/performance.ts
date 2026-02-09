@@ -50,7 +50,7 @@ export class PerformanceTracker {
    */
   startOperation(name: string, metadata?: Record<string, unknown>): string {
     const operationId = `${name}-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
-    
+
     const metrics: OperationMetrics = {
       operationId,
       name,
@@ -83,12 +83,7 @@ export class PerformanceTracker {
   /**
    * Update API quota metrics
    */
-  updateAPIQuota(quota: {
-    limit: number;
-    remaining: number;
-    used: number;
-    reset: number;
-  }): void {
+  updateAPIQuota(quota: { limit: number; remaining: number; used: number; reset: number }): void {
     this.apiQuota = {
       limit: quota.limit,
       remaining: quota.remaining,
@@ -109,8 +104,10 @@ export class PerformanceTracker {
    * Get metrics for a specific operation
    */
   getOperation(operationId: string): OperationMetrics | undefined {
-    return this.operations.get(operationId) || 
-           this.completedOperations.find(op => op.operationId === operationId);
+    return (
+      this.operations.get(operationId) ||
+      this.completedOperations.find((op) => op.operationId === operationId)
+    );
   }
 
   /**
@@ -132,12 +129,10 @@ export class PerformanceTracker {
    */
   generateReport(): PerformanceReport {
     const allOperations = this.completedOperations;
-    const completed = allOperations.filter(op => op.status === 'completed');
-    const failed = allOperations.filter(op => op.status === 'failed');
+    const completed = allOperations.filter((op) => op.status === 'completed');
+    const failed = allOperations.filter((op) => op.status === 'failed');
 
-    const durations = completed
-      .filter(op => op.duration !== undefined)
-      .map(op => op.duration!);
+    const durations = completed.filter((op) => op.duration !== undefined).map((op) => op.duration!);
 
     const totalDuration = durations.reduce((sum, d) => sum + d, 0);
     const averageDuration = durations.length > 0 ? totalDuration / durations.length : 0;
@@ -157,7 +152,7 @@ export class PerformanceTracker {
    * Get operations by name
    */
   getOperationsByName(name: string): OperationMetrics[] {
-    return this.completedOperations.filter(op => op.name === name);
+    return this.completedOperations.filter((op) => op.name === name);
   }
 
   /**
@@ -166,8 +161,8 @@ export class PerformanceTracker {
   getOperationPercentile(name: string, percentile: number): number {
     const operations = this.getOperationsByName(name);
     const durations = operations
-      .filter(op => op.duration !== undefined)
-      .map(op => op.duration!)
+      .filter((op) => op.duration !== undefined)
+      .map((op) => op.duration!)
       .sort((a, b) => a - b);
 
     if (durations.length === 0) {
@@ -205,7 +200,9 @@ export class PerformanceTracker {
     if (r.apiQuota) {
       lines.push('');
       lines.push('API Quota:');
-      lines.push(`  Used: ${r.apiQuota.used}/${r.apiQuota.limit} (${r.apiQuota.percentUsed.toFixed(1)}%)`);
+      lines.push(
+        `  Used: ${r.apiQuota.used}/${r.apiQuota.limit} (${r.apiQuota.percentUsed.toFixed(1)}%)`
+      );
       lines.push(`  Remaining: ${r.apiQuota.remaining}`);
       lines.push(`  Resets at: ${r.apiQuota.resetAt.toISOString()}`);
     }

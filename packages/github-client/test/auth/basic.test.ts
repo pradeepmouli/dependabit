@@ -25,7 +25,7 @@ describe('BasicAuthHandler', () => {
     it('should return auth object with credentials', async () => {
       const handler = new BasicAuthHandler('testuser', 'testpass');
       const auth = await handler.authenticate();
-      
+
       expect(auth).toEqual({
         type: 'basic',
         username: 'testuser',
@@ -36,7 +36,7 @@ describe('BasicAuthHandler', () => {
     it('should encode credentials properly', async () => {
       const handler = new BasicAuthHandler('user@example.com', 'p@ssw0rd!');
       const auth = await handler.authenticate();
-      
+
       expect(auth.username).toBe('user@example.com');
       expect(auth.password).toBe('p@ssw0rd!');
     });
@@ -46,7 +46,7 @@ describe('BasicAuthHandler', () => {
     it('should generate base64 encoded auth header', () => {
       const handler = new BasicAuthHandler('user', 'pass');
       const header = handler.getAuthHeader();
-      
+
       // "user:pass" in base64 is "dXNlcjpwYXNz"
       expect(header).toBe('Basic dXNlcjpwYXNz');
     });
@@ -54,7 +54,7 @@ describe('BasicAuthHandler', () => {
     it('should handle special characters in credentials', () => {
       const handler = new BasicAuthHandler('user@example.com', 'p@ss:word');
       const header = handler.getAuthHeader();
-      
+
       expect(header).toMatch(/^Basic [A-Za-z0-9+/=]+$/);
     });
   });
@@ -92,7 +92,7 @@ describe('BasicAuthHandler', () => {
     it('should allow password update', () => {
       const handler = new BasicAuthHandler('user', 'oldpass');
       handler.updateCredentials('user', 'newpass');
-      
+
       const header = handler.getAuthHeader();
       expect(header).toContain(Buffer.from('user:newpass').toString('base64'));
     });
@@ -107,7 +107,7 @@ describe('BasicAuthHandler', () => {
     it('should not expose password in toString', () => {
       const handler = new BasicAuthHandler('user', 'secretpass');
       const str = handler.toString();
-      
+
       expect(str).not.toContain('secretpass');
       expect(str).toContain('***');
     });
@@ -115,7 +115,7 @@ describe('BasicAuthHandler', () => {
     it('should not expose password in JSON', () => {
       const handler = new BasicAuthHandler('user', 'secretpass');
       const json = JSON.stringify(handler);
-      
+
       expect(json).not.toContain('secretpass');
     });
   });

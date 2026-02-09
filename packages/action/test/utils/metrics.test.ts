@@ -59,13 +59,14 @@ describe('MetricsCalculator', () => {
 
   describe('calculateRollingAverage', () => {
     it('should calculate 30-day rolling average', () => {
+      const referenceDate = new Date('2026-01-25');
       const dataPoints = [
         { date: '2026-01-01', falsePositiveRate: 0.1 },
         { date: '2026-01-10', falsePositiveRate: 0.15 },
         { date: '2026-01-20', falsePositiveRate: 0.05 }
       ];
 
-      const average = calculator.calculateRollingAverage(dataPoints);
+      const average = calculator.calculateRollingAverage(dataPoints, 30, referenceDate);
 
       expect(average).toBeCloseTo(0.1, 2); // (0.1 + 0.15 + 0.05) / 3
     });
@@ -79,7 +80,7 @@ describe('MetricsCalculator', () => {
       const now = new Date('2026-01-31');
       const dataPoints = [
         { date: '2025-12-15', falsePositiveRate: 0.5 }, // Outside 30-day window
-        { date: '2026-01-20', falsePositiveRate: 0.1 }  // Inside window
+        { date: '2026-01-20', falsePositiveRate: 0.1 } // Inside window
       ];
 
       const average = calculator.calculateRollingAverage(dataPoints, 30, now);
@@ -132,9 +133,7 @@ describe('MetricsCalculator', () => {
     });
 
     it('should return no-data for insufficient data', () => {
-      const dataPoints = [
-        { date: '2026-01-01', falsePositiveRate: 0.1 }
-      ];
+      const dataPoints = [{ date: '2026-01-01', falsePositiveRate: 0.1 }];
 
       const trend = calculator.getTrend(dataPoints);
 
