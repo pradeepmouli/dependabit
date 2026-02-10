@@ -64,6 +64,7 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
           pnpm build
+          pnpm --filter @dependabit/action run build:action
 
       - name: Check manifest exists
         id: manifest_check
