@@ -51,9 +51,11 @@ jobs:
       - name: Setup GitHub CLI (required for Copilot CLI)
         run: |
           # GitHub CLI is pre-installed on GitHub Actions runners
-          # Verify it's available and authenticated
+          # Verify it's available
           gh --version
-          gh auth status
+          gh auth status -h github.com || echo "gh auth status failed (expected in Actions)"
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Install dependencies and build action
         run: |
