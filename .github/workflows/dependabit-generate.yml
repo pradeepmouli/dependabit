@@ -35,6 +35,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Setup GitHub CLI (required for Copilot CLI)
         run: |
@@ -45,8 +49,7 @@ jobs:
 
       - name: Install dependencies and build action
         run: |
-          corepack enable
-          pnpm install
+          pnpm install --frozen-lockfile
           pnpm build
 
       - name: Generate manifest
