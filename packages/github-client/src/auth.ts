@@ -3,9 +3,9 @@
  * Provides token, OAuth, and basic authentication methods
  */
 
-import { TokenAuthHandler, type TokenAuth } from './auth/token';
-import { OAuthHandler, type OAuthAuth, type OAuthConfig } from './auth/oauth';
-import { BasicAuthHandler, type BasicAuth } from './auth/basic';
+import { TokenAuthHandler, type TokenAuth } from './auth/token.js';
+import { OAuthHandler, type OAuthAuth, type OAuthConfig } from './auth/oauth.js';
+import { BasicAuthHandler, type BasicAuth } from './auth/basic.js';
 
 export type AuthType = 'token' | 'oauth' | 'basic';
 export type AuthResult = TokenAuth | OAuthAuth | BasicAuth;
@@ -95,6 +95,6 @@ export function createAuth(config: AuthConfig): AuthManager {
 }
 
 // Re-export handler classes and types
-export { TokenAuthHandler, type TokenAuth } from './auth/token';
-export { OAuthHandler, type OAuthAuth, type OAuthConfig } from './auth/oauth';
-export { BasicAuthHandler, type BasicAuth } from './auth/basic';
+export { TokenAuthHandler, type TokenAuth } from './auth/token.js';
+export { OAuthHandler, type OAuthAuth, type OAuthConfig } from './auth/oauth.js';
+export { BasicAuthHandler, type BasicAuth } from './auth/basic.js';
