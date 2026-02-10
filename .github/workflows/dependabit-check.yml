@@ -9,12 +9,12 @@ on:
       force_check:
         description: 'Force check all dependencies (ignore schedules)'
         required: false
-        default: 'false'
+        default: false
         type: boolean
       severity_filter:
         description: 'Minimum severity to report'
         required: false
-        default: 'minor'
+        default: minor
         type: choice
         options:
           - minor
