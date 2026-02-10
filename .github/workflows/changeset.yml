@@ -14,7 +14,7 @@ on:
           - major
         default: auto
       base_ref:
-        description: 'Base reference to compare against (default: last tag or main)'
+        description: 'Base reference to compare against (default: last tag or master)'
         required: false
         type: string
 
@@ -51,7 +51,7 @@ jobs:
           if [ -n "${{ inputs.base_ref }}" ]; then
             BASE_REF="${{ inputs.base_ref }}"
           else
-            BASE_REF=$(git describe --tags --abbrev=0 2>/dev/null || echo "main")
+            BASE_REF=$(git describe --tags --abbrev=0 2>/dev/null || echo "master")
           fi
 
           echo "Analyzing commits since: $BASE_REF"
@@ -129,8 +129,20 @@ jobs:
 
           cat <<EOF > .changeset/${TIMESTAMP}.md
           ---
-          "@company/core": ${CHANGE_TYPE}
-          "@company/utils": ${CHANGE_TYPE}
+          "@dependabit/action": ${CHANGE_TYPE}
+          "@dependabit/core": ${CHANGE_TYPE}
+          "@dependabit/utils": ${CHANGE_TYPE}
+          "@dependabit/test-utils": ${CHANGE_TYPE}
+          "@dependabit/detector": ${CHANGE_TYPE}
+          "@dependabit/github-client": ${CHANGE_TYPE}
+          "@dependabit/manifest": ${CHANGE_TYPE}
+          "@dependabit/monitor": ${CHANGE_TYPE}
+          "@dependabit/plugin-arxiv": ${CHANGE_TYPE}
+          "@dependabit/plugin-context7": ${CHANGE_TYPE}
+          "@dependabit/plugin-github": ${CHANGE_TYPE}
+          "@dependabit/plugin-http": ${CHANGE_TYPE}
+          "@dependabit/plugin-openapi": ${CHANGE_TYPE}
+          "@dependabit/plugins": ${CHANGE_TYPE}
           ---
 
           $(cat /tmp/changelog_content.txt)

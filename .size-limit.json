@@ -1,11 +1,11 @@
 [
   {
-    "name": "@company/core",
+    "name": "@dependabit/core",
     "path": "packages/core/dist/index.js",
     "limit": "10 KB"
   },
   {
-    "name": "@company/utils",
+    "name": "@dependabit/utils",
     "path": "packages/utils/dist/index.js",
     "limit": "15 KB"
   }

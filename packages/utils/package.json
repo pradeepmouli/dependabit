@@ -1,6 +1,6 @@
 {
-  "name": "@company/utils",
-  "version": "0.1.0",
+  "name": "@dependabit/utils",
+  "version": "0.1.1",
   "description": "Utility functions for the monorepo",
   "type": "module",
   "main": "dist/index.js",
@@ -28,7 +28,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@company/core": "workspace:*"
+    "@dependabit/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^25.2.2",

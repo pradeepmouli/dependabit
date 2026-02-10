@@ -1,4 +1,4 @@
-# @company/core
+# @dependabit/core
 
 Core utilities used across the monorepo.
 
@@ -12,7 +12,7 @@ Core utilities used across the monorepo.
 ## Installation
 
 ```bash
-pnpm add @company/core
+pnpm add @dependabit/core
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ pnpm add @company/core
 ### Email Validation
 
 ```typescript
-import { isValidEmail } from '@company/core';
+import { isValidEmail } from '@dependabit/core';
 
 isValidEmail('user@example.com');  // true
 isValidEmail('invalid');            // false
@@ -29,7 +29,7 @@ isValidEmail('invalid');            // false
 ### API Responses
 
 ```typescript
-import { createSuccessResponse, createErrorResponse } from '@company/core';
+import { createSuccessResponse, createErrorResponse } from '@dependabit/core';
 
 const success = createSuccessResponse({ user: { id: 1 } });
 const error = createErrorResponse('Not found');
@@ -38,7 +38,7 @@ const error = createErrorResponse('Not found');
 ### Async Utilities
 
 ```typescript
-import { delay } from '@company/core';
+import { delay } from '@dependabit/core';
 
 // Wait before continuing
 await delay(1000);
@@ -66,10 +66,10 @@ Returns a promise that resolves after the specified milliseconds.
 
 ```bash
 # Run tests for this package
-pnpm --filter @company/core test
+pnpm --filter @dependabit/core test
 
 # Watch mode
-pnpm --filter @company/core test:watch
+pnpm --filter @dependabit/core test:watch
 ```
 
 ## Types

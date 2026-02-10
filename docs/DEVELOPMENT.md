@@ -148,7 +148,7 @@ This creates a file in `.changeset/` like:
 
 ```markdown
 ---
-'@company/utils': minor
+'@dependabit/utils': minor
 ---
 
 Add isValidUrl utility function for URL validation
@@ -222,8 +222,8 @@ If your change affects multiple packages:
 
 ```bash
 # Install in multiple packages
-pnpm --filter @company/core add lodash
-pnpm --filter @company/utils add lodash
+pnpm --filter @dependabit/core add lodash
+pnpm --filter @dependabit/utils add lodash
 
 # Or install in all packages
 pnpm add -r lodash
@@ -235,9 +235,9 @@ If package B depends on package A:
 
 ```json
 {
-  "name": "@company/b",
+  "name": "@dependabit/b",
   "dependencies": {
-    "@company/a": "workspace:*"
+    "@dependabit/a": "workspace:*"
   }
 }
 ```
@@ -253,8 +253,8 @@ Use integration tests to verify packages work together:
 
 ```typescript
 // integration.test.ts
-import { isValidEmail } from '@company/core';
-import { capitalize } from '@company/utils';
+import { isValidEmail } from '@dependabit/core';
+import { capitalize } from '@dependabit/utils';
 
 it('should combine core and utils', () => {
   expect(isValidEmail('john@example.com')).toBe(true);
@@ -273,7 +273,7 @@ For faster builds:
 pnpm --filter "...{packages/core}" run build
 
 # Run tests only for affected packages
-pnpm --filter @company/core run test
+pnpm --filter @dependabit/core run test
 ```
 
 ### Type Checking
@@ -348,7 +348,7 @@ pnpm install
 pnpm run test
 
 # 6. Commit
-git commit -m "chore: add new package @company/my-new-package"
+git commit -m "chore: add new package @dependabit/my-new-package"
 ```
 
 ## Debugging

@@ -1,6 +1,6 @@
 {
   "name": "dependabit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "dependabot for resources, related projects, and knowledge",
   "type": "module",
@@ -11,12 +11,16 @@
     "url": "https://github.com/pradeepmouli/dependabit.git"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/plugins/*"
   ],
   "scripts": {
     "build": "pnpm -r run build",
     "clean": "pnpm -r run clean && find packages -name 'tsconfig.tsbuildinfo' -delete && rm -rf node_modules/.cache",
     "clean:all": "pnpm -r exec rm -rf dist node_modules && rm -rf node_modules",
+    "changeset": "changeset",
+    "changeset:publish": "changeset publish",
+    "changeset:version": "changeset version && node scripts/sync-root-version.mjs",
     "dev": "pnpm -r --parallel run dev",
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",

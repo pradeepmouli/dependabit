@@ -350,7 +350,7 @@ importers:
 
   packages/utils:
     dependencies:
-      '@company/core':
+      '@dependabit/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:

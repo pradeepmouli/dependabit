@@ -5,7 +5,7 @@ This directory contains examples demonstrating how to use the packages in this m
 ## String Utilities
 
 ```typescript
-import { capitalize, camelCase, kebabCase, truncate } from '@company/utils';
+import { capitalize, camelCase, kebabCase, truncate } from '@dependabit/utils';
 
 // Capitalize
 capitalize('hello');        // 'Hello'
@@ -28,7 +28,7 @@ truncate('Hi', 8);          // 'Hi'
 ## Array Utilities
 
 ```typescript
-import { unique, groupBy, flatten, chunk } from '@company/utils';
+import { unique, groupBy, flatten, chunk } from '@dependabit/utils';
 
 // Remove duplicates
 unique([1, 2, 2, 3, 3, 3]);           // [1, 2, 3]
@@ -57,7 +57,7 @@ chunk('hello', 2);                    // ['he', 'll', 'o']
 ### Email Validation
 
 ```typescript
-import { isValidEmail, createSuccessResponse, createErrorResponse } from '@company/core';
+import { isValidEmail, createSuccessResponse, createErrorResponse } from '@dependabit/core';
 
 // Validate email
 isValidEmail('user@example.com');     // true
@@ -71,7 +71,7 @@ const response = createSuccessResponse({ email: 'user@example.com' });
 ### API Response Helpers
 
 ```typescript
-import { createSuccessResponse, createErrorResponse } from '@company/core';
+import { createSuccessResponse, createErrorResponse } from '@dependabit/core';
 
 // Success response
 const success = createSuccessResponse({
@@ -88,7 +88,7 @@ const error = createErrorResponse('User not found');
 ### Async Utilities
 
 ```typescript
-import { delay } from '@company/core';
+import { delay } from '@dependabit/core';
 
 // Wait before continuing
 async function fetchWithRetry() {
@@ -105,8 +105,8 @@ async function fetchWithRetry() {
 ## Cross-Package Usage
 
 ```typescript
-import { isValidEmail } from '@company/core';
-import { capitalize } from '@company/utils';
+import { isValidEmail } from '@dependabit/core';
+import { capitalize } from '@dependabit/utils';
 
 // Combine utilities
 function formatUserEmail(email: string): string | null {
@@ -128,7 +128,7 @@ import {
   createMockUser,
   createMockApiResponse,
   createMockFn,
-} from '@company/test-utils';
+} from '@dependabit/test-utils';
 
 describe('User Service', () => {
   it('should fetch and process user', async () => {
@@ -149,15 +149,15 @@ describe('User Service', () => {
 Creating a new feature across packages:
 
 ```typescript
-// 1. Add validation logic in @company/core
+// 1. Add validation logic in @dependabit/core
 // packages/core/src/validation.ts
 export function validateUsername(username: string): boolean {
   return username.length >= 3 && /^[a-zA-Z0-9_]+$/.test(username);
 }
 
-// 2. Use in @company/utils for formatting
+// 2. Use in @dependabit/utils for formatting
 // packages/utils/src/user.ts
-import { validateUsername } from '@company/core';
+import { validateUsername } from '@dependabit/core';
 
 export function formatUsername(name: string): string {
   if (!validateUsername(name)) throw new Error('Invalid username');
@@ -166,8 +166,8 @@ export function formatUsername(name: string): string {
 
 // 3. Test integration
 // integration.test.ts
-import { validateUsername } from '@company/core';
-import { formatUsername } from '@company/utils';
+import { validateUsername } from '@dependabit/core';
+import { formatUsername } from '@dependabit/utils';
 
 it('should validate and format usernames', () => {
   expect(formatUsername('JohnDoe')).toBe('johndoe');
@@ -180,8 +180,8 @@ it('should validate and format usernames', () => {
 ### User Data Processing
 
 ```typescript
-import { isValidEmail } from '@company/core';
-import { capitalize, unique } from '@company/utils';
+import { isValidEmail } from '@dependabit/core';
+import { capitalize, unique } from '@dependabit/utils';
 
 const users = [
   { email: 'john@example.com', name: 'john' },
@@ -205,7 +205,7 @@ const validUsers = users
 ### Data Batch Processing
 
 ```typescript
-import { chunk } from '@company/utils';
+import { chunk } from '@dependabit/utils';
 
 const items = Array.from({ length: 1000 }, (_, i) => i);
 const batches = chunk(items, 100);
@@ -218,7 +218,7 @@ for (const batch of batches) {
 ### API Error Handling
 
 ```typescript
-import { createSuccessResponse, createErrorResponse, delay } from '@company/core';
+import { createSuccessResponse, createErrorResponse, delay } from '@dependabit/core';
 
 async function fetchWithFallback(url: string) {
   try {
