@@ -82,4 +82,4 @@ outputs:
 
 runs:
   using: 'node20'
-  main: 'action-dist/index.js'
+  main: 'dist/index.js'

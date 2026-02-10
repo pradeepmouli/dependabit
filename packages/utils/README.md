@@ -1,4 +1,4 @@
-# @company/utils
+# @dependabit/utils
 
 String and array utility functions for the monorepo.
 
@@ -12,7 +12,7 @@ String and array utility functions for the monorepo.
 ## Installation
 
 ```bash
-pnpm add @company/utils
+pnpm add @dependabit/utils
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ pnpm add @company/utils
 ### String Utilities
 
 ```typescript
-import { capitalize, camelCase, kebabCase, truncate } from '@company/utils/string';
+import { capitalize, camelCase, kebabCase, truncate } from '@dependabit/utils/string';
 
 capitalize('hello');          // 'Hello'
 camelCase('hello-world');     // 'helloWorld'
@@ -31,7 +31,7 @@ truncate('Hello World', 8);   // 'Hello...'
 ### Array Utilities
 
 ```typescript
-import { unique, groupBy, flatten, chunk } from '@company/utils/array';
+import { unique, groupBy, flatten, chunk } from '@dependabit/utils/array';
 
 unique([1, 2, 2, 3]);                      // [1, 2, 3]
 groupBy([1, 2, 3], n => n % 2);            // { 0: [2], 1: [1, 3] }
@@ -45,13 +45,13 @@ You can import specific modules:
 
 ```typescript
 // Import only string utilities
-import { capitalize } from '@company/utils/string';
+import { capitalize } from '@dependabit/utils/string';
 
 // Import only array utilities
-import { unique } from '@company/utils/array';
+import { unique } from '@dependabit/utils/array';
 
 // Import everything
-import { capitalize, unique } from '@company/utils';
+import { capitalize, unique } from '@dependabit/utils';
 ```
 
 ## API
@@ -74,13 +74,13 @@ import { capitalize, unique } from '@company/utils';
 
 ```bash
 # Run tests for this package
-pnpm --filter @company/utils test
+pnpm --filter @dependabit/utils test
 
 # Watch mode
-pnpm --filter @company/utils test:watch
+pnpm --filter @dependabit/utils test:watch
 
 # Coverage
-pnpm --filter @company/utils test:coverage
+pnpm --filter @dependabit/utils test:coverage
 ```
 
 ## Performance

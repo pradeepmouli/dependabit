@@ -1,6 +1,6 @@
 {
   "name": "dependabit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "dependabot for resources, related projects, and knowledge",
   "type": "module",
@@ -11,12 +11,16 @@
     "url": "https://github.com/pradeepmouli/dependabit.git"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/plugins/*"
   ],
   "scripts": {
     "build": "pnpm -r run build",
     "clean": "pnpm -r run clean && find packages -name 'tsconfig.tsbuildinfo' -delete && rm -rf node_modules/.cache",
     "clean:all": "pnpm -r exec rm -rf dist node_modules && rm -rf node_modules",
+    "changeset": "changeset",
+    "changeset:publish": "changeset publish",
+    "changeset:version": "changeset version && node scripts/sync-root-version.mjs",
     "dev": "pnpm -r --parallel run dev",
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",
@@ -30,19 +34,19 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
-    "@types/node": "^25.0.3",
-    "@vitest/coverage-v8": "^4.0.16",
-    "@vitest/ui": "^4.0.16",
+    "@types/node": "^25.2.2",
+    "@typescript/native-preview": "7.0.0-dev.20260209.1",
+    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/ui": "^4.0.18",
     "lint-staged": "^16.2.7",
-    "oxfmt": "^0.21.0",
-    "oxlint": "^1.36.0",
+    "oxfmt": "^0.28.0",
+    "oxlint": "^1.43.0",
     "simple-git-hooks": "^2.13.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.16"
+    "vitest": "^4.0.18"
   },
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=10.0.0"
   },
-  "packageManager": "pnpm@10.27.0"
+  "packageManager": "pnpm@10.28.0"
 }

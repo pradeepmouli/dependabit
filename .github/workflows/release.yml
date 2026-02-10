@@ -4,7 +4,7 @@
 # It supports npm Trusted Publishers (OIDC) for secure, token-free publishing.
 #
 # How it works:
-# 1. When you push to main, Changesets creates a "Version Packages" PR
+# 1. When you push to master, Changesets creates a "Version Packages" PR
 # 2. When that PR is merged, packages are automatically published to npm
 # 3. GitHub releases are created automatically
 #
@@ -25,7 +25,7 @@ name: Release
 on:
   push:
     branches:
-      - main
+      - master
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -77,17 +77,55 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Resolve release metadata
+        if: steps.changesets.outputs.published == 'true'
+        id: release_meta
+        run: |
+          ROOT_VERSION=$(node -e "const fs=require('fs');const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));console.log(pkg.version);")
+          echo "root_version=$ROOT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create per-package tags
+        if: steps.changesets.outputs.published == 'true'
+        uses: actions/github-script@v7
+        env:
+          PUBLISHED_PACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
+        with:
+          script: |
+            const pkgs = JSON.parse(process.env.PUBLISHED_PACKAGES || '[]');
+            if (pkgs.length <= 1) {
+              core.info('Single package published; skipping per-package tags.');
+              return;
+            }
+            for (const pkg of pkgs) {
+              const tag = `${pkg.name}-v${pkg.version}`;
+              core.info(`Creating tag ${tag}`);
+              try {
+                await github.rest.git.createRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: `refs/tags/${tag}`,
+                  sha: context.sha
+                });
+              } catch (error) {
+                if (error.status === 422) {
+                  core.info(`Tag ${tag} already exists; skipping.`);
+                  continue;
+                }
+                throw error;
+              }
+            }
+
       - name: Create GitHub Release
         if: steps.changesets.outputs.published == 'true'
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ fromJson(steps.changesets.outputs.publishedPackages)[0].version }}
-          release_name: v${{ fromJson(steps.changesets.outputs.publishedPackages)[0].version }}
+          tag_name: v${{ steps.release_meta.outputs.root_version }}
+          release_name: v${{ steps.release_meta.outputs.root_version }}
           body: |
-            Release ${{ fromJson(steps.changesets.outputs.publishedPackages)[0].version }}
+            Release ${{ steps.release_meta.outputs.root_version }}
 
-            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
+            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/master/CHANGELOG.md) for details.
           draft: false
-          prerelease: ${{ contains(fromJson(steps.changesets.outputs.publishedPackages)[0].version, '-') }}
+          prerelease: ${{ contains(steps.release_meta.outputs.root_version, '-') }}

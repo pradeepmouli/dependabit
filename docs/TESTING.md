@@ -65,7 +65,7 @@ Configure in [vitest.config.ts](../vitest.config.ts).
 
 ### Using Test Utilities
 
-The `@company/test-utils` package provides mocks and fixtures:
+The `@dependabit/test-utils` package provides mocks and fixtures:
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -74,7 +74,7 @@ import {
   createMockApiResponse,
   createMockFn,
   spyOn,
-} from '@company/test-utils';
+} from '@dependabit/test-utils';
 
 describe('User API', () => {
   it('should fetch user', async () => {
@@ -103,8 +103,8 @@ Test integration between packages in `integration.test.ts`:
 
 ```typescript
 import { describe, it, expect } from 'vitest';
-import { isValidEmail, createSuccessResponse } from '@company/core';
-import { capitalize } from '@company/utils';
+import { isValidEmail, createSuccessResponse } from '@dependabit/core';
+import { capitalize } from '@dependabit/utils';
 
 describe('Cross-Package Integration', () => {
   it('should combine utilities', () => {
@@ -139,7 +139,7 @@ Create benchmark files (usually separate from unit tests):
 ```typescript
 // vitest.benchmark.config.ts
 import { bench, describe } from 'vitest';
-import { unique, flatten } from '@company/utils';
+import { unique, flatten } from '@dependabit/utils';
 
 describe('Benchmarks', () => {
   const largeArray = Array.from({ length: 10000 }, (_, i) => i % 100);

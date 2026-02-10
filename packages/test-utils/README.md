@@ -1,4 +1,4 @@
-# @company/test-utils
+# @dependabit/test-utils
 
 Shared testing utilities for the monorepo using Vitest.
 
@@ -12,7 +12,7 @@ Shared testing utilities for the monorepo using Vitest.
 ## Installation
 
 ```bash
-pnpm add -D @company/test-utils
+pnpm add -D @dependabit/test-utils
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ pnpm add -D @company/test-utils
 ### Creating Test Data
 
 ```typescript
-import { createMockUser, createMockEmail, createMockApiResponse } from '@company/test-utils';
+import { createMockUser, createMockEmail, createMockApiResponse } from '@dependabit/test-utils';
 
 // Create a mock user
 const user = createMockUser({ name: 'Alice' });
@@ -35,7 +35,7 @@ const response = createMockApiResponse({ status: 201 });
 ### Mocking Functions
 
 ```typescript
-import { createMockFn, spyOn } from '@company/test-utils';
+import { createMockFn, spyOn } from '@dependabit/test-utils';
 
 // Create a mock function
 const mockFn = createMockFn();
@@ -50,7 +50,7 @@ expect(consoleSpy).toHaveBeenCalledWith('test');
 ### Working with Time
 
 ```typescript
-import { createMockTimer } from '@company/test-utils';
+import { createMockTimer } from '@dependabit/test-utils';
 
 it('should handle timeouts', () => {
   const timer = createMockTimer();
@@ -67,7 +67,7 @@ it('should handle timeouts', () => {
 ### Mocking Fetch
 
 ```typescript
-import { mockFetch } from '@company/test-utils';
+import { mockFetch } from '@dependabit/test-utils';
 
 it('should fetch data', async () => {
   mockFetch('/api/users', { success: true });
@@ -114,7 +114,7 @@ import {
   createMockUser,
   createMockFn,
   createMockApiResponse,
-} from '@company/test-utils';
+} from '@dependabit/test-utils';
 
 describe('UserService', () => {
   it('should fetch and process user', async () => {
@@ -137,7 +137,7 @@ describe('UserService', () => {
 
 ```bash
 # Run tests (if any)
-pnpm --filter @company/test-utils test
+pnpm --filter @dependabit/test-utils test
 ```
 
 ## License

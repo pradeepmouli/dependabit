@@ -75,7 +75,7 @@ pnpm changeset:publish  # Publishes to npm
   "commit": false,
   "linked": [],
   "access": "public",
-  "baseBranch": "main",
+  "baseBranch": "master",
   "updateInternalDependencies": "patch",
   "ignore": []
 }
@@ -107,8 +107,8 @@ To switch to Release-Please or Semantic Release:
 
 ```yaml
 ---
-"@company/core": minor
-"@company/utils": patch
+"@dependabit/core": minor
+"@dependabit/utils": patch
 ---
 
 Add new authentication API with JWT support

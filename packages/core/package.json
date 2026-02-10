@@ -1,6 +1,6 @@
 {
-  "name": "@company/core",
-  "version": "0.1.0",
+  "name": "@dependabit/core",
+  "version": "0.1.1",
   "description": "Core utilities for the monorepo",
   "type": "module",
   "main": "dist/index.js",
@@ -12,10 +12,10 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsgo -p tsconfig.json",
     "clean": "rm -rf dist",
     "dev": "tsx watch src/index.ts",
-    "type-check": "tsc --noEmit -p tsconfig.json",
+    "type-check": "tsgo --noEmit -p tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -23,7 +23,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/node": "^25.0.10",
+    "@types/node": "^25.2.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"

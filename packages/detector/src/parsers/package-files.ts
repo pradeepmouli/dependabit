@@ -48,7 +48,7 @@ export function parsePackageJson(content: string): PackageMetadata {
       ...(documentation !== undefined && { documentation }),
       urls
     };
-  } catch (error) {
+  } catch  {
     return { urls: [] };
   }
 }
