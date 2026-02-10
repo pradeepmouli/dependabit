@@ -31,14 +31,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Resolve pnpm version
+        id: pnpm_version
+        run: |
+          VERSION=$(node -e "const pkg=require('./package.json');const pm=pkg.packageManager||'';const match=pm.match(/^pnpm@(.*)$/);if(!match){throw new Error('packageManager must be set to pnpm@<version>');}console.log(match[1]);")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ steps.pnpm_version.outputs.version }}
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
 
       - name: Setup GitHub CLI (required for Copilot CLI)
         run: |
