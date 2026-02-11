@@ -8,12 +8,12 @@ vi.mock('node:child_process', () => {
   const mockCallback = vi.fn();
   
   // The custom promisify implementation that mimics Node.js behavior
-  const customPromisify = vi.fn((...args) => {
+  const customPromisify = vi.fn((...execArgs) => {
     return new Promise((resolve, reject) => {
       // Call the mock with a callback that converts to { stdout, stderr }
-      mockCallback(...args, (err: Error | null, stdout: string, stderr: string) => {
+      mockCallback(...execArgs, (err: Error | null, stdout: string, stderr: string) => {
         if (err) {
-          const error = err as any;
+          const error = err as NodeJS.ErrnoException & { stdout?: string; stderr?: string };
           error.stdout = stdout;
           error.stderr = stderr;
           reject(error);
