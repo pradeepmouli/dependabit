@@ -46,20 +46,13 @@ export interface DetectionResult {
 
 const DEFAULT_IGNORE_PATTERNS = [
   'node_modules',
-  '.git',
-  '.github',
-  '.claude',
-  '.codex',
   'dist',
   'build',
   'target',
   'vendor',
-  '.venv',
   'venv',
   '__pycache__',
-  'coverage',
-  '.next',
-  '.nuxt'
+  'coverage'
 ];
 
 /**
