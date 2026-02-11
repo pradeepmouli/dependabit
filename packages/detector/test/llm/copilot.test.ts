@@ -1,15 +1,38 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { promisify } from 'node:util';
 import { GitHubCopilotProvider } from '../../src/llm/copilot.js';
 import type { DetectedDependency } from '../../src/llm/client.js';
 
-// Mock child_process
-vi.mock('node:child_process', () => ({
-  execFile: vi.fn()
-}));
+// Mock child_process with proper execFile behavior
+vi.mock('node:child_process', () => {
+  const mockCallback = vi.fn();
+  
+  // The custom promisify implementation that mimics Node.js behavior
+  const customPromisify = vi.fn((...args) => {
+    return new Promise((resolve, reject) => {
+      // Call the mock with a callback that converts to { stdout, stderr }
+      mockCallback(...args, (err: Error | null, stdout: string, stderr: string) => {
+        if (err) {
+          const error = err as any;
+          error.stdout = stdout;
+          error.stderr = stderr;
+          reject(error);
+        } else {
+          resolve({ stdout, stderr });
+        }
+      });
+    });
+  });
+  
+  mockCallback[promisify.custom] = customPromisify;
+  
+  return {
+    execFile: mockCallback
+  };
+});
 
 import { execFile } from 'node:child_process';
-
-const mockExecFile = vi.mocked(execFile);
+const mockExecFileCallback = vi.mocked(execFile);
 
 describe('GitHubCopilotProvider', () => {
   let provider: GitHubCopilotProvider;
@@ -26,8 +49,9 @@ describe('GitHubCopilotProvider', () => {
   describe('CLI invocation', () => {
     it('should use execFile with correct command and flags', async () => {
       const mockResponse = JSON.stringify({ dependencies: [] });
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
+          // Use correct callback signature: callback(error, stdout, stderr)
           callback(null, mockResponse, '');
         }
         return {} as any;
@@ -35,7 +59,7 @@ describe('GitHubCopilotProvider', () => {
 
       await provider.analyze('test content', 'test prompt');
 
-      expect(mockExecFile).toHaveBeenCalledWith(
+      expect(mockExecFileCallback).toHaveBeenCalledWith(
         'gh',
         expect.arrayContaining([
           'copilot',
@@ -54,9 +78,9 @@ describe('GitHubCopilotProvider', () => {
 
     it('should pass prompt directly without shell escaping', async () => {
       const mockResponse = JSON.stringify({ dependencies: [] });
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(null, { stdout: mockResponse, stderr: '' });
+          callback(null, mockResponse, '');
         }
         return {} as any;
       });
@@ -64,7 +88,7 @@ describe('GitHubCopilotProvider', () => {
       const promptWithSpecialChars = 'test "quotes" $dollar `backtick`';
       await provider.analyze('content', promptWithSpecialChars);
 
-      const callArgs = mockExecFile.mock.calls[0];
+      const callArgs = mockExecFileCallback.mock.calls[0];
       const args = callArgs?.[1] as string[];
       const fullPrompt = args?.[2];
 
@@ -74,9 +98,9 @@ describe('GitHubCopilotProvider', () => {
 
     it('should handle prompts with newlines', async () => {
       const mockResponse = JSON.stringify({ dependencies: [] });
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(null, { stdout: mockResponse, stderr: '' });
+          callback(null, mockResponse, '');
         }
         return {} as any;
       });
@@ -84,7 +108,7 @@ describe('GitHubCopilotProvider', () => {
       const promptWithNewlines = 'line1\nline2\nline3';
       await provider.analyze('content', promptWithNewlines);
 
-      const callArgs = mockExecFile.mock.calls[0];
+      const callArgs = mockExecFileCallback.mock.calls[0];
       const args = callArgs?.[1] as string[];
       const fullPrompt = args?.[2];
 
@@ -93,9 +117,9 @@ describe('GitHubCopilotProvider', () => {
 
     it('should handle prompts ending with backslash', async () => {
       const mockResponse = JSON.stringify({ dependencies: [] });
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(null, { stdout: mockResponse, stderr: '' });
+          callback(null, mockResponse, '');
         }
         return {} as any;
       });
@@ -103,7 +127,7 @@ describe('GitHubCopilotProvider', () => {
       const promptWithBackslash = 'path\\to\\file\\';
       await provider.analyze('content', promptWithBackslash);
 
-      const callArgs = mockExecFile.mock.calls[0];
+      const callArgs = mockExecFileCallback.mock.calls[0];
       const args = callArgs?.[1] as string[];
       const fullPrompt = args?.[2];
 
@@ -123,9 +147,9 @@ describe('GitHubCopilotProvider', () => {
         }
       ];
       const mockResponse = JSON.stringify({ dependencies: mockDeps });
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(null, { stdout: mockResponse, stderr: '' });
+          callback(null, mockResponse, '');
         }
         return {} as any;
       });
@@ -146,9 +170,9 @@ describe('GitHubCopilotProvider', () => {
         }
       ];
       const mockResponse = '```json\n' + JSON.stringify({ dependencies: mockDeps }) + '\n```';
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(null, { stdout: mockResponse, stderr: '' });
+          callback(null, mockResponse, '');
         }
         return {} as any;
       });
@@ -160,9 +184,9 @@ describe('GitHubCopilotProvider', () => {
 
     it('should handle malformed JSON gracefully', async () => {
       const mockResponse = 'not valid json';
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(null, { stdout: mockResponse, stderr: '' });
+          callback(null, mockResponse, '');
         }
         return {} as any;
       });
@@ -173,9 +197,9 @@ describe('GitHubCopilotProvider', () => {
     });
 
     it('should return empty dependencies on empty response', async () => {
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(null, { stdout: '', stderr: '' });
+          callback(null, '', '');
         }
         return {} as any;
       });
@@ -188,9 +212,9 @@ describe('GitHubCopilotProvider', () => {
 
   describe('error handling', () => {
     it('should handle CLI execution errors', async () => {
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(new Error('CLI error'), { stdout: '', stderr: 'Error message' });
+          callback(new Error('CLI error'), '', 'Error message');
         }
         return {} as any;
       });
@@ -202,9 +226,9 @@ describe('GitHubCopilotProvider', () => {
     });
 
     it('should handle stderr without stdout as error', async () => {
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(null, { stdout: '', stderr: 'Authentication failed' });
+          callback(null, '', 'Authentication failed');
         }
         return {} as any;
       });
@@ -215,11 +239,11 @@ describe('GitHubCopilotProvider', () => {
     });
 
     it('should handle timeout errors', async () => {
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
           const error = new Error('Command timeout') as NodeJS.ErrnoException;
           error.code = 'ETIMEDOUT';
-          callback(error, { stdout: '', stderr: '' });
+          callback(error, '', '');
         }
         return {} as any;
       });
@@ -230,11 +254,11 @@ describe('GitHubCopilotProvider', () => {
     });
 
     it('should handle buffer overflow errors', async () => {
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
           const error = new Error('maxBuffer exceeded') as NodeJS.ErrnoException;
           error.code = 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER';
-          callback(error, { stdout: '', stderr: '' });
+          callback(error, '', '');
         }
         return {} as any;
       });
@@ -248,9 +272,9 @@ describe('GitHubCopilotProvider', () => {
   describe('usage metadata', () => {
     it('should include usage metadata in response', async () => {
       const mockResponse = JSON.stringify({ dependencies: [] });
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(null, { stdout: mockResponse, stderr: '' });
+          callback(null, mockResponse, '');
         }
         return {} as any;
       });
@@ -266,9 +290,9 @@ describe('GitHubCopilotProvider', () => {
 
     it('should use configured model in usage metadata', async () => {
       const mockResponse = JSON.stringify({ dependencies: [] });
-      mockExecFile.mockImplementation((file, args, options, callback) => {
+      mockExecFileCallback.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(null, { stdout: mockResponse, stderr: '' });
+          callback(null, mockResponse, '');
         }
         return {} as any;
       });
