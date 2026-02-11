@@ -3,7 +3,7 @@
  * Integrates with GitHub Copilot via CLI commands
  */
 
-import { exec } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import type {
   LLMProvider,
@@ -15,7 +15,7 @@ import type {
 } from './client.js';
 import { SYSTEM_PROMPT } from './prompts.js';
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 
 export class GitHubCopilotProvider implements LLMProvider {
   private config: Required<LLMProviderConfig>;
@@ -44,14 +44,17 @@ export class GitHubCopilotProvider implements LLMProvider {
       // Combine system prompt and user prompt for CLI
       const fullPrompt = `${SYSTEM_PROMPT}\n\n${prompt}`;
 
-      // Escape the prompt for shell safety (basic escaping)
-      const escapedPrompt = fullPrompt.replace(/"/g, '\\"').replace(/\$/g, '\\$').replace(/`/g, '\\`');
+      // Use execFile to avoid shell escaping issues and command injection
+      // Pass prompt directly as an argument without manual escaping
+      const args = [
+        'copilot',
+        '-p',
+        fullPrompt,
+        '--silent',
+        '--allow-all-tools'
+      ];
 
-      // Use gh copilot with -p flag for non-interactive mode
-      // The --silent flag suppresses extra output, --allow-all-tools allows autonomous execution
-      const command = `gh copilot -p "${escapedPrompt}" --silent --allow-all-tools 2>&1`;
-
-      const { stdout, stderr } = await execAsync(command, {
+      const { stdout, stderr } = await execFileAsync('gh', args, {
         maxBuffer: 10 * 1024 * 1024, // 10MB buffer for large responses
         timeout: 60000 // 60 second timeout
       });
