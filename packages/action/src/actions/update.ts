@@ -9,9 +9,11 @@ import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { Detector, GitHubCopilotProvider, extractDependencyChanges } from '@dependabit/detector';
 import {
+  readConfig,
   readManifest,
   writeManifest,
   mergeManifests,
+  type DependabitConfig,
   type DependencyManifest
 } from '@dependabit/manifest';
 import { createGitHubClient, getCommitDiff } from '@dependabit/github-client';
@@ -24,6 +26,7 @@ import { setUpdateOutputs, createUpdateSummary } from '../utils/outputs.js';
  */
 export async function run(): Promise<void> {
   const logger = createLogger({ enableDebug: true });
+  let config: DependabitConfig | undefined;
 
   try {
     logger.startGroup('📋 Parsing Action Inputs');
@@ -43,6 +46,21 @@ export async function run(): Promise<void> {
     const [owner, repo] = repository.split('/');
     if (!owner || !repo) {
       throw new Error(`Invalid GITHUB_REPOSITORY format: ${repository}`);
+    }
+
+    if (inputs.configPath) {
+      const configPath = join(inputs.repoPath, inputs.configPath);
+      if (existsSync(configPath)) {
+        try {
+          config = await readConfig(configPath);
+          logger.info('Config loaded', { path: configPath });
+        } catch (error) {
+          logger.warning('Failed to read config; continuing without it', {
+            error: error instanceof Error ? error.message : String(error),
+            path: configPath
+          });
+        }
+      }
     }
 
     // Check if manifest exists
@@ -176,7 +194,8 @@ export async function run(): Promise<void> {
       // Create detector
       const detector = new Detector({
         repoPath: inputs.repoPath,
-        llmProvider
+        llmProvider,
+        useGitExcludes: config?.ignore?.useGitExcludes ?? true
       });
 
       const result = await withTiming(logger, 'selective-analysis', async () => {

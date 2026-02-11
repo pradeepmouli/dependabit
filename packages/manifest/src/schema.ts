@@ -197,7 +197,8 @@ export const DependabitConfigSchema = z.object({
     .object({
       urls: z.array(z.string()).optional(),
       types: z.array(DependencyTypeSchema).optional(),
-      patterns: z.array(z.string()).optional()
+      patterns: z.array(z.string()).optional(),
+      useGitExcludes: z.boolean().default(true)
     })
     .optional()
 });

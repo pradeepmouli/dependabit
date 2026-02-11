@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/monitor",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Change detection and monitoring logic for external dependencies",
   "type": "module",
   "main": "dist/index.js",
@@ -25,7 +25,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/node": "^25.2.2",
+    "@types/node": "^25.2.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"

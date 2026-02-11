@@ -4,8 +4,11 @@
  */
 
 import { readdir, readFile } from 'node:fs/promises';
-import { join, relative, resolve, normalize, sep } from 'node:path';
+import { execSync } from 'node:child_process';
+import { homedir } from 'node:os';
+import { dirname, join, relative, resolve, normalize, sep } from 'node:path';
 import { randomUUID } from 'node:crypto';
+import ignore, { type Ignore } from 'ignore';
 import type { LLMProvider } from './llm/client.js';
 import { createClassificationPrompt } from './llm/prompts.js';
 import { parseReadme } from './parsers/readme.js';
@@ -27,6 +30,7 @@ export interface DetectorOptions {
   repoPath: string;
   llmProvider: LLMProvider;
   ignorePatterns?: string[];
+  useGitExcludes?: boolean;
 }
 
 export interface DetectionResult {
@@ -43,6 +47,9 @@ export interface DetectionResult {
 const DEFAULT_IGNORE_PATTERNS = [
   'node_modules',
   '.git',
+  '.github',
+  '.claude',
+  '.codex',
   'dist',
   'build',
   'target',
@@ -60,11 +67,14 @@ const DEFAULT_IGNORE_PATTERNS = [
  */
 export class Detector {
   private options: Required<DetectorOptions>;
+  private ignoreMatcher: Ignore | null = null;
+  private ignoreMatcherLoaded = false;
 
   constructor(options: DetectorOptions) {
     this.options = {
       ...options,
-      ignorePatterns: options.ignorePatterns || DEFAULT_IGNORE_PATTERNS
+      ignorePatterns: options.ignorePatterns || DEFAULT_IGNORE_PATTERNS,
+      useGitExcludes: options.useGitExcludes ?? true
     };
   }
 
@@ -505,7 +515,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
       for (const entry of entries) {
         const fullPath = join(dir, entry.name);
 
-        if (this.shouldIgnore(entry.name)) {
+        if (await this.shouldIgnorePath(fullPath, entry.isDirectory())) {
           continue;
         }
 
@@ -535,6 +545,202 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     return this.options.ignorePatterns.some((pattern) => name.includes(pattern));
   }
 
+  private async shouldIgnorePath(filePath: string, isDirectory = false): Promise<boolean> {
+    if (this.isDotDirectoryPath(filePath)) {
+      return true;
+    }
+
+    const segments = normalize(filePath).split(sep);
+    if (segments.some((segment) => this.shouldIgnore(segment))) {
+      return true;
+    }
+
+    return await this.isGitIgnored(filePath, isDirectory);
+  }
+
+  private isDotDirectoryPath(filePath: string): boolean {
+    const segments = normalize(filePath).split(sep);
+    return segments.some((segment) => segment.startsWith('.') && segment.length > 1);
+  }
+
+  private isDotDirectoryName(name: string): boolean {
+    return name.startsWith('.') && name.length > 1;
+  }
+
+  private async isGitIgnored(filePath: string, isDirectory: boolean): Promise<boolean> {
+    if (!this.options.useGitExcludes) {
+      return false;
+    }
+    const matcher = await this.getIgnoreMatcher();
+    if (!matcher) {
+      return false;
+    }
+
+    const relativePath = this.getRepoRelativePath(filePath);
+    if (!relativePath) {
+      return false;
+    }
+
+    const normalized = relativePath.split(sep).join('/');
+    const testPath = isDirectory ? `${normalized}/` : normalized;
+    return matcher.ignores(testPath);
+  }
+
+  private getRepoRelativePath(filePath: string): string | null {
+    const repoPath = resolve(normalize(this.options.repoPath));
+    const normalizedPath = resolve(normalize(filePath));
+
+    if (normalizedPath === repoPath) {
+      return '';
+    }
+
+    if (normalizedPath.startsWith(repoPath + sep)) {
+      return relative(repoPath, normalizedPath);
+    }
+
+    return normalize(filePath);
+  }
+
+  private async getIgnoreMatcher(): Promise<Ignore | null> {
+    if (this.ignoreMatcherLoaded) {
+      return this.ignoreMatcher;
+    }
+
+    this.ignoreMatcherLoaded = true;
+
+    if (!this.options.useGitExcludes) {
+      this.ignoreMatcher = null;
+      return this.ignoreMatcher;
+    }
+
+    try {
+      const matcher = ignore();
+      const gitignoreFiles = await this.collectGitignoreFiles(this.options.repoPath);
+      const extraIgnoreFiles = this.collectExtraIgnoreFiles();
+
+      for (const filePath of gitignoreFiles) {
+        const content = await readFile(filePath, 'utf-8');
+        const rules = this.prefixGitignoreRules(filePath, content);
+        if (rules.length > 0) {
+          matcher.add(rules);
+        }
+      }
+
+      for (const filePath of extraIgnoreFiles) {
+        try {
+          const content = await readFile(filePath, 'utf-8');
+          const rules = this.prefixGitignoreRules(filePath, content, '');
+          if (rules.length > 0) {
+            matcher.add(rules);
+          }
+        } catch {
+          // Ignore missing or unreadable global ignore files
+        }
+      }
+
+      this.ignoreMatcher = matcher;
+    } catch {
+      this.ignoreMatcher = null;
+    }
+
+    return this.ignoreMatcher;
+  }
+
+  private async collectGitignoreFiles(dir: string): Promise<string[]> {
+    const files: string[] = [];
+
+    try {
+      const entries = await readdir(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        if (entry.isDirectory()) {
+          if (this.isDotDirectoryName(entry.name) || this.shouldIgnore(entry.name)) {
+            continue;
+          }
+          files.push(...(await this.collectGitignoreFiles(join(dir, entry.name))));
+        } else if (entry.isFile() && entry.name === '.gitignore') {
+          files.push(join(dir, entry.name));
+        }
+      }
+    } catch {
+      // Ignore errors
+    }
+
+    return files;
+  }
+
+  private prefixGitignoreRules(filePath: string, content: string, basePrefix?: string): string[] {
+    const repoPath = resolve(normalize(this.options.repoPath));
+    const ignoreDir = dirname(filePath);
+    const relativeDir = relative(repoPath, ignoreDir).split(sep).join('/');
+    const prefix = basePrefix !== undefined ? basePrefix : relativeDir ? `${relativeDir}/` : '';
+
+    return content
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith('#'))
+      .map((line) => {
+        const negated = line.startsWith('!');
+        const raw = negated ? line.slice(1) : line;
+        const trimmed = raw.startsWith('/') ? raw.slice(1) : raw;
+        const scoped = `${prefix}${trimmed}`;
+        return negated ? `!${scoped}` : scoped;
+      });
+  }
+
+  private collectExtraIgnoreFiles(): string[] {
+    const files = new Set<string>();
+
+    files.add(join(this.options.repoPath, '.git', 'info', 'exclude'));
+
+    const globalConfig = this.getGlobalExcludeFileFromGit();
+    if (globalConfig) {
+      files.add(globalConfig);
+    }
+
+    for (const fallback of this.getDefaultGlobalExcludeFiles()) {
+      files.add(fallback);
+    }
+
+    return Array.from(files);
+  }
+
+  private getGlobalExcludeFileFromGit(): string | null {
+    try {
+      const output = execSync('git config --get core.excludesfile', {
+        stdio: ['ignore', 'pipe', 'ignore']
+      })
+        .toString()
+        .trim();
+
+      if (!output) {
+        return null;
+      }
+
+      return this.expandHomePath(output);
+    } catch {
+      return null;
+    }
+  }
+
+  private getDefaultGlobalExcludeFiles(): string[] {
+    const home = homedir();
+    return [
+      join(home, '.config', 'git', 'ignore'),
+      join(home, '.gitignore_global'),
+      join(home, '.gitignore')
+    ];
+  }
+
+  private expandHomePath(filePath: string): string {
+    if (filePath.startsWith('~/')) {
+      return join(homedir(), filePath.slice(2));
+    }
+    if (filePath === '~') {
+      return homedir();
+    }
+    return filePath;
+  }
+
   /**
    * Analyze only specific files for dependencies (for incremental updates)
    * This is more efficient than full repository scan when only few files changed
@@ -555,6 +761,9 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     let totalLatencyMs = 0;
 
     for (const filePath of filePaths) {
+      if (await this.shouldIgnorePath(filePath)) {
+        continue;
+      }
       // Validate that the file path is safe before joining
       const normalizedRepoPath = resolve(normalize(this.options.repoPath));
       const normalizedFilePath = normalize(filePath);

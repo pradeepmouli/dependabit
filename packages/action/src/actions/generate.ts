@@ -5,8 +5,9 @@
 
 import * as core from '@actions/core';
 import { join } from 'node:path';
+import { existsSync } from 'node:fs';
 import { Detector, GitHubCopilotProvider } from '@dependabit/detector';
-import { writeManifest, type DependencyManifest } from '@dependabit/manifest';
+import { readConfig, writeManifest, type DependabitConfig, type DependencyManifest } from '@dependabit/manifest';
 import { createLogger, withTiming } from '../logger.js';
 import { parseGenerateInputs } from '../utils/inputs.js';
 import {
@@ -31,6 +32,7 @@ export async function run(): Promise<void> {
  */
 async function generateAction(): Promise<void> {
   const logger = createLogger({ enableDebug: true });
+  let config: DependabitConfig | undefined;
 
   try {
     logger.startGroup('📋 Parsing Action Inputs');
@@ -42,6 +44,21 @@ async function generateAction(): Promise<void> {
       manifestPath: inputs.manifestPath
     });
     logger.endGroup();
+
+    if (inputs.configPath) {
+      const configPath = join(inputs.repoPath, inputs.configPath);
+      if (existsSync(configPath)) {
+        try {
+          config = await readConfig(configPath);
+          logger.info('Config loaded', { path: configPath });
+        } catch (error) {
+          logger.warning('Failed to read config; continuing without it', {
+            error: error instanceof Error ? error.message : String(error),
+            path: configPath
+          });
+        }
+      }
+    }
 
     // Initialize LLM provider
     logger.startGroup('🤖 Initializing LLM Provider');
@@ -60,7 +77,8 @@ async function generateAction(): Promise<void> {
     logger.startGroup('🔍 Detecting Dependencies');
     const detector = new Detector({
       repoPath: inputs.repoPath,
-      llmProvider
+      llmProvider,
+      useGitExcludes: config?.ignore?.useGitExcludes ?? true
     });
 
     const result = await withTiming(logger, 'dependency-detection', async () => {

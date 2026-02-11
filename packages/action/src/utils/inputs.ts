@@ -11,6 +11,7 @@ export interface GenerateActionInputs {
   llmModel?: string;
   llmApiKey?: string;
   manifestPath: string;
+  configPath?: string;
   enableDebug: boolean;
 }
 
@@ -18,6 +19,7 @@ export interface UpdateActionInputs {
   repoPath: string;
   manifestPath: string;
   commits: string[]; // Commit SHAs to analyze
+  configPath?: string;
 }
 
 export interface CheckActionInputs {
@@ -40,6 +42,7 @@ export function parseGenerateInputs(): GenerateActionInputs {
     ...(llmModelInput && { llmModel: llmModelInput }),
     ...(llmApiKeyInput && { llmApiKey: llmApiKeyInput }),
     manifestPath: core.getInput('manifest_path') || '.dependabit/manifest.json',
+    ...(core.getInput('config_path') && { configPath: core.getInput('config_path') }),
     enableDebug: core.getInput('debug') === 'true'
   };
 }
@@ -54,7 +57,8 @@ export function parseUpdateInputs(): UpdateActionInputs {
   return {
     repoPath: core.getInput('repo_path') || process.cwd(),
     manifestPath: core.getInput('manifest_path') || '.dependabit/manifest.json',
-    commits
+    commits,
+    ...(core.getInput('config_path') && { configPath: core.getInput('config_path') })
   };
 }
 

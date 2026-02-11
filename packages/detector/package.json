@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/detector",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "LLM-based dependency detection for external resources",
   "type": "module",
   "main": "dist/index.js",
@@ -23,10 +23,11 @@
     "@actions/core": "^3.0.0",
     "@dependabit/github-client": "workspace:*",
     "@dependabit/manifest": "workspace:*",
+    "ignore": "^7.0.5",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/node": "^25.2.2",
+    "@types/node": "^25.2.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"

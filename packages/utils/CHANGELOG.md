@@ -1,5 +1,13 @@
 # @dependabit/utils
 
+## 0.1.2
+
+### Patch Changes
+
+- Add gitignore-aware exclusions for manifest detection
+- Updated dependencies
+  - @dependabit/core@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes
