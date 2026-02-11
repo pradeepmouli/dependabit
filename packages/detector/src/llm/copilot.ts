@@ -45,11 +45,11 @@ export class GitHubCopilotProvider implements LLMProvider {
       const fullPrompt = `${SYSTEM_PROMPT}\n\n${prompt}`;
 
       // Escape the prompt for shell safety (basic escaping)
-      const escapedPrompt = fullPrompt.replace(/"/g, '\\"').replace(/\$/g, '\\$');
+      const escapedPrompt = fullPrompt.replace(/"/g, '\\"').replace(/\$/g, '\\$').replace(/`/g, '\\`');
 
-      // Use gh copilot suggest command to get AI response
-      // The --yes flag auto-accepts the suggestion, --shell-out returns raw output
-      const command = `echo "${escapedPrompt}" | gh copilot suggest --yes 2>&1`;
+      // Use gh copilot with -p flag for non-interactive mode
+      // The --silent flag suppresses extra output, --allow-all-tools allows autonomous execution
+      const command = `gh copilot -p "${escapedPrompt}" --silent --allow-all-tools 2>&1`;
 
       const { stdout, stderr } = await execAsync(command, {
         maxBuffer: 10 * 1024 * 1024, // 10MB buffer for large responses
