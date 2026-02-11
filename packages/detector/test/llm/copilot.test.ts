@@ -28,7 +28,7 @@ describe('GitHubCopilotProvider', () => {
       const mockResponse = JSON.stringify({ dependencies: [] });
       mockExecFile.mockImplementation((file, args, options, callback) => {
         if (typeof callback === 'function') {
-          callback(null, { stdout: mockResponse, stderr: '' });
+          callback(null, mockResponse, '');
         }
         return {} as any;
       });
