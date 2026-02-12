@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/test-utils",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Shared testing utilities for the monorepo",
   "type": "module",
   "main": "dist/index.js",
