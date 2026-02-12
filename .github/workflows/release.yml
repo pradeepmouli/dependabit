@@ -61,6 +61,15 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Configure npm for OIDC authentication
+        run: |
+          # The NPM_CONFIG_USERCONFIG env var points to setup-node's .npmrc
+          # We need to add scoped registry config for proper OIDC token handling
+          echo "registry=https://registry.npmjs.org/" >> "$NPM_CONFIG_USERCONFIG"
+          echo "@dependabit:registry=https://registry.npmjs.org/" >> "$NPM_CONFIG_USERCONFIG"
+          echo "Configured npm registry:"
+          cat "$NPM_CONFIG_USERCONFIG" || echo "Using default setup-node config"
+
       - name: Configure git
         run: |
           git config user.name "github-actions[bot]"
@@ -71,10 +80,11 @@ jobs:
           echo "=== npm config ==="
           npm config get registry
           npm config get @dependabit:registry
-          echo "=== .npmrc content ==="
-          cat ~/.npmrc || echo "No .npmrc found"
+          echo "=== .npmrc files ==="
+          echo "NPM_CONFIG_USERCONFIG: $NPM_CONFIG_USERCONFIG"
+          [ -f "$NPM_CONFIG_USERCONFIG" ] && echo "=== Content of $NPM_CONFIG_USERCONFIG ===" && cat "$NPM_CONFIG_USERCONFIG" || echo "File not found"
           echo "=== NODE_AUTH_TOKEN presence ==="
-          [ -n "$NODE_AUTH_TOKEN" ] && echo "NODE_AUTH_TOKEN is set" || echo "NODE_AUTH_TOKEN is NOT set"
+          [ -n "$NODE_AUTH_TOKEN" ] && echo "NODE_AUTH_TOKEN is set ($(echo "$NODE_AUTH_TOKEN" | head -c 10)...)" || echo "NODE_AUTH_TOKEN is NOT set"
           echo "=== npm whoami ==="
           npm whoami 2>&1 || echo "npm whoami failed (expected if using OIDC)"
 
