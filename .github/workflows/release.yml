@@ -52,6 +52,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -59,16 +60,12 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Configure npm for OIDC (no token)
+      - name: Configure npm for publishing
         run: |
-          # For OIDC to work, we must NOT have _authToken set
-          # npm will automatically request an OIDC token from GitHub Actions
-          cat > ~/.npmrc << 'EOF'
-          registry=https://registry.npmjs.org/
-          @dependabit:registry=https://registry.npmjs.org/
-          EOF
-          echo "Configured ~/.npmrc for OIDC:"
-          cat ~/.npmrc
+          # Delete _authToken to force OIDC
+          npm config delete //registry.npmjs.org/:_authToken 2>/dev/null ||true
+          echo "NPM configuration:"
+          npm config list
 
       - name: Configure git
         run: |
@@ -105,10 +102,12 @@ jobs:
             git push origin master
             
             # Publish to npm
-            pnpm changeset:publish
+            pnpm changeset:publish --no-git-tags
           else
             echo "No changesets found, skipping publication"
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_CONFIG_PROVENANCE: 'true'
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+
