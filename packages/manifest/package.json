@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/manifest",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Manifest schema and validation for dependency tracking",
   "type": "module",
   "main": "dist/index.js",

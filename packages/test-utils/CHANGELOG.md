@@ -1,5 +1,11 @@
 # @dependabit/test-utils
 
+## 0.1.8
+
+### Patch Changes
+
+- 8df08cd: chore: publish with setup-node OIDC token generation
+
 ## 0.1.7
 
 ### Patch Changes

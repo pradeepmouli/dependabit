@@ -1,5 +1,14 @@
 # @dependabit/plugin-github
 
+## 0.1.8
+
+### Patch Changes
+
+- 8df08cd: chore: publish with setup-node OIDC token generation
+- Updated dependencies [8df08cd]
+  - @dependabit/manifest@0.1.8
+  - @dependabit/github-client@0.1.8
+
 ## 0.1.7
 
 ### Patch Changes
