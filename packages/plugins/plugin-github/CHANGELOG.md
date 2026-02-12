@@ -1,5 +1,14 @@
 # @dependabit/plugin-github
 
+## 0.1.6
+
+### Patch Changes
+
+- d5232a5: chore: publish with OIDC authentication enabled
+- Updated dependencies [d5232a5]
+  - @dependabit/manifest@0.1.6
+  - @dependabit/github-client@0.1.6
+
 ## 0.1.5
 
 ### Patch Changes

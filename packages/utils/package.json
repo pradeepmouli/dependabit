@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/utils",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Utility functions for the monorepo",
   "type": "module",
   "main": "dist/index.js",
