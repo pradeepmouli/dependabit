@@ -66,6 +66,18 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      - name: Debug npm authentication
+        run: |
+          echo "=== npm config ==="
+          npm config get registry
+          npm config get @dependabit:registry
+          echo "=== .npmrc content ==="
+          cat ~/.npmrc || echo "No .npmrc found"
+          echo "=== NODE_AUTH_TOKEN presence ==="
+          [ -n "$NODE_AUTH_TOKEN" ] && echo "NODE_AUTH_TOKEN is set" || echo "NODE_AUTH_TOKEN is NOT set"
+          echo "=== npm whoami ==="
+          npm whoami 2>&1 || echo "npm whoami failed (expected if using OIDC)"
+
       - name: Version packages and publish
         run: |
           # Check if there are any changesets
