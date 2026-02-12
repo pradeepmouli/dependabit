@@ -52,13 +52,19 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm build
+
+      - name: Configure npm for OIDC
+        run: |
+          cat > ~/.npmrc << EOF
+          registry=https://registry.npmjs.org
+          @dependabit:registry=https://registry.npmjs.org
+          EOF
 
       - name: Configure git
         run: |
