@@ -52,8 +52,6 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'
-          scope: '@dependabit'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -61,14 +59,16 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Configure npm for OIDC authentication
+      - name: Configure npm for OIDC (no token)
         run: |
-          # The NPM_CONFIG_USERCONFIG env var points to setup-node's .npmrc
-          # We need to add scoped registry config for proper OIDC token handling
-          echo "registry=https://registry.npmjs.org/" >> "$NPM_CONFIG_USERCONFIG"
-          echo "@dependabit:registry=https://registry.npmjs.org/" >> "$NPM_CONFIG_USERCONFIG"
-          echo "Configured npm registry:"
-          cat "$NPM_CONFIG_USERCONFIG" || echo "Using default setup-node config"
+          # For OIDC to work, we must NOT have _authToken set
+          # npm will automatically request an OIDC token from GitHub Actions
+          cat > ~/.npmrc << 'EOF'
+          registry=https://registry.npmjs.org/
+          @dependabit:registry=https://registry.npmjs.org/
+          EOF
+          echo "Configured ~/.npmrc for OIDC:"
+          cat ~/.npmrc
 
       - name: Configure git
         run: |
@@ -80,13 +80,12 @@ jobs:
           echo "=== npm config ==="
           npm config get registry
           npm config get @dependabit:registry
-          echo "=== .npmrc files ==="
-          echo "NPM_CONFIG_USERCONFIG: $NPM_CONFIG_USERCONFIG"
-          [ -f "$NPM_CONFIG_USERCONFIG" ] && echo "=== Content of $NPM_CONFIG_USERCONFIG ===" && cat "$NPM_CONFIG_USERCONFIG" || echo "File not found"
+          echo "=== .npmrc content ==="
+          cat ~/.npmrc
           echo "=== NODE_AUTH_TOKEN presence ==="
-          [ -n "$NODE_AUTH_TOKEN" ] && echo "NODE_AUTH_TOKEN is set ($(echo "$NODE_AUTH_TOKEN" | head -c 10)...)" || echo "NODE_AUTH_TOKEN is NOT set"
+          [ -n "$NODE_AUTH_TOKEN" ] && echo "NODE_AUTH_TOKEN is set (OIDC token from GitHub Actions)" || echo "NODE_AUTH_TOKEN is NOT set"
           echo "=== npm whoami ==="
-          npm whoami 2>&1 || echo "npm whoami failed (expected if using OIDC)"
+          npm whoami 2>&1 || echo "npm whoami expected to fail with OIDC in PROVENANCE mode"
 
       - name: Version packages and publish
         run: |
