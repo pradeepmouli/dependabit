@@ -1,5 +1,16 @@
 # @dependabit/action
 
+## 0.1.7
+
+### Patch Changes
+
+- chore: publish with corrected npm OIDC configuration
+- Updated dependencies
+  - @dependabit/detector@0.1.7
+  - @dependabit/manifest@0.1.7
+  - @dependabit/monitor@0.1.7
+  - @dependabit/github-client@0.1.7
+
 ## 0.1.6
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @dependabit/utils
 
+## 0.1.7
+
+### Patch Changes
+
+- chore: publish with corrected npm OIDC configuration
+- Updated dependencies
+  - @dependabit/core@0.1.7
+
 ## 0.1.6
 
 ### Patch Changes

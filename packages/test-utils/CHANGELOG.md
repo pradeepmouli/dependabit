@@ -1,5 +1,11 @@
 # @dependabit/test-utils
 
+## 0.1.7
+
+### Patch Changes
+
+- chore: publish with corrected npm OIDC configuration
+
 ## 0.1.6
 
 ### Patch Changes
