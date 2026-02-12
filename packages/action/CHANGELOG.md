@@ -1,5 +1,16 @@
 # @dependabit/action
 
+## 0.1.10
+
+### Patch Changes
+
+- e773c8d: chore: test OIDC with proper setup-node .npmrc configuration
+- Updated dependencies [e773c8d]
+  - @dependabit/detector@0.1.10
+  - @dependabit/manifest@0.1.10
+  - @dependabit/monitor@0.1.10
+  - @dependabit/github-client@0.1.10
+
 ## 0.1.9
 
 ### Patch Changes

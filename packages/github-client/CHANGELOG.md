@@ -1,5 +1,11 @@
 # @dependabit/github-client
 
+## 0.1.10
+
+### Patch Changes
+
+- e773c8d: chore: test OIDC with proper setup-node .npmrc configuration
+
 ## 0.1.9
 
 ### Patch Changes

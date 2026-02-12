@@ -1,6 +1,6 @@
 {
   "name": "dependabit",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "private": true,
   "description": "dependabot for resources, related projects, and knowledge",
   "type": "module",

@@ -1,5 +1,13 @@
 # @dependabit/plugin-openapi
 
+## 0.1.10
+
+### Patch Changes
+
+- e773c8d: chore: test OIDC with proper setup-node .npmrc configuration
+- Updated dependencies [e773c8d]
+  - @dependabit/manifest@0.1.10
+
 ## 0.1.9
 
 ### Patch Changes
