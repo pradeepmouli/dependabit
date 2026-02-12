@@ -1,5 +1,11 @@
 # @dependabit/core
 
+## 0.1.9
+
+### Patch Changes
+
+- 85fc334: chore: test npm OIDC authentication with debug logging
+
 ## 0.1.8
 
 ### Patch Changes
