@@ -1,5 +1,13 @@
 # @dependabit/plugin-context7
 
+## 0.1.9
+
+### Patch Changes
+
+- 85fc334: chore: test npm OIDC authentication with debug logging
+- Updated dependencies [85fc334]
+  - @dependabit/manifest@0.1.9
+
 ## 0.1.8
 
 ### Patch Changes
