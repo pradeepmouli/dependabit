@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/plugin-github",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "GitHub API file/release access plugin for dependency tracking",
   "type": "module",
   "main": "dist/index.js",

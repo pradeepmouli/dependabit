@@ -1,5 +1,14 @@
 # @dependabit/detector
 
+## 0.1.5
+
+### Patch Changes
+
+- 7cb6440: chore: publish v0.1.5 with OIDC trusted publishers
+- Updated dependencies [7cb6440]
+  - @dependabit/manifest@0.1.5
+  - @dependabit/github-client@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes
