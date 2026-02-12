@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/plugin-http",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Generic HTTP plugin with content hashing for dependency tracking",
   "type": "module",
   "main": "dist/index.js",

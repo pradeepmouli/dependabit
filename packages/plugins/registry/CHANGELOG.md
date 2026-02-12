@@ -1,5 +1,11 @@
 # @dependabit/plugins
 
+## 0.1.6
+
+### Patch Changes
+
+- d5232a5: chore: publish with OIDC authentication enabled
+
 ## 0.1.5
 
 ### Patch Changes

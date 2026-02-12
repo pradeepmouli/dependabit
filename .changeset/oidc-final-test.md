@@ -15,4 +15,4 @@
 '@dependabit/plugins': patch
 ---
 
-chore: publish with OIDC authentication enabled
+chore: publish with corrected npm OIDC configuration
