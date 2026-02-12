@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/monitor",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Change detection and monitoring logic for external dependencies",
   "type": "module",
   "main": "dist/index.js",
