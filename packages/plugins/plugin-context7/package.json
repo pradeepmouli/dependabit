@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/plugin-context7",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Context7 API plugin for dependency tracking",
   "type": "module",
   "main": "dist/index.js",

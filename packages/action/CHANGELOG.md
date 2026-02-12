@@ -1,5 +1,16 @@
 # @dependabit/action
 
+## 0.1.11
+
+### Patch Changes
+
+- 94abf8f: chore: publish with clean OIDC configuration (no \_authToken)
+- Updated dependencies [94abf8f]
+  - @dependabit/detector@0.1.11
+  - @dependabit/manifest@0.1.11
+  - @dependabit/monitor@0.1.11
+  - @dependabit/github-client@0.1.11
+
 ## 0.1.10
 
 ### Patch Changes

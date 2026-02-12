@@ -1,5 +1,11 @@
 # @dependabit/core
 
+## 0.1.11
+
+### Patch Changes
+
+- 94abf8f: chore: publish with clean OIDC configuration (no \_authToken)
+
 ## 0.1.10
 
 ### Patch Changes
