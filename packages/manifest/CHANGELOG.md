@@ -1,5 +1,12 @@
 # @dependabit/manifest
 
+## 0.1.4
+
+### Patch Changes
+
+- b6d5114: chore: release v0.1.4 with OIDC publishing
+- fddd353: chore: test OIDC publishing with NODE_AUTH_TOKEN fix
+
 ## 0.1.3
 
 ### Patch Changes
