@@ -53,7 +53,6 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -73,6 +72,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Use npm Trusted Publishers (OIDC). No NPM_TOKEN required.
           NPM_CONFIG_PROVENANCE: 'true'
+          NODE_AUTH_TOKEN: ''
 
       - name: Resolve release metadata
         if: steps.changesets.outputs.published == 'true'
