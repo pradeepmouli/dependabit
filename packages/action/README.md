@@ -133,11 +133,13 @@ Supports multiple authentication methods:
 Configure in `.dependabit/config.yml`:
 ```yaml
 auth:
-  registry.npmjs.org:
-    secret: NPM_TOKEN
   api.example.com:
     secret: API_KEY
+  registry.example.com:
+    secret: REGISTRY_TOKEN
 ```
+
+For npm publishing, use npm Trusted Publishers (OIDC) in GitHub Actions; no npm token is required.
 
 ## Configuration
 

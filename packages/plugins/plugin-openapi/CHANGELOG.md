@@ -1,5 +1,13 @@
 # @dependabit/plugin-openapi
 
+## 0.1.3
+
+### Patch Changes
+
+- chore: publish with OIDC trusted publishers
+- Updated dependencies
+  - @dependabit/manifest@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/core",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Core utilities for the monorepo",
   "type": "module",
   "main": "dist/index.js",

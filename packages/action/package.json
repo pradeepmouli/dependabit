@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/action",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "GitHub Action entry points for dependency tracking",
   "type": "module",
   "main": "dist/index.js",

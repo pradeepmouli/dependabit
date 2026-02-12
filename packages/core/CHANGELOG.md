@@ -1,5 +1,11 @@
 # @dependabit/core
 
+## 0.1.3
+
+### Patch Changes
+
+- chore: publish with OIDC trusted publishers
+
 ## 0.1.2
 
 ### Patch Changes
