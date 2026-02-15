@@ -78,7 +78,12 @@ jobs:
           npm config get registry
           npm config get @dependabit:registry
           echo "=== .npmrc content ==="
-          cat ~/.npmrc
+          USERCONFIG=$(npm config get userconfig)
+          if [ -f "$USERCONFIG" ]; then
+            cat "$USERCONFIG"
+          else
+            echo "No user .npmrc found at $USERCONFIG"
+          fi
           echo "=== NODE_AUTH_TOKEN presence ==="
           [ -n "$NODE_AUTH_TOKEN" ] && echo "NODE_AUTH_TOKEN is set (OIDC token from GitHub Actions)" || echo "NODE_AUTH_TOKEN is NOT set"
           echo "=== npm whoami ==="
