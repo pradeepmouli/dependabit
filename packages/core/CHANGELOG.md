@@ -1,5 +1,11 @@
 # @dependabit/core
 
+## 0.1.12
+
+### Patch Changes
+
+- b9b3ee9: chore: test npm Trusted Publishers with explicit \_authToken deletion and OIDC
+
 ## 0.1.11
 
 ### Patch Changes

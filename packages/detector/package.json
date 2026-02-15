@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/detector",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "LLM-based dependency detection for external resources",
   "type": "module",
   "main": "dist/index.js",
