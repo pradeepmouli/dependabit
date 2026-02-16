@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/plugin-arxiv",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "arXiv API plugin for dependency tracking",
   "type": "module",
   "main": "dist/index.js",
