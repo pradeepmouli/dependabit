@@ -174,9 +174,9 @@ describe('MetricsCalculator', () => {
       };
 
       const history = [
-        { date: '2026-01-01', falsePositiveRate: 0.15 },
-        { date: '2026-01-15', falsePositiveRate: 0.12 },
-        { date: '2026-01-30', falsePositiveRate: 0.1 }
+        { date: '2026-02-01', falsePositiveRate: 0.15 },
+        { date: '2026-02-08', falsePositiveRate: 0.12 },
+        { date: '2026-02-15', falsePositiveRate: 0.1 }
       ];
 
       const report = calculator.generateReport(feedback, history);
