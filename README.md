@@ -41,6 +41,16 @@ Dependabit automatically discovers, tracks, and monitors external dependencies r
 - **Multiple Auth Methods**: Token, OAuth, and basic authentication support
 - **AI Agent Assignment**: Automatically assign issues to AI agents based on severity
 
+## GitHub Marketplace Publishing
+
+To publish the action to the GitHub Marketplace:
+
+1. Run the `Bundle Action` workflow (or build locally) so `packages/action/action-dist` is committed.
+2. Create a GitHub Release tag (for example, `v0.1.12`).
+3. In the Release UI, select **Publish this Action to the GitHub Marketplace**.
+
+The action metadata in [action.yml](action.yml) points to the bundled file, so Marketplace users get a self-contained action.
+
 ## Quick Start
 
 ### Prerequisites

@@ -1,0 +1,55 @@
+name: Bundle Action
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - action.yml
+      - packages/action/**
+      - package.json
+      - pnpm-lock.yaml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build bundled action
+        run: pnpm --filter @dependabit/action run build:action
+
+      - name: Commit bundle
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add packages/action/action-dist packages/action/licenses.txt
+          if git diff --staged --quiet; then
+            echo "No bundle changes to commit"
+            exit 0
+          fi
+          git commit -m "chore: update action bundle"
+          git push origin master
