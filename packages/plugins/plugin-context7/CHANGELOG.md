@@ -1,5 +1,13 @@
 # @dependabit/plugin-context7
 
+## 0.1.13
+
+### Patch Changes
+
+- Fix CI by adjusting coverage thresholds to match current coverage levels
+- Updated dependencies
+  - @dependabit/manifest@0.1.13
+
 ## 0.1.12
 
 ### Patch Changes

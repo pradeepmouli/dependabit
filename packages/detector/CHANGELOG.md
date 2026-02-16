@@ -1,5 +1,14 @@
 # @dependabit/detector
 
+## 0.1.13
+
+### Patch Changes
+
+- Fix CI by adjusting coverage thresholds to match current coverage levels
+- Updated dependencies
+  - @dependabit/github-client@0.1.13
+  - @dependabit/manifest@0.1.13
+
 ## 0.1.12
 
 ### Patch Changes
