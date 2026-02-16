@@ -23,6 +23,8 @@ export default defineConfig({
       reporter: ['text', 'html', 'lcov'],
       include: ['packages/*/src/**/*.ts'],
       exclude: ['**/*.test.ts', '**/*.spec.ts', '**/test/**', '**/dist/**', '**/node_modules/**'],
+      // TODO: Incrementally improve test coverage and raise these thresholds
+      // Target: lines 80%, statements 80%, functions 80%, branches 75%
       thresholds: {
         lines: 48,
         functions: 55,
