@@ -39,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build workspace packages
+        run: pnpm run build
+
       - name: Build bundled action
         run: pnpm --filter @dependabit/action run build:action
 
