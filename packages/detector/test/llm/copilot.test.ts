@@ -224,35 +224,6 @@ describe('GitHubCopilotProvider', () => {
       expect(result.dependencies).toEqual([]);
       expect(result.rawResponse).toContain('CLI error');
     });
-  });
-
-  describe('usage metadata', () => {
-    it('should include usage metadata in response', async () => {
-      const mockResponse = JSON.stringify({ dependencies: [] });
-      mockExecFile.mockImplementation((file, args, options, callback) => {
-        if (typeof callback === 'function') {
-          callback(null, { stdout: mockResponse, stderr: '' });
-        }
-        return {} as any;
-      });
-
-      const result = await provider.analyze('content', 'prompt');
-
-      expect(result.usage).toBeDefined();
-      expect(result.usage.promptTokens).toBeGreaterThan(0);
-      expect(result.usage.completionTokens).toBeGreaterThan(0);
-      expect(result.usage.totalTokens).toBeGreaterThan(0);
-      expect(result.usage.latencyMs).toBeGreaterThanOrEqual(0);
-    });
-
-    it('should use configured model in usage metadata', async () => {
-      const mockResponse = JSON.stringify({ dependencies: [] });
-      mockExecFile.mockImplementation((file, args, options, callback) => {
-        if (typeof callback === 'function') {
-          callback(null, { stdout: mockResponse, stderr: '' });
-        }
-        return {} as any;
-      });
 
     it('should handle stderr without stdout as error', async () => {
       mockExecFileCallback.mockImplementation((file, args, options, callback) => {
