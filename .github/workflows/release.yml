@@ -40,7 +40,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -53,6 +53,9 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Install npm v11 (OIDC fix)
+        run: npm install -g npm@11
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
