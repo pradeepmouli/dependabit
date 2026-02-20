@@ -30,7 +30,8 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
-    "type-check": "pnpm -r run type-check"
+    "type-check": "pnpm -r run type-check",
+    "prepare": "simple-git-hooks"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
@@ -48,5 +49,9 @@
     "node": ">=20.0.0",
     "pnpm": ">=10.0.0"
   },
-  "packageManager": "pnpm@10.28.0"
+  "packageManager": "pnpm@10.6.2",
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged",
+    "pre-push": "pnpm run type-check"
+  }
 }
