@@ -52,35 +52,14 @@ jobs:
           manifest_path: .dependabit/manifest.json
           config_path: .dependabit/config.yml
 
-      - name: Check for dependency changes
-        id: check
-        if: steps.manifest_check.outputs.exists == 'true' && steps.validate.outcome == 'success'
-        uses: pradeepmouli/dependabit@main
-        with:
-          action: check
-          repo_path: .
-          manifest_path: .dependabit/manifest.json
-          config_path: .dependabit/config.yml
-          force_check: ${{ inputs.force_check || 'false' }}
-          severity_filter: ${{ inputs.severity_filter || 'minor' }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Summary
         if: always() && steps.manifest_check.outputs.exists == 'true'
         run: |
-          echo "### Dependency Check Results" >> $GITHUB_STEP_SUMMARY
+          echo "### Dependency Validation Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Dependencies Checked**: ${{ steps.check.outputs.dependencies_checked || '0' }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Changes Detected**: ${{ steps.check.outputs.changes_detected || '0' }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Issues Created**: ${{ steps.check.outputs.issues_created || '0' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Manifest Validated**: ${{ steps.validate.outcome == 'success' && 'Yes' || 'No' }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Severity | Count |" >> $GITHUB_STEP_SUMMARY
-          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Breaking | ${{ steps.check.outputs.breaking_changes || '0' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Major | ${{ steps.check.outputs.major_changes || '0' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Minor | ${{ steps.check.outputs.minor_changes || '0' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "_Note: The automated dependency **check** step is currently disabled because the \`check\` action mode is not yet implemented in \`pradeepmouli/dependabit\`._" >> $GITHUB_STEP_SUMMARY
 
       - name: No manifest warning
         if: steps.manifest_check.outputs.exists == 'false'
