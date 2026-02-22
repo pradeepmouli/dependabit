@@ -33,7 +33,7 @@ jobs:
 
       - name: Generate manifest
         id: generate
-        uses: pradeepmouli/dependabit@main
+        uses: pradeepmouli/dependabit@v1
         with:
           action: generate
           repo_path: .
