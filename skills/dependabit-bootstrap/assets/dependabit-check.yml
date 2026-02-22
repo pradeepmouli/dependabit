@@ -1,0 +1,90 @@
+name: Dependabit - Check Dependencies
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # Daily at 2 AM UTC
+  workflow_dispatch:
+    inputs:
+      force_check:
+        description: 'Force check all dependencies (ignore schedules)'
+        required: false
+        default: false
+        type: boolean
+      severity_filter:
+        description: 'Minimum severity to report'
+        required: false
+        default: minor
+        type: choice
+        options:
+          - minor
+          - major
+          - breaking
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    name: Check for Dependency Changes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check manifest exists
+        id: manifest_check
+        run: |
+          if [ -f ".dependabit/manifest.json" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "::warning::No manifest found. Run the generate workflow first."
+          fi
+
+      - name: Validate manifest
+        id: validate
+        if: steps.manifest_check.outputs.exists == 'true'
+        uses: pradeepmouli/dependabit@main
+        with:
+          action: validate
+          manifest_path: .dependabit/manifest.json
+          config_path: .dependabit/config.yml
+
+      - name: Check for dependency changes
+        id: check
+        if: steps.manifest_check.outputs.exists == 'true' && steps.validate.outcome == 'success'
+        uses: pradeepmouli/dependabit@main
+        with:
+          action: check
+          repo_path: .
+          manifest_path: .dependabit/manifest.json
+          config_path: .dependabit/config.yml
+          force_check: ${{ inputs.force_check || 'false' }}
+          severity_filter: ${{ inputs.severity_filter || 'minor' }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        if: always() && steps.manifest_check.outputs.exists == 'true'
+        run: |
+          echo "### Dependency Check Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Dependencies Checked**: ${{ steps.check.outputs.dependencies_checked || '0' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Changes Detected**: ${{ steps.check.outputs.changes_detected || '0' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Issues Created**: ${{ steps.check.outputs.issues_created || '0' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Severity | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Breaking | ${{ steps.check.outputs.breaking_changes || '0' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Major | ${{ steps.check.outputs.major_changes || '0' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Minor | ${{ steps.check.outputs.minor_changes || '0' }} |" >> $GITHUB_STEP_SUMMARY
+
+      - name: No manifest warning
+        if: steps.manifest_check.outputs.exists == 'false'
+        run: |
+          echo "### No Manifest Found" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Run the **Dependabit - Generate Manifest** workflow first." >> $GITHUB_STEP_SUMMARY
