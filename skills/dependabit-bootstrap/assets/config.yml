@@ -18,9 +18,10 @@ issues:
     - dependabit
     - dependency-update
   aiAgentAssignment:
-    breaking: "@copilot"
-    major: "@copilot"
-    minor: "@copilot"
+    enabled: true
+    breaking: "copilot"
+    major: "copilot"
+    minor: "copilot"
 
 # Monitoring behavior
 monitoring:
