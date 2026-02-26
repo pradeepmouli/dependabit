@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/plugin-openapi",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "OpenAPI spec fetching plugin for dependency tracking",
   "type": "module",
   "main": "dist/index.js",
