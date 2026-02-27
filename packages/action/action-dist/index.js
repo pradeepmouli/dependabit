@@ -42379,10 +42379,19 @@ INCLUDE these types of dependencies:
 
 EXCLUDE these (handled by dependabot):
 - NPM packages in package.json
-- Python packages in requirements.txt  
+- Python packages in requirements.txt
 - Rust crates in Cargo.toml
 - Docker images in Dockerfile
 - Any declared package manager dependencies
+
+ALSO EXCLUDE (false positives):
+- URLs that reference the repository itself (self-references)
+- Relative file paths (e.g., CONTRIBUTING.md, docs/guide.md, ./src/utils)
+- Placeholder URLs used in documentation examples (example.com, example.org, localhost)
+- Internal documentation links within the same repository
+- URLs with template variables or placeholders (e.g., issues/[NUMBER], user/repo)
+
+Only return dependencies with confidence >= 0.7.
 
 For each dependency found, provide:
 1. url: The complete URL
@@ -42792,7 +42801,7 @@ var ignore = __nccwpck_require__(2881);
  * README Parser
  * Extracts URLs and references from README and markdown files
  */
-// Patterns to skip (package managers, CI badges, shields.io)
+// Patterns to skip (package managers, CI badges, shields.io, placeholders)
 const SKIP_PATTERNS = [
   /npmjs\.com\/package/,
   /pypi\.org\/project/,
@@ -42803,7 +42812,13 @@ const SKIP_PATTERNS = [
   /badge(s)?\..*\.svg/,
   /travis-ci\.(org|com)/,
   /circleci\.com/,
-  /github\.com\/.*\/actions/ // GitHub Actions badges
+  /github\.com\/.*\/actions/, // GitHub Actions badges
+  /example\.com/, // placeholder domain
+  /example\.org/, // placeholder domain
+  /localhost/, // local dev URLs
+  /127\.0\.0\.1/, // loopback address
+  /\[.*\]/, // template placeholders (e.g., issues/[NUMBER])
+  /github\.com\/user\/repo/ // common placeholder in docs
 ];
 /**
  * Parse README content and extract external references
@@ -43229,12 +43244,23 @@ class Detector {
   options;
   ignoreMatcher = null;
   ignoreMatcherLoaded = false;
+  skipUrlPatterns;
   constructor(options) {
     this.options = {
       ...options,
       ignorePatterns: options.ignorePatterns || DEFAULT_IGNORE_PATTERNS,
-      useGitExcludes: options.useGitExcludes ?? true
+      useGitExcludes: options.useGitExcludes ?? true,
+      repoOwner: options.repoOwner || '',
+      repoName: options.repoName || ''
     };
+    this.skipUrlPatterns = [
+      /example\.com/,
+      /example\.org/,
+      /localhost/,
+      /127\.0\.0\.1/,
+      /\[.*\]/, // template placeholders like [NUMBER]
+      /github\.com\/user\/repo/ // common placeholder in docs
+    ];
   }
   /**
    * Detect all external dependencies in the repository
@@ -43375,6 +43401,8 @@ Return as JSON with "dependencies" array.`;
     const dependencies = [];
     const now = new Date().toISOString();
     for (const [url, data] of allReferences) {
+      // Skip entries that will end up with low confidence
+      // (entries that can't be typed programmatically and LLM assigns low confidence)
       // Prepare context for potential LLM use
       const context = data.contexts
         .map((c) => `${c.file}${c.line ? `:${c.line}` : ''}: ${c.text}`)
@@ -43406,6 +43434,10 @@ Return as JSON with "dependencies" array.`;
       if (!type) {
         type = 'other';
         typeConfidence = 0.3;
+      }
+      // Skip low-confidence entries
+      if (typeConfidence < 0.5) {
+        continue;
       }
       // Step 5: Try programmatic access method determination
       let accessMethod = this.determineAccessMethod(url);
@@ -43489,6 +43521,24 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     };
   }
   addReference(map, url, context, detectionMethod) {
+    // Skip URLs that don't start with http:// or https://
+    if (!/^https?:\/\//.test(url)) {
+      return;
+    }
+    // Skip URLs matching skip patterns (placeholders, localhost, etc.)
+    if (this.skipUrlPatterns.some((pattern) => pattern.test(url))) {
+      return;
+    }
+    // Skip self-references (URLs pointing to the repo itself)
+    if (this.options.repoOwner && this.options.repoName) {
+      const selfPattern = new RegExp(
+        `github\\.com[/:]${this.escapeRegExp(this.options.repoOwner)}/${this.escapeRegExp(this.options.repoName)}(?:/|$|#|\\?)`,
+        'i'
+      );
+      if (selfPattern.test(url)) {
+        return;
+      }
+    }
     if (!map.has(url)) {
       map.set(url, {
         url,
@@ -43497,6 +43547,9 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
       });
     }
     map.get(url).contexts.push(context);
+  }
+  escapeRegExp(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
   /**
    * Programmatically determine access method based on URL patterns
@@ -58492,10 +58545,16 @@ async function generateAction() {
     logger.endGroup();
     // Create detector
     logger.startGroup('🔍 Detecting Dependencies');
+    const repoSlug = process.env['GITHUB_REPOSITORY'] || '';
+    const repoParts = repoSlug.split('/');
+    const repoOwner = repoParts[0] || '';
+    const repoName = repoParts[1] || '';
     const detector = new Detector({
       repoPath: inputs.repoPath,
       llmProvider,
-      useGitExcludes: config?.ignore?.useGitExcludes ?? true
+      useGitExcludes: config?.ignore?.useGitExcludes ?? true,
+      repoOwner,
+      repoName
     });
     const result = await withTiming(logger, 'dependency-detection', async () => {
       return await detector.detectDependencies();

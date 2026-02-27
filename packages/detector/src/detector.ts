@@ -31,6 +31,8 @@ export interface DetectorOptions {
   llmProvider: LLMProvider;
   ignorePatterns?: string[];
   useGitExcludes?: boolean;
+  repoOwner?: string;
+  repoName?: string;
 }
 
 export interface DetectionResult {
@@ -62,13 +64,25 @@ export class Detector {
   private options: Required<DetectorOptions>;
   private ignoreMatcher: Ignore | null = null;
   private ignoreMatcherLoaded = false;
+  private skipUrlPatterns: RegExp[];
 
   constructor(options: DetectorOptions) {
     this.options = {
       ...options,
       ignorePatterns: options.ignorePatterns || DEFAULT_IGNORE_PATTERNS,
-      useGitExcludes: options.useGitExcludes ?? true
+      useGitExcludes: options.useGitExcludes ?? true,
+      repoOwner: options.repoOwner || '',
+      repoName: options.repoName || ''
     };
+
+    this.skipUrlPatterns = [
+      /example\.com/,
+      /example\.org/,
+      /localhost/,
+      /127\.0\.0\.1/,
+      /\[.*\]/, // template placeholders like [NUMBER]
+      /github\.com\/user\/repo/ // common placeholder in docs
+    ];
   }
 
   /**
@@ -225,6 +239,8 @@ Return as JSON with "dependencies" array.`;
     const now = new Date().toISOString();
 
     for (const [url, data] of allReferences) {
+      // Skip entries that will end up with low confidence
+      // (entries that can't be typed programmatically and LLM assigns low confidence)
       // Prepare context for potential LLM use
       const context = data.contexts
         .map((c) => `${c.file}${c.line ? `:${c.line}` : ''}: ${c.text}`)
@@ -260,6 +276,11 @@ Return as JSON with "dependencies" array.`;
       if (!type) {
         type = 'other';
         typeConfidence = 0.3;
+      }
+
+      // Skip low-confidence entries
+      if (typeConfidence < 0.5) {
+        continue;
       }
 
       // Step 5: Try programmatic access method determination
@@ -357,6 +378,27 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     context: { file: string; line?: number; text: string },
     detectionMethod: DetectionMethod
   ): void {
+    // Skip URLs that don't start with http:// or https://
+    if (!/^https?:\/\//.test(url)) {
+      return;
+    }
+
+    // Skip URLs matching skip patterns (placeholders, localhost, etc.)
+    if (this.skipUrlPatterns.some((pattern) => pattern.test(url))) {
+      return;
+    }
+
+    // Skip self-references (URLs pointing to the repo itself)
+    if (this.options.repoOwner && this.options.repoName) {
+      const selfPattern = new RegExp(
+        `github\\.com[/:]${this.escapeRegExp(this.options.repoOwner)}/${this.escapeRegExp(this.options.repoName)}(?:/|$|#|\\?)`,
+        'i'
+      );
+      if (selfPattern.test(url)) {
+        return;
+      }
+    }
+
     if (!map.has(url)) {
       map.set(url, {
         url,
@@ -365,6 +407,10 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
       });
     }
     map.get(url)!.contexts.push(context);
+  }
+
+  private escapeRegExp(str: string): string {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
   /**
@@ -519,7 +565,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
           files.push(fullPath);
         }
       }
-    } catch  {
+    } catch {
       // Ignore errors (permission denied, etc.)
     }
 

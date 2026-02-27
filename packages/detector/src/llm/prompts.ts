@@ -17,10 +17,19 @@ INCLUDE these types of dependencies:
 
 EXCLUDE these (handled by dependabot):
 - NPM packages in package.json
-- Python packages in requirements.txt  
+- Python packages in requirements.txt
 - Rust crates in Cargo.toml
 - Docker images in Dockerfile
 - Any declared package manager dependencies
+
+ALSO EXCLUDE (false positives):
+- URLs that reference the repository itself (self-references)
+- Relative file paths (e.g., CONTRIBUTING.md, docs/guide.md, ./src/utils)
+- Placeholder URLs used in documentation examples (example.com, example.org, localhost)
+- Internal documentation links within the same repository
+- URLs with template variables or placeholders (e.g., issues/[NUMBER], user/repo)
+
+Only return dependencies with confidence >= 0.7.
 
 For each dependency found, provide:
 1. url: The complete URL

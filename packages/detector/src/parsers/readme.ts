@@ -10,7 +10,7 @@ export interface ExtractedReference {
   type: 'markdown-link' | 'bare-url' | 'reference-link';
 }
 
-// Patterns to skip (package managers, CI badges, shields.io)
+// Patterns to skip (package managers, CI badges, shields.io, placeholders)
 const SKIP_PATTERNS = [
   /npmjs\.com\/package/,
   /pypi\.org\/project/,
@@ -21,7 +21,13 @@ const SKIP_PATTERNS = [
   /badge(s)?\..*\.svg/,
   /travis-ci\.(org|com)/,
   /circleci\.com/,
-  /github\.com\/.*\/actions/ // GitHub Actions badges
+  /github\.com\/.*\/actions/, // GitHub Actions badges
+  /example\.com/, // placeholder domain
+  /example\.org/, // placeholder domain
+  /localhost/, // local dev URLs
+  /127\.0\.0\.1/, // loopback address
+  /\[.*\]/, // template placeholders (e.g., issues/[NUMBER])
+  /github\.com\/user\/repo/ // common placeholder in docs
 ];
 
 /**

@@ -80,10 +80,16 @@ async function generateAction(): Promise<void> {
 
     // Create detector
     logger.startGroup('🔍 Detecting Dependencies');
+    const repoSlug = process.env['GITHUB_REPOSITORY'] || '';
+    const repoParts = repoSlug.split('/');
+    const repoOwner = repoParts[0] || '';
+    const repoName = repoParts[1] || '';
     const detector = new Detector({
       repoPath: inputs.repoPath,
       llmProvider,
-      useGitExcludes: config?.ignore?.useGitExcludes ?? true
+      useGitExcludes: config?.ignore?.useGitExcludes ?? true,
+      repoOwner,
+      repoName
     });
 
     const result = await withTiming(logger, 'dependency-detection', async () => {
