@@ -83,7 +83,11 @@ export class Detector {
       /localhost/,
       /127\.0\.0\.1/,
       /\[.*\]/, // template placeholders like [NUMBER]
-      /github\.com\/user\/repo/ // common placeholder in docs
+      /github\.com\/user\/repo/, // common placeholder in docs
+      /your-?username/i, // template placeholder: your-username or yourusername
+      /you\/your-project/i, // template: you/your-project
+      /github\.com\/YOUR-?USERNAME/i, // GitHub template: YOUR-USERNAME
+      /github\.com\/your-?username/i // GitHub template: your-username
     ];
   }
 
