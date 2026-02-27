@@ -1,4 +1,20 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { Detector } from '../src/detector.js';
+
+const createDetector = (): Detector =>
+  new Detector({
+    repoPath: '.',
+    llmProvider: {
+      analyze: vi.fn(async () => ({
+        dependencies: [],
+        usage: { totalTokens: 0, latencyMs: 0 },
+        rawResponse: '{}'
+      }))
+    }
+  });
 
 describe('Detector', () => {
   beforeEach(() => {
@@ -49,12 +65,63 @@ describe('Detector', () => {
       // Expected: Continue with parser results, log error
       expect(true).toBe(true);
     });
+
+    it('should keep GitHub repo links when LLM parser misses them', async () => {
+      const repoPath = await mkdtemp(join(tmpdir(), 'dependabit-detector-'));
+
+      try {
+        await mkdir(join(repoPath, 'docs'), { recursive: true });
+        await writeFile(
+          join(repoPath, 'docs', 'tooling.md'),
+          '- [spec-kit](https://github.com/github/spec-kit)\n'
+        );
+
+        const detector = new Detector({
+          repoPath,
+          llmProvider: {
+            analyze: vi.fn(async () => ({
+              dependencies: [],
+              usage: { totalTokens: 0, latencyMs: 0 },
+              rawResponse: '{}'
+            })),
+            getSupportedModels: vi.fn(() => ['test-model']),
+            getRateLimit: vi.fn(async () => ({
+              remaining: 100,
+              limit: 100,
+              resetAt: new Date(Date.now() + 60_000)
+            })),
+            validateConfig: vi.fn(() => true)
+          },
+          repoOwner: 'pradeepmouli',
+          repoName: 'dependabit'
+        });
+
+        const result = await detector.detectDependencies();
+        const dep = result.dependencies.find((d) => d.url === 'https://github.com/github/spec-kit');
+
+        expect(dep).toBeDefined();
+        expect(dep?.type).toBe('reference-implementation');
+        expect(dep?.accessMethod).toBe('github-api');
+      } finally {
+        await rm(repoPath, { recursive: true, force: true });
+      }
+    });
   });
 
   describe('classifyDependency', () => {
     it('should classify GitHub URLs as repository', () => {
       const url = 'https://github.com/owner/repo';
       expect(url).toContain('github.com');
+    });
+
+    it('should classify GitHub repository links as reference-implementation', () => {
+      const detector = createDetector();
+      const type = (detector as any).determineDependencyType(
+        'https://github.com/github/spec-kit',
+        'spec-kit'
+      );
+
+      expect(type).toBe('reference-implementation');
     });
 
     it('should classify arXiv URLs as research-paper', () => {

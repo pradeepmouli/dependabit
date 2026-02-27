@@ -6,7 +6,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { execSync } from 'node:child_process';
 import { homedir } from 'node:os';
-import { dirname, join, relative, resolve, normalize, sep } from 'node:path';
+import { basename, dirname, join, relative, resolve, normalize, sep } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import ignore, { type Ignore } from 'ignore';
 import type { LLMProvider } from './llm/client.js';
@@ -56,6 +56,8 @@ const DEFAULT_IGNORE_PATTERNS = [
   '__pycache__',
   'coverage'
 ];
+
+const ALLOWED_DOT_DIRECTORIES = new Set<string>();
 
 /**
  * Main detector class
@@ -135,7 +137,33 @@ export class Detector {
       filesScanned++;
     }
 
-    // 1b. Parse package files for metadata (NOT dependencies)
+    // 1b. Parse non-README documentation files
+    const documentationFiles = await this.findFiles(this.options.repoPath, /\.(md|txt|rst|adoc)$/i);
+    for (const file of documentationFiles) {
+      if (/^README/i.test(basename(file))) {
+        continue;
+      }
+
+      const content = await readFile(file, 'utf-8');
+      const references = parseReadme(content, relative(this.options.repoPath, file));
+
+      for (const ref of references) {
+        this.addReference(
+          allReferences,
+          ref.url,
+          {
+            file: relative(this.options.repoPath, file),
+            ...(ref.line !== undefined && { line: ref.line }),
+            text: ref.context
+          },
+          'llm-analysis'
+        );
+      }
+
+      filesScanned++;
+    }
+
+    // 1c. Parse package files for metadata (NOT dependencies)
     const packageFiles = await this.findPackageFiles(this.options.repoPath);
     for (const file of packageFiles) {
       const content = await readFile(file, 'utf-8');
@@ -161,7 +189,7 @@ export class Detector {
       filesScanned++;
     }
 
-    // 1c. Parse code comments from source files
+    // 1d. Parse code comments from source files
     const sourceFiles = await this.findSourceFiles(this.options.repoPath);
     for (const file of sourceFiles.slice(0, 50)) {
       // Limit to 50 files for performance
@@ -451,6 +479,10 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     const lowerUrl = url.toLowerCase();
     const lowerContext = context.toLowerCase();
 
+    const isGitHubRepositoryUrl = /^https?:\/\/github\.com\/[^/]+\/[^/#?]+(?:$|[/?#])/.test(
+      lowerUrl
+    );
+
     // Research papers
     if (
       lowerUrl.includes('arxiv.org') ||
@@ -486,10 +518,11 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
 
     // Reference implementations (GitHub repos)
     if (
-      lowerUrl.includes('github.com') &&
-      (lowerContext.includes('example') ||
-        lowerContext.includes('implementation') ||
-        lowerContext.includes('reference'))
+      isGitHubRepositoryUrl ||
+      (lowerUrl.includes('github.com') &&
+        (lowerContext.includes('example') ||
+          lowerContext.includes('implementation') ||
+          lowerContext.includes('reference')))
     ) {
       return 'reference-implementation';
     }
@@ -599,11 +632,14 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
 
   private isDotDirectoryPath(filePath: string): boolean {
     const segments = normalize(filePath).split(sep);
-    return segments.some((segment) => segment.startsWith('.') && segment.length > 1);
+    return segments.some(
+      (segment) =>
+        segment.startsWith('.') && segment.length > 1 && !ALLOWED_DOT_DIRECTORIES.has(segment)
+    );
   }
 
   private isDotDirectoryName(name: string): boolean {
-    return name.startsWith('.') && name.length > 1;
+    return name.startsWith('.') && name.length > 1 && !ALLOWED_DOT_DIRECTORIES.has(name);
   }
 
   private async isGitIgnored(filePath: string, isDirectory: boolean): Promise<boolean> {
