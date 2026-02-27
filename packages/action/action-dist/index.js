@@ -43237,6 +43237,7 @@ const DEFAULT_IGNORE_PATTERNS = [
   '__pycache__',
   'coverage'
 ];
+const ALLOWED_DOT_DIRECTORIES = new Set();
 /**
  * Main detector class
  */
@@ -43259,7 +43260,20 @@ class Detector {
       /localhost/,
       /127\.0\.0\.1/,
       /\[.*\]/, // template placeholders like [NUMBER]
-      /github\.com\/user\/repo/ // common placeholder in docs
+      /github\.com\/user\/repo/, // common placeholder in docs
+      /your-?username/i, // template placeholder: your-username or yourusername
+      /you\/your-project/i, // template: you/your-project
+      /github\.com\/YOUR-?USERNAME/i, // GitHub template: YOUR-USERNAME
+      /github\.com\/your-?username/i, // GitHub template: your-username
+      // Self-reference: skip if URL matches current repository
+      ...(this.options.repoOwner && this.options.repoName
+        ? [
+            new RegExp(
+              `github\\.com\\/${this.options.repoOwner}\\/${this.options.repoName}(?:\\.git)?(?:[/?#]|$)`,
+              'i'
+            )
+          ]
+        : [])
     ];
   }
   /**
@@ -43303,7 +43317,32 @@ class Detector {
       }
       filesScanned++;
     }
-    // 1b. Parse package files for metadata (NOT dependencies)
+    // 1b. Parse non-README documentation files
+    const documentationFiles = await this.findFiles(this.options.repoPath, /\.(md|txt|rst|adoc)$/i);
+    for (const file of documentationFiles) {
+      if (/^README/i.test((0, external_node_path_namespaceObject.basename)(file))) {
+        continue;
+      }
+      const content = await (0, promises_namespaceObject.readFile)(file, 'utf-8');
+      const references = parseReadme(
+        content,
+        (0, external_node_path_namespaceObject.relative)(this.options.repoPath, file)
+      );
+      for (const ref of references) {
+        this.addReference(
+          allReferences,
+          ref.url,
+          {
+            file: (0, external_node_path_namespaceObject.relative)(this.options.repoPath, file),
+            ...(ref.line !== undefined && { line: ref.line }),
+            text: ref.context
+          },
+          'llm-analysis'
+        );
+      }
+      filesScanned++;
+    }
+    // 1c. Parse package files for metadata (NOT dependencies)
     const packageFiles = await this.findPackageFiles(this.options.repoPath);
     for (const file of packageFiles) {
       const content = await (0, promises_namespaceObject.readFile)(file, 'utf-8');
@@ -43326,7 +43365,7 @@ class Detector {
       }
       filesScanned++;
     }
-    // 1c. Parse code comments from source files
+    // 1d. Parse code comments from source files
     const sourceFiles = await this.findSourceFiles(this.options.repoPath);
     for (const file of sourceFiles.slice(0, 50)) {
       // Limit to 50 files for performance
@@ -43583,6 +43622,9 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
   determineDependencyType(url, context) {
     const lowerUrl = url.toLowerCase();
     const lowerContext = context.toLowerCase();
+    const isGitHubRepositoryUrl = /^https?:\/\/github\.com\/[^/]+\/[^/#?]+(?:$|[/?#])/.test(
+      lowerUrl
+    );
     // Research papers
     if (
       lowerUrl.includes('arxiv.org') ||
@@ -43615,10 +43657,11 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     }
     // Reference implementations (GitHub repos)
     if (
-      lowerUrl.includes('github.com') &&
-      (lowerContext.includes('example') ||
-        lowerContext.includes('implementation') ||
-        lowerContext.includes('reference'))
+      isGitHubRepositoryUrl ||
+      (lowerUrl.includes('github.com') &&
+        (lowerContext.includes('example') ||
+          lowerContext.includes('implementation') ||
+          lowerContext.includes('reference')))
     ) {
       return 'reference-implementation';
     }
@@ -43710,10 +43753,13 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
     const segments = (0, external_node_path_namespaceObject.normalize)(filePath).split(
       external_node_path_namespaceObject.sep
     );
-    return segments.some((segment) => segment.startsWith('.') && segment.length > 1);
+    return segments.some(
+      (segment) =>
+        segment.startsWith('.') && segment.length > 1 && !ALLOWED_DOT_DIRECTORIES.has(segment)
+    );
   }
   isDotDirectoryName(name) {
-    return name.startsWith('.') && name.length > 1;
+    return name.startsWith('.') && name.length > 1 && !ALLOWED_DOT_DIRECTORIES.has(name);
   }
   async isGitIgnored(filePath, isDirectory) {
     if (!this.options.useGitExcludes) {
