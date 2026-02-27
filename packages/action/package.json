@@ -19,11 +19,12 @@
   "scripts": {
     "build": "tsgo -p tsconfig.json",
     "build:action": "tsgo -p tsconfig.json && ncc build dist/index.js -o action-dist --source-map --license licenses.txt",
-    "clean": "rm -rf dist action-dist",
+    "clean": "rm -rf dist action-dist tsconfig.tsbuildinfo",
     "dev": "tsx watch src/index.ts",
     "type-check": "tsgo --noEmit -p tsconfig.json",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
     "@actions/core": "^3.0.0",
