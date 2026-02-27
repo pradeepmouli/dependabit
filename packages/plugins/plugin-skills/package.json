@@ -1,6 +1,11 @@
 {
   "name": "@dependabit/plugin-skills",
   "version": "0.1.13",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pradeepmouli/dependabit",
+    "directory": "packages/plugins/plugin-skills"
+  },
   "description": "Skills.sh plugin for tracking AI agent skill versions",
   "type": "module",
   "main": "dist/index.js",

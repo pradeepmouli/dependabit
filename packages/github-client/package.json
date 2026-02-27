@@ -1,6 +1,11 @@
 {
   "name": "@dependabit/github-client",
   "version": "0.1.13",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pradeepmouli/dependabit",
+    "directory": "packages/github-client"
+  },
   "description": "GitHub API wrapper with rate limiting and authentication",
   "type": "module",
   "main": "dist/index.js",

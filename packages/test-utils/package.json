@@ -1,6 +1,11 @@
 {
   "name": "@dependabit/test-utils",
   "version": "0.1.13",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pradeepmouli/dependabit",
+    "directory": "packages/test-utils"
+  },
   "description": "Shared testing utilities for the monorepo",
   "type": "module",
   "main": "dist/index.js",

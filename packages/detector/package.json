@@ -1,6 +1,11 @@
 {
   "name": "@dependabit/detector",
   "version": "0.1.14",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pradeepmouli/dependabit",
+    "directory": "packages/detector"
+  },
   "description": "LLM-based dependency detection for external resources",
   "type": "module",
   "main": "dist/index.js",

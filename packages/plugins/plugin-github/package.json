@@ -1,6 +1,11 @@
 {
   "name": "@dependabit/plugin-github",
   "version": "0.1.13",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pradeepmouli/dependabit",
+    "directory": "packages/plugins/plugin-github"
+  },
   "description": "GitHub API file/release access plugin for dependency tracking",
   "type": "module",
   "main": "dist/index.js",
