@@ -7,7 +7,12 @@ import * as core from '@actions/core';
 import { join } from 'node:path';
 import { existsSync } from 'node:fs';
 import { Detector, GitHubCopilotProvider } from '@dependabit/detector';
-import { readConfig, writeManifest, type DependabitConfig, type DependencyManifest } from '@dependabit/manifest';
+import {
+  readConfig,
+  writeManifest,
+  type DependabitConfig,
+  type DependencyManifest
+} from '@dependabit/manifest';
 import { createLogger, withTiming } from '../logger.js';
 import { parseGenerateInputs } from '../utils/inputs.js';
 import {
@@ -99,7 +104,16 @@ async function generateAction(): Promise<void> {
     const manifest = await createManifest(inputs.repoPath, result.dependencies, inputs.llmProvider);
 
     const manifestPath = join(inputs.repoPath, inputs.manifestPath);
-    await writeManifest(manifestPath, manifest);
+    const writeResult = await writeManifest(manifestPath, manifest);
+
+    if (writeResult.validationErrors?.length) {
+      logger.warning('Manifest written with validation warnings', {
+        errors: writeResult.validationErrors
+      });
+      for (const err of writeResult.validationErrors) {
+        core.warning(`Manifest validation: ${err}`);
+      }
+    }
 
     logger.info('Manifest written', {
       path: manifestPath,

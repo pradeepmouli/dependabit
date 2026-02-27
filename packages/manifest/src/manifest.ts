@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { type DependencyManifest, type DependencyEntry } from './schema.js';
-import { validateManifest, validateDependencyEntry } from './validator.js';
+import { validateManifest, validateDependencyEntry, safeValidateManifest } from './validator.js';
 
 /**
  * Read and parse a manifest file
@@ -15,9 +15,24 @@ export async function readManifest(path: string): Promise<DependencyManifest> {
 /**
  * Write a manifest to file
  */
-export async function writeManifest(path: string, manifest: DependencyManifest): Promise<void> {
+export async function writeManifest(
+  path: string,
+  manifest: DependencyManifest,
+  options?: { strict?: boolean }
+): Promise<{ validationErrors?: string[] }> {
+  const strict = options?.strict ?? false;
+  const result: { validationErrors?: string[] } = {};
+
   // Validate before writing
-  validateManifest(manifest);
+  const validation = safeValidateManifest(manifest);
+  if (!validation.success) {
+    const errors = validation.error!.getFormattedErrors();
+    if (strict) {
+      throw validation.error!;
+    }
+    // Non-strict: record warnings but still write the manifest
+    result.validationErrors = errors;
+  }
 
   // Ensure directory exists
   await mkdir(dirname(path), { recursive: true });
@@ -25,6 +40,8 @@ export async function writeManifest(path: string, manifest: DependencyManifest):
   // Write formatted JSON
   const content = JSON.stringify(manifest, null, 2);
   await writeFile(path, content, 'utf-8');
+
+  return result;
 }
 
 /**
