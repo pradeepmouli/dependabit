@@ -1,5 +1,11 @@
 # @dependabit/detector
 
+## 0.1.14
+
+### Patch Changes
+
+- [`b991df2`](https://github.com/pradeepmouli/dependabit/commit/b991df2ff7af5aab2651e23d21af522f9674cae1) Thanks [@pradeepmouli](https://github.com/pradeepmouli)! - Fix detector false positives: filter self-references, placeholder URLs, and low-confidence entries
+
 ## 0.1.13
 
 ### Patch Changes
