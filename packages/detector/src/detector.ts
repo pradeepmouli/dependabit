@@ -87,7 +87,16 @@ export class Detector {
       /your-?username/i, // template placeholder: your-username or yourusername
       /you\/your-project/i, // template: you/your-project
       /github\.com\/YOUR-?USERNAME/i, // GitHub template: YOUR-USERNAME
-      /github\.com\/your-?username/i // GitHub template: your-username
+      /github\.com\/your-?username/i, // GitHub template: your-username
+      // Self-reference: skip if URL matches current repository
+      ...(this.options.repoOwner && this.options.repoName
+        ? [
+            new RegExp(
+              `github\\.com\\/${this.options.repoOwner}\\/${this.options.repoName}(?:\\.git)?(?:[/?#]|$)`,
+              'i'
+            )
+          ]
+        : [])
     ];
   }
 
