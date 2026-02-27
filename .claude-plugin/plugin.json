@@ -1,0 +1,13 @@
+{
+  "name": "dependabit",
+  "version": "0.1.0",
+  "description": "AI-powered tracker for external informational dependencies. Bootstrap Dependabit in any repo to discover, track, and monitor documentation sites, research papers, API schemas, and reference implementations.",
+  "author": {
+    "name": "Pradeep Mouli",
+    "url": "https://github.com/pradeepmouli"
+  },
+  "homepage": "https://github.com/pradeepmouli/dependabit",
+  "repository": "https://github.com/pradeepmouli/dependabit",
+  "license": "MIT",
+  "keywords": ["dependencies", "monitoring", "documentation", "ai", "github-actions"]
+}
