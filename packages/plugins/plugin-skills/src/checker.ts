@@ -8,6 +8,8 @@
  */
 
 import crypto from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import { basename } from 'node:path';
 
 /**
  * Skills checker configuration
@@ -23,6 +25,21 @@ export interface SkillsConfig {
   skillName?: string;
   /** GitHub API token for higher rate limits */
   apiToken?: string;
+  /** Optional local path to a skills lock file (e.g. skills-lock.json) */
+  lockFilePath?: string;
+  /** Optional skill key to select from lock file entries */
+  lockSkillKey?: string;
+}
+
+interface SkillsLockEntry {
+  source: string;
+  sourceType?: string;
+  computedHash?: string;
+}
+
+interface SkillsLockFile {
+  version?: number;
+  skills: Record<string, SkillsLockEntry>;
 }
 
 /**
@@ -73,6 +90,102 @@ export interface SkillChangeDetection {
  */
 export class SkillsChecker {
   private githubApiUrl = 'https://api.github.com';
+
+  private isSkillsLockPath(input: string): boolean {
+    const value = input.toLowerCase();
+    return value.endsWith('skills-lock.json') || value.includes('skills-lock.json#');
+  }
+
+  private extractLockSkillKey(url: string): string | undefined {
+    const hashIndex = url.indexOf('#');
+    if (hashIndex === -1) {
+      return undefined;
+    }
+
+    const fragment = url.substring(hashIndex + 1).trim();
+    return fragment.length > 0 ? fragment : undefined;
+  }
+
+  private normalizeLockPath(url: string): string {
+    const hashIndex = url.indexOf('#');
+    return hashIndex === -1 ? url : url.substring(0, hashIndex);
+  }
+
+  private async readSkillsLock(path: string): Promise<SkillsLockFile> {
+    const content = await readFile(path, 'utf-8');
+    const parsed = JSON.parse(content) as Partial<SkillsLockFile>;
+
+    if (
+      !parsed ||
+      typeof parsed !== 'object' ||
+      !parsed.skills ||
+      typeof parsed.skills !== 'object'
+    ) {
+      throw new Error(`Invalid skills lock file format: ${path}`);
+    }
+
+    return parsed as SkillsLockFile;
+  }
+
+  private resolveLockSkill(
+    lock: SkillsLockFile,
+    lockPath: string,
+    requestedKey?: string
+  ): { key: string; entry: SkillsLockEntry } {
+    const keys = Object.keys(lock.skills);
+
+    if (keys.length === 0) {
+      throw new Error(`No skills found in lock file: ${lockPath}`);
+    }
+
+    if (requestedKey) {
+      const entry = lock.skills[requestedKey];
+      if (!entry) {
+        throw new Error(
+          `Skill '${requestedKey}' not found in ${lockPath}. Available skills: ${keys.join(', ')}`
+        );
+      }
+      return { key: requestedKey, entry };
+    }
+
+    if (keys.length > 1) {
+      throw new Error(
+        `Multiple skills found in ${lockPath}. Specify one via lockSkillKey, skillName, or '#<skill-key>' in the URL.`
+      );
+    }
+
+    const key = keys[0]!;
+    return { key, entry: lock.skills[key]! };
+  }
+
+  private buildSnapshotFromLock(
+    lockPath: string,
+    skillKey: string,
+    entry: SkillsLockEntry
+  ): SkillSnapshot {
+    const parsed = this.parseSkillUrl(entry.source);
+    const owner = parsed?.owner || 'unknown';
+    const repo = parsed?.repo || 'unknown';
+    const skillName = parsed?.skillName || skillKey;
+    const computedHash =
+      entry.computedHash || crypto.createHash('sha256').update(entry.source).digest('hex');
+
+    return {
+      version: computedHash.substring(0, 8),
+      stateHash: computedHash,
+      fetchedAt: new Date(),
+      metadata: {
+        owner,
+        repo,
+        skillName,
+        treeSha: computedHash,
+        lastCommitSha: computedHash.substring(0, 40),
+        lastCommitDate: new Date().toISOString(),
+        fileCount: 1,
+        skillsShUrl: `skills-lock://${basename(lockPath)}#${skillKey}`
+      }
+    };
+  }
 
   /**
    * Parse a skills.sh URL or GitHub URL into owner/repo/skill components
@@ -227,6 +340,20 @@ export class SkillsChecker {
    */
   async fetch(config: SkillsConfig): Promise<SkillSnapshot> {
     const { url, owner: providedOwner, repo: providedRepo, skillName: providedSkill } = config;
+
+    const lockPath =
+      config.lockFilePath || (this.isSkillsLockPath(url) ? this.normalizeLockPath(url) : null);
+    if (lockPath) {
+      try {
+        const lock = await this.readSkillsLock(lockPath);
+        const lockSkillKey =
+          config.lockSkillKey || providedSkill || this.extractLockSkillKey(url) || undefined;
+        const { key, entry } = this.resolveLockSkill(lock, lockPath, lockSkillKey);
+        return this.buildSnapshotFromLock(lockPath, key, entry);
+      } catch (error) {
+        throw new Error(`Failed to fetch skill info from lock file: ${(error as Error).message}`);
+      }
+    }
 
     // Parse URL or use provided values
     const parsed = this.parseSkillUrl(url);
