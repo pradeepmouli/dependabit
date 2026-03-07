@@ -135,6 +135,22 @@ export class SkillsChecker {
       throw new Error(`Invalid skills lock file format: ${path}`);
     }
 
+    // Validate each skill entry to avoid confusing downstream runtime errors.
+    const skills = (parsed as any).skills as Record<string, unknown>;
+    for (const [key, rawEntry] of Object.entries(skills)) {
+      if (!rawEntry || typeof rawEntry !== 'object') {
+        throw new Error(
+          `Invalid entry for skill '${key}' in skills lock file: ${path} (expected an object).`
+        );
+      }
+
+      const entry = rawEntry as { source?: unknown };
+      if (typeof entry.source !== 'string' || entry.source.trim() === '') {
+        throw new Error(
+          `Invalid or missing 'source' for skill '${key}' in skills lock file: ${path} (expected non-empty string).`
+        );
+      }
+    }
     return parsed as SkillsLockFile;
   }
 
