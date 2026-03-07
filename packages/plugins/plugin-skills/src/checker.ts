@@ -88,6 +88,11 @@ export interface SkillChangeDetection {
 /**
  * Skills.sh checker implementation
  */
+
+function isValidSha256(h: string): boolean {
+  return /^[0-9a-f]{64}$/i.test(h);
+}
+
 export class SkillsChecker {
   private githubApiUrl = 'https://api.github.com';
 
@@ -180,7 +185,9 @@ export class SkillsChecker {
     const repo = parsed.repo;
     const skillName = parsed.skillName || skillKey;
     const computedHash =
-      entry.computedHash || crypto.createHash('sha256').update(entry.source).digest('hex');
+      entry.computedHash && isValidSha256(entry.computedHash)
+        ? entry.computedHash
+        : crypto.createHash('sha256').update(entry.source).digest('hex');
 
     return {
       version: computedHash.substring(0, 8),
