@@ -59,7 +59,7 @@ describe('Manifest Operations Tests', () => {
       const invalid = { version: '2.0.0' } as any;
       const path = join(TEST_DIR, 'manifest.json');
 
-      await expect(writeManifest(path, invalid)).rejects.toThrow();
+      await expect(writeManifest(path, invalid, { strict: true })).rejects.toThrow();
     });
   });
 
