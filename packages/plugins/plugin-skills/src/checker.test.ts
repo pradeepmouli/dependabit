@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -116,6 +117,75 @@ describe('SkillsChecker lock file support', () => {
       expect(snapshot.version).toBe('bbbbbbbb');
       expect(snapshot.metadata.repo).toBe('repo-b');
       expect(snapshot.metadata.skillName).toBe('beta');
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  it('falls back to sha256(source) when computedHash is malformed', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'skills-lock-test-'));
+    try {
+      const lockPath = join(dir, 'skills-lock.json');
+
+      await writeFile(
+        lockPath,
+        JSON.stringify(
+          {
+            version: 1,
+            skills: {
+              alpha: {
+                source: 'org/repo-a',
+                sourceType: 'github',
+                computedHash: 'not-a-hash'
+              }
+            }
+          },
+          null,
+          2
+        )
+      );
+
+      const checker = new SkillsChecker();
+      const snapshot = await checker.fetch({ url: lockPath });
+
+      const expectedHash = crypto.createHash('sha256').update('org/repo-a').digest('hex');
+      expect(snapshot.stateHash).toBe(expectedHash);
+      expect(snapshot.version).toBe(expectedHash.substring(0, 8));
+      expect(snapshot.metadata.treeSha).toBe(expectedHash);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  it('falls back to sha256(source) when computedHash is absent', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'skills-lock-test-'));
+    try {
+      const lockPath = join(dir, 'skills-lock.json');
+
+      await writeFile(
+        lockPath,
+        JSON.stringify(
+          {
+            version: 1,
+            skills: {
+              alpha: {
+                source: 'org/repo-a',
+                sourceType: 'github'
+              }
+            }
+          },
+          null,
+          2
+        )
+      );
+
+      const checker = new SkillsChecker();
+      const snapshot = await checker.fetch({ url: lockPath });
+
+      const expectedHash = crypto.createHash('sha256').update('org/repo-a').digest('hex');
+      expect(snapshot.stateHash).toBe(expectedHash);
+      expect(snapshot.version).toBe(expectedHash.substring(0, 8));
+      expect(snapshot.metadata.treeSha).toBe(expectedHash);
     } finally {
       await rm(dir, { recursive: true, force: true });
     }
