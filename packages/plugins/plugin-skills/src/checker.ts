@@ -170,9 +170,15 @@ export class SkillsChecker {
     entry: SkillsLockEntry
   ): SkillSnapshot {
     const parsed = this.parseSkillUrl(entry.source);
-    const owner = parsed?.owner || 'unknown';
-    const repo = parsed?.repo || 'unknown';
-    const skillName = parsed?.skillName || skillKey;
+    if (!parsed || !parsed.owner || !parsed.repo) {
+      throw new Error(
+        `Invalid skill source '${entry.source}' for skill '${skillKey}' in lock file ${lockPath}. ` +
+          `Expected a supported skills.sh or GitHub URL.`
+      );
+    }
+    const owner = parsed.owner;
+    const repo = parsed.repo;
+    const skillName = parsed.skillName || skillKey;
     const computedHash =
       entry.computedHash || crypto.createHash('sha256').update(entry.source).digest('hex');
 
