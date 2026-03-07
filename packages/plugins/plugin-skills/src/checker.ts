@@ -379,14 +379,20 @@ export class SkillsChecker {
     const lockPath =
       config.lockFilePath || (this.isSkillsLockPath(url) ? this.normalizeLockPath(url) : null);
     if (lockPath) {
+      const lockSkillKey =
+        config.lockSkillKey || providedSkill || this.extractLockSkillKey(url) || undefined;
       try {
         const lock = await this.readSkillsLock(lockPath);
-        const lockSkillKey =
-          config.lockSkillKey || providedSkill || this.extractLockSkillKey(url) || undefined;
         const { key, entry } = this.resolveLockSkill(lock, lockPath, lockSkillKey);
         return this.buildSnapshotFromLock(lockPath, key, entry);
       } catch (error) {
-        throw new Error(`Failed to fetch skill info from lock file: ${(error as Error).message}`);
+        const underlyingError = error instanceof Error ? error : undefined;
+        throw new Error(
+          `Failed to fetch skill info from lock file '${lockPath}'` +
+            (lockSkillKey ? ` for skill key '${lockSkillKey}'` : '') +
+            (underlyingError ? `: ${underlyingError.message}` : ''),
+          underlyingError ? { cause: underlyingError } : undefined
+        );
       }
     }
 
