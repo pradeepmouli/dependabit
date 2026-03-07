@@ -92,7 +92,13 @@ export class SkillsChecker {
   private githubApiUrl = 'https://api.github.com';
 
   private isSkillsLockPath(input: string): boolean {
-    const value = input.toLowerCase();
+    const value = input.toLowerCase().trim();
+
+    // Treat only local filesystem-like paths as lock files.
+    // Explicitly exclude HTTP(S) URLs so we don't try to read them via fs.
+    if (value.startsWith('http://') || value.startsWith('https://')) {
+      return false;
+    }
     return value.endsWith('skills-lock.json') || value.includes('skills-lock.json#');
   }
 
