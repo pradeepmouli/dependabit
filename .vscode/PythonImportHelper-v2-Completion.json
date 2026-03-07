@@ -1,0 +1,435 @@
+[
+  {
+    "label": "sys",
+    "kind": 6,
+    "isExtraImport": true,
+    "importPath": "sys",
+    "description": "sys",
+    "detail": "sys",
+    "documentation": {}
+  },
+  {
+    "label": "Path",
+    "importPath": "pathlib",
+    "description": "pathlib",
+    "isExtraImport": true,
+    "detail": "pathlib",
+    "documentation": {}
+  },
+  {
+    "label": "Path",
+    "importPath": "pathlib",
+    "description": "pathlib",
+    "isExtraImport": true,
+    "detail": "pathlib",
+    "documentation": {}
+  },
+  {
+    "label": "Path",
+    "importPath": "pathlib",
+    "description": "pathlib",
+    "isExtraImport": true,
+    "detail": "pathlib",
+    "documentation": {}
+  },
+  {
+    "label": "Path",
+    "importPath": "pathlib",
+    "description": "pathlib",
+    "isExtraImport": true,
+    "detail": "pathlib",
+    "documentation": {}
+  },
+  {
+    "label": "Path",
+    "importPath": "pathlib",
+    "description": "pathlib",
+    "isExtraImport": true,
+    "detail": "pathlib",
+    "documentation": {}
+  },
+  {
+    "label": "Path",
+    "importPath": "pathlib",
+    "description": "pathlib",
+    "isExtraImport": true,
+    "detail": "pathlib",
+    "documentation": {}
+  },
+  {
+    "label": "zipfile",
+    "kind": 6,
+    "isExtraImport": true,
+    "importPath": "zipfile",
+    "description": "zipfile",
+    "detail": "zipfile",
+    "documentation": {}
+  },
+  {
+    "label": "validate_skill",
+    "importPath": "quick_validate",
+    "description": "quick_validate",
+    "isExtraImport": true,
+    "detail": "quick_validate",
+    "documentation": {}
+  },
+  {
+    "label": "validate_skill",
+    "importPath": "quick_validate",
+    "description": "quick_validate",
+    "isExtraImport": true,
+    "detail": "quick_validate",
+    "documentation": {}
+  },
+  {
+    "label": "os",
+    "kind": 6,
+    "isExtraImport": true,
+    "importPath": "os",
+    "description": "os",
+    "detail": "os",
+    "documentation": {}
+  },
+  {
+    "label": "re",
+    "kind": 6,
+    "isExtraImport": true,
+    "importPath": "re",
+    "description": "re",
+    "detail": "re",
+    "documentation": {}
+  },
+  {
+    "label": "yaml",
+    "kind": 6,
+    "isExtraImport": true,
+    "importPath": "yaml",
+    "description": "yaml",
+    "detail": "yaml",
+    "documentation": {}
+  },
+  {
+    "label": "json",
+    "kind": 6,
+    "isExtraImport": true,
+    "importPath": "json",
+    "description": "json",
+    "detail": "json",
+    "documentation": {}
+  },
+  {
+    "label": "main",
+    "kind": 2,
+    "importPath": ".agents.skills.skill-creator.scripts.init_skill",
+    "description": ".agents.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "def main():\n    print(\"This is an example script for {skill_name}\")\n    # TODO: Add actual script logic here\n    # This could be data processing, file conversion, API calls, etc.\nif __name__ == \"__main__\":\n    main()\n'''\nEXAMPLE_REFERENCE = \"\"\"# Reference Documentation for {skill_title}\nThis is a placeholder for detailed reference documentation.\nReplace with actual reference content or delete if not needed.",
+    "detail": ".agents.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "title_case_skill_name",
+    "kind": 2,
+    "importPath": ".agents.skills.skill-creator.scripts.init_skill",
+    "description": ".agents.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "def title_case_skill_name(skill_name):\n    \"\"\"Convert hyphenated skill name to Title Case for display.\"\"\"\n    return ' '.join(word.capitalize() for word in skill_name.split('-'))\ndef init_skill(skill_name, path):\n    \"\"\"\n    Initialize a new skill directory with template SKILL.md.\n    Args:\n        skill_name: Name of the skill\n        path: Path where the skill directory should be created\n    Returns:",
+    "detail": ".agents.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "init_skill",
+    "kind": 2,
+    "importPath": ".agents.skills.skill-creator.scripts.init_skill",
+    "description": ".agents.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "def init_skill(skill_name, path):\n    \"\"\"\n    Initialize a new skill directory with template SKILL.md.\n    Args:\n        skill_name: Name of the skill\n        path: Path where the skill directory should be created\n    Returns:\n        Path to created skill directory, or None if error\n    \"\"\"\n    # Determine skill directory path",
+    "detail": ".agents.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "main",
+    "kind": 2,
+    "importPath": ".agents.skills.skill-creator.scripts.init_skill",
+    "description": ".agents.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "def main():\n    if len(sys.argv) < 4 or sys.argv[2] != '--path':\n        print(\"Usage: init_skill.py <skill-name> --path <path>\")\n        print(\"\\nSkill name requirements:\")\n        print(\"  - Hyphen-case identifier (e.g., 'data-analyzer')\")\n        print(\"  - Lowercase letters, digits, and hyphens only\")\n        print(\"  - Max 40 characters\")\n        print(\"  - Must match directory name exactly\")\n        print(\"\\nExamples:\")\n        print(\"  init_skill.py my-new-skill --path skills/public\")",
+    "detail": ".agents.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "SKILL_TEMPLATE",
+    "kind": 5,
+    "importPath": ".agents.skills.skill-creator.scripts.init_skill",
+    "description": ".agents.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "SKILL_TEMPLATE = \"\"\"---\nname: {skill_name}\ndescription: [TODO: Complete and informative explanation of what the skill does and when to use it. Include WHEN to use this skill - specific scenarios, file types, or tasks that trigger it.]\n---\n# {skill_title}\n## Overview\n[TODO: 1-2 sentences explaining what this skill enables]\n## Structuring This Skill\n[TODO: Choose the structure that best fits this skill's purpose. Common patterns:\n**1. Workflow-Based** (best for sequential processes)",
+    "detail": ".agents.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "EXAMPLE_SCRIPT",
+    "kind": 5,
+    "importPath": ".agents.skills.skill-creator.scripts.init_skill",
+    "description": ".agents.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "EXAMPLE_SCRIPT = '''#!/usr/bin/env python3\n\"\"\"\nExample helper script for {skill_name}\nThis is a placeholder script that can be executed directly.\nReplace with actual implementation or delete if not needed.\nExample real scripts from other skills:\n- pdf/scripts/fill_fillable_fields.py - Fills PDF form fields\n- pdf/scripts/convert_pdf_to_images.py - Converts PDF pages to images\n\"\"\"\ndef main():",
+    "detail": ".agents.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "EXAMPLE_REFERENCE",
+    "kind": 5,
+    "importPath": ".agents.skills.skill-creator.scripts.init_skill",
+    "description": ".agents.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "EXAMPLE_REFERENCE = \"\"\"# Reference Documentation for {skill_title}\nThis is a placeholder for detailed reference documentation.\nReplace with actual reference content or delete if not needed.\nExample real reference docs from other skills:\n- product-management/references/communication.md - Comprehensive guide for status updates\n- product-management/references/context_building.md - Deep-dive on gathering context\n- bigquery/references/ - API references and query examples\n## When Reference Docs Are Useful\nReference docs are ideal for:\n- Comprehensive API documentation",
+    "detail": ".agents.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "EXAMPLE_ASSET",
+    "kind": 5,
+    "importPath": ".agents.skills.skill-creator.scripts.init_skill",
+    "description": ".agents.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "EXAMPLE_ASSET = \"\"\"# Example Asset File\nThis placeholder represents where asset files would be stored.\nReplace with actual asset files (templates, images, fonts, etc.) or delete if not needed.\nAsset files are NOT intended to be loaded into context, but rather used within\nthe output Claude produces.\nExample asset files from other skills:\n- Brand guidelines: logo.png, slides_template.pptx\n- Frontend builder: hello-world/ directory with HTML/React boilerplate\n- Typography: custom-font.ttf, font-family.woff2\n- Data: sample_data.csv, test_dataset.json",
+    "detail": ".agents.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "package_skill",
+    "kind": 2,
+    "importPath": ".agents.skills.skill-creator.scripts.package_skill",
+    "description": ".agents.skills.skill-creator.scripts.package_skill",
+    "peekOfCode": "def package_skill(skill_path, output_dir=None):\n    \"\"\"\n    Package a skill folder into a .skill file.\n    Args:\n        skill_path: Path to the skill folder\n        output_dir: Optional output directory for the .skill file (defaults to current directory)\n    Returns:\n        Path to the created .skill file, or None if error\n    \"\"\"\n    skill_path = Path(skill_path).resolve()",
+    "detail": ".agents.skills.skill-creator.scripts.package_skill",
+    "documentation": {}
+  },
+  {
+    "label": "main",
+    "kind": 2,
+    "importPath": ".agents.skills.skill-creator.scripts.package_skill",
+    "description": ".agents.skills.skill-creator.scripts.package_skill",
+    "peekOfCode": "def main():\n    if len(sys.argv) < 2:\n        print(\"Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]\")\n        print(\"\\nExample:\")\n        print(\"  python utils/package_skill.py skills/public/my-skill\")\n        print(\"  python utils/package_skill.py skills/public/my-skill ./dist\")\n        sys.exit(1)\n    skill_path = sys.argv[1]\n    output_dir = sys.argv[2] if len(sys.argv) > 2 else None\n    print(f\"📦 Packaging skill: {skill_path}\")",
+    "detail": ".agents.skills.skill-creator.scripts.package_skill",
+    "documentation": {}
+  },
+  {
+    "label": "validate_skill",
+    "kind": 2,
+    "importPath": ".agents.skills.skill-creator.scripts.quick_validate",
+    "description": ".agents.skills.skill-creator.scripts.quick_validate",
+    "peekOfCode": "def validate_skill(skill_path):\n    \"\"\"Basic validation of a skill\"\"\"\n    skill_path = Path(skill_path)\n    # Check SKILL.md exists\n    skill_md = skill_path / 'SKILL.md'\n    if not skill_md.exists():\n        return False, \"SKILL.md not found\"\n    # Read and validate frontmatter\n    content = skill_md.read_text()\n    if not content.startswith('---'):",
+    "detail": ".agents.skills.skill-creator.scripts.quick_validate",
+    "documentation": {}
+  },
+  {
+    "label": "main",
+    "kind": 2,
+    "importPath": ".github.skills.skill-creator.scripts.init_skill",
+    "description": ".github.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "def main():\n    print(\"This is an example script for {skill_name}\")\n    # TODO: Add actual script logic here\n    # This could be data processing, file conversion, API calls, etc.\nif __name__ == \"__main__\":\n    main()\n'''\nEXAMPLE_REFERENCE = \"\"\"# Reference Documentation for {skill_title}\nThis is a placeholder for detailed reference documentation.\nReplace with actual reference content or delete if not needed.",
+    "detail": ".github.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "title_case_skill_name",
+    "kind": 2,
+    "importPath": ".github.skills.skill-creator.scripts.init_skill",
+    "description": ".github.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "def title_case_skill_name(skill_name):\n    \"\"\"Convert hyphenated skill name to Title Case for display.\"\"\"\n    return ' '.join(word.capitalize() for word in skill_name.split('-'))\ndef init_skill(skill_name, path):\n    \"\"\"\n    Initialize a new skill directory with template SKILL.md.\n    Args:\n        skill_name: Name of the skill\n        path: Path where the skill directory should be created\n    Returns:",
+    "detail": ".github.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "init_skill",
+    "kind": 2,
+    "importPath": ".github.skills.skill-creator.scripts.init_skill",
+    "description": ".github.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "def init_skill(skill_name, path):\n    \"\"\"\n    Initialize a new skill directory with template SKILL.md.\n    Args:\n        skill_name: Name of the skill\n        path: Path where the skill directory should be created\n    Returns:\n        Path to created skill directory, or None if error\n    \"\"\"\n    # Determine skill directory path",
+    "detail": ".github.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "main",
+    "kind": 2,
+    "importPath": ".github.skills.skill-creator.scripts.init_skill",
+    "description": ".github.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "def main():\n    if len(sys.argv) < 4 or sys.argv[2] != '--path':\n        print(\"Usage: init_skill.py <skill-name> --path <path>\")\n        print(\"\\nSkill name requirements:\")\n        print(\"  - Hyphen-case identifier (e.g., 'data-analyzer')\")\n        print(\"  - Lowercase letters, digits, and hyphens only\")\n        print(\"  - Max 40 characters\")\n        print(\"  - Must match directory name exactly\")\n        print(\"\\nExamples:\")\n        print(\"  init_skill.py my-new-skill --path skills/public\")",
+    "detail": ".github.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "SKILL_TEMPLATE",
+    "kind": 5,
+    "importPath": ".github.skills.skill-creator.scripts.init_skill",
+    "description": ".github.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "SKILL_TEMPLATE = \"\"\"---\nname: {skill_name}\ndescription: [TODO: Complete and informative explanation of what the skill does and when to use it. Include WHEN to use this skill - specific scenarios, file types, or tasks that trigger it.]\n---\n# {skill_title}\n## Overview\n[TODO: 1-2 sentences explaining what this skill enables]\n## Structuring This Skill\n[TODO: Choose the structure that best fits this skill's purpose. Common patterns:\n**1. Workflow-Based** (best for sequential processes)",
+    "detail": ".github.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "EXAMPLE_SCRIPT",
+    "kind": 5,
+    "importPath": ".github.skills.skill-creator.scripts.init_skill",
+    "description": ".github.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "EXAMPLE_SCRIPT = '''#!/usr/bin/env python3\n\"\"\"\nExample helper script for {skill_name}\nThis is a placeholder script that can be executed directly.\nReplace with actual implementation or delete if not needed.\nExample real scripts from other skills:\n- pdf/scripts/fill_fillable_fields.py - Fills PDF form fields\n- pdf/scripts/convert_pdf_to_images.py - Converts PDF pages to images\n\"\"\"\ndef main():",
+    "detail": ".github.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "EXAMPLE_REFERENCE",
+    "kind": 5,
+    "importPath": ".github.skills.skill-creator.scripts.init_skill",
+    "description": ".github.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "EXAMPLE_REFERENCE = \"\"\"# Reference Documentation for {skill_title}\nThis is a placeholder for detailed reference documentation.\nReplace with actual reference content or delete if not needed.\nExample real reference docs from other skills:\n- product-management/references/communication.md - Comprehensive guide for status updates\n- product-management/references/context_building.md - Deep-dive on gathering context\n- bigquery/references/ - API references and query examples\n## When Reference Docs Are Useful\nReference docs are ideal for:\n- Comprehensive API documentation",
+    "detail": ".github.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "EXAMPLE_ASSET",
+    "kind": 5,
+    "importPath": ".github.skills.skill-creator.scripts.init_skill",
+    "description": ".github.skills.skill-creator.scripts.init_skill",
+    "peekOfCode": "EXAMPLE_ASSET = \"\"\"# Example Asset File\nThis placeholder represents where asset files would be stored.\nReplace with actual asset files (templates, images, fonts, etc.) or delete if not needed.\nAsset files are NOT intended to be loaded into context, but rather used within\nthe output Claude produces.\nExample asset files from other skills:\n- Brand guidelines: logo.png, slides_template.pptx\n- Frontend builder: hello-world/ directory with HTML/React boilerplate\n- Typography: custom-font.ttf, font-family.woff2\n- Data: sample_data.csv, test_dataset.json",
+    "detail": ".github.skills.skill-creator.scripts.init_skill",
+    "documentation": {}
+  },
+  {
+    "label": "package_skill",
+    "kind": 2,
+    "importPath": ".github.skills.skill-creator.scripts.package_skill",
+    "description": ".github.skills.skill-creator.scripts.package_skill",
+    "peekOfCode": "def package_skill(skill_path, output_dir=None):\n    \"\"\"\n    Package a skill folder into a .skill file.\n    Args:\n        skill_path: Path to the skill folder\n        output_dir: Optional output directory for the .skill file (defaults to current directory)\n    Returns:\n        Path to the created .skill file, or None if error\n    \"\"\"\n    skill_path = Path(skill_path).resolve()",
+    "detail": ".github.skills.skill-creator.scripts.package_skill",
+    "documentation": {}
+  },
+  {
+    "label": "main",
+    "kind": 2,
+    "importPath": ".github.skills.skill-creator.scripts.package_skill",
+    "description": ".github.skills.skill-creator.scripts.package_skill",
+    "peekOfCode": "def main():\n    if len(sys.argv) < 2:\n        print(\"Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]\")\n        print(\"\\nExample:\")\n        print(\"  python utils/package_skill.py skills/public/my-skill\")\n        print(\"  python utils/package_skill.py skills/public/my-skill ./dist\")\n        sys.exit(1)\n    skill_path = sys.argv[1]\n    output_dir = sys.argv[2] if len(sys.argv) > 2 else None\n    print(f\"📦 Packaging skill: {skill_path}\")",
+    "detail": ".github.skills.skill-creator.scripts.package_skill",
+    "documentation": {}
+  },
+  {
+    "label": "validate_skill",
+    "kind": 2,
+    "importPath": ".github.skills.skill-creator.scripts.quick_validate",
+    "description": ".github.skills.skill-creator.scripts.quick_validate",
+    "peekOfCode": "def validate_skill(skill_path):\n    \"\"\"Basic validation of a skill\"\"\"\n    skill_path = Path(skill_path)\n    # Check SKILL.md exists\n    skill_md = skill_path / 'SKILL.md'\n    if not skill_md.exists():\n        return False, \"SKILL.md not found\"\n    # Read and validate frontmatter\n    content = skill_md.read_text()\n    if not content.startswith('---'):",
+    "detail": ".github.skills.skill-creator.scripts.quick_validate",
+    "documentation": {}
+  },
+  {
+    "label": "_Known",
+    "kind": 6,
+    "importPath": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0",
+    "detail": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "_String",
+    "kind": 6,
+    "importPath": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0\n    for _ in value:\n        keys.append(i)\n        i += 1\n    return keys",
+    "detail": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "parse",
+    "kind": 2,
+    "importPath": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+    "detail": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "stringify",
+    "kind": 2,
+    "importPath": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+    "detail": "node_modules..pnpm.@vitest+ui@4.0.18_vitest@4.0.18.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "_Known",
+    "kind": 6,
+    "importPath": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0",
+    "detail": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "_String",
+    "kind": 6,
+    "importPath": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0\n    for _ in value:\n        keys.append(i)\n        i += 1\n    return keys",
+    "detail": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "parse",
+    "kind": 2,
+    "importPath": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+    "detail": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "stringify",
+    "kind": 2,
+    "importPath": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+    "detail": "node_modules..pnpm.flatted@3.3.3.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "_Known",
+    "kind": 6,
+    "importPath": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0",
+    "detail": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "_String",
+    "kind": 6,
+    "importPath": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0\n    for _ in value:\n        keys.append(i)\n        i += 1\n    return keys",
+    "detail": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "parse",
+    "kind": 2,
+    "importPath": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+    "detail": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "stringify",
+    "kind": 2,
+    "importPath": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "description": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+    "detail": "node_modules..pnpm.node_modules.flatted.python.flatted",
+    "documentation": {}
+  },
+  {
+    "label": "TransformerModel",
+    "kind": 6,
+    "importPath": "test-fixtures.sample-repo.src.ml_model",
+    "description": "test-fixtures.sample-repo.src.ml_model",
+    "peekOfCode": "class TransformerModel:\n    \"\"\"\n    Implementation following the paper:\n    https://arxiv.org/abs/1706.03762 (Attention Is All You Need)\n    \"\"\"\n    def __init__(self, vocab_size, d_model=512):\n        # Model initialization\n        # Reference: https://pytorch.org/docs/stable/nn.html\n        self.d_model = d_model\n        self.vocab_size = vocab_size",
+    "detail": "test-fixtures.sample-repo.src.ml_model",
+    "documentation": {}
+  }
+]
