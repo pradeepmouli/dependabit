@@ -121,8 +121,8 @@ export class SkillsChecker {
   private normalizeLockPath(url: string): string {
     const hashIndex = url.indexOf('#');
     const path = hashIndex === -1 ? url : url.substring(0, hashIndex);
-    // Convert file:// URLs to filesystem paths for readFile() compatibility
-    if (path.startsWith('file://')) {
+    // Convert file:// URLs (case-insensitive scheme) to filesystem paths for readFile() compatibility
+    if (/^file:\/\//i.test(path)) {
       return fileURLToPath(path);
     }
     return path;
