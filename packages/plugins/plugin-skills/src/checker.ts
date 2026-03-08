@@ -123,7 +123,14 @@ export class SkillsChecker {
     const path = hashIndex === -1 ? url : url.substring(0, hashIndex);
     // Convert file:// URLs (case-insensitive scheme) to filesystem paths for readFile() compatibility
     if (/^file:\/\//i.test(path)) {
-      return fileURLToPath(path);
+      try {
+        return fileURLToPath(path);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        throw new Error(
+          `Failed to normalize skills lock path '${path}' as file URL: ${message}`
+        );
+      }
     }
     return path;
   }
