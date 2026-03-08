@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { isValidEmail, createSuccessResponse, createErrorResponse, delay } from './index';
 
 describe('Core Utils', () => {
@@ -35,13 +35,26 @@ describe('Core Utils', () => {
   });
 
   describe('delay', () => {
-    it('should delay execution', async () => {
-      const start = Date.now();
-      await delay(100);
-      const elapsed = Date.now() - start;
+    afterEach(() => {
+      vi.useRealTimers();
+    });
 
-      expect(elapsed).toBeGreaterThanOrEqual(100);
-      expect(elapsed).toBeLessThan(200); // Allow some tolerance
+    it('should delay execution', async () => {
+      vi.useFakeTimers();
+
+      let resolved = false;
+      const promise = delay(100).then(() => {
+        resolved = true;
+      });
+
+      // Flush microtasks - promise should still be pending before timers advance
+      await Promise.resolve();
+      expect(resolved).toBe(false);
+
+      vi.advanceTimersByTime(100);
+      await promise;
+
+      expect(resolved).toBe(true);
     });
   });
 });

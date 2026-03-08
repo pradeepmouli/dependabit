@@ -296,8 +296,3 @@ export async function run(): Promise<void> {
     core.setFailed(error instanceof Error ? error.message : String(error));
   }
 }
-
-// Run the action
-if (import.meta.url === `file://${process.argv[1]}`) {
-  run();
-}

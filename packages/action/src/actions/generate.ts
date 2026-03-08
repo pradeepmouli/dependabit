@@ -212,8 +212,3 @@ async function createManifest(
 
   return manifest;
 }
-
-// Run the action
-if (import.meta.url === `file://${process.argv[1]}`) {
-  run();
-}

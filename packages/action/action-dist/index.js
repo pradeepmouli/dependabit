@@ -58706,10 +58706,6 @@ async function createManifest(repoPath, dependencies, llmProvider) {
   };
   return manifest;
 }
-// Run the action
-if (import.meta.url === `file://${process.argv[1]}`) {
-  run();
-}
 //# sourceMappingURL=generate.js.map
 // CONCATENATED MODULE: ../../node_modules/.pnpm/universal-user-agent@7.0.3/node_modules/universal-user-agent/index.js
 function getUserAgent() {
@@ -67241,10 +67237,6 @@ async function update_run() {
     });
     setFailed(error instanceof Error ? error.message : String(error));
   }
-}
-// Run the action
-if (import.meta.url === `file://${process.argv[1]}`) {
-  update_run();
 }
 //# sourceMappingURL=update.js.map
 // CONCATENATED MODULE: ./dist/actions/validate.js
