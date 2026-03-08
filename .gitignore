@@ -12,3 +12,4 @@ coverage/
 .pnpm-debug.log*
 *.tsbuildinfo
 .playwright-mcp/
+.vscode/PythonImportHelper-v2-Completion.json

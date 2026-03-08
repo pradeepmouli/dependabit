@@ -10,6 +10,7 @@
 import crypto from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { basename } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 /**
  * Skills checker configuration
@@ -119,7 +120,19 @@ export class SkillsChecker {
 
   private normalizeLockPath(url: string): string {
     const hashIndex = url.indexOf('#');
-    return hashIndex === -1 ? url : url.substring(0, hashIndex);
+    const path = hashIndex === -1 ? url : url.substring(0, hashIndex);
+    // Convert file:// URLs (case-insensitive scheme) to filesystem paths for readFile() compatibility
+    if (/^file:\/\//i.test(path)) {
+      try {
+        return fileURLToPath(path);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        throw new Error(
+          `Failed to normalize skills lock path '${path}' as file URL: ${message}`
+        );
+      }
+    }
+    return path;
   }
 
   private async readSkillsLock(path: string): Promise<SkillsLockFile> {

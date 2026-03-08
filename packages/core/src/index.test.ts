@@ -42,12 +42,19 @@ describe('Core Utils', () => {
     it('should delay execution', async () => {
       vi.useFakeTimers();
 
-      const promise = delay(100);
+      let resolved = false;
+      const promise = delay(100).then(() => {
+        resolved = true;
+      });
+
+      // Flush microtasks - promise should still be pending before timers advance
+      await Promise.resolve();
+      expect(resolved).toBe(false);
+
       vi.advanceTimersByTime(100);
       await promise;
 
-      // If we reach here the promise resolved after exactly 100ms of fake time
-      expect(true).toBe(true);
+      expect(resolved).toBe(true);
     });
   });
 });
