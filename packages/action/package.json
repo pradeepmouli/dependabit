@@ -16,6 +16,12 @@
       "default": "./dist/index.js"
     }
   },
+  "files": [
+    "dist/",
+    "action.yml",
+    "README.md",
+    "CHANGELOG.md"
+  ],
   "scripts": {
     "build": "tsgo -p tsconfig.json",
     "build:action": "tsgo -p tsconfig.json && ncc build dist/index.js -o action-dist --source-map --license licenses.txt",
@@ -24,7 +30,7 @@
     "type-check": "tsgo --noEmit -p tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
     "@actions/core": "^3.0.0",

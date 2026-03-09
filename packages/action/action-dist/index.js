@@ -809,13 +809,10 @@ import { createRequire as __WEBPACK_EXTERNAL_createRequire } from 'module';
           }
 
           statusCounts() {
-            return this.counts.reduce(
-              (acc, v, i) => {
-                acc[this.status[i]] = v;
-                return acc;
-              },
-              {}
-            );
+            return this.counts.reduce((acc, v, i) => {
+              acc[this.status[i]] = v;
+              return acc;
+            }, {});
           }
         };
 
