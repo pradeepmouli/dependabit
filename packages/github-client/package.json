@@ -22,8 +22,7 @@
     "dev": "tsx watch src/index.ts",
     "type-check": "tsgo --noEmit -p tsconfig.json",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "prepublishOnly": "npm run clean && npm run build"
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@actions/github": "^9.0.0",
