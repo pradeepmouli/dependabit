@@ -1,5 +1,11 @@
 # @dependabit/core
 
+## 0.1.14
+
+### Patch Changes
+
+- [#76](https://github.com/pradeepmouli/dependabit/pull/76) [`7952538`](https://github.com/pradeepmouli/dependabit/commit/7952538578b97472f9da49056db535abf8c6a26a) Thanks [@pradeepmouli](https://github.com/pradeepmouli)! - - test: trigger CI pipeline
+
 ## 0.1.13
 
 ### Patch Changes

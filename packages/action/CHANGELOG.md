@@ -1,5 +1,17 @@
 # @dependabit/action
 
+## 0.1.16
+
+### Patch Changes
+
+- [#76](https://github.com/pradeepmouli/dependabit/pull/76) [`7952538`](https://github.com/pradeepmouli/dependabit/commit/7952538578b97472f9da49056db535abf8c6a26a) Thanks [@pradeepmouli](https://github.com/pradeepmouli)! - - test: trigger CI pipeline
+
+- Updated dependencies [[`7952538`](https://github.com/pradeepmouli/dependabit/commit/7952538578b97472f9da49056db535abf8c6a26a)]:
+  - @dependabit/detector@0.1.16
+  - @dependabit/github-client@0.1.14
+  - @dependabit/manifest@0.1.14
+  - @dependabit/monitor@0.1.14
+
 ## 0.1.14
 
 ### Patch Changes
