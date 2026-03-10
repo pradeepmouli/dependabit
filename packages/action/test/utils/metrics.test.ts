@@ -173,10 +173,17 @@ describe('MetricsCalculator', () => {
         total: 100
       };
 
+      const now = new Date();
+      const dateStr = (daysAgo: number) => {
+        const d = new Date(now);
+        d.setDate(d.getDate() - daysAgo);
+        return d.toISOString().split('T')[0];
+      };
+
       const history = [
-        { date: '2026-02-01', falsePositiveRate: 0.15 },
-        { date: '2026-02-08', falsePositiveRate: 0.12 },
-        { date: '2026-02-15', falsePositiveRate: 0.1 }
+        { date: dateStr(21), falsePositiveRate: 0.15 },
+        { date: dateStr(14), falsePositiveRate: 0.12 },
+        { date: dateStr(7), falsePositiveRate: 0.1 }
       ];
 
       const report = calculator.generateReport(feedback, history);
