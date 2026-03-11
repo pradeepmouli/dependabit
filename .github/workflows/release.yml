@@ -46,20 +46,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '20'
-          cache: 'pnpm'
+      - name: Setup pnpm and Node.js
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Update npm for OIDC support
         run: npm install -g npm@latest
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm build
@@ -78,7 +69,7 @@ jobs:
 
       - name: Enable auto-merge on version PR
         if: steps.changesets.outputs.hasChangesets == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.RELEASE_TOKEN }}
           script: |
