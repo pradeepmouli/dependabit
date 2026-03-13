@@ -7,7 +7,7 @@ on:
     branches: [master, develop]
 
 jobs:
-  lint-and-test:
+  CI:
     name: CI
     runs-on: ubuntu-latest
 
