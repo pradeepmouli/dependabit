@@ -13,3 +13,4 @@ coverage/
 *.tsbuildinfo
 .playwright-mcp/
 .vscode/PythonImportHelper-v2-Completion.json
+docs/html/
