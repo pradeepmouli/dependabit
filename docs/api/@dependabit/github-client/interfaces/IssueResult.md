@@ -6,7 +6,7 @@
 
 # Interface: IssueResult
 
-Defined in: [packages/github-client/src/issues.ts:21](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/issues.ts#L21)
+Defined in: [packages/github-client/src/issues.ts:21](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/issues.ts#L21)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/issues.ts:21](https://github.com/pradeep
 
 > `optional` **assignees?**: `string`[]
 
-Defined in: [packages/github-client/src/issues.ts:25](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/issues.ts#L25)
+Defined in: [packages/github-client/src/issues.ts:25](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/issues.ts#L25)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/github-client/src/issues.ts:25](https://github.com/pradeep
 
 > **labels**: `string`[]
 
-Defined in: [packages/github-client/src/issues.ts:24](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/issues.ts#L24)
+Defined in: [packages/github-client/src/issues.ts:24](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/issues.ts#L24)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/github-client/src/issues.ts:24](https://github.com/pradeep
 
 > **number**: `number`
 
-Defined in: [packages/github-client/src/issues.ts:22](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/issues.ts#L22)
+Defined in: [packages/github-client/src/issues.ts:22](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/issues.ts#L22)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [packages/github-client/src/issues.ts:22](https://github.com/pradeep
 
 > **url**: `string`
 
-Defined in: [packages/github-client/src/issues.ts:23](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/issues.ts#L23)
+Defined in: [packages/github-client/src/issues.ts:23](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/issues.ts#L23)

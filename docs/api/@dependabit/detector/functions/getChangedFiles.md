@@ -8,7 +8,7 @@
 
 > **getChangedFiles**(`files`): [`ChangedFilesResult`](../interfaces/ChangedFilesResult.md)
 
-Defined in: [detector/src/diff-parser.ts:154](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/diff-parser.ts#L154)
+Defined in: [detector/src/diff-parser.ts:154](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/diff-parser.ts#L154)
 
 Identify files relevant for dependency analysis
 

@@ -8,7 +8,7 @@
 
 > **camelCase**(`str`): `string`
 
-Defined in: [string.ts:29](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/utils/src/string.ts#L29)
+Defined in: [string.ts:29](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/utils/src/string.ts#L29)
 
 Converts a string to camelCase
 

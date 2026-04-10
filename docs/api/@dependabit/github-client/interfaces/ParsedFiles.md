@@ -6,7 +6,7 @@
 
 # Interface: ParsedFiles
 
-Defined in: [packages/github-client/src/commits.ts:33](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L33)
+Defined in: [packages/github-client/src/commits.ts:33](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/commits.ts#L33)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/commits.ts:33](https://github.com/pradee
 
 > **added**: `string`[]
 
-Defined in: [packages/github-client/src/commits.ts:34](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L34)
+Defined in: [packages/github-client/src/commits.ts:34](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/commits.ts#L34)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/github-client/src/commits.ts:34](https://github.com/pradee
 
 > **modified**: `string`[]
 
-Defined in: [packages/github-client/src/commits.ts:35](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L35)
+Defined in: [packages/github-client/src/commits.ts:35](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/commits.ts#L35)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [packages/github-client/src/commits.ts:35](https://github.com/pradee
 
 > **removed**: `string`[]
 
-Defined in: [packages/github-client/src/commits.ts:36](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L36)
+Defined in: [packages/github-client/src/commits.ts:36](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/commits.ts#L36)

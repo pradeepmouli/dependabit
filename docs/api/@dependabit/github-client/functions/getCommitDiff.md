@@ -8,7 +8,7 @@
 
 > **getCommitDiff**(`client`, `owner`, `repo`, `sha`): `Promise`\<[`CommitDiff`](../interfaces/CommitDiff.md)\>
 
-Defined in: [packages/github-client/src/commits.ts:90](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L90)
+Defined in: [packages/github-client/src/commits.ts:90](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/commits.ts#L90)
 
 Get detailed diff for a specific commit
 

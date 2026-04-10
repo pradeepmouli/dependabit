@@ -6,7 +6,7 @@
 
 # Interface: LogEntry
 
-Defined in: [logger.ts:16](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L16)
+Defined in: [logger.ts:16](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/action/src/logger.ts#L16)
 
 Structured log entry
 
@@ -20,7 +20,7 @@ Structured log entry
 
 > `optional` **correlationId?**: `string`
 
-Defined in: [logger.ts:20](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L20)
+Defined in: [logger.ts:20](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/action/src/logger.ts#L20)
 
 ***
 
@@ -28,7 +28,7 @@ Defined in: [logger.ts:20](https://github.com/pradeepmouli/dependabit/blob/593f8
 
 > **level**: [`LogLevel`](../enumerations/LogLevel.md)
 
-Defined in: [logger.ts:18](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L18)
+Defined in: [logger.ts:18](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/action/src/logger.ts#L18)
 
 ***
 
@@ -36,7 +36,7 @@ Defined in: [logger.ts:18](https://github.com/pradeepmouli/dependabit/blob/593f8
 
 > **message**: `string`
 
-Defined in: [logger.ts:19](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L19)
+Defined in: [logger.ts:19](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/action/src/logger.ts#L19)
 
 ***
 
@@ -44,4 +44,4 @@ Defined in: [logger.ts:19](https://github.com/pradeepmouli/dependabit/blob/593f8
 
 > **timestamp**: `string`
 
-Defined in: [logger.ts:17](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L17)
+Defined in: [logger.ts:17](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/action/src/logger.ts#L17)

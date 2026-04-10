@@ -6,7 +6,7 @@
 
 # Interface: CommentReference
 
-Defined in: [detector/src/parsers/code-comments.ts:6](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/code-comments.ts#L6)
+Defined in: [detector/src/parsers/code-comments.ts:6](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/parsers/code-comments.ts#L6)
 
 Code Comment Parser
 Extracts URLs and references from code comments
@@ -17,7 +17,7 @@ Extracts URLs and references from code comments
 
 > **commentType**: `"single-line"` \| `"multi-line"` \| `"jsdoc"`
 
-Defined in: [detector/src/parsers/code-comments.ts:11](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/code-comments.ts#L11)
+Defined in: [detector/src/parsers/code-comments.ts:11](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/parsers/code-comments.ts#L11)
 
 ***
 
@@ -25,7 +25,7 @@ Defined in: [detector/src/parsers/code-comments.ts:11](https://github.com/pradee
 
 > **context**: `string`
 
-Defined in: [detector/src/parsers/code-comments.ts:8](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/code-comments.ts#L8)
+Defined in: [detector/src/parsers/code-comments.ts:8](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/parsers/code-comments.ts#L8)
 
 ***
 
@@ -33,7 +33,7 @@ Defined in: [detector/src/parsers/code-comments.ts:8](https://github.com/pradeep
 
 > **file**: `string`
 
-Defined in: [detector/src/parsers/code-comments.ts:9](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/code-comments.ts#L9)
+Defined in: [detector/src/parsers/code-comments.ts:9](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/parsers/code-comments.ts#L9)
 
 ***
 
@@ -41,7 +41,7 @@ Defined in: [detector/src/parsers/code-comments.ts:9](https://github.com/pradeep
 
 > **line**: `number`
 
-Defined in: [detector/src/parsers/code-comments.ts:10](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/code-comments.ts#L10)
+Defined in: [detector/src/parsers/code-comments.ts:10](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/parsers/code-comments.ts#L10)
 
 ***
 
@@ -49,4 +49,4 @@ Defined in: [detector/src/parsers/code-comments.ts:10](https://github.com/pradee
 
 > **url**: `string`
 
-Defined in: [detector/src/parsers/code-comments.ts:7](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/code-comments.ts#L7)
+Defined in: [detector/src/parsers/code-comments.ts:7](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/parsers/code-comments.ts#L7)

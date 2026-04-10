@@ -6,7 +6,7 @@
 
 # Class: ReleaseManager
 
-Defined in: [packages/github-client/src/releases.ts:23](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/releases.ts#L23)
+Defined in: [packages/github-client/src/releases.ts:23](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/releases.ts#L23)
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/releases.ts:23](https://github.com/prade
 
 > **new ReleaseManager**(`auth?`): `ReleaseManager`
 
-Defined in: [packages/github-client/src/releases.ts:26](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/releases.ts#L26)
+Defined in: [packages/github-client/src/releases.ts:26](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/releases.ts#L26)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [packages/github-client/src/releases.ts:26](https://github.com/prade
 
 > **compareReleases**(`oldReleases`, `newReleases`): [`ReleaseComparison`](../interfaces/ReleaseComparison.md)
 
-Defined in: [packages/github-client/src/releases.ts:100](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/releases.ts#L100)
+Defined in: [packages/github-client/src/releases.ts:100](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/releases.ts#L100)
 
 Compares two sets of releases to find new ones
 
@@ -56,7 +56,7 @@ Compares two sets of releases to find new ones
 
 > **getAllReleases**(`params`): `Promise`\<[`Release`](../interfaces/Release.md)[]\>
 
-Defined in: [packages/github-client/src/releases.ts:64](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/releases.ts#L64)
+Defined in: [packages/github-client/src/releases.ts:64](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/releases.ts#L64)
 
 Fetches all releases from a repository
 
@@ -90,7 +90,7 @@ Fetches all releases from a repository
 
 > **getLatestRelease**(`params`): `Promise`\<[`Release`](../interfaces/Release.md) \| `null`\>
 
-Defined in: [packages/github-client/src/releases.ts:35](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/releases.ts#L35)
+Defined in: [packages/github-client/src/releases.ts:35](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/releases.ts#L35)
 
 Fetches the latest release from a repository
 
@@ -116,7 +116,7 @@ Fetches the latest release from a repository
 
 > **getReleaseByTag**(`params`): `Promise`\<[`Release`](../interfaces/Release.md) \| `null`\>
 
-Defined in: [packages/github-client/src/releases.ts:119](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/releases.ts#L119)
+Defined in: [packages/github-client/src/releases.ts:119](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/releases.ts#L119)
 
 Fetches release notes for a specific tag
 

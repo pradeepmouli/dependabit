@@ -6,7 +6,7 @@
 
 # Interface: RateLimitInfo
 
-Defined in: [detector/src/llm/client.ts:8](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/client.ts#L8)
+Defined in: [detector/src/llm/client.ts:8](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/llm/client.ts#L8)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [detector/src/llm/client.ts:8](https://github.com/pradeepmouli/depen
 
 > **limit**: `number`
 
-Defined in: [detector/src/llm/client.ts:10](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/client.ts#L10)
+Defined in: [detector/src/llm/client.ts:10](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/llm/client.ts#L10)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [detector/src/llm/client.ts:10](https://github.com/pradeepmouli/depe
 
 > **remaining**: `number`
 
-Defined in: [detector/src/llm/client.ts:9](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/client.ts#L9)
+Defined in: [detector/src/llm/client.ts:9](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/llm/client.ts#L9)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [detector/src/llm/client.ts:9](https://github.com/pradeepmouli/depen
 
 > **resetAt**: `Date`
 
-Defined in: [detector/src/llm/client.ts:11](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/client.ts#L11)
+Defined in: [detector/src/llm/client.ts:11](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/llm/client.ts#L11)

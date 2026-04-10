@@ -6,7 +6,7 @@
 
 # Class: GitHubCopilotProvider
 
-Defined in: [detector/src/llm/copilot.ts:20](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/copilot.ts#L20)
+Defined in: [detector/src/llm/copilot.ts:20](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/llm/copilot.ts#L20)
 
 Base interface that all LLM providers must implement
 
@@ -20,7 +20,7 @@ Base interface that all LLM providers must implement
 
 > **new GitHubCopilotProvider**(`config?`): `GitHubCopilotProvider`
 
-Defined in: [detector/src/llm/copilot.ts:24](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/copilot.ts#L24)
+Defined in: [detector/src/llm/copilot.ts:24](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/llm/copilot.ts#L24)
 
 #### Parameters
 
@@ -38,7 +38,7 @@ Defined in: [detector/src/llm/copilot.ts:24](https://github.com/pradeepmouli/dep
 
 > **analyze**(`content`, `prompt`): `Promise`\<[`LLMResponse`](../interfaces/LLMResponse.md)\>
 
-Defined in: [detector/src/llm/copilot.ts:40](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/copilot.ts#L40)
+Defined in: [detector/src/llm/copilot.ts:40](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/llm/copilot.ts#L40)
 
 Analyze content and detect external dependencies
 
@@ -72,7 +72,7 @@ LLM response with detected dependencies
 
 > **getRateLimit**(): `Promise`\<[`RateLimitInfo`](../interfaces/RateLimitInfo.md)\>
 
-Defined in: [detector/src/llm/copilot.ts:135](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/copilot.ts#L135)
+Defined in: [detector/src/llm/copilot.ts:135](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/llm/copilot.ts#L135)
 
 Get current rate limit status
 
@@ -90,7 +90,7 @@ Get current rate limit status
 
 > **getSupportedModels**(): `string`[]
 
-Defined in: [detector/src/llm/copilot.ts:130](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/copilot.ts#L130)
+Defined in: [detector/src/llm/copilot.ts:130](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/llm/copilot.ts#L130)
 
 Get list of supported models for this provider
 
@@ -108,7 +108,7 @@ Get list of supported models for this provider
 
 > **validateConfig**(): `boolean`
 
-Defined in: [detector/src/llm/copilot.ts:145](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/copilot.ts#L145)
+Defined in: [detector/src/llm/copilot.ts:145](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/llm/copilot.ts#L145)
 
 Validate provider configuration
 

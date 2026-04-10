@@ -6,7 +6,7 @@
 
 # Interface: OAuthConfig
 
-Defined in: [packages/github-client/src/auth/oauth.ts:6](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/oauth.ts#L6)
+Defined in: [packages/github-client/src/auth/oauth.ts:6](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/oauth.ts#L6)
 
 OAuth 2.0 authentication handler for GitHub
 Supports authorization code flow and token refresh
@@ -17,7 +17,7 @@ Supports authorization code flow and token refresh
 
 > **clientId**: `string`
 
-Defined in: [packages/github-client/src/auth/oauth.ts:7](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/oauth.ts#L7)
+Defined in: [packages/github-client/src/auth/oauth.ts:7](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/oauth.ts#L7)
 
 ***
 
@@ -25,7 +25,7 @@ Defined in: [packages/github-client/src/auth/oauth.ts:7](https://github.com/prad
 
 > **clientSecret**: `string`
 
-Defined in: [packages/github-client/src/auth/oauth.ts:8](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/oauth.ts#L8)
+Defined in: [packages/github-client/src/auth/oauth.ts:8](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/oauth.ts#L8)
 
 ***
 
@@ -33,4 +33,4 @@ Defined in: [packages/github-client/src/auth/oauth.ts:8](https://github.com/prad
 
 > **redirectUri**: `string`
 
-Defined in: [packages/github-client/src/auth/oauth.ts:9](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/oauth.ts#L9)
+Defined in: [packages/github-client/src/auth/oauth.ts:9](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/oauth.ts#L9)

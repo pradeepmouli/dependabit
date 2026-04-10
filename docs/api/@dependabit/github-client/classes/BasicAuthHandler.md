@@ -6,7 +6,7 @@
 
 # Class: BasicAuthHandler
 
-Defined in: [packages/github-client/src/auth/basic.ts:15](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/basic.ts#L15)
+Defined in: [packages/github-client/src/auth/basic.ts:15](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/basic.ts#L15)
 
 Handler for HTTP Basic authentication
 
@@ -16,7 +16,7 @@ Handler for HTTP Basic authentication
 
 > **new BasicAuthHandler**(`username`, `password`): `BasicAuthHandler`
 
-Defined in: [packages/github-client/src/auth/basic.ts:19](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/basic.ts#L19)
+Defined in: [packages/github-client/src/auth/basic.ts:19](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/basic.ts#L19)
 
 #### Parameters
 
@@ -38,7 +38,7 @@ Defined in: [packages/github-client/src/auth/basic.ts:19](https://github.com/pra
 
 > **authenticate**(): `Promise`\<[`BasicAuth`](../interfaces/BasicAuth.md)\>
 
-Defined in: [packages/github-client/src/auth/basic.ts:33](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/basic.ts#L33)
+Defined in: [packages/github-client/src/auth/basic.ts:33](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/basic.ts#L33)
 
 Authenticate and return auth object
 
@@ -52,7 +52,7 @@ Authenticate and return auth object
 
 > **getAuthHeader**(): `string`
 
-Defined in: [packages/github-client/src/auth/basic.ts:44](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/basic.ts#L44)
+Defined in: [packages/github-client/src/auth/basic.ts:44](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/basic.ts#L44)
 
 Get base64-encoded Basic auth header value
 
@@ -66,7 +66,7 @@ Get base64-encoded Basic auth header value
 
 > **getType**(): `string`
 
-Defined in: [packages/github-client/src/auth/basic.ts:67](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/basic.ts#L67)
+Defined in: [packages/github-client/src/auth/basic.ts:67](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/basic.ts#L67)
 
 Get authentication type
 
@@ -80,7 +80,7 @@ Get authentication type
 
 > **toJSON**(): `Record`\<`string`, `unknown`\>
 
-Defined in: [packages/github-client/src/auth/basic.ts:95](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/basic.ts#L95)
+Defined in: [packages/github-client/src/auth/basic.ts:95](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/basic.ts#L95)
 
 JSON representation (excludes password)
 
@@ -94,7 +94,7 @@ JSON representation (excludes password)
 
 > **toString**(): `string`
 
-Defined in: [packages/github-client/src/auth/basic.ts:88](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/basic.ts#L88)
+Defined in: [packages/github-client/src/auth/basic.ts:88](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/basic.ts#L88)
 
 String representation (masks password)
 
@@ -108,7 +108,7 @@ String representation (masks password)
 
 > **updateCredentials**(`username`, `password`): `void`
 
-Defined in: [packages/github-client/src/auth/basic.ts:74](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/basic.ts#L74)
+Defined in: [packages/github-client/src/auth/basic.ts:74](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/basic.ts#L74)
 
 Update credentials (for rotation)
 
@@ -132,7 +132,7 @@ Update credentials (for rotation)
 
 > **validate**(): `boolean`
 
-Defined in: [packages/github-client/src/auth/basic.ts:53](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/basic.ts#L53)
+Defined in: [packages/github-client/src/auth/basic.ts:53](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth/basic.ts#L53)
 
 Validate credentials format
 

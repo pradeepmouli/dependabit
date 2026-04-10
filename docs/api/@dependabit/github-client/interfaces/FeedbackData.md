@@ -6,7 +6,7 @@
 
 # Interface: FeedbackData
 
-Defined in: [packages/github-client/src/feedback.ts:23](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/feedback.ts#L23)
+Defined in: [packages/github-client/src/feedback.ts:23](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/feedback.ts#L23)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/feedback.ts:23](https://github.com/prade
 
 > **falsePositives**: `object`[]
 
-Defined in: [packages/github-client/src/feedback.ts:25](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/feedback.ts#L25)
+Defined in: [packages/github-client/src/feedback.ts:25](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/feedback.ts#L25)
 
 #### created\_at?
 
@@ -34,7 +34,7 @@ Defined in: [packages/github-client/src/feedback.ts:25](https://github.com/prade
 
 > **total**: `number`
 
-Defined in: [packages/github-client/src/feedback.ts:26](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/feedback.ts#L26)
+Defined in: [packages/github-client/src/feedback.ts:26](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/feedback.ts#L26)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/github-client/src/feedback.ts:26](https://github.com/prade
 
 > **truePositives**: `object`[]
 
-Defined in: [packages/github-client/src/feedback.ts:24](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/feedback.ts#L24)
+Defined in: [packages/github-client/src/feedback.ts:24](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/feedback.ts#L24)
 
 #### created\_at?
 

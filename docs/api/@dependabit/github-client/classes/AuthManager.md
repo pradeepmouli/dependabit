@@ -6,7 +6,7 @@
 
 # Class: AuthManager
 
-Defined in: [packages/github-client/src/auth.ts:24](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth.ts#L24)
+Defined in: [packages/github-client/src/auth.ts:24](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth.ts#L24)
 
 Authentication manager that supports multiple auth methods
 
@@ -16,7 +16,7 @@ Authentication manager that supports multiple auth methods
 
 > **new AuthManager**(`config`): `AuthManager`
 
-Defined in: [packages/github-client/src/auth.ts:27](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth.ts#L27)
+Defined in: [packages/github-client/src/auth.ts:27](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth.ts#L27)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: [packages/github-client/src/auth.ts:27](https://github.com/pradeepmo
 
 > **authenticate**(`code?`): `Promise`\<[`AuthResult`](../type-aliases/AuthResult.md)\>
 
-Defined in: [packages/github-client/src/auth.ts:58](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth.ts#L58)
+Defined in: [packages/github-client/src/auth.ts:58](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth.ts#L58)
 
 Perform authentication
 
@@ -54,7 +54,7 @@ Perform authentication
 
 > **getHandler**(): [`TokenAuthHandler`](TokenAuthHandler.md) \| [`OAuthHandler`](OAuthHandler.md) \| [`BasicAuthHandler`](BasicAuthHandler.md)
 
-Defined in: [packages/github-client/src/auth.ts:85](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth.ts#L85)
+Defined in: [packages/github-client/src/auth.ts:85](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth.ts#L85)
 
 Get underlying handler
 
@@ -68,7 +68,7 @@ Get underlying handler
 
 > **getType**(): `string`
 
-Defined in: [packages/github-client/src/auth.ts:78](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth.ts#L78)
+Defined in: [packages/github-client/src/auth.ts:78](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth.ts#L78)
 
 Get authentication type
 
@@ -82,7 +82,7 @@ Get authentication type
 
 > **validate**(): `boolean`
 
-Defined in: [packages/github-client/src/auth.ts:71](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth.ts#L71)
+Defined in: [packages/github-client/src/auth.ts:71](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/auth.ts#L71)
 
 Validate authentication configuration
 

@@ -8,7 +8,7 @@
 
 > **getEffectiveMonitoringRules**(`config`, `dependencyUrl`): `object`
 
-Defined in: [packages/manifest/src/config.ts:36](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/config.ts#L36)
+Defined in: [packages/manifest/src/config.ts:36](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/manifest/src/config.ts#L36)
 
 Get effective monitoring rules for a dependency
 Merges global config with dependency-specific overrides

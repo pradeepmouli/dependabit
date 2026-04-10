@@ -8,4 +8,4 @@
 
 > **Severity** = `z.infer`\<*typeof* [`SeveritySchema`](../variables/SeveritySchema.md)\>
 
-Defined in: [packages/manifest/src/schema.ts:258](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/schema.ts#L258)
+Defined in: [packages/manifest/src/schema.ts:258](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/manifest/src/schema.ts#L258)

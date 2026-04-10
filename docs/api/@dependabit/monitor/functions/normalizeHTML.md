@@ -8,7 +8,7 @@
 
 > **normalizeHTML**(`html`): `string`
 
-Defined in: [monitor/src/normalizer.ts:18](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/normalizer.ts#L18)
+Defined in: [monitor/src/normalizer.ts:18](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/monitor/src/normalizer.ts#L18)
 
 Normalizes HTML content for consistent comparison
 

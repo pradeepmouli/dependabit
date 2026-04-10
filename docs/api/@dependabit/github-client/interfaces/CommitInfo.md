@@ -6,7 +6,7 @@
 
 # Interface: CommitInfo
 
-Defined in: [packages/github-client/src/commits.ts:8](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L8)
+Defined in: [packages/github-client/src/commits.ts:8](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/commits.ts#L8)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/commits.ts:8](https://github.com/pradeep
 
 > **author**: `object`
 
-Defined in: [packages/github-client/src/commits.ts:11](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L11)
+Defined in: [packages/github-client/src/commits.ts:11](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/commits.ts#L11)
 
 #### date
 
@@ -34,7 +34,7 @@ Defined in: [packages/github-client/src/commits.ts:11](https://github.com/pradee
 
 > **message**: `string`
 
-Defined in: [packages/github-client/src/commits.ts:10](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L10)
+Defined in: [packages/github-client/src/commits.ts:10](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/commits.ts#L10)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [packages/github-client/src/commits.ts:10](https://github.com/pradee
 
 > **sha**: `string`
 
-Defined in: [packages/github-client/src/commits.ts:9](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L9)
+Defined in: [packages/github-client/src/commits.ts:9](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/commits.ts#L9)
 
 ***
 
@@ -50,4 +50,4 @@ Defined in: [packages/github-client/src/commits.ts:9](https://github.com/pradeep
 
 > `optional` **url?**: `string`
 
-Defined in: [packages/github-client/src/commits.ts:16](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L16)
+Defined in: [packages/github-client/src/commits.ts:16](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/github-client/src/commits.ts#L16)

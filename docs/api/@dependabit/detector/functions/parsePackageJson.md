@@ -8,7 +8,7 @@
 
 > **parsePackageJson**(`content`): [`PackageMetadata`](../interfaces/PackageMetadata.md)
 
-Defined in: [detector/src/parsers/package-files.ts:17](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/package-files.ts#L17)
+Defined in: [detector/src/parsers/package-files.ts:17](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/parsers/package-files.ts#L17)
 
 Parse package.json and extract metadata URLs (NOT dependencies)
 

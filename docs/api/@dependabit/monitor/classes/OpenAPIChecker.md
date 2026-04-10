@@ -6,7 +6,7 @@
 
 # Class: OpenAPIChecker
 
-Defined in: [monitor/src/checkers/openapi.ts:65](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/checkers/openapi.ts#L65)
+Defined in: [monitor/src/checkers/openapi.ts:65](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/monitor/src/checkers/openapi.ts#L65)
 
 ## Implements
 
@@ -28,7 +28,7 @@ Defined in: [monitor/src/checkers/openapi.ts:65](https://github.com/pradeepmouli
 
 > **compare**(`prev`, `curr`): `Promise`\<[`ChangeDetection`](../interfaces/ChangeDetection.md)\>
 
-Defined in: [monitor/src/checkers/openapi.ts:185](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/checkers/openapi.ts#L185)
+Defined in: [monitor/src/checkers/openapi.ts:185](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/monitor/src/checkers/openapi.ts#L185)
 
 Compares two OpenAPI snapshots with semantic diffing
 
@@ -56,7 +56,7 @@ Compares two OpenAPI snapshots with semantic diffing
 
 > **fetch**(`config`): `Promise`\<[`DependencySnapshot`](../interfaces/DependencySnapshot.md)\>
 
-Defined in: [monitor/src/checkers/openapi.ts:69](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/checkers/openapi.ts#L69)
+Defined in: [monitor/src/checkers/openapi.ts:69](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/monitor/src/checkers/openapi.ts#L69)
 
 Fetches and parses OpenAPI specification
 

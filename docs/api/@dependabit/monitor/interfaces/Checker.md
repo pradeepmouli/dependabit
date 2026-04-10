@@ -6,7 +6,7 @@
 
 # Interface: Checker
 
-Defined in: [monitor/src/types.ts:30](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/types.ts#L30)
+Defined in: [monitor/src/types.ts:30](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/monitor/src/types.ts#L30)
 
 ## Methods
 
@@ -14,7 +14,7 @@ Defined in: [monitor/src/types.ts:30](https://github.com/pradeepmouli/dependabit
 
 > **compare**(`prev`, `curr`): `Promise`\<[`ChangeDetection`](ChangeDetection.md)\>
 
-Defined in: [monitor/src/types.ts:39](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/types.ts#L39)
+Defined in: [monitor/src/types.ts:39](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/monitor/src/types.ts#L39)
 
 Compares two snapshots to detect changes
 
@@ -38,7 +38,7 @@ Compares two snapshots to detect changes
 
 > **fetch**(`config`): `Promise`\<[`DependencySnapshot`](DependencySnapshot.md)\>
 
-Defined in: [monitor/src/types.ts:34](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/types.ts#L34)
+Defined in: [monitor/src/types.ts:34](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/monitor/src/types.ts#L34)
 
 Fetches the current state of a dependency
 

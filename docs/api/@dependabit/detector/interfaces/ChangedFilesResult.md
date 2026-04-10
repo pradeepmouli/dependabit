@@ -6,7 +6,7 @@
 
 # Interface: ChangedFilesResult
 
-Defined in: [detector/src/diff-parser.ts:18](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/diff-parser.ts#L18)
+Defined in: [detector/src/diff-parser.ts:18](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/diff-parser.ts#L18)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [detector/src/diff-parser.ts:18](https://github.com/pradeepmouli/dep
 
 > **documentationFiles**: `string`[]
 
-Defined in: [detector/src/diff-parser.ts:21](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/diff-parser.ts#L21)
+Defined in: [detector/src/diff-parser.ts:21](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/diff-parser.ts#L21)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [detector/src/diff-parser.ts:21](https://github.com/pradeepmouli/dep
 
 > **packageFiles**: `string`[]
 
-Defined in: [detector/src/diff-parser.ts:20](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/diff-parser.ts#L20)
+Defined in: [detector/src/diff-parser.ts:20](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/diff-parser.ts#L20)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [detector/src/diff-parser.ts:20](https://github.com/pradeepmouli/dep
 
 > **relevantFiles**: `string`[]
 
-Defined in: [detector/src/diff-parser.ts:19](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/diff-parser.ts#L19)
+Defined in: [detector/src/diff-parser.ts:19](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/detector/src/diff-parser.ts#L19)

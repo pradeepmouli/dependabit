@@ -6,7 +6,7 @@
 
 # Interface: SizeCheckOptions
 
-Defined in: [packages/manifest/src/size-check.ts:13](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/size-check.ts#L13)
+Defined in: [packages/manifest/src/size-check.ts:13](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/manifest/src/size-check.ts#L13)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/manifest/src/size-check.ts:13](https://github.com/pradeepm
 
 > `optional` **errorThreshold?**: `number`
 
-Defined in: [packages/manifest/src/size-check.ts:15](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/size-check.ts#L15)
+Defined in: [packages/manifest/src/size-check.ts:15](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/manifest/src/size-check.ts#L15)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [packages/manifest/src/size-check.ts:15](https://github.com/pradeepm
 
 > `optional` **warnThreshold?**: `number`
 
-Defined in: [packages/manifest/src/size-check.ts:14](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/size-check.ts#L14)
+Defined in: [packages/manifest/src/size-check.ts:14](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/manifest/src/size-check.ts#L14)

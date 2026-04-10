@@ -6,7 +6,7 @@
 
 # Interface: ApiResponse\<T\>
 
-Defined in: [index.ts:11](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/core/src/index.ts#L11)
+Defined in: [index.ts:11](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/core/src/index.ts#L11)
 
 Represents an API response with status and data
 
@@ -22,7 +22,7 @@ Represents an API response with status and data
 
 > `optional` **data?**: `T`
 
-Defined in: [index.ts:13](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/core/src/index.ts#L13)
+Defined in: [index.ts:13](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/core/src/index.ts#L13)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [index.ts:13](https://github.com/pradeepmouli/dependabit/blob/593f80
 
 > `optional` **error?**: `string`
 
-Defined in: [index.ts:14](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/core/src/index.ts#L14)
+Defined in: [index.ts:14](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/core/src/index.ts#L14)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [index.ts:14](https://github.com/pradeepmouli/dependabit/blob/593f80
 
 > **success**: `boolean`
 
-Defined in: [index.ts:12](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/core/src/index.ts#L12)
+Defined in: [index.ts:12](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/core/src/index.ts#L12)

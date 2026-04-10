@@ -8,7 +8,7 @@
 
 > **delay**(`ms`): `Promise`\<`void`\>
 
-Defined in: [index.ts:75](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/core/src/index.ts#L75)
+Defined in: [index.ts:75](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/core/src/index.ts#L75)
 
 Delays execution for a specified number of milliseconds
 

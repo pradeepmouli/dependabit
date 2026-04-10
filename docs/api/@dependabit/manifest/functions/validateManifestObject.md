@@ -8,7 +8,7 @@
 
 > **validateManifestObject**(`manifest`, `options?`): [`SizeCheckResult`](../interfaces/SizeCheckResult.md)
 
-Defined in: [packages/manifest/src/size-check.ts:74](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/size-check.ts#L74)
+Defined in: [packages/manifest/src/size-check.ts:74](https://github.com/pradeepmouli/dependabit/blob/2f586b74942347a0d6cf8cd13709400ab545830b/packages/manifest/src/size-check.ts#L74)
 
 Validate manifest object size before serialization
 
