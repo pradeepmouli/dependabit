@@ -3,6 +3,7 @@
   "version": "0.1.16",
   "private": true,
   "description": "dependabot for resources, related projects, and knowledge",
+  "keywords": ["dependency", "monitoring", "security", "vulnerability", "changelog", "version-tracking", "github", "automation", "ai"],
   "type": "module",
   "author": "Pradeep Mouli",
   "license": "MIT",

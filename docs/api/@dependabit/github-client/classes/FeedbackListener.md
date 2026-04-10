@@ -6,7 +6,7 @@
 
 # Class: FeedbackListener
 
-Defined in: [packages/github-client/src/feedback.ts:44](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L44)
+Defined in: [packages/github-client/src/feedback.ts:44](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/feedback.ts#L44)
 
 Listener that monitors issue labels for false positive feedback
 
@@ -16,7 +16,7 @@ Listener that monitors issue labels for false positive feedback
 
 > **new FeedbackListener**(`issueManager`, `config?`): `FeedbackListener`
 
-Defined in: [packages/github-client/src/feedback.ts:49](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L49)
+Defined in: [packages/github-client/src/feedback.ts:49](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/feedback.ts#L49)
 
 #### Parameters
 
@@ -38,7 +38,7 @@ Defined in: [packages/github-client/src/feedback.ts:49](https://github.com/prade
 
 > **collectFeedback**(`options?`): `Promise`\<[`FeedbackData`](../interfaces/FeedbackData.md)\>
 
-Defined in: [packages/github-client/src/feedback.ts:58](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L58)
+Defined in: [packages/github-client/src/feedback.ts:58](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/feedback.ts#L58)
 
 Collect feedback from issues with feedback labels
 
@@ -58,7 +58,7 @@ Collect feedback from issues with feedback labels
 
 > **getFeedbackRate**(`options?`): `Promise`\<[`FeedbackRate`](../interfaces/FeedbackRate.md)\>
 
-Defined in: [packages/github-client/src/feedback.ts:123](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L123)
+Defined in: [packages/github-client/src/feedback.ts:123](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/feedback.ts#L123)
 
 Calculate false positive rate from collected feedback
 
@@ -78,7 +78,7 @@ Calculate false positive rate from collected feedback
 
 > **getRecentFeedback**(`days`, `referenceDate?`): `Promise`\<[`FeedbackData`](../interfaces/FeedbackData.md)\>
 
-Defined in: [packages/github-client/src/feedback.ts:144](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L144)
+Defined in: [packages/github-client/src/feedback.ts:144](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/feedback.ts#L144)
 
 Get feedback from recent time window (e.g., last 30 days)
 
@@ -102,7 +102,7 @@ Get feedback from recent time window (e.g., last 30 days)
 
 > **monitorIssue**(`issueNumber`): `Promise`\<`boolean`\>
 
-Defined in: [packages/github-client/src/feedback.ts:155](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L155)
+Defined in: [packages/github-client/src/feedback.ts:155](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/feedback.ts#L155)
 
 Check if a specific issue has feedback label
 

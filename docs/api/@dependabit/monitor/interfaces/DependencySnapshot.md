@@ -6,7 +6,7 @@
 
 # Interface: DependencySnapshot
 
-Defined in: [monitor/src/types.ts:5](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L5)
+Defined in: [monitor/src/types.ts:5](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/types.ts#L5)
 
 Common types for dependency checkers
 
@@ -16,7 +16,7 @@ Common types for dependency checkers
 
 > **fetchedAt**: `Date`
 
-Defined in: [monitor/src/types.ts:8](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L8)
+Defined in: [monitor/src/types.ts:8](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/types.ts#L8)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [monitor/src/types.ts:8](https://github.com/pradeepmouli/dependabit/
 
 > `optional` **metadata?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [monitor/src/types.ts:9](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L9)
+Defined in: [monitor/src/types.ts:9](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/types.ts#L9)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [monitor/src/types.ts:9](https://github.com/pradeepmouli/dependabit/
 
 > **stateHash**: `string`
 
-Defined in: [monitor/src/types.ts:7](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L7)
+Defined in: [monitor/src/types.ts:7](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/types.ts#L7)
 
 ***
 
@@ -40,4 +40,4 @@ Defined in: [monitor/src/types.ts:7](https://github.com/pradeepmouli/dependabit/
 
 > `optional` **version?**: `string`
 
-Defined in: [monitor/src/types.ts:6](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L6)
+Defined in: [monitor/src/types.ts:6](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/types.ts#L6)

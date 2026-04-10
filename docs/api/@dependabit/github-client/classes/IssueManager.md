@@ -6,7 +6,7 @@
 
 # Class: IssueManager
 
-Defined in: [packages/github-client/src/issues.ts:37](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L37)
+Defined in: [packages/github-client/src/issues.ts:37](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/issues.ts#L37)
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/issues.ts:37](https://github.com/pradeep
 
 > **new IssueManager**(`auth?`): `IssueManager`
 
-Defined in: [packages/github-client/src/issues.ts:40](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L40)
+Defined in: [packages/github-client/src/issues.ts:40](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/issues.ts#L40)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [packages/github-client/src/issues.ts:40](https://github.com/pradeep
 
 > **createIssue**(`data`): `Promise`\<[`IssueResult`](../interfaces/IssueResult.md)\>
 
-Defined in: [packages/github-client/src/issues.ts:49](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L49)
+Defined in: [packages/github-client/src/issues.ts:49](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/issues.ts#L49)
 
 Creates a new issue for a dependency change
 
@@ -52,7 +52,7 @@ Creates a new issue for a dependency change
 
 > **findExistingIssue**(`params`): `Promise`\<[`IssueResult`](../interfaces/IssueResult.md) \| `null`\>
 
-Defined in: [packages/github-client/src/issues.ts:76](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L76)
+Defined in: [packages/github-client/src/issues.ts:76](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/issues.ts#L76)
 
 Finds an existing issue for a dependency
 
@@ -82,7 +82,7 @@ Finds an existing issue for a dependency
 
 > **updateIssue**(`data`): `Promise`\<[`IssueResult`](../interfaces/IssueResult.md)\>
 
-Defined in: [packages/github-client/src/issues.ts:115](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L115)
+Defined in: [packages/github-client/src/issues.ts:115](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/issues.ts#L115)
 
 Updates an existing issue
 

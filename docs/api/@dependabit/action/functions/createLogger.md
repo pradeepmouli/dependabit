@@ -8,7 +8,7 @@
 
 > **createLogger**(`config?`): [`Logger`](../classes/Logger.md)
 
-Defined in: [logger.ts:185](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L185)
+Defined in: [logger.ts:185](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L185)
 
 Create a new logger instance
 

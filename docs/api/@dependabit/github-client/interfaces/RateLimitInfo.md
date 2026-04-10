@@ -6,7 +6,7 @@
 
 # Interface: RateLimitInfo
 
-Defined in: [packages/github-client/src/rate-limit.ts:8](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L8)
+Defined in: [packages/github-client/src/rate-limit.ts:8](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/rate-limit.ts#L8)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/rate-limit.ts:8](https://github.com/prad
 
 > **limit**: `number`
 
-Defined in: [packages/github-client/src/rate-limit.ts:9](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L9)
+Defined in: [packages/github-client/src/rate-limit.ts:9](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/rate-limit.ts#L9)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/github-client/src/rate-limit.ts:9](https://github.com/prad
 
 > **remaining**: `number`
 
-Defined in: [packages/github-client/src/rate-limit.ts:10](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L10)
+Defined in: [packages/github-client/src/rate-limit.ts:10](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/rate-limit.ts#L10)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/github-client/src/rate-limit.ts:10](https://github.com/pra
 
 > **reset**: `Date`
 
-Defined in: [packages/github-client/src/rate-limit.ts:11](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L11)
+Defined in: [packages/github-client/src/rate-limit.ts:11](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/rate-limit.ts#L11)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/github-client/src/rate-limit.ts:11](https://github.com/pra
 
 > **used**: `number`
 
-Defined in: [packages/github-client/src/rate-limit.ts:12](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L12)
+Defined in: [packages/github-client/src/rate-limit.ts:12](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/rate-limit.ts#L12)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [packages/github-client/src/rate-limit.ts:12](https://github.com/pra
 
 > `optional` **warning?**: `string`
 
-Defined in: [packages/github-client/src/rate-limit.ts:13](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L13)
+Defined in: [packages/github-client/src/rate-limit.ts:13](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/rate-limit.ts#L13)

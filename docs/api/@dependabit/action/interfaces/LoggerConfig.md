@@ -6,7 +6,7 @@
 
 # Interface: LoggerConfig
 
-Defined in: [logger.ts:27](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L27)
+Defined in: [logger.ts:27](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L27)
 
 Logger configuration
 
@@ -16,7 +16,7 @@ Logger configuration
 
 > `optional` **context?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [logger.ts:30](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L30)
+Defined in: [logger.ts:30](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L30)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [logger.ts:30](https://github.com/pradeepmouli/dependabit/blob/12b63
 
 > `optional` **correlationId?**: `string`
 
-Defined in: [logger.ts:28](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L28)
+Defined in: [logger.ts:28](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L28)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [logger.ts:28](https://github.com/pradeepmouli/dependabit/blob/12b63
 
 > `optional` **enableDebug?**: `boolean`
 
-Defined in: [logger.ts:29](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L29)
+Defined in: [logger.ts:29](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L29)

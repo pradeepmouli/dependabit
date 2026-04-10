@@ -8,4 +8,4 @@
 
 > `const` **MonitoringRulesSchema**: `ZodObject`\<\{ `checkFrequency`: `ZodDefault`\<`ZodEnum`\<\{ `daily`: `"daily"`; `hourly`: `"hourly"`; `monthly`: `"monthly"`; `weekly`: `"weekly"`; \}\>\>; `enabled`: `ZodDefault`\<`ZodBoolean`\>; `ignoreChanges`: `ZodDefault`\<`ZodBoolean`\>; `severityOverride`: `ZodOptional`\<`ZodEnum`\<\{ `breaking`: `"breaking"`; `major`: `"major"`; `minor`: `"minor"`; \}\>\>; \}, `$strip`\>
 
-Defined in: [packages/manifest/src/schema.ts:42](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/manifest/src/schema.ts#L42)
+Defined in: [packages/manifest/src/schema.ts:42](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/schema.ts#L42)

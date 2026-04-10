@@ -6,7 +6,7 @@
 
 # Class: Monitor
 
-Defined in: [monitor/src/monitor.ts:34](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/monitor.ts#L34)
+Defined in: [monitor/src/monitor.ts:34](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/monitor.ts#L34)
 
 @dependabit/monitor - Dependency change detection and monitoring
 
@@ -16,7 +16,7 @@ Defined in: [monitor/src/monitor.ts:34](https://github.com/pradeepmouli/dependab
 
 > **new Monitor**(): `Monitor`
 
-Defined in: [monitor/src/monitor.ts:38](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/monitor.ts#L38)
+Defined in: [monitor/src/monitor.ts:38](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/monitor.ts#L38)
 
 #### Returns
 
@@ -28,7 +28,7 @@ Defined in: [monitor/src/monitor.ts:38](https://github.com/pradeepmouli/dependab
 
 > **checkAll**(`dependencies`): `Promise`\<[`CheckResult`](../interfaces/CheckResult.md)[]\>
 
-Defined in: [monitor/src/monitor.ts:96](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/monitor.ts#L96)
+Defined in: [monitor/src/monitor.ts:96](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/monitor.ts#L96)
 
 Checks multiple dependencies, respecting monitoring rules
 
@@ -48,7 +48,7 @@ Checks multiple dependencies, respecting monitoring rules
 
 > **checkDependency**(`dependency`): `Promise`\<[`CheckResult`](../interfaces/CheckResult.md)\>
 
-Defined in: [monitor/src/monitor.ts:50](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/monitor.ts#L50)
+Defined in: [monitor/src/monitor.ts:50](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/monitor.ts#L50)
 
 Checks a single dependency for changes
 
@@ -68,7 +68,7 @@ Checks a single dependency for changes
 
 > **registerChecker**(`accessMethod`, `checker`): `void`
 
-Defined in: [monitor/src/monitor.ts:117](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/monitor.ts#L117)
+Defined in: [monitor/src/monitor.ts:117](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/monitor/src/monitor.ts#L117)
 
 Registers a custom checker for an access method
 

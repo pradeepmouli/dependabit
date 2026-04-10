@@ -6,7 +6,7 @@
 
 # Class: ValidationError
 
-Defined in: [packages/manifest/src/validator.ts:14](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/manifest/src/validator.ts#L14)
+Defined in: [packages/manifest/src/validator.ts:14](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/validator.ts#L14)
 
 Validation error class with detailed error information
 
@@ -20,7 +20,7 @@ Validation error class with detailed error information
 
 > **new ValidationError**(`message`, `errors`): `ValidationError`
 
-Defined in: [packages/manifest/src/validator.ts:15](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/manifest/src/validator.ts#L15)
+Defined in: [packages/manifest/src/validator.ts:15](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/validator.ts#L15)
 
 #### Parameters
 
@@ -58,7 +58,7 @@ Defined in: node\_modules/.pnpm/typescript@5.9.3/node\_modules/typescript/lib/li
 
 > `readonly` **errors**: `ZodError`
 
-Defined in: [packages/manifest/src/validator.ts:17](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/manifest/src/validator.ts#L17)
+Defined in: [packages/manifest/src/validator.ts:17](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/validator.ts#L17)
 
 ***
 
@@ -124,7 +124,7 @@ not capture any frames.
 
 > **getFormattedErrors**(): `string`[]
 
-Defined in: [packages/manifest/src/validator.ts:26](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/manifest/src/validator.ts#L26)
+Defined in: [packages/manifest/src/validator.ts:26](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/validator.ts#L26)
 
 Get formatted error messages
 

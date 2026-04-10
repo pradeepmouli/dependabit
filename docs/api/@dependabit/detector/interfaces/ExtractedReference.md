@@ -6,7 +6,7 @@
 
 # Interface: ExtractedReference
 
-Defined in: [detector/src/parsers/readme.ts:6](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/readme.ts#L6)
+Defined in: [detector/src/parsers/readme.ts:6](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/readme.ts#L6)
 
 README Parser
 Extracts URLs and references from README and markdown files
@@ -17,7 +17,7 @@ Extracts URLs and references from README and markdown files
 
 > **context**: `string`
 
-Defined in: [detector/src/parsers/readme.ts:8](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/readme.ts#L8)
+Defined in: [detector/src/parsers/readme.ts:8](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/readme.ts#L8)
 
 ***
 
@@ -25,7 +25,7 @@ Defined in: [detector/src/parsers/readme.ts:8](https://github.com/pradeepmouli/d
 
 > `optional` **line?**: `number`
 
-Defined in: [detector/src/parsers/readme.ts:9](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/readme.ts#L9)
+Defined in: [detector/src/parsers/readme.ts:9](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/readme.ts#L9)
 
 ***
 
@@ -33,7 +33,7 @@ Defined in: [detector/src/parsers/readme.ts:9](https://github.com/pradeepmouli/d
 
 > **type**: `"markdown-link"` \| `"bare-url"` \| `"reference-link"`
 
-Defined in: [detector/src/parsers/readme.ts:10](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/readme.ts#L10)
+Defined in: [detector/src/parsers/readme.ts:10](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/readme.ts#L10)
 
 ***
 
@@ -41,4 +41,4 @@ Defined in: [detector/src/parsers/readme.ts:10](https://github.com/pradeepmouli/
 
 > **url**: `string`
 
-Defined in: [detector/src/parsers/readme.ts:7](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/readme.ts#L7)
+Defined in: [detector/src/parsers/readme.ts:7](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/readme.ts#L7)

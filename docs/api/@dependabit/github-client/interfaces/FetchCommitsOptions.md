@@ -6,7 +6,7 @@
 
 # Interface: FetchCommitsOptions
 
-Defined in: [packages/github-client/src/commits.ts:39](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L39)
+Defined in: [packages/github-client/src/commits.ts:39](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L39)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/commits.ts:39](https://github.com/pradee
 
 > `optional` **page?**: `number`
 
-Defined in: [packages/github-client/src/commits.ts:45](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L45)
+Defined in: [packages/github-client/src/commits.ts:45](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L45)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/github-client/src/commits.ts:45](https://github.com/pradee
 
 > `optional` **path?**: `string`
 
-Defined in: [packages/github-client/src/commits.ts:43](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L43)
+Defined in: [packages/github-client/src/commits.ts:43](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L43)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/github-client/src/commits.ts:43](https://github.com/pradee
 
 > `optional` **per\_page?**: `number`
 
-Defined in: [packages/github-client/src/commits.ts:44](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L44)
+Defined in: [packages/github-client/src/commits.ts:44](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L44)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/github-client/src/commits.ts:44](https://github.com/pradee
 
 > `optional` **sha?**: `string`
 
-Defined in: [packages/github-client/src/commits.ts:42](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L42)
+Defined in: [packages/github-client/src/commits.ts:42](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L42)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/github-client/src/commits.ts:42](https://github.com/pradee
 
 > `optional` **since?**: `string`
 
-Defined in: [packages/github-client/src/commits.ts:40](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L40)
+Defined in: [packages/github-client/src/commits.ts:40](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L40)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [packages/github-client/src/commits.ts:40](https://github.com/pradee
 
 > `optional` **until?**: `string`
 
-Defined in: [packages/github-client/src/commits.ts:41](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L41)
+Defined in: [packages/github-client/src/commits.ts:41](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/commits.ts#L41)

@@ -8,7 +8,7 @@
 
 > **parseCommitDiffs**(`files`): `Map`\<`string`, [`DiffParseResult`](../interfaces/DiffParseResult.md)\>
 
-Defined in: [detector/src/diff-parser.ts:203](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/diff-parser.ts#L203)
+Defined in: [detector/src/diff-parser.ts:203](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/diff-parser.ts#L203)
 
 Parse all diffs from commit files
 

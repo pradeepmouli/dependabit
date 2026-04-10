@@ -6,7 +6,7 @@
 
 # Interface: ReleaseComparison
 
-Defined in: [packages/github-client/src/releases.ts:18](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/releases.ts#L18)
+Defined in: [packages/github-client/src/releases.ts:18](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/releases.ts#L18)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/releases.ts:18](https://github.com/prade
 
 > **newReleases**: [`Release`](Release.md)[]
 
-Defined in: [packages/github-client/src/releases.ts:19](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/releases.ts#L19)
+Defined in: [packages/github-client/src/releases.ts:19](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/releases.ts#L19)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [packages/github-client/src/releases.ts:19](https://github.com/prade
 
 > **oldReleases**: [`Release`](Release.md)[]
 
-Defined in: [packages/github-client/src/releases.ts:20](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/releases.ts#L20)
+Defined in: [packages/github-client/src/releases.ts:20](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/releases.ts#L20)

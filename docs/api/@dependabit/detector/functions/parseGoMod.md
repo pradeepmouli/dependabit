@@ -8,7 +8,7 @@
 
 > **parseGoMod**(`content`): [`PackageMetadata`](../interfaces/PackageMetadata.md)
 
-Defined in: [detector/src/parsers/package-files.ts:130](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/package-files.ts#L130)
+Defined in: [detector/src/parsers/package-files.ts:130](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/parsers/package-files.ts#L130)
 
 Parse go.mod and extract URLs from comments
 EXCLUDES actual dependencies (handled by dependabot)

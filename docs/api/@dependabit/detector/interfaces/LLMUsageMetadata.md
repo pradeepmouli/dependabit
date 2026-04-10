@@ -6,7 +6,7 @@
 
 # Interface: LLMUsageMetadata
 
-Defined in: [detector/src/llm/client.ts:14](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L14)
+Defined in: [detector/src/llm/client.ts:14](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/client.ts#L14)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [detector/src/llm/client.ts:14](https://github.com/pradeepmouli/depe
 
 > **completionTokens**: `number`
 
-Defined in: [detector/src/llm/client.ts:16](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L16)
+Defined in: [detector/src/llm/client.ts:16](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/client.ts#L16)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [detector/src/llm/client.ts:16](https://github.com/pradeepmouli/depe
 
 > **latencyMs**: `number`
 
-Defined in: [detector/src/llm/client.ts:19](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L19)
+Defined in: [detector/src/llm/client.ts:19](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/client.ts#L19)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [detector/src/llm/client.ts:19](https://github.com/pradeepmouli/depe
 
 > **model**: `string`
 
-Defined in: [detector/src/llm/client.ts:18](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L18)
+Defined in: [detector/src/llm/client.ts:18](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/client.ts#L18)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [detector/src/llm/client.ts:18](https://github.com/pradeepmouli/depe
 
 > **promptTokens**: `number`
 
-Defined in: [detector/src/llm/client.ts:15](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L15)
+Defined in: [detector/src/llm/client.ts:15](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/client.ts#L15)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [detector/src/llm/client.ts:15](https://github.com/pradeepmouli/depe
 
 > **totalTokens**: `number`
 
-Defined in: [detector/src/llm/client.ts:17](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L17)
+Defined in: [detector/src/llm/client.ts:17](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/client.ts#L17)

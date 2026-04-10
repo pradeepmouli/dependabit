@@ -8,4 +8,4 @@
 
 > **Schedule** = `z.infer`\<*typeof* [`ScheduleSchema`](../variables/ScheduleSchema.md)\>
 
-Defined in: [packages/manifest/src/schema.ts:261](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/manifest/src/schema.ts#L261)
+Defined in: [packages/manifest/src/schema.ts:261](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/manifest/src/schema.ts#L261)

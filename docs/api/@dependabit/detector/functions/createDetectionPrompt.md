@@ -8,7 +8,7 @@
 
 > **createDetectionPrompt**(`contentType`, `filePath`, `content`): `string`
 
-Defined in: [detector/src/llm/prompts.ts:72](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/prompts.ts#L72)
+Defined in: [detector/src/llm/prompts.ts:72](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/llm/prompts.ts#L72)
 
 ## Parameters
 

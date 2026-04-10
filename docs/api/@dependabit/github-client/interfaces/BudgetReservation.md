@@ -6,7 +6,7 @@
 
 # Interface: BudgetReservation
 
-Defined in: [packages/github-client/src/rate-limit.ts:22](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L22)
+Defined in: [packages/github-client/src/rate-limit.ts:22](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/rate-limit.ts#L22)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/rate-limit.ts:22](https://github.com/pra
 
 > `optional` **reason?**: `string`
 
-Defined in: [packages/github-client/src/rate-limit.ts:24](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L24)
+Defined in: [packages/github-client/src/rate-limit.ts:24](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/rate-limit.ts#L24)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/github-client/src/rate-limit.ts:24](https://github.com/pra
 
 > **reserved**: `boolean`
 
-Defined in: [packages/github-client/src/rate-limit.ts:23](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L23)
+Defined in: [packages/github-client/src/rate-limit.ts:23](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/rate-limit.ts#L23)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [packages/github-client/src/rate-limit.ts:23](https://github.com/pra
 
 > `optional` **waitTime?**: `number`
 
-Defined in: [packages/github-client/src/rate-limit.ts:25](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L25)
+Defined in: [packages/github-client/src/rate-limit.ts:25](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/rate-limit.ts#L25)

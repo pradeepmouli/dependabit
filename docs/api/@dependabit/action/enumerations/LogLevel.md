@@ -6,7 +6,7 @@
 
 # Enumeration: LogLevel
 
-Defined in: [logger.ts:6](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L6)
+Defined in: [logger.ts:6](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L6)
 
 Log level enumeration
 
@@ -16,7 +16,7 @@ Log level enumeration
 
 > **DEBUG**: `"debug"`
 
-Defined in: [logger.ts:7](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L7)
+Defined in: [logger.ts:7](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L7)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [logger.ts:7](https://github.com/pradeepmouli/dependabit/blob/12b63d
 
 > **ERROR**: `"error"`
 
-Defined in: [logger.ts:10](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L10)
+Defined in: [logger.ts:10](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L10)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [logger.ts:10](https://github.com/pradeepmouli/dependabit/blob/12b63
 
 > **INFO**: `"info"`
 
-Defined in: [logger.ts:8](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L8)
+Defined in: [logger.ts:8](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L8)
 
 ***
 
@@ -40,4 +40,4 @@ Defined in: [logger.ts:8](https://github.com/pradeepmouli/dependabit/blob/12b63d
 
 > **WARNING**: `"warning"`
 
-Defined in: [logger.ts:9](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L9)
+Defined in: [logger.ts:9](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/action/src/logger.ts#L9)

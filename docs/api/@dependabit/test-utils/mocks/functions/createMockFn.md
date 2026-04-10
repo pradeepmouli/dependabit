@@ -8,7 +8,7 @@
 
 > **createMockFn**(): `Mock`\<`Procedure` \| `Constructable`\>
 
-Defined in: [mocks.ts:16](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/test-utils/src/mocks.ts#L16)
+Defined in: [mocks.ts:16](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/test-utils/src/mocks.ts#L16)
 
 Creates a mock function
 

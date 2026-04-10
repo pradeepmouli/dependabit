@@ -8,7 +8,7 @@
 
 > **parseDiff**(`patch`): [`DiffParseResult`](../interfaces/DiffParseResult.md)
 
-Defined in: [detector/src/diff-parser.ts:73](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/diff-parser.ts#L73)
+Defined in: [detector/src/diff-parser.ts:73](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/detector/src/diff-parser.ts#L73)
 
 Parse a unified diff and extract additions and deletions
 

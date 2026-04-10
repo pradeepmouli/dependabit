@@ -6,7 +6,7 @@
 
 # Class: TokenAuthHandler
 
-Defined in: [packages/github-client/src/auth/token.ts:14](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/token.ts#L14)
+Defined in: [packages/github-client/src/auth/token.ts:14](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/token.ts#L14)
 
 Handler for token-based authentication (GitHub PAT, API keys)
 
@@ -16,7 +16,7 @@ Handler for token-based authentication (GitHub PAT, API keys)
 
 > **new TokenAuthHandler**(`token`): `TokenAuthHandler`
 
-Defined in: [packages/github-client/src/auth/token.ts:25](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/token.ts#L25)
+Defined in: [packages/github-client/src/auth/token.ts:25](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/token.ts#L25)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: [packages/github-client/src/auth/token.ts:25](https://github.com/pra
 
 > **authenticate**(): `Promise`\<[`TokenAuth`](../interfaces/TokenAuth.md)\>
 
-Defined in: [packages/github-client/src/auth/token.ts:35](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/token.ts#L35)
+Defined in: [packages/github-client/src/auth/token.ts:35](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/token.ts#L35)
 
 Authenticate and return auth object
 
@@ -48,7 +48,7 @@ Authenticate and return auth object
 
 > **getToken**(): `string`
 
-Defined in: [packages/github-client/src/auth/token.ts:78](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/token.ts#L78)
+Defined in: [packages/github-client/src/auth/token.ts:78](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/token.ts#L78)
 
 Get current token
 
@@ -67,7 +67,7 @@ logging or displaying the token. Prefer using authenticate() for auth operations
 
 > **getType**(): `string`
 
-Defined in: [packages/github-client/src/auth/token.ts:58](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/token.ts#L58)
+Defined in: [packages/github-client/src/auth/token.ts:58](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/token.ts#L58)
 
 Get authentication type
 
@@ -81,7 +81,7 @@ Get authentication type
 
 > **updateToken**(`newToken`): `void`
 
-Defined in: [packages/github-client/src/auth/token.ts:65](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/token.ts#L65)
+Defined in: [packages/github-client/src/auth/token.ts:65](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/token.ts#L65)
 
 Update token (for rotation)
 
@@ -101,7 +101,7 @@ Update token (for rotation)
 
 > **validate**(): `boolean`
 
-Defined in: [packages/github-client/src/auth/token.ts:45](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/token.ts#L45)
+Defined in: [packages/github-client/src/auth/token.ts:45](https://github.com/pradeepmouli/dependabit/blob/593f80b1a52a09f3a829e289daa81800eaa7d5b0/packages/github-client/src/auth/token.ts#L45)
 
 Validate token format
 
