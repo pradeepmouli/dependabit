@@ -1,0 +1,43 @@
+[**Documentation v0.1.16**](../../../README.md)
+
+***
+
+[Documentation](../../../README.md) / [@dependabit/manifest](../README.md) / canAddEntry
+
+# Function: canAddEntry()
+
+> **canAddEntry**(`currentManifest`, `newEntry`, `options?`): `object`
+
+Defined in: [packages/manifest/src/size-check.ts:93](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/manifest/src/size-check.ts#L93)
+
+Check if adding an entry would exceed limits
+
+## Parameters
+
+### currentManifest
+
+`unknown`
+
+### newEntry
+
+`unknown`
+
+### options?
+
+[`SizeCheckOptions`](../interfaces/SizeCheckOptions.md)
+
+## Returns
+
+`object`
+
+### canAdd
+
+> **canAdd**: `boolean`
+
+### currentSize
+
+> **currentSize**: [`SizeCheckResult`](../interfaces/SizeCheckResult.md)
+
+### estimatedSize
+
+> **estimatedSize**: [`SizeCheckResult`](../interfaces/SizeCheckResult.md)
