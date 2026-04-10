@@ -1,20 +1,21 @@
 ---
 name: dependabit-utils
-description: "Main export file for utils package Use when working with capitalize, camelCase, kebabCase, truncate, unique."
+description: "dependabot for resources, related projects, and knowledge"
 license: MIT
 ---
 
 # @dependabit/utils
 
-Main export file for utils package
+dependabot for resources, related projects, and knowledge
 
 ## When to Use
 
-- Calling `capitalize()`, `camelCase()`, `kebabCase()`, `truncate()`, `unique()`, and 3 more
+- API surface: 8 functions
 
 ## Quick Reference
 
-**8 functions** — `capitalize`, `camelCase`, `kebabCase`, `truncate`, `unique`, `groupBy`, `flatten`, `chunk`
+**string:** `capitalize`, `camelCase`, `kebabCase`, `truncate`
+**array:** `unique`, `groupBy`, `flatten`, `chunk`
 
 ## Links
 

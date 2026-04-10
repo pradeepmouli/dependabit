@@ -1,6 +1,8 @@
 # Functions
 
-## `createMockFn`
+## mocks
+
+### `createMockFn`
 Creates a mock function
 ```ts
 createMockFn(): Mock<Procedure | Constructable>
@@ -11,7 +13,7 @@ const mockFn = createMockFn()
   .mockResolvedValue('test');
 ```
 
-## `spyOn`
+### `spyOn`
 Creates a spy on a method
 ```ts
 spyOn<T, K>(obj: T, method: K): any
@@ -26,7 +28,7 @@ console.log('test');
 expect(consoleSpy).toHaveBeenCalledWith('test');
 ```
 
-## `createMockTimer`
+### `createMockTimer`
 Creates a mock timer
 ```ts
 createMockTimer(): { runAll: () => VitestUtils; runOnlyPendingTimers: () => VitestUtils; advanceTimersByTime: (ms: number) => VitestUtils; restore: () => VitestUtils }
@@ -37,7 +39,7 @@ const timer = createMockTimer();
 timer.runAll();
 ```
 
-## `mockFetch`
+### `mockFetch`
 Mocks a fetch request
 ```ts
 mockFetch(url: string, response: any): void
@@ -51,7 +53,9 @@ const res = await fetch('/api/users');
 expect(res.json()).resolves.toEqual({ success: true });
 ```
 
-## `createMockUser`
+## fixtures
+
+### `createMockUser`
 Creates mock user data for testing
 ```ts
 createMockUser(overrides?: Partial<any>): any
@@ -65,7 +69,7 @@ expect(user.name).toBe('John');
 expect(user.email).toBe('user@example.com');
 ```
 
-## `createMockEmail`
+### `createMockEmail`
 Creates mock email data for testing
 ```ts
 createMockEmail(overrides?: Partial<any>): any
@@ -78,7 +82,7 @@ const email = createMockEmail({ to: 'john@example.com' });
 expect(email.to).toBe('john@example.com');
 ```
 
-## `createMockApiResponse`
+### `createMockApiResponse`
 Creates mock API response for testing
 ```ts
 createMockApiResponse(overrides?: Partial<any>): any
@@ -91,7 +95,7 @@ const response = createMockApiResponse({ status: 201 });
 expect(response.status).toBe(201);
 ```
 
-## `createMockErrorResponse`
+### `createMockErrorResponse`
 Creates mock error response for testing
 ```ts
 createMockErrorResponse(message: string): any
@@ -104,7 +108,7 @@ const error = createMockErrorResponse('Not found');
 expect(error.success).toBe(false);
 ```
 
-## `createMockArray`
+### `createMockArray`
 Creates an array of mock items
 ```ts
 createMockArray<T>(count: number, factory: (index: number) => T): T[]

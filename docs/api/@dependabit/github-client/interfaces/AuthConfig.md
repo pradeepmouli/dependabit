@@ -6,7 +6,7 @@
 
 # Interface: AuthConfig
 
-Defined in: [packages/github-client/src/auth.ts:13](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/auth.ts#L13)
+Defined in: [packages/github-client/src/auth.ts:13](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth.ts#L13)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/auth.ts:13](https://github.com/pradeepmo
 
 > `optional` **oauth?**: [`OAuthConfig`](OAuthConfig.md)
 
-Defined in: [packages/github-client/src/auth.ts:16](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/auth.ts#L16)
+Defined in: [packages/github-client/src/auth.ts:16](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth.ts#L16)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/github-client/src/auth.ts:16](https://github.com/pradeepmo
 
 > `optional` **password?**: `string`
 
-Defined in: [packages/github-client/src/auth.ts:18](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/auth.ts#L18)
+Defined in: [packages/github-client/src/auth.ts:18](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth.ts#L18)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/github-client/src/auth.ts:18](https://github.com/pradeepmo
 
 > `optional` **token?**: `string`
 
-Defined in: [packages/github-client/src/auth.ts:15](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/auth.ts#L15)
+Defined in: [packages/github-client/src/auth.ts:15](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth.ts#L15)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/github-client/src/auth.ts:15](https://github.com/pradeepmo
 
 > **type**: [`AuthType`](../type-aliases/AuthType.md)
 
-Defined in: [packages/github-client/src/auth.ts:14](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/auth.ts#L14)
+Defined in: [packages/github-client/src/auth.ts:14](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth.ts#L14)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [packages/github-client/src/auth.ts:14](https://github.com/pradeepmo
 
 > `optional` **username?**: `string`
 
-Defined in: [packages/github-client/src/auth.ts:17](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/auth.ts#L17)
+Defined in: [packages/github-client/src/auth.ts:17](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth.ts#L17)

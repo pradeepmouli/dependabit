@@ -1,6 +1,8 @@
 # Classes
 
-## `Monitor`
+## monitor
+
+### `Monitor`
 @dependabit/monitor - Dependency change detection and monitoring
 ```ts
 constructor(): Monitor
@@ -10,7 +12,9 @@ constructor(): Monitor
 - `checkAll(dependencies: DependencyConfig[]): Promise<CheckResult[]>` — Checks multiple dependencies, respecting monitoring rules
 - `registerChecker(accessMethod: string, checker: Checker): void` — Registers a custom checker for an access method
 
-## `GitHubRepoChecker`
+## github-repo
+
+### `GitHubRepoChecker`
 *implements `Checker`*
 ```ts
 constructor(): GitHubRepoChecker
@@ -19,7 +23,9 @@ constructor(): GitHubRepoChecker
 - `fetch(config: AccessConfig): Promise<DependencySnapshot>` — Fetches latest release information from a GitHub repository
 - `compare(prev: DependencySnapshot, curr: DependencySnapshot): Promise<ChangeDetection>` — Compares two snapshots to detect version/state changes
 
-## `URLContentChecker`
+## url-content
+
+### `URLContentChecker`
 *implements `Checker`*
 ```ts
 constructor(): URLContentChecker
@@ -28,7 +34,9 @@ constructor(): URLContentChecker
 - `fetch(config: AccessConfig): Promise<DependencySnapshot>` — Fetches and hashes URL content
 - `compare(prev: DependencySnapshot, curr: DependencySnapshot): Promise<ChangeDetection>` — Compares two snapshots to detect content changes
 
-## `OpenAPIChecker`
+## openapi
+
+### `OpenAPIChecker`
 *implements `Checker`*
 ```ts
 constructor(): OpenAPIChecker
@@ -37,21 +45,27 @@ constructor(): OpenAPIChecker
 - `fetch(config: AccessConfig): Promise<DependencySnapshot>` — Fetches and parses OpenAPI specification
 - `compare(prev: DependencySnapshot, curr: DependencySnapshot): Promise<ChangeDetection>` — Compares two OpenAPI snapshots with semantic diffing
 
-## `StateComparator`
+## comparator
+
+### `StateComparator`
 ```ts
 constructor(): StateComparator
 ```
 **Methods:**
 - `compare(oldState: DependencySnapshot, newState: DependencySnapshot): ChangeDetection` — Compares two dependency snapshots to detect changes
 
-## `SeverityClassifier`
+## severity
+
+### `SeverityClassifier`
 ```ts
 constructor(): SeverityClassifier
 ```
 **Methods:**
 - `classify(changes: ChangeDetection): Severity` — Classifies the severity of a change based on version changes and change types
 
-## `Scheduler`
+## scheduler
+
+### `Scheduler`
 Scheduler for per-dependency monitoring
 
 Determines which dependencies should be checked based on:

@@ -8,7 +8,7 @@
 
 > **createMockUser**(`overrides?`): `any`
 
-Defined in: [fixtures.ts:17](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/test-utils/src/fixtures.ts#L17)
+Defined in: [fixtures.ts:17](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/test-utils/src/fixtures.ts#L17)
 
 Creates mock user data for testing
 

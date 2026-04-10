@@ -6,7 +6,7 @@
 
 # Interface: AccessConfig
 
-Defined in: [monitor/src/types.ts:21](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/types.ts#L21)
+Defined in: [monitor/src/types.ts:21](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/types.ts#L21)
 
 ## Extended by
 
@@ -18,7 +18,7 @@ Defined in: [monitor/src/types.ts:21](https://github.com/pradeepmouli/dependabit
 
 > **accessMethod**: `"github-api"` \| `"http"` \| `"openapi"` \| `"context7"` \| `"arxiv"`
 
-Defined in: [monitor/src/types.ts:23](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/types.ts#L23)
+Defined in: [monitor/src/types.ts:23](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/types.ts#L23)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [monitor/src/types.ts:23](https://github.com/pradeepmouli/dependabit
 
 > `optional` **auth?**: `object`
 
-Defined in: [monitor/src/types.ts:24](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/types.ts#L24)
+Defined in: [monitor/src/types.ts:24](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/types.ts#L24)
 
 #### secret?
 
@@ -42,4 +42,4 @@ Defined in: [monitor/src/types.ts:24](https://github.com/pradeepmouli/dependabit
 
 > **url**: `string`
 
-Defined in: [monitor/src/types.ts:22](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/types.ts#L22)
+Defined in: [monitor/src/types.ts:22](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/types.ts#L22)

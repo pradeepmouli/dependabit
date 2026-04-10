@@ -8,7 +8,7 @@
 
 > **groupBy**\<`T`, `K`\>(`arr`, `keyFn`): `Record`\<`K`, `T`[]\>
 
-Defined in: [array.ts:29](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/utils/src/array.ts#L29)
+Defined in: [array.ts:29](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/utils/src/array.ts#L29)
 
 Groups array elements by a key function
 

@@ -6,7 +6,7 @@
 
 # Class: GitHubClient
 
-Defined in: [packages/github-client/src/client.ts:25](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L25)
+Defined in: [packages/github-client/src/client.ts:25](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L25)
 
 GitHub API client wrapper with rate limit handling
 
@@ -16,7 +16,7 @@ GitHub API client wrapper with rate limit handling
 
 > **new GitHubClient**(`config?`): `GitHubClient`
 
-Defined in: [packages/github-client/src/client.ts:31](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L31)
+Defined in: [packages/github-client/src/client.ts:31](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L31)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: [packages/github-client/src/client.ts:31](https://github.com/pradeep
 
 > **checkRateLimit**(): `Promise`\<`void`\>
 
-Defined in: [packages/github-client/src/client.ts:60](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L60)
+Defined in: [packages/github-client/src/client.ts:60](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L60)
 
 Check rate limit and throw if exceeded; log a warning when remaining is low.
 
@@ -48,7 +48,7 @@ Check rate limit and throw if exceeded; log a warning when remaining is low.
 
 > **getLastRateLimitCheck**(): `RateLimitInfo` \| `undefined`
 
-Defined in: [packages/github-client/src/client.ts:99](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L99)
+Defined in: [packages/github-client/src/client.ts:99](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L99)
 
 Get last known rate limit info (cached)
 
@@ -62,7 +62,7 @@ Get last known rate limit info (cached)
 
 > **getOctokit**(): `Octokit` & `object` & `paginateGraphQLInterface` & `Api` & `object`
 
-Defined in: [packages/github-client/src/client.ts:92](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L92)
+Defined in: [packages/github-client/src/client.ts:92](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L92)
 
 Get the underlying Octokit instance
 
@@ -76,7 +76,7 @@ Get the underlying Octokit instance
 
 > **getRateLimit**(): `Promise`\<`RateLimitInfo`\>
 
-Defined in: [packages/github-client/src/client.ts:42](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L42)
+Defined in: [packages/github-client/src/client.ts:42](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L42)
 
 Get current rate limit status
 
@@ -90,7 +90,7 @@ Get current rate limit status
 
 > **withRateLimit**\<`T`\>(`fn`): `Promise`\<`T`\>
 
-Defined in: [packages/github-client/src/client.ts:84](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L84)
+Defined in: [packages/github-client/src/client.ts:84](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L84)
 
 Execute a request with rate limit checking
 

@@ -8,7 +8,7 @@
 
 > **shouldIgnoreUrl**(`config`, `url`): `boolean`
 
-Defined in: [packages/manifest/src/config.ts:70](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/manifest/src/config.ts#L70)
+Defined in: [packages/manifest/src/config.ts:70](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/manifest/src/config.ts#L70)
 
 Check if a URL should be ignored based on config
 

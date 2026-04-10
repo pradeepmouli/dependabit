@@ -6,7 +6,7 @@
 
 # Interface: DetectedDependency
 
-Defined in: [detector/src/llm/client.ts:22](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L22)
+Defined in: [detector/src/llm/client.ts:22](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L22)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [detector/src/llm/client.ts:22](https://github.com/pradeepmouli/depe
 
 > **confidence**: `number`
 
-Defined in: [detector/src/llm/client.ts:33](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L33)
+Defined in: [detector/src/llm/client.ts:33](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L33)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [detector/src/llm/client.ts:33](https://github.com/pradeepmouli/depe
 
 > `optional` **description?**: `string`
 
-Defined in: [detector/src/llm/client.ts:25](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L25)
+Defined in: [detector/src/llm/client.ts:25](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L25)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [detector/src/llm/client.ts:25](https://github.com/pradeepmouli/depe
 
 > **name**: `string`
 
-Defined in: [detector/src/llm/client.ts:24](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L24)
+Defined in: [detector/src/llm/client.ts:24](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L24)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [detector/src/llm/client.ts:24](https://github.com/pradeepmouli/depe
 
 > `optional` **reasoning?**: `string`
 
-Defined in: [detector/src/llm/client.ts:34](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L34)
+Defined in: [detector/src/llm/client.ts:34](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L34)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [detector/src/llm/client.ts:34](https://github.com/pradeepmouli/depe
 
 > **type**: `"reference-implementation"` \| `"schema"` \| `"documentation"` \| `"research-paper"` \| `"api-example"` \| `"other"`
 
-Defined in: [detector/src/llm/client.ts:26](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L26)
+Defined in: [detector/src/llm/client.ts:26](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L26)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [detector/src/llm/client.ts:26](https://github.com/pradeepmouli/depe
 
 > **url**: `string`
 
-Defined in: [detector/src/llm/client.ts:23](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L23)
+Defined in: [detector/src/llm/client.ts:23](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L23)

@@ -8,7 +8,7 @@
 
 > **getCommitsBetween**(`client`, `owner`, `repo`, `base`, `head`): `Promise`\<[`CommitInfo`](../interfaces/CommitInfo.md)[]\>
 
-Defined in: [packages/github-client/src/commits.ts:148](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/commits.ts#L148)
+Defined in: [packages/github-client/src/commits.ts:148](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/commits.ts#L148)
 
 Get commits between two refs
 

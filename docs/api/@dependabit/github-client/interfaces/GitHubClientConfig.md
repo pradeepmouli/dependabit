@@ -6,7 +6,7 @@
 
 # Interface: GitHubClientConfig
 
-Defined in: [packages/github-client/src/client.ts:16](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L16)
+Defined in: [packages/github-client/src/client.ts:16](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L16)
 
 GitHub client configuration
 
@@ -16,7 +16,7 @@ GitHub client configuration
 
 > `optional` **auth?**: `string`
 
-Defined in: [packages/github-client/src/client.ts:17](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L17)
+Defined in: [packages/github-client/src/client.ts:17](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L17)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [packages/github-client/src/client.ts:17](https://github.com/pradeep
 
 > `optional` **rateLimitMinRemaining?**: `number`
 
-Defined in: [packages/github-client/src/client.ts:19](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L19)
+Defined in: [packages/github-client/src/client.ts:19](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L19)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [packages/github-client/src/client.ts:19](https://github.com/pradeep
 
 > `optional` **rateLimitWarningThreshold?**: `number`
 
-Defined in: [packages/github-client/src/client.ts:18](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L18)
+Defined in: [packages/github-client/src/client.ts:18](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L18)

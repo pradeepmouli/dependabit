@@ -6,7 +6,7 @@
 
 # Class: Detector
 
-Defined in: [detector/src/detector.ts:65](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/detector.ts#L65)
+Defined in: [detector/src/detector.ts:65](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L65)
 
 Main detector class
 
@@ -16,7 +16,7 @@ Main detector class
 
 > **new Detector**(`options`): `Detector`
 
-Defined in: [detector/src/detector.ts:71](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/detector.ts#L71)
+Defined in: [detector/src/detector.ts:71](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L71)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: [detector/src/detector.ts:71](https://github.com/pradeepmouli/depend
 
 > **analyzeFiles**(`filePaths`): `Promise`\<[`DetectionResult`](../interfaces/DetectionResult.md)\>
 
-Defined in: [detector/src/detector.ts:836](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/detector.ts#L836)
+Defined in: [detector/src/detector.ts:836](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L836)
 
 Analyze only specific files for dependencies (for incremental updates)
 This is more efficient than full repository scan when only few files changed
@@ -55,7 +55,7 @@ This is more efficient than full repository scan when only few files changed
 
 > **detectDependencies**(): `Promise`\<[`DetectionResult`](../interfaces/DetectionResult.md)\>
 
-Defined in: [detector/src/detector.ts:115](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/detector.ts#L115)
+Defined in: [detector/src/detector.ts:115](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L115)
 
 Detect all external dependencies in the repository
 

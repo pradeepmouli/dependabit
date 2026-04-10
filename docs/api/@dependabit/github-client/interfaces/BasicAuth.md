@@ -6,7 +6,7 @@
 
 # Interface: BasicAuth
 
-Defined in: [packages/github-client/src/auth/basic.ts:6](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/auth/basic.ts#L6)
+Defined in: [packages/github-client/src/auth/basic.ts:6](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth/basic.ts#L6)
 
 Basic authentication handler for GitHub API
 Supports username/password or username/personal access token
@@ -17,7 +17,7 @@ Supports username/password or username/personal access token
 
 > **password**: `string`
 
-Defined in: [packages/github-client/src/auth/basic.ts:9](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/auth/basic.ts#L9)
+Defined in: [packages/github-client/src/auth/basic.ts:9](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth/basic.ts#L9)
 
 ***
 
@@ -25,7 +25,7 @@ Defined in: [packages/github-client/src/auth/basic.ts:9](https://github.com/prad
 
 > **type**: `"basic"`
 
-Defined in: [packages/github-client/src/auth/basic.ts:7](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/auth/basic.ts#L7)
+Defined in: [packages/github-client/src/auth/basic.ts:7](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth/basic.ts#L7)
 
 ***
 
@@ -33,4 +33,4 @@ Defined in: [packages/github-client/src/auth/basic.ts:7](https://github.com/prad
 
 > **username**: `string`
 
-Defined in: [packages/github-client/src/auth/basic.ts:8](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/auth/basic.ts#L8)
+Defined in: [packages/github-client/src/auth/basic.ts:8](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth/basic.ts#L8)

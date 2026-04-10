@@ -8,7 +8,7 @@
 
 > **readConfig**(`path`): `Promise`\<\{ `dependencies?`: `object`[]; `ignore?`: \{ `patterns?`: `string`[]; `types?`: (`"reference-implementation"` \| `"schema"` \| `"documentation"` \| `"research-paper"` \| `"api-example"` \| `"other"`)[]; `urls?`: `string`[]; `useGitExcludes`: `boolean`; \}; `issues?`: \{ `aiAgentAssignment?`: \{ `breaking?`: `string`; `enabled`: `boolean`; `major?`: `string`; `minor?`: `string`; \}; `assignees`: `string`[]; `bodyTemplate?`: `string`; `labels`: `string`[]; `titleTemplate`: `string`; \}; `llm?`: \{ `maxTokens`: `number`; `model?`: `string`; `provider`: `"github-copilot"` \| `"claude"` \| `"openai"` \| `"azure-openai"`; `temperature`: `number`; \}; `monitoring?`: \{ `autoUpdate`: `boolean`; `enabled`: `boolean`; `falsePositiveThreshold`: `number`; \}; `schedule`: \{ `day?`: `"monday"` \| `"tuesday"` \| `"wednesday"` \| `"thursday"` \| `"friday"` \| `"saturday"` \| `"sunday"`; `interval`: `"hourly"` \| `"daily"` \| `"weekly"` \| `"monthly"`; `time?`: `string`; `timezone`: `string`; \}; `version`: `"1"`; \}\>
 
-Defined in: [packages/manifest/src/config.ts:9](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/manifest/src/config.ts#L9)
+Defined in: [packages/manifest/src/config.ts:9](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/manifest/src/config.ts#L9)
 
 Parse and validate a YAML configuration file
 

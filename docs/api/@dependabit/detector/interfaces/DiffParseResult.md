@@ -6,7 +6,7 @@
 
 # Interface: DiffParseResult
 
-Defined in: [detector/src/diff-parser.ts:8](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/diff-parser.ts#L8)
+Defined in: [detector/src/diff-parser.ts:8](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/diff-parser.ts#L8)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [detector/src/diff-parser.ts:8](https://github.com/pradeepmouli/depe
 
 > **additions**: `string`[]
 
-Defined in: [detector/src/diff-parser.ts:9](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/diff-parser.ts#L9)
+Defined in: [detector/src/diff-parser.ts:9](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/diff-parser.ts#L9)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [detector/src/diff-parser.ts:9](https://github.com/pradeepmouli/depe
 
 > **deletions**: `string`[]
 
-Defined in: [detector/src/diff-parser.ts:10](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/diff-parser.ts#L10)
+Defined in: [detector/src/diff-parser.ts:10](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/diff-parser.ts#L10)

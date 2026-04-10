@@ -1,6 +1,8 @@
 # Functions
 
-## `normalizeHTML`
+## normalizer
+
+### `normalizeHTML`
 Normalizes HTML content for consistent comparison
 ```ts
 normalizeHTML(html: string): string
@@ -9,7 +11,7 @@ normalizeHTML(html: string): string
 - `html: string` — Raw HTML content
 **Returns:** `string` — Normalized HTML string
 
-## `normalizeURL`
+### `normalizeURL`
 Normalizes a URL by removing tracking parameters
 ```ts
 normalizeURL(url: string): string

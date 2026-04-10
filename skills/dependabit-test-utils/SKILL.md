@@ -1,20 +1,21 @@
 ---
 name: dependabit-test-utils
-description: "Main export for test utilities Use when working with createMockFn, spyOn, createMockTimer, mockFetch, createMockUser."
+description: "dependabot for resources, related projects, and knowledge"
 license: MIT
 ---
 
 # @dependabit/test-utils
 
-Main export for test utilities
+dependabot for resources, related projects, and knowledge
 
 ## When to Use
 
-- Calling `createMockFn()`, `spyOn()`, `createMockTimer()`, `mockFetch()`, `createMockUser()`, and 4 more
+- API surface: 9 functions
 
 ## Quick Reference
 
-**9 functions** — `createMockFn`, `spyOn`, `createMockTimer`, `mockFetch`, `createMockUser`, `createMockEmail`, `createMockApiResponse`, `createMockErrorResponse`, `createMockArray`
+**mocks:** `createMockFn`, `spyOn`, `createMockTimer`, `mockFetch`
+**fixtures:** `createMockUser`, `createMockEmail`, `createMockApiResponse`, `createMockErrorResponse`, `createMockArray`
 
 ## Links
 

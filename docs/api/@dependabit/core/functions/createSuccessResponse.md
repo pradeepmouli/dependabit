@@ -8,7 +8,7 @@
 
 > **createSuccessResponse**\<`T`\>(`data`): [`ApiResponse`](../interfaces/ApiResponse.md)\<`T`\>
 
-Defined in: [index.ts:42](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/core/src/index.ts#L42)
+Defined in: [index.ts:42](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/core/src/index.ts#L42)
 
 Creates a successful API response
 

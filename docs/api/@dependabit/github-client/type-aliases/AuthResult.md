@@ -8,4 +8,4 @@
 
 > **AuthResult** = [`TokenAuth`](../interfaces/TokenAuth.md) \| [`OAuthAuth`](../interfaces/OAuthAuth.md) \| [`BasicAuth`](../interfaces/BasicAuth.md)
 
-Defined in: [packages/github-client/src/auth.ts:11](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/auth.ts#L11)
+Defined in: [packages/github-client/src/auth.ts:11](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth.ts#L11)

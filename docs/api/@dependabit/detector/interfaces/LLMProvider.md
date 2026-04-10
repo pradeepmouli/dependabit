@@ -6,7 +6,7 @@
 
 # Interface: LLMProvider
 
-Defined in: [detector/src/llm/client.ts:54](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L54)
+Defined in: [detector/src/llm/client.ts:54](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L54)
 
 Base interface that all LLM providers must implement
 
@@ -16,7 +16,7 @@ Base interface that all LLM providers must implement
 
 > **analyze**(`content`, `prompt`): `Promise`\<[`LLMResponse`](LLMResponse.md)\>
 
-Defined in: [detector/src/llm/client.ts:61](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L61)
+Defined in: [detector/src/llm/client.ts:61](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L61)
 
 Analyze content and detect external dependencies
 
@@ -46,7 +46,7 @@ LLM response with detected dependencies
 
 > **getRateLimit**(): `Promise`\<[`RateLimitInfo`](RateLimitInfo.md)\>
 
-Defined in: [detector/src/llm/client.ts:71](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L71)
+Defined in: [detector/src/llm/client.ts:71](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L71)
 
 Get current rate limit status
 
@@ -60,7 +60,7 @@ Get current rate limit status
 
 > **getSupportedModels**(): `string`[]
 
-Defined in: [detector/src/llm/client.ts:66](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L66)
+Defined in: [detector/src/llm/client.ts:66](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L66)
 
 Get list of supported models for this provider
 
@@ -74,7 +74,7 @@ Get list of supported models for this provider
 
 > **validateConfig**(): `boolean`
 
-Defined in: [detector/src/llm/client.ts:76](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/llm/client.ts#L76)
+Defined in: [detector/src/llm/client.ts:76](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L76)
 
 Validate provider configuration
 

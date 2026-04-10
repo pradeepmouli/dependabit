@@ -8,7 +8,7 @@
 
 > **parseRequirementsTxt**(`content`): [`PackageMetadata`](../interfaces/PackageMetadata.md)
 
-Defined in: [detector/src/parsers/package-files.ts:60](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/detector/src/parsers/package-files.ts#L60)
+Defined in: [detector/src/parsers/package-files.ts:60](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/parsers/package-files.ts#L60)
 
 Parse requirements.txt and extract URLs from comments
 EXCLUDES actual packages (handled by dependabot)

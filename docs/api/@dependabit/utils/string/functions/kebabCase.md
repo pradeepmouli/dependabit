@@ -8,7 +8,7 @@
 
 > **kebabCase**(`str`): `string`
 
-Defined in: [string.ts:42](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/utils/src/string.ts#L42)
+Defined in: [string.ts:42](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/utils/src/string.ts#L42)
 
 Converts a string to kebab-case
 

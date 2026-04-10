@@ -6,7 +6,7 @@
 
 # Class: StateComparator
 
-Defined in: [monitor/src/comparator.ts:8](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/comparator.ts#L8)
+Defined in: [monitor/src/comparator.ts:8](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/comparator.ts#L8)
 
 ## Constructors
 
@@ -24,7 +24,7 @@ Defined in: [monitor/src/comparator.ts:8](https://github.com/pradeepmouli/depend
 
 > **compare**(`oldState`, `newState`): [`ChangeDetection`](../interfaces/ChangeDetection.md)
 
-Defined in: [monitor/src/comparator.ts:12](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/comparator.ts#L12)
+Defined in: [monitor/src/comparator.ts:12](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/comparator.ts#L12)
 
 Compares two dependency snapshots to detect changes
 

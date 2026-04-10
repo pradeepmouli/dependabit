@@ -8,7 +8,7 @@
 
 > **createGitHubClient**(`config?`): [`GitHubClient`](../classes/GitHubClient.md)
 
-Defined in: [packages/github-client/src/client.ts:107](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/github-client/src/client.ts#L107)
+Defined in: [packages/github-client/src/client.ts:107](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/client.ts#L107)
 
 Create a GitHub client instance
 

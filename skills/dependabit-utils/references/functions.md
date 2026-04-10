@@ -1,6 +1,8 @@
 # Functions
 
-## `capitalize`
+## string
+
+### `capitalize`
 Capitalizes the first letter of a string
 ```ts
 capitalize(str: string): string
@@ -12,7 +14,7 @@ capitalize(str: string): string
 capitalize('hello'); // 'Hello'
 ```
 
-## `camelCase`
+### `camelCase`
 Converts a string to camelCase
 ```ts
 camelCase(str: string): string
@@ -24,7 +26,7 @@ camelCase(str: string): string
 camelCase('hello-world'); // 'helloWorld'
 ```
 
-## `kebabCase`
+### `kebabCase`
 Converts a string to kebab-case
 ```ts
 kebabCase(str: string): string
@@ -36,7 +38,7 @@ kebabCase(str: string): string
 kebabCase('HelloWorld'); // 'hello-world'
 ```
 
-## `truncate`
+### `truncate`
 Truncates a string to a maximum length
 ```ts
 truncate(str: string, maxLength: number, suffix: string): string
@@ -50,7 +52,9 @@ truncate(str: string, maxLength: number, suffix: string): string
 truncate('Hello World', 8); // 'Hello...'
 ```
 
-## `unique`
+## array
+
+### `unique`
 Removes duplicates from an array
 ```ts
 unique<T>(arr: T[]): T[]
@@ -62,7 +66,7 @@ unique<T>(arr: T[]): T[]
 unique([1, 2, 2, 3]); // [1, 2, 3]
 ```
 
-## `groupBy`
+### `groupBy`
 Groups array elements by a key function
 ```ts
 groupBy<T, K>(arr: T[], keyFn: (item: T) => K): Record<K, T[]>
@@ -75,7 +79,7 @@ groupBy<T, K>(arr: T[], keyFn: (item: T) => K): Record<K, T[]>
 groupBy([1, 2, 3], n => n % 2); // { '0': [2], '1': [1, 3] }
 ```
 
-## `flatten`
+### `flatten`
 Flattens a nested array
 ```ts
 flatten<T>(arr: (T | T[])[], depth: number): T[]
@@ -88,7 +92,7 @@ flatten<T>(arr: (T | T[])[], depth: number): T[]
 flatten([[1, 2], [3, [4, 5]]], 1); // [1, 2, 3, [4, 5]]
 ```
 
-## `chunk`
+### `chunk`
 Chunks an array into smaller arrays
 ```ts
 chunk<T>(arr: T[], size: number): T[][]

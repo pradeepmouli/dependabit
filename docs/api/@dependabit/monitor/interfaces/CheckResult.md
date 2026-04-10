@@ -6,7 +6,7 @@
 
 # Interface: CheckResult
 
-Defined in: [monitor/src/monitor.ts:25](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/monitor.ts#L25)
+Defined in: [monitor/src/monitor.ts:25](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/monitor.ts#L25)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [monitor/src/monitor.ts:25](https://github.com/pradeepmouli/dependab
 
 > `optional` **changes?**: [`ChangeDetection`](ChangeDetection.md)
 
-Defined in: [monitor/src/monitor.ts:28](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/monitor.ts#L28)
+Defined in: [monitor/src/monitor.ts:28](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/monitor.ts#L28)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [monitor/src/monitor.ts:28](https://github.com/pradeepmouli/dependab
 
 > **dependency**: [`DependencyConfig`](DependencyConfig.md)
 
-Defined in: [monitor/src/monitor.ts:26](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/monitor.ts#L26)
+Defined in: [monitor/src/monitor.ts:26](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/monitor.ts#L26)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [monitor/src/monitor.ts:26](https://github.com/pradeepmouli/dependab
 
 > `optional` **error?**: `string`
 
-Defined in: [monitor/src/monitor.ts:31](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/monitor.ts#L31)
+Defined in: [monitor/src/monitor.ts:31](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/monitor.ts#L31)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [monitor/src/monitor.ts:31](https://github.com/pradeepmouli/dependab
 
 > **hasChanged**: `boolean`
 
-Defined in: [monitor/src/monitor.ts:27](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/monitor.ts#L27)
+Defined in: [monitor/src/monitor.ts:27](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/monitor.ts#L27)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [monitor/src/monitor.ts:27](https://github.com/pradeepmouli/dependab
 
 > `optional` **newSnapshot?**: [`DependencySnapshot`](DependencySnapshot.md)
 
-Defined in: [monitor/src/monitor.ts:30](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/monitor.ts#L30)
+Defined in: [monitor/src/monitor.ts:30](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/monitor.ts#L30)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [monitor/src/monitor.ts:30](https://github.com/pradeepmouli/dependab
 
 > `optional` **severity?**: `"breaking"` \| `"major"` \| `"minor"`
 
-Defined in: [monitor/src/monitor.ts:29](https://github.com/pradeepmouli/dependabit/blob/4918d1ad177242efd82cc7d7c13c4be62c454ef5/packages/monitor/src/monitor.ts#L29)
+Defined in: [monitor/src/monitor.ts:29](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/monitor.ts#L29)
