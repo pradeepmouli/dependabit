@@ -6,7 +6,7 @@
 
 # Interface: CommitDiff
 
-Defined in: [packages/github-client/src/commits.ts:28](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/commits.ts#L28)
+Defined in: [packages/github-client/src/commits.ts:28](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L28)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/commits.ts:28](https://github.com/pradee
 
 > **files**: [`CommitFile`](CommitFile.md)[]
 
-Defined in: [packages/github-client/src/commits.ts:30](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/commits.ts#L30)
+Defined in: [packages/github-client/src/commits.ts:30](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L30)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [packages/github-client/src/commits.ts:30](https://github.com/pradee
 
 > **sha**: `string`
 
-Defined in: [packages/github-client/src/commits.ts:29](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/commits.ts#L29)
+Defined in: [packages/github-client/src/commits.ts:29](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L29)

@@ -6,7 +6,7 @@
 
 # Class: SeverityClassifier
 
-Defined in: [monitor/src/severity.ts:10](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/severity.ts#L10)
+Defined in: [monitor/src/severity.ts:10](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/severity.ts#L10)
 
 ## Constructors
 
@@ -24,7 +24,7 @@ Defined in: [monitor/src/severity.ts:10](https://github.com/pradeepmouli/dependa
 
 > **classify**(`changes`): [`Severity`](../type-aliases/Severity.md)
 
-Defined in: [monitor/src/severity.ts:14](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/severity.ts#L14)
+Defined in: [monitor/src/severity.ts:14](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/severity.ts#L14)
 
 Classifies the severity of a change based on version changes and change types
 

@@ -6,7 +6,7 @@
 
 # Interface: FeedbackConfig
 
-Defined in: [packages/github-client/src/feedback.ts:18](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/feedback.ts#L18)
+Defined in: [packages/github-client/src/feedback.ts:18](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L18)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/feedback.ts:18](https://github.com/prade
 
 > `optional` **falsePositiveLabel?**: `string`
 
-Defined in: [packages/github-client/src/feedback.ts:20](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/feedback.ts#L20)
+Defined in: [packages/github-client/src/feedback.ts:20](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L20)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [packages/github-client/src/feedback.ts:20](https://github.com/prade
 
 > `optional` **truePositiveLabel?**: `string`
 
-Defined in: [packages/github-client/src/feedback.ts:19](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/feedback.ts#L19)
+Defined in: [packages/github-client/src/feedback.ts:19](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L19)

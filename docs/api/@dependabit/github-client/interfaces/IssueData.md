@@ -6,7 +6,7 @@
 
 # Interface: IssueData
 
-Defined in: [packages/github-client/src/issues.ts:8](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/issues.ts#L8)
+Defined in: [packages/github-client/src/issues.ts:8](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L8)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/issues.ts:8](https://github.com/pradeepm
 
 > `optional` **assignee?**: `string`
 
-Defined in: [packages/github-client/src/issues.ts:18](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/issues.ts#L18)
+Defined in: [packages/github-client/src/issues.ts:18](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L18)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/github-client/src/issues.ts:18](https://github.com/pradeep
 
 > **body**: `string`
 
-Defined in: [packages/github-client/src/issues.ts:12](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/issues.ts#L12)
+Defined in: [packages/github-client/src/issues.ts:12](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L12)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/github-client/src/issues.ts:12](https://github.com/pradeep
 
 > **dependency**: `object`
 
-Defined in: [packages/github-client/src/issues.ts:14](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/issues.ts#L14)
+Defined in: [packages/github-client/src/issues.ts:14](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L14)
 
 #### id
 
@@ -46,7 +46,7 @@ Defined in: [packages/github-client/src/issues.ts:14](https://github.com/pradeep
 
 > **owner**: `string`
 
-Defined in: [packages/github-client/src/issues.ts:9](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/issues.ts#L9)
+Defined in: [packages/github-client/src/issues.ts:9](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L9)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [packages/github-client/src/issues.ts:9](https://github.com/pradeepm
 
 > **repo**: `string`
 
-Defined in: [packages/github-client/src/issues.ts:10](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/issues.ts#L10)
+Defined in: [packages/github-client/src/issues.ts:10](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L10)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [packages/github-client/src/issues.ts:10](https://github.com/pradeep
 
 > **severity**: `"breaking"` \| `"major"` \| `"minor"`
 
-Defined in: [packages/github-client/src/issues.ts:13](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/issues.ts#L13)
+Defined in: [packages/github-client/src/issues.ts:13](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L13)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [packages/github-client/src/issues.ts:13](https://github.com/pradeep
 
 > **title**: `string`
 
-Defined in: [packages/github-client/src/issues.ts:11](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/issues.ts#L11)
+Defined in: [packages/github-client/src/issues.ts:11](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/issues.ts#L11)

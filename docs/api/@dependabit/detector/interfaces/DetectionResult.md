@@ -6,7 +6,7 @@
 
 # Interface: DetectionResult
 
-Defined in: [detector/src/detector.ts:38](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L38)
+Defined in: [detector/src/detector.ts:38](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/detector.ts#L38)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [detector/src/detector.ts:38](https://github.com/pradeepmouli/depend
 
 > **dependencies**: `object`[]
 
-Defined in: [detector/src/detector.ts:39](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L39)
+Defined in: [detector/src/detector.ts:39](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/detector.ts#L39)
 
 #### accessMethod
 
@@ -114,7 +114,7 @@ Defined in: [detector/src/detector.ts:39](https://github.com/pradeepmouli/depend
 
 > **statistics**: `object`
 
-Defined in: [detector/src/detector.ts:40](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L40)
+Defined in: [detector/src/detector.ts:40](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/detector.ts#L40)
 
 #### filesScanned
 

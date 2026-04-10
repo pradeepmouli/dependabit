@@ -6,7 +6,7 @@
 
 # Interface: LLMProviderConfig
 
-Defined in: [detector/src/llm/client.ts:43](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L43)
+Defined in: [detector/src/llm/client.ts:43](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L43)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [detector/src/llm/client.ts:43](https://github.com/pradeepmouli/depe
 
 > `optional` **apiKey?**: `string`
 
-Defined in: [detector/src/llm/client.ts:44](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L44)
+Defined in: [detector/src/llm/client.ts:44](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L44)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [detector/src/llm/client.ts:44](https://github.com/pradeepmouli/depe
 
 > `optional` **endpoint?**: `string`
 
-Defined in: [detector/src/llm/client.ts:45](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L45)
+Defined in: [detector/src/llm/client.ts:45](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L45)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [detector/src/llm/client.ts:45](https://github.com/pradeepmouli/depe
 
 > `optional` **maxTokens?**: `number`
 
-Defined in: [detector/src/llm/client.ts:47](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L47)
+Defined in: [detector/src/llm/client.ts:47](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L47)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [detector/src/llm/client.ts:47](https://github.com/pradeepmouli/depe
 
 > `optional` **model?**: `string`
 
-Defined in: [detector/src/llm/client.ts:46](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L46)
+Defined in: [detector/src/llm/client.ts:46](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L46)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [detector/src/llm/client.ts:46](https://github.com/pradeepmouli/depe
 
 > `optional` **temperature?**: `number`
 
-Defined in: [detector/src/llm/client.ts:48](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/llm/client.ts#L48)
+Defined in: [detector/src/llm/client.ts:48](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/llm/client.ts#L48)

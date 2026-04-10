@@ -6,7 +6,7 @@
 
 # Interface: ChangeDetection
 
-Defined in: [monitor/src/types.ts:12](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/types.ts#L12)
+Defined in: [monitor/src/types.ts:12](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L12)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [monitor/src/types.ts:12](https://github.com/pradeepmouli/dependabit
 
 > **changes**: `string`[]
 
-Defined in: [monitor/src/types.ts:14](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/types.ts#L14)
+Defined in: [monitor/src/types.ts:14](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L14)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [monitor/src/types.ts:14](https://github.com/pradeepmouli/dependabit
 
 > `optional` **diff?**: `unknown`
 
-Defined in: [monitor/src/types.ts:17](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/types.ts#L17)
+Defined in: [monitor/src/types.ts:17](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L17)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [monitor/src/types.ts:17](https://github.com/pradeepmouli/dependabit
 
 > **hasChanged**: `boolean`
 
-Defined in: [monitor/src/types.ts:13](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/types.ts#L13)
+Defined in: [monitor/src/types.ts:13](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L13)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [monitor/src/types.ts:13](https://github.com/pradeepmouli/dependabit
 
 > `optional` **newVersion?**: `string`
 
-Defined in: [monitor/src/types.ts:16](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/types.ts#L16)
+Defined in: [monitor/src/types.ts:16](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L16)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [monitor/src/types.ts:16](https://github.com/pradeepmouli/dependabit
 
 > `optional` **oldVersion?**: `string`
 
-Defined in: [monitor/src/types.ts:15](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/types.ts#L15)
+Defined in: [monitor/src/types.ts:15](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L15)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [monitor/src/types.ts:15](https://github.com/pradeepmouli/dependabit
 
 > `optional` **severity?**: `"breaking"` \| `"major"` \| `"minor"`
 
-Defined in: [monitor/src/types.ts:18](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/types.ts#L18)
+Defined in: [monitor/src/types.ts:18](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/types.ts#L18)

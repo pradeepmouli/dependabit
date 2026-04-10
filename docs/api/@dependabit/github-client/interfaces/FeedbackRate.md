@@ -6,7 +6,7 @@
 
 # Interface: FeedbackRate
 
-Defined in: [packages/github-client/src/feedback.ts:29](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/feedback.ts#L29)
+Defined in: [packages/github-client/src/feedback.ts:29](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L29)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/feedback.ts:29](https://github.com/prade
 
 > **falsePositiveRate**: `number`
 
-Defined in: [packages/github-client/src/feedback.ts:30](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/feedback.ts#L30)
+Defined in: [packages/github-client/src/feedback.ts:30](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L30)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/github-client/src/feedback.ts:30](https://github.com/prade
 
 > **totalFeedback**: `number`
 
-Defined in: [packages/github-client/src/feedback.ts:32](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/feedback.ts#L32)
+Defined in: [packages/github-client/src/feedback.ts:32](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L32)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [packages/github-client/src/feedback.ts:32](https://github.com/prade
 
 > **truePositiveRate**: `number`
 
-Defined in: [packages/github-client/src/feedback.ts:31](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/feedback.ts#L31)
+Defined in: [packages/github-client/src/feedback.ts:31](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/feedback.ts#L31)

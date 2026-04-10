@@ -6,7 +6,7 @@
 
 # Class: Scheduler
 
-Defined in: [monitor/src/scheduler.ts:21](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/scheduler.ts#L21)
+Defined in: [monitor/src/scheduler.ts:21](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/scheduler.ts#L21)
 
 Scheduler for per-dependency monitoring
 
@@ -33,7 +33,7 @@ Determines which dependencies should be checked based on:
 
 > **filterDependenciesToCheck**(`dependencies`, `config`, `currentTime?`): `object`[]
 
-Defined in: [monitor/src/scheduler.ts:80](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/scheduler.ts#L80)
+Defined in: [monitor/src/scheduler.ts:80](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/scheduler.ts#L80)
 
 Filter dependencies that should be checked
 
@@ -191,7 +191,7 @@ Filtered array of dependencies to check
 
 > **getNextCheckTime**(`dependency`, `config`): `Date`
 
-Defined in: [monitor/src/scheduler.ts:116](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/scheduler.ts#L116)
+Defined in: [monitor/src/scheduler.ts:116](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/scheduler.ts#L116)
 
 Get next check time for a dependency
 
@@ -433,7 +433,7 @@ Next check time
 
 > **getScheduleSummary**(`dependencies`, `config`): `object`
 
-Defined in: [monitor/src/scheduler.ts:134](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/scheduler.ts#L134)
+Defined in: [monitor/src/scheduler.ts:134](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/scheduler.ts#L134)
 
 Get schedule summary for all dependencies
 
@@ -605,7 +605,7 @@ Schedule summary grouped by frequency
 
 > **shouldCheckDependency**(`dependency`, `config`, `currentTime?`): `boolean`
 
-Defined in: [monitor/src/scheduler.ts:30](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/scheduler.ts#L30)
+Defined in: [monitor/src/scheduler.ts:30](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/scheduler.ts#L30)
 
 Check if a dependency should be checked now
 

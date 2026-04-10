@@ -6,7 +6,7 @@
 
 # Class: OAuthHandler
 
-Defined in: [packages/github-client/src/auth/oauth.ts:32](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth/oauth.ts#L32)
+Defined in: [packages/github-client/src/auth/oauth.ts:32](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/oauth.ts#L32)
 
 Handler for OAuth 2.0 authentication
 
@@ -16,7 +16,7 @@ Handler for OAuth 2.0 authentication
 
 > **new OAuthHandler**(`config`): `OAuthHandler`
 
-Defined in: [packages/github-client/src/auth/oauth.ts:36](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth/oauth.ts#L36)
+Defined in: [packages/github-client/src/auth/oauth.ts:36](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/oauth.ts#L36)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: [packages/github-client/src/auth/oauth.ts:36](https://github.com/pra
 
 > **authenticate**(`code`): `Promise`\<[`OAuthAuth`](../interfaces/OAuthAuth.md)\>
 
-Defined in: [packages/github-client/src/auth/oauth.ts:49](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth/oauth.ts#L49)
+Defined in: [packages/github-client/src/auth/oauth.ts:49](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/oauth.ts#L49)
 
 Exchange authorization code for access token
 
@@ -54,7 +54,7 @@ Exchange authorization code for access token
 
 > **getAuthorizationUrl**(`scopes`, `state?`): `string`
 
-Defined in: [packages/github-client/src/auth/oauth.ts:69](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth/oauth.ts#L69)
+Defined in: [packages/github-client/src/auth/oauth.ts:69](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/oauth.ts#L69)
 
 Generate authorization URL for OAuth flow
 
@@ -78,7 +78,7 @@ Generate authorization URL for OAuth flow
 
 > **getType**(): `string`
 
-Defined in: [packages/github-client/src/auth/oauth.ts:118](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth/oauth.ts#L118)
+Defined in: [packages/github-client/src/auth/oauth.ts:118](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/oauth.ts#L118)
 
 Get authentication type
 
@@ -92,7 +92,7 @@ Get authentication type
 
 > **refreshToken**(`refreshToken`): `Promise`\<[`OAuthAuth`](../interfaces/OAuthAuth.md)\>
 
-Defined in: [packages/github-client/src/auth/oauth.ts:86](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth/oauth.ts#L86)
+Defined in: [packages/github-client/src/auth/oauth.ts:86](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/oauth.ts#L86)
 
 Refresh an expired access token
 
@@ -112,7 +112,7 @@ Refresh an expired access token
 
 > **validate**(): `boolean`
 
-Defined in: [packages/github-client/src/auth/oauth.ts:105](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/auth/oauth.ts#L105)
+Defined in: [packages/github-client/src/auth/oauth.ts:105](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/auth/oauth.ts#L105)
 
 Validate OAuth configuration
 

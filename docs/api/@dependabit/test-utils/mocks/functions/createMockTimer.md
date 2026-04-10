@@ -8,7 +8,7 @@
 
 > **createMockTimer**(): `object`
 
-Defined in: [mocks.ts:46](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/test-utils/src/mocks.ts#L46)
+Defined in: [mocks.ts:46](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/test-utils/src/mocks.ts#L46)
 
 Creates a mock timer
 

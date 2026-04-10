@@ -8,7 +8,7 @@
 
 > **extractSpecReferences**(`content`): `object`[]
 
-Defined in: [detector/src/parsers/code-comments.ts:153](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/parsers/code-comments.ts#L153)
+Defined in: [detector/src/parsers/code-comments.ts:153](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/code-comments.ts#L153)
 
 Extract specification and RFC references from comments
 

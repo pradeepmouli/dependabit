@@ -6,7 +6,7 @@
 
 # Class: GitHubRepoChecker
 
-Defined in: [monitor/src/checkers/github-repo.ts:9](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/checkers/github-repo.ts#L9)
+Defined in: [monitor/src/checkers/github-repo.ts:9](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/checkers/github-repo.ts#L9)
 
 ## Implements
 
@@ -28,7 +28,7 @@ Defined in: [monitor/src/checkers/github-repo.ts:9](https://github.com/pradeepmo
 
 > **compare**(`prev`, `curr`): `Promise`\<[`ChangeDetection`](../interfaces/ChangeDetection.md)\>
 
-Defined in: [monitor/src/checkers/github-repo.ts:128](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/checkers/github-repo.ts#L128)
+Defined in: [monitor/src/checkers/github-repo.ts:128](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/checkers/github-repo.ts#L128)
 
 Compares two snapshots to detect version/state changes
 
@@ -56,7 +56,7 @@ Compares two snapshots to detect version/state changes
 
 > **fetch**(`config`): `Promise`\<[`DependencySnapshot`](../interfaces/DependencySnapshot.md)\>
 
-Defined in: [monitor/src/checkers/github-repo.ts:13](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/monitor/src/checkers/github-repo.ts#L13)
+Defined in: [monitor/src/checkers/github-repo.ts:13](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/monitor/src/checkers/github-repo.ts#L13)
 
 Fetches latest release information from a GitHub repository
 

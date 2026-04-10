@@ -6,7 +6,7 @@
 
 # Class: RateLimitHandler
 
-Defined in: [packages/github-client/src/rate-limit.ts:28](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L28)
+Defined in: [packages/github-client/src/rate-limit.ts:28](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L28)
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/rate-limit.ts:28](https://github.com/pra
 
 > **new RateLimitHandler**(`auth?`): `RateLimitHandler`
 
-Defined in: [packages/github-client/src/rate-limit.ts:33](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L33)
+Defined in: [packages/github-client/src/rate-limit.ts:33](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L33)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [packages/github-client/src/rate-limit.ts:33](https://github.com/pra
 
 > **calculateWaitTime**(`rateLimitInfo`): `number`
 
-Defined in: [packages/github-client/src/rate-limit.ts:79](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L79)
+Defined in: [packages/github-client/src/rate-limit.ts:79](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L79)
 
 Calculates wait time until rate limit resets
 
@@ -52,7 +52,7 @@ Calculates wait time until rate limit resets
 
 > **canProceed**(`estimatedCalls`, `options?`): `Promise`\<\{ `canProceed`: `boolean`; `reason?`: `string`; \}\>
 
-Defined in: [packages/github-client/src/rate-limit.ts:133](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L133)
+Defined in: [packages/github-client/src/rate-limit.ts:133](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L133)
 
 Proactively check if operation can proceed without hitting rate limit
 
@@ -82,7 +82,7 @@ Proactively check if operation can proceed without hitting rate limit
 
 > **checkRateLimit**(): `Promise`\<[`RateLimitInfo`](../interfaces/RateLimitInfo.md)\>
 
-Defined in: [packages/github-client/src/rate-limit.ts:42](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L42)
+Defined in: [packages/github-client/src/rate-limit.ts:42](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L42)
 
 Checks current rate limit status
 
@@ -96,7 +96,7 @@ Checks current rate limit status
 
 > **getCachedStatus**(): [`RateLimitStatus`](../interfaces/RateLimitStatus.md) \| `undefined`
 
-Defined in: [packages/github-client/src/rate-limit.ts:200](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L200)
+Defined in: [packages/github-client/src/rate-limit.ts:200](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L200)
 
 Gets cached rate limit status (avoids API call)
 
@@ -110,7 +110,7 @@ Gets cached rate limit status (avoids API call)
 
 > **getRateLimitStatus**(): `Promise`\<[`RateLimitStatus`](../interfaces/RateLimitStatus.md)\>
 
-Defined in: [packages/github-client/src/rate-limit.ts:168](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L168)
+Defined in: [packages/github-client/src/rate-limit.ts:168](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L168)
 
 Gets detailed rate limit status for all API categories
 
@@ -124,7 +124,7 @@ Gets detailed rate limit status for all API categories
 
 > **reserveBudget**(`callsNeeded`, `options?`): `Promise`\<[`BudgetReservation`](../interfaces/BudgetReservation.md)\>
 
-Defined in: [packages/github-client/src/rate-limit.ts:94](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L94)
+Defined in: [packages/github-client/src/rate-limit.ts:94](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L94)
 
 Attempts to reserve API call budget with proactive checking
 
@@ -154,7 +154,7 @@ Attempts to reserve API call budget with proactive checking
 
 > **waitIfNeeded**(): `Promise`\<`void`\>
 
-Defined in: [packages/github-client/src/rate-limit.ts:64](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L64)
+Defined in: [packages/github-client/src/rate-limit.ts:64](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L64)
 
 Waits if rate limited
 

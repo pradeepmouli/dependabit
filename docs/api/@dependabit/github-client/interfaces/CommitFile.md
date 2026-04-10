@@ -6,7 +6,7 @@
 
 # Interface: CommitFile
 
-Defined in: [packages/github-client/src/commits.ts:19](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/commits.ts#L19)
+Defined in: [packages/github-client/src/commits.ts:19](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L19)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/commits.ts:19](https://github.com/pradee
 
 > `optional` **additions?**: `number`
 
-Defined in: [packages/github-client/src/commits.ts:22](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/commits.ts#L22)
+Defined in: [packages/github-client/src/commits.ts:22](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L22)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/github-client/src/commits.ts:22](https://github.com/pradee
 
 > `optional` **changes?**: `number`
 
-Defined in: [packages/github-client/src/commits.ts:24](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/commits.ts#L24)
+Defined in: [packages/github-client/src/commits.ts:24](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L24)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/github-client/src/commits.ts:24](https://github.com/pradee
 
 > `optional` **deletions?**: `number`
 
-Defined in: [packages/github-client/src/commits.ts:23](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/commits.ts#L23)
+Defined in: [packages/github-client/src/commits.ts:23](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L23)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/github-client/src/commits.ts:23](https://github.com/pradee
 
 > **filename**: `string`
 
-Defined in: [packages/github-client/src/commits.ts:20](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/commits.ts#L20)
+Defined in: [packages/github-client/src/commits.ts:20](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L20)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/github-client/src/commits.ts:20](https://github.com/pradee
 
 > `optional` **patch?**: `string`
 
-Defined in: [packages/github-client/src/commits.ts:25](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/commits.ts#L25)
+Defined in: [packages/github-client/src/commits.ts:25](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L25)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [packages/github-client/src/commits.ts:25](https://github.com/pradee
 
 > **status**: `"added"` \| `"removed"` \| `"modified"` \| `"renamed"` \| `"copied"` \| `"changed"` \| `"unchanged"`
 
-Defined in: [packages/github-client/src/commits.ts:21](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/commits.ts#L21)
+Defined in: [packages/github-client/src/commits.ts:21](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/commits.ts#L21)

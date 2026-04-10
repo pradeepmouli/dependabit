@@ -6,7 +6,7 @@
 
 # Class: Logger
 
-Defined in: [logger.ts:36](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L36)
+Defined in: [logger.ts:36](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L36)
 
 Structured JSON logger for GitHub Actions
 
@@ -16,7 +16,7 @@ Structured JSON logger for GitHub Actions
 
 > **new Logger**(`config?`): `Logger`
 
-Defined in: [logger.ts:41](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L41)
+Defined in: [logger.ts:41](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L41)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: [logger.ts:41](https://github.com/pradeepmouli/dependabit/blob/7a951
 
 > **child**(`context?`): `Logger`
 
-Defined in: [logger.ts:124](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L124)
+Defined in: [logger.ts:124](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L124)
 
 Create a child logger with the same correlation ID
 
@@ -54,7 +54,7 @@ Create a child logger with the same correlation ID
 
 > **debug**(`message`, `data?`): `void`
 
-Defined in: [logger.ts:73](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L73)
+Defined in: [logger.ts:73](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L73)
 
 Log debug message
 
@@ -78,7 +78,7 @@ Log debug message
 
 > **endGroup**(): `void`
 
-Defined in: [logger.ts:110](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L110)
+Defined in: [logger.ts:110](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L110)
 
 End a log group
 
@@ -92,7 +92,7 @@ End a log group
 
 > **error**(`message`, `data?`): `void`
 
-Defined in: [logger.ts:96](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L96)
+Defined in: [logger.ts:96](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L96)
 
 Log error message
 
@@ -116,7 +116,7 @@ Log error message
 
 > **getCorrelationId**(): `string`
 
-Defined in: [logger.ts:117](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L117)
+Defined in: [logger.ts:117](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L117)
 
 Get correlation ID
 
@@ -130,7 +130,7 @@ Get correlation ID
 
 > **info**(`message`, `data?`): `void`
 
-Defined in: [logger.ts:82](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L82)
+Defined in: [logger.ts:82](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L82)
 
 Log info message
 
@@ -154,7 +154,7 @@ Log info message
 
 > **logAPICall**(`data`): `void`
 
-Defined in: [logger.ts:152](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L152)
+Defined in: [logger.ts:152](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L152)
 
 Log API call
 
@@ -204,7 +204,7 @@ Log API call
 
 > **logDuration**(`operation`, `durationMs`, `data?`): `void`
 
-Defined in: [logger.ts:172](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L172)
+Defined in: [logger.ts:172](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L172)
 
 Log operation duration
 
@@ -232,7 +232,7 @@ Log operation duration
 
 > **logLLMInteraction**(`data`): `void`
 
-Defined in: [logger.ts:135](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L135)
+Defined in: [logger.ts:135](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L135)
 
 Log LLM interaction
 
@@ -274,7 +274,7 @@ Log LLM interaction
 
 > **startGroup**(`name`): `void`
 
-Defined in: [logger.ts:103](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L103)
+Defined in: [logger.ts:103](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L103)
 
 Start a log group
 
@@ -294,7 +294,7 @@ Start a log group
 
 > **warning**(`message`, `data?`): `void`
 
-Defined in: [logger.ts:89](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/action/src/logger.ts#L89)
+Defined in: [logger.ts:89](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/action/src/logger.ts#L89)
 
 Log warning message
 

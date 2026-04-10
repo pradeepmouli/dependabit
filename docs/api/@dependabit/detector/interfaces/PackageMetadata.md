@@ -6,7 +6,7 @@
 
 # Interface: PackageMetadata
 
-Defined in: [detector/src/parsers/package-files.ts:7](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/parsers/package-files.ts#L7)
+Defined in: [detector/src/parsers/package-files.ts:7](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/package-files.ts#L7)
 
 Package File Parser
 Extracts metadata and references from package manager files
@@ -18,7 +18,7 @@ EXCLUDES actual dependencies (handled by dependabot)
 
 > `optional` **documentation?**: `string`
 
-Defined in: [detector/src/parsers/package-files.ts:10](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/parsers/package-files.ts#L10)
+Defined in: [detector/src/parsers/package-files.ts:10](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/package-files.ts#L10)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [detector/src/parsers/package-files.ts:10](https://github.com/pradee
 
 > `optional` **homepage?**: `string`
 
-Defined in: [detector/src/parsers/package-files.ts:9](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/parsers/package-files.ts#L9)
+Defined in: [detector/src/parsers/package-files.ts:9](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/package-files.ts#L9)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [detector/src/parsers/package-files.ts:9](https://github.com/pradeep
 
 > `optional` **repository?**: `string`
 
-Defined in: [detector/src/parsers/package-files.ts:8](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/parsers/package-files.ts#L8)
+Defined in: [detector/src/parsers/package-files.ts:8](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/package-files.ts#L8)
 
 ***
 
@@ -42,4 +42,4 @@ Defined in: [detector/src/parsers/package-files.ts:8](https://github.com/pradeep
 
 > **urls**: `string`[]
 
-Defined in: [detector/src/parsers/package-files.ts:11](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/parsers/package-files.ts#L11)
+Defined in: [detector/src/parsers/package-files.ts:11](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/parsers/package-files.ts#L11)

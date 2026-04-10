@@ -6,7 +6,7 @@
 
 # Interface: DetectorOptions
 
-Defined in: [detector/src/detector.ts:29](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L29)
+Defined in: [detector/src/detector.ts:29](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/detector.ts#L29)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [detector/src/detector.ts:29](https://github.com/pradeepmouli/depend
 
 > `optional` **ignorePatterns?**: `string`[]
 
-Defined in: [detector/src/detector.ts:32](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L32)
+Defined in: [detector/src/detector.ts:32](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/detector.ts#L32)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [detector/src/detector.ts:32](https://github.com/pradeepmouli/depend
 
 > **llmProvider**: [`LLMProvider`](LLMProvider.md)
 
-Defined in: [detector/src/detector.ts:31](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L31)
+Defined in: [detector/src/detector.ts:31](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/detector.ts#L31)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [detector/src/detector.ts:31](https://github.com/pradeepmouli/depend
 
 > `optional` **repoName?**: `string`
 
-Defined in: [detector/src/detector.ts:35](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L35)
+Defined in: [detector/src/detector.ts:35](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/detector.ts#L35)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [detector/src/detector.ts:35](https://github.com/pradeepmouli/depend
 
 > `optional` **repoOwner?**: `string`
 
-Defined in: [detector/src/detector.ts:34](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L34)
+Defined in: [detector/src/detector.ts:34](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/detector.ts#L34)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [detector/src/detector.ts:34](https://github.com/pradeepmouli/depend
 
 > **repoPath**: `string`
 
-Defined in: [detector/src/detector.ts:30](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L30)
+Defined in: [detector/src/detector.ts:30](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/detector.ts#L30)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [detector/src/detector.ts:30](https://github.com/pradeepmouli/depend
 
 > `optional` **useGitExcludes?**: `boolean`
 
-Defined in: [detector/src/detector.ts:33](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/detector/src/detector.ts#L33)
+Defined in: [detector/src/detector.ts:33](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/detector/src/detector.ts#L33)

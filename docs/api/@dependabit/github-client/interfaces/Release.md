@@ -6,7 +6,7 @@
 
 # Interface: Release
 
-Defined in: [packages/github-client/src/releases.ts:8](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/releases.ts#L8)
+Defined in: [packages/github-client/src/releases.ts:8](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/releases.ts#L8)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/releases.ts:8](https://github.com/pradee
 
 > `optional` **body?**: `string`
 
-Defined in: [packages/github-client/src/releases.ts:12](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/releases.ts#L12)
+Defined in: [packages/github-client/src/releases.ts:12](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/releases.ts#L12)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/github-client/src/releases.ts:12](https://github.com/prade
 
 > `optional` **draft?**: `boolean`
 
-Defined in: [packages/github-client/src/releases.ts:15](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/releases.ts#L15)
+Defined in: [packages/github-client/src/releases.ts:15](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/releases.ts#L15)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/github-client/src/releases.ts:15](https://github.com/prade
 
 > **htmlUrl**: `string`
 
-Defined in: [packages/github-client/src/releases.ts:13](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/releases.ts#L13)
+Defined in: [packages/github-client/src/releases.ts:13](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/releases.ts#L13)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/github-client/src/releases.ts:13](https://github.com/prade
 
 > **name**: `string`
 
-Defined in: [packages/github-client/src/releases.ts:10](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/releases.ts#L10)
+Defined in: [packages/github-client/src/releases.ts:10](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/releases.ts#L10)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/github-client/src/releases.ts:10](https://github.com/prade
 
 > `optional` **prerelease?**: `boolean`
 
-Defined in: [packages/github-client/src/releases.ts:14](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/releases.ts#L14)
+Defined in: [packages/github-client/src/releases.ts:14](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/releases.ts#L14)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [packages/github-client/src/releases.ts:14](https://github.com/prade
 
 > **publishedAt**: `Date`
 
-Defined in: [packages/github-client/src/releases.ts:11](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/releases.ts#L11)
+Defined in: [packages/github-client/src/releases.ts:11](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/releases.ts#L11)
 
 ***
 
@@ -62,4 +62,4 @@ Defined in: [packages/github-client/src/releases.ts:11](https://github.com/prade
 
 > **tagName**: `string`
 
-Defined in: [packages/github-client/src/releases.ts:9](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/releases.ts#L9)
+Defined in: [packages/github-client/src/releases.ts:9](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/releases.ts#L9)

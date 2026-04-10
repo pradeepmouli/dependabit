@@ -6,7 +6,7 @@
 
 # Interface: RateLimitStatus
 
-Defined in: [packages/github-client/src/rate-limit.ts:16](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L16)
+Defined in: [packages/github-client/src/rate-limit.ts:16](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L16)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/github-client/src/rate-limit.ts:16](https://github.com/pra
 
 > **core**: [`RateLimitInfo`](RateLimitInfo.md) & `object`
 
-Defined in: [packages/github-client/src/rate-limit.ts:17](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L17)
+Defined in: [packages/github-client/src/rate-limit.ts:17](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L17)
 
 #### Type Declaration
 
@@ -28,7 +28,7 @@ Defined in: [packages/github-client/src/rate-limit.ts:17](https://github.com/pra
 
 > **graphql**: [`RateLimitInfo`](RateLimitInfo.md) & `object`
 
-Defined in: [packages/github-client/src/rate-limit.ts:19](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L19)
+Defined in: [packages/github-client/src/rate-limit.ts:19](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L19)
 
 #### Type Declaration
 
@@ -42,7 +42,7 @@ Defined in: [packages/github-client/src/rate-limit.ts:19](https://github.com/pra
 
 > **search**: [`RateLimitInfo`](RateLimitInfo.md) & `object`
 
-Defined in: [packages/github-client/src/rate-limit.ts:18](https://github.com/pradeepmouli/dependabit/blob/7a951f605034a11422e43adf0f167eebf18155ad/packages/github-client/src/rate-limit.ts#L18)
+Defined in: [packages/github-client/src/rate-limit.ts:18](https://github.com/pradeepmouli/dependabit/blob/12b63d7aa2de6ab4cf236695ba391228bb4f0775/packages/github-client/src/rate-limit.ts#L18)
 
 #### Type Declaration
 
