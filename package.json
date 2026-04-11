@@ -51,8 +51,8 @@
     "@changesets/cli": "^2.30.0",
     "@types/node": "^25.2.3",
     "@typescript/native-preview": "7.0.0-dev.20260219.1",
-    "@vitest/coverage-v8": "^4.1.0",
-    "@vitest/ui": "^4.1.0",
+    "@vitest/coverage-v8": "^4.1.4",
+    "@vitest/ui": "^4.1.4",
     "lint-staged": "^16.2.7",
     "oxfmt": "^0.31.0",
     "oxlint": "^1.46.0",
@@ -60,7 +60,7 @@
     "typedoc": "^0.28.17",
     "typedoc-plugin-markdown": "^4.11.0",
     "typedoc-plugin-to-skills": "^0.6.0",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.4"
   },
   "engines": {
     "node": ">=20.0.0",
