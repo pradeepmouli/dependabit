@@ -1,0 +1,102 @@
+[**Documentation v0.1.16**](../../README.md)
+
+***
+
+[Documentation](../../README.md) / @dependabit/core
+
+# @dependabit/core
+
+Core utilities used across the monorepo.
+
+## Features
+
+- **Email validation** - RFC-compliant email validation
+- **API response helpers** - Consistent response formatting
+- **Async utilities** - Delay and promise helpers
+- **Type-safe** - Full TypeScript support
+
+## Installation
+
+```bash
+pnpm add @dependabit/core
+```
+
+## Usage
+
+### Email Validation
+
+```typescript
+import { isValidEmail } from '@dependabit/core';
+
+isValidEmail('user@example.com');  // true
+isValidEmail('invalid');            // false
+```
+
+### API Responses
+
+```typescript
+import { createSuccessResponse, createErrorResponse } from '@dependabit/core';
+
+const success = createSuccessResponse({ user: { id: 1 } });
+const error = createErrorResponse('Not found');
+```
+
+### Async Utilities
+
+```typescript
+import { delay } from '@dependabit/core';
+
+// Wait before continuing
+await delay(1000);
+```
+
+## API
+
+### `isValidEmail(email: string): boolean`
+
+Validates email addresses using Zod schema validation.
+
+### `createSuccessResponse<T>(data: T): ApiResponse<T>`
+
+Creates a successful API response.
+
+### `createErrorResponse(error: string): ApiResponse<never>`
+
+Creates an error API response.
+
+### `delay(ms: number): Promise<void>`
+
+Returns a promise that resolves after the specified milliseconds.
+
+## Testing
+
+```bash
+# Run tests for this package
+pnpm --filter @dependabit/core test
+
+# Watch mode
+pnpm --filter @dependabit/core test:watch
+```
+
+## Types
+
+```typescript
+interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
+}
+```
+
+Core utility functions and types for the monorepo
+
+## Interfaces
+
+- [ApiResponse](interfaces/ApiResponse.md)
+
+## Functions
+
+- [createErrorResponse](functions/createErrorResponse.md)
+- [createSuccessResponse](functions/createSuccessResponse.md)
+- [delay](functions/delay.md)
+- [isValidEmail](functions/isValidEmail.md)
