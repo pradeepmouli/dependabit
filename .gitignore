@@ -14,3 +14,6 @@ coverage/
 .playwright-mcp/
 .vscode/PythonImportHelper-v2-Completion.json
 docs/html/
+
+# Generated API docs (typedoc)
+docs/api/
