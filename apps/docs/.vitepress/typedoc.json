@@ -8,7 +8,11 @@
     "../../../packages/manifest/src/index.ts",
     "../../../packages/monitor/src/index.ts",
     "../../../packages/test-utils/src/index.ts",
-    "../../../packages/utils/src/index.ts"
+    "../../../packages/utils/src/index.ts",
+    "../../../packages/plugins/registry/src/index.ts",
+    "../../../packages/plugins/plugin-arxiv/src/index.ts",
+    "../../../packages/plugins/plugin-context7/src/index.ts",
+    "../../../packages/plugins/plugin-skills/src/index.ts"
   ],
   "entryPointStrategy": "resolve",
   "tsconfig": "./tsconfig.typedoc.json",

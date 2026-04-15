@@ -1,12 +1,18 @@
 {
   "name": "@dependabit/plugin-http",
   "version": "0.1.14",
+  "description": "Generic HTTP content-hash checker plugin for dependabit — fingerprints arbitrary URL resources to detect upstream changes.",
+  "homepage": "https://pradeepmouli.github.io/dependabit/",
+  "bugs": {
+    "url": "https://github.com/pradeepmouli/dependabit/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pradeepmouli/dependabit",
+    "url": "git+https://github.com/pradeepmouli/dependabit.git",
     "directory": "packages/plugins/plugin-http"
   },
-  "description": "Generic HTTP plugin with content hashing for dependency tracking",
+  "license": "MIT",
+  "author": "Pradeep Mouli <pmouli@mac.com> (https://github.com/pradeepmouli)",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -35,12 +41,15 @@
     "vitest": "^4.1.4"
   },
   "keywords": [
-    "plugin",
     "http",
-    "hashing"
+    "plugin",
+    "dependabit",
+    "hashing",
+    "content-hash"
   ],
-  "license": "MIT",
-  "author": "Pradeep Mouli <pmouli@mac.com> (https://github.com/pradeepmouli)",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "publishConfig": {
     "access": "public"
   },
