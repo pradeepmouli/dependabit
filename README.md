@@ -291,7 +291,7 @@ dependabit/
 
 ## Documentation
 
-- **[Setup Guide](scripts/SETUP.md)** - Development environment setup
+- **[Setup Guide](docs/SETUP.md)** - Development environment setup
 - **[Workspace Guide](docs/WORKSPACE.md)** - Managing monorepo packages
 - **[Development Workflow](docs/DEVELOPMENT.md)** - Development process and best practices
 - **[Testing Guide](docs/TESTING.md)** - Testing infrastructure and guidelines
