@@ -313,10 +313,10 @@ git commit -m "feat(utils): add new utility function"
 
 ```bash
 # 1. Create bug fix branch
-git checkout -b fix/core-validation
+git checkout -b fix/manifest-validation
 
 # 2. Navigate to package
-cd packages/core
+cd packages/manifest
 
 # 3. Write regression test
 # 4. Implement fix
