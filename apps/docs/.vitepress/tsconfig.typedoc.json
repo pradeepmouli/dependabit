@@ -8,7 +8,6 @@
   },
   "include": [
     "../../../packages/action/src/index.ts",
-    "../../../packages/core/src/index.ts",
     "../../../packages/detector/src/index.ts",
     "../../../packages/github-client/src/index.ts",
     "../../../packages/manifest/src/index.ts",

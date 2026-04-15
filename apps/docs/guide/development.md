@@ -222,7 +222,7 @@ If your change affects multiple packages:
 
 ```bash
 # Install in multiple packages
-pnpm --filter @dependabit/core add lodash
+pnpm --filter @dependabit/manifest add lodash
 pnpm --filter @dependabit/utils add lodash
 
 # Or install in all packages
@@ -253,11 +253,12 @@ Use integration tests to verify packages work together:
 
 ```typescript
 // integration.test.ts
-import { isValidEmail } from '@dependabit/core';
+import { parseConfig } from '@dependabit/manifest';
 import { capitalize } from '@dependabit/utils';
 
-it('should combine core and utils', () => {
-  expect(isValidEmail('john@example.com')).toBe(true);
+it('should combine manifest and utils', () => {
+  const cfg = parseConfig('version: "1.0.0"\n');
+  expect(cfg.version).toBe('1.0.0');
   expect(capitalize('john')).toBe('John');
 });
 ```
@@ -270,10 +271,10 @@ For faster builds:
 
 ```bash
 # Build only changed packages
-pnpm --filter "...{packages/core}" run build
+pnpm --filter "...{packages/manifest}" run build
 
 # Run tests only for affected packages
-pnpm --filter @dependabit/core run test
+pnpm --filter @dependabit/manifest run test
 ```
 
 ### Type Checking

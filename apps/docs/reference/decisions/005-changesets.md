@@ -107,13 +107,13 @@ To switch to Release-Please or Semantic Release:
 
 ```yaml
 ---
-"@dependabit/core": minor
+"@dependabit/manifest": minor
 "@dependabit/utils": patch
 ---
 
 Add new authentication API with JWT support
 
-Breaking changes in core package v2.0.0:
+Breaking changes in manifest package v2.0.0:
 - Removed deprecated login() method
 ```
 
