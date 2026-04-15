@@ -17,6 +17,8 @@ Dependabit automatically discovers, tracks, and monitors external dependencies r
 
 > **⚠️ Pre-1.0 software** — APIs are subject to change between minor versions. Pin to exact versions in production. See the [CHANGELOG](./CHANGELOG.md) for breaking changes between releases.
 
+📚 **Documentation:** <https://pradeepmouli.github.io/dependabit/>
+
 ## Features
 
 ### 🎯 **AI-Powered Detection**

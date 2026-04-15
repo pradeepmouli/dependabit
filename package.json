@@ -44,7 +44,9 @@
     "type-check": "pnpm -r run type-check",
     "prepare": "simple-git-hooks",
     "docs": "typedoc --out docs/html --plugin typedoc-plugin-to-skills",
-    "docs:md": "typedoc"
+    "docs:md": "typedoc",
+    "docs:dev": "pnpm --filter @dependabit/docs dev",
+    "docs:build": "pnpm --filter @dependabit/docs build"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.6.0",
