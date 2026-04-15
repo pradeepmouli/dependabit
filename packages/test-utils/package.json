@@ -3,10 +3,14 @@
   "version": "0.1.14",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pradeepmouli/dependabit",
+    "url": "https://github.com/pradeepmouli/dependabit.git",
     "directory": "packages/test-utils"
   },
-  "description": "Shared testing utilities for the monorepo",
+  "homepage": "https://pradeepmouli.github.io/dependabit/",
+  "bugs": {
+    "url": "https://github.com/pradeepmouli/dependabit/issues"
+  },
+  "description": "Vitest mocks and fixtures for dependabit internal tests, exposed via /mocks and /fixtures subpaths.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -38,10 +42,12 @@
     "vitest": "^4.0.0"
   },
   "keywords": [
+    "dependabit",
     "test",
     "testing",
-    "utilities",
-    "vitest"
+    "vitest",
+    "mocks",
+    "fixtures"
   ],
   "license": "MIT",
   "author": "Pradeep Mouli <pmouli@mac.com> (https://github.com/pradeepmouli)",

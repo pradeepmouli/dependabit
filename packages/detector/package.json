@@ -3,10 +3,14 @@
   "version": "0.1.16",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pradeepmouli/dependabit",
+    "url": "https://github.com/pradeepmouli/dependabit.git",
     "directory": "packages/detector"
   },
-  "description": "LLM-based dependency detection for external resources",
+  "homepage": "https://pradeepmouli.github.io/dependabit/",
+  "bugs": {
+    "url": "https://github.com/pradeepmouli/dependabit/issues"
+  },
+  "description": "Detect external dependencies from READMEs, code comments, diffs, and package files using LLM-assisted parsing.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -38,10 +42,13 @@
     "vitest": "^4.1.4"
   },
   "keywords": [
+    "dependabit",
     "dependency",
     "detection",
     "llm",
-    "ai"
+    "ai",
+    "copilot",
+    "parser"
   ],
   "license": "MIT",
   "author": "Pradeep Mouli <pmouli@mac.com> (https://github.com/pradeepmouli)",

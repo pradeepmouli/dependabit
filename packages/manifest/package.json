@@ -3,10 +3,14 @@
   "version": "0.1.14",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pradeepmouli/dependabit",
+    "url": "https://github.com/pradeepmouli/dependabit.git",
     "directory": "packages/manifest"
   },
-  "description": "Manifest schema and validation for dependency tracking",
+  "homepage": "https://pradeepmouli.github.io/dependabit/",
+  "bugs": {
+    "url": "https://github.com/pradeepmouli/dependabit/issues"
+  },
+  "description": "Zod schema, YAML loader, and validator for dependabit external-dependency manifests and config files.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -35,8 +39,11 @@
     "vitest": "^4.1.4"
   },
   "keywords": [
+    "dependabit",
     "manifest",
     "schema",
+    "zod",
+    "yaml",
     "validation"
   ],
   "license": "MIT",

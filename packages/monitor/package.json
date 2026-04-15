@@ -3,10 +3,14 @@
   "version": "0.1.14",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pradeepmouli/dependabit",
+    "url": "https://github.com/pradeepmouli/dependabit.git",
     "directory": "packages/monitor"
   },
-  "description": "Change detection and monitoring logic for external dependencies",
+  "homepage": "https://pradeepmouli.github.io/dependabit/",
+  "bugs": {
+    "url": "https://github.com/pradeepmouli/dependabit/issues"
+  },
+  "description": "Poll GitHub repos, URLs, and OpenAPI specs for changes with snapshot diffing and severity classification.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -36,9 +40,12 @@
     "vitest": "^4.1.4"
   },
   "keywords": [
+    "dependabit",
     "monitor",
     "change-detection",
-    "dependency"
+    "dependency",
+    "openapi",
+    "diff"
   ],
   "license": "MIT",
   "author": "Pradeep Mouli <pmouli@mac.com> (https://github.com/pradeepmouli)",

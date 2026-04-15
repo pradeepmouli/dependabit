@@ -3,10 +3,14 @@
   "version": "0.1.14",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pradeepmouli/dependabit",
+    "url": "https://github.com/pradeepmouli/dependabit.git",
     "directory": "packages/core"
   },
-  "description": "Core utilities for the monorepo",
+  "homepage": "https://pradeepmouli.github.io/dependabit/",
+  "bugs": {
+    "url": "https://github.com/pradeepmouli/dependabit/issues"
+  },
+  "description": "Shared primitives for dependabit: ApiResponse envelopes, zod-backed validation, and async helpers.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -34,8 +38,12 @@
     "vitest": "^4.1.4"
   },
   "keywords": [
+    "dependabit",
     "core",
-    "utilities"
+    "zod",
+    "validation",
+    "api-response",
+    "typescript"
   ],
   "license": "MIT",
   "author": "Pradeep Mouli <pmouli@mac.com> (https://github.com/pradeepmouli)",
