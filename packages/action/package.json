@@ -46,5 +46,15 @@
     "dependency",
     "tracking"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "author": "Pradeep Mouli <pmouli@mac.com> (https://github.com/pradeepmouli)",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ]
 }
