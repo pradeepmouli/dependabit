@@ -1,0 +1,32 @@
+version: "1"
+
+# Global settings
+schedule:
+  interval: daily
+  time: "02:00"
+
+# Issue handling & AI agent assignment rules
+# Note: AI agent assignments use GitHub mention syntax (@username)
+# Replace with actual GitHub usernames of AI agents or team members
+# Example: "@github-copilot", "@your-ai-agent", or "@team-member"
+issues:
+  aiAgentAssignment:
+    breaking: "@copilot"  # Replace with your GitHub username for breaking changes
+    major: "@claude"      # Replace with your GitHub username for major changes
+    minor: "@copilot"     # Replace with your GitHub username for minor changes
+
+# Per-dependency overrides (examples)
+dependencies:
+  # Example: Monitor an important repository hourly
+  # - url: "https://github.com/important/repo"
+  #   schedule:
+  #     interval: hourly
+  #   monitoring:
+  #     ignoreChanges: false
+
+  # Example: Monitor stable documentation weekly
+  # - url: "https://stable-docs.example.com"
+  #   schedule:
+  #     interval: weekly
+  #   monitoring:
+  #     ignoreChanges: false

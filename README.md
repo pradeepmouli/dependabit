@@ -15,6 +15,21 @@
 
 Dependabit automatically discovers, tracks, and monitors external dependencies referenced in your codebase using LLM-powered analysis. Unlike traditional dependency managers that only track package manifests, Dependabit finds informational dependencies like GitHub repos, documentation sites, API references, research papers, and more.
 
+## 🤔 Dependabot vs Dependabit
+
+**"Should I use Dependabot or Dependabit?"** — Use **both**! They complement each other:
+
+| Tool | Purpose | What it tracks |
+|------|---------|----------------|
+| **Dependabot** | Updates package dependencies | npm, pip, cargo, maven, docker packages in manifest files |
+| **Dependabit** | Tracks external references | GitHub repos, docs, APIs, papers mentioned in code/comments |
+
+**Think of it this way:**
+- **Dependabot** manages your `package.json` dependencies
+- **Dependabit** finds the docs URLs in your code comments
+
+👉 **[Read the full comparison in our FAQ](docs/FAQ.md#how-is-dependabit-different-from-dependabot)**
+
 ## Features
 
 ### 🎯 **AI-Powered Detection**
@@ -59,6 +74,17 @@ The action metadata in [action.yml](action.yml) points to the bundled file, so M
 - pnpm >= 10.0.0
 - GitHub repository with Actions enabled
 - GitHub Copilot access (or alternative LLM provider)
+
+### Bootstrap Templates
+
+Ready-to-use templates are available in the [`templates/`](./templates/) directory:
+
+- **[TypeScript Template](./templates/typescript/)** - Complete setup for TypeScript projects
+  - Includes all three workflow files (generate, update, check)
+  - Example configuration file
+  - Detailed setup instructions
+
+Simply copy the template files to your repository and run the generate workflow to get started!
 
 ### For Development
 
@@ -289,6 +315,7 @@ dependabit/
 
 ## Documentation
 
+- **[FAQ](docs/FAQ.md)** - Frequently asked questions, including Dependabot vs Dependabit comparison
 - **[Setup Guide](scripts/SETUP.md)** - Development environment setup
 - **[Workspace Guide](docs/WORKSPACE.md)** - Managing monorepo packages
 - **[Development Workflow](docs/DEVELOPMENT.md)** - Development process and best practices
