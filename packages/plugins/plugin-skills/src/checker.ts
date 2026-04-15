@@ -127,9 +127,7 @@ export class SkillsChecker {
         return fileURLToPath(path);
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
-        throw new Error(
-          `Failed to normalize skills lock path '${path}' as file URL: ${message}`
-        );
+        throw new Error(`Failed to normalize skills lock path '${path}' as file URL: ${message}`);
       }
     }
     return path;

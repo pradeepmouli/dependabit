@@ -46,13 +46,7 @@ export class GitHubCopilotProvider implements LLMProvider {
 
       // Use execFile to avoid shell escaping issues and command injection
       // Pass prompt directly as an argument without manual escaping
-      const args = [
-        'copilot',
-        '-p',
-        fullPrompt,
-        '--silent',
-        '--allow-all-tools'
-      ];
+      const args = ['copilot', '-p', fullPrompt, '--silent', '--allow-all-tools'];
 
       const { stdout, stderr } = await execFileAsync('gh', args, {
         maxBuffer: 10 * 1024 * 1024, // 10MB buffer for large responses

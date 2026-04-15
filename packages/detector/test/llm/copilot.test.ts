@@ -6,7 +6,7 @@ import type { DetectedDependency } from '../../src/llm/client.js';
 // Mock child_process with proper execFile behavior
 vi.mock('node:child_process', () => {
   const mockCallback = vi.fn();
-  
+
   // The custom promisify implementation that mimics Node.js behavior
   const customPromisify = vi.fn((...execArgs) => {
     return new Promise((resolve, reject) => {
@@ -23,9 +23,9 @@ vi.mock('node:child_process', () => {
       });
     });
   });
-  
+
   mockCallback[promisify.custom] = customPromisify;
-  
+
   return {
     execFile: mockCallback
   };

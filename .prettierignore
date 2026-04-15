@@ -1,2 +1,33 @@
 package.json
 *.md
+.vscode/**
+
+# Build outputs / generated
+**/dist/**
+**/build/**
+**/node_modules/**
+**/coverage/**
+**/.turbo/**
+**/.cache/**
+
+# Vendored / bundled action artifacts
+**/action-dist/**
+packages/action/action-dist/**
+
+# Docs and specs
+docs/**
+specs/**
+
+# Agent tooling
+.agents/**
+.claude/**
+.codex/**
+.gemini/**
+.specify/**
+.github/agents/**
+.github/skills/**
+
+# Lockfiles
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
