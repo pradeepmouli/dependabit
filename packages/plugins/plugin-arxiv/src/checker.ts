@@ -9,10 +9,26 @@
 import crypto from 'node:crypto';
 
 /**
- * arXiv API configuration
+ * Configuration for the {@link ArxivChecker}.
+ *
+ * @config
+ * @category plugin-arxiv
+ *
+ * @useWhen
+ * Monitoring an arXiv preprint for new versions or abstract revisions.
+ *
+ * @pitfalls
+ * - `url` should point to the abstract page (`/abs/`) not the PDF (`/pdf/`).
+ *   The ID extractor supports both, but the canonical URL in the manifest
+ *   should use the abstract form.
+ * - arXiv IDs do not carry version numbers; the checker always fetches the
+ *   **latest** version.  If a paper is withdrawn, the API returns an empty
+ *   entry and the checker throws.
  */
 export interface ArxivConfig {
+  /** Abstract or PDF URL, or a bare arXiv ID (e.g. `2301.00001`). */
   url: string;
+  /** Explicit arXiv ID (e.g. `2301.00001`) — parsed from `url` when omitted. */
   arxivId?: string;
 }
 
@@ -61,7 +77,36 @@ export interface ArxivChangeDetection {
 }
 
 /**
- * arXiv checker implementation
+ * Monitors arXiv preprints for new versions via the arXiv Atom API.
+ *
+ * @remarks
+ * The checker uses the public arXiv export API
+ * (`https://export.arxiv.org/api/query`).  No API key is required, but
+ * arXiv enforces a rate limit of approximately 3 requests per second.
+ * Running many concurrent checkers against arXiv may trigger HTTP 429
+ * responses.
+ *
+ * State hashing uses the paper version number, last updated date, and the
+ * first 500 characters of the abstract to produce a stable fingerprint.
+ *
+ * @category plugin-arxiv
+ *
+ * @useWhen
+ * Tracking research papers that your project cites or implements, to be
+ * notified when authors publish revisions.
+ *
+ * @avoidWhen
+ * Monitoring large arXiv search result pages — this checker is designed for
+ * individual paper IDs only.
+ *
+ * @pitfalls
+ * - **No rate limit handling**: burst usage (checking many papers at once)
+ *   will hit arXiv's rate limit.  Add a delay between concurrent checks.
+ * - **Abstract hash instability**: arXiv occasionally re-formats abstracts
+ *   (whitespace normalisation) without bumping the paper version.  This
+ *   produces a false positive change detection for `abstract`.
+ * - **Withdrawn papers**: if a paper is withdrawn, the arXiv API returns an
+ *   empty entry; `fetch` will throw `'Could not parse arXiv response'`.
  */
 export class ArxivChecker {
   private apiUrl = 'https://export.arxiv.org/api/query';

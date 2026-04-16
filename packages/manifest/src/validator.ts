@@ -9,7 +9,13 @@ import {
 import { ZodError } from 'zod';
 
 /**
- * Validation error class with detailed error information
+ * Wraps a Zod `ZodError` to provide human-readable formatted error messages.
+ *
+ * @remarks
+ * Thrown by `validateManifest`, `validateDependencyEntry`, and
+ * `validateConfig` when their input does not match the expected schema.
+ *
+ * @category Manifest
  */
 export class ValidationError extends Error {
   constructor(

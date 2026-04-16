@@ -6,7 +6,9 @@
 import { vi } from 'vitest';
 
 /**
- * Creates a mock function
+ * Creates a Vitest mock function.
+ * @returns A `vi.fn()` spy ready to be configured.
+ * @category Test Utilities
  * @example
  * ```ts
  * const mockFn = createMockFn()
@@ -18,9 +20,10 @@ export function createMockFn(): ReturnType<typeof vi.fn> {
 }
 
 /**
- * Creates a spy on a method
- * @param obj - Object to spy on
- * @param method - Method name
+ * Creates a Vitest spy on an object method.
+ * @param obj - Object to spy on.
+ * @param method - Method name to spy on.
+ * @category Test Utilities
  * @example
  * ```ts
  * const consoleSpy = spyOn(console, 'log');
@@ -36,7 +39,9 @@ export function spyOn<T extends object, K extends keyof T>(
 }
 
 /**
- * Creates a mock timer
+ * Activates Vitest fake timers and returns a helper object.
+ * @remarks Call `restore()` in an `afterEach` hook to reset real timers.
+ * @category Test Utilities
  * @example
  * ```ts
  * const timer = createMockTimer();
@@ -54,9 +59,13 @@ export function createMockTimer() {
 }
 
 /**
- * Mocks a fetch request
- * @param url - URL to mock
- * @param response - Response data
+ * Replaces the global `fetch` with a Vitest mock that returns `response`
+ * as JSON when `url` is requested.
+ * @param url - The URL string to match.
+ * @param response - JSON-serialisable response body.
+ * @remarks This mutates `global.fetch`; reset it in `afterEach` with
+ * `vi.restoreAllMocks()`.
+ * @category Test Utilities
  * @example
  * ```ts
  * mockFetch('/api/users', { success: true });

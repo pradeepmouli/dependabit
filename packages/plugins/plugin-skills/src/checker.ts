@@ -13,7 +13,23 @@ import { basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 /**
- * Skills checker configuration
+ * Configuration for the {@link SkillsChecker}.
+ *
+ * @config
+ * @category plugin-skills
+ *
+ * @useWhen
+ * Monitoring a specific AI agent skill hosted on skills.sh or stored in a
+ * GitHub repository for version changes (detected via Git tree SHA).
+ *
+ * @pitfalls
+ * - When `lockFilePath` points to a lock file with multiple skills and
+ *   `lockSkillKey` is not set, the checker throws asking you to specify one.
+ *   Always set `lockSkillKey` when monitoring a single skill from a
+ *   multi-skill lock file.
+ * - `apiToken` is optional but highly recommended — unauthenticated GitHub
+ *   API requests have a 60 req/h limit shared per IP, which is easily
+ *   exhausted in CI environments.
  */
 export interface SkillsConfig {
   /** URL to the skill on skills.sh or its GitHub source */
@@ -87,7 +103,44 @@ export interface SkillChangeDetection {
 }
 
 /**
- * Skills.sh checker implementation
+ * Monitors AI agent skills for version changes by comparing the Git tree SHA
+ * of the skill's directory in its source GitHub repository.
+ *
+ * @remarks
+ * The checker supports three input modes:
+ * 1. **skills.sh URL** — resolves to the GitHub source repo via URL parsing.
+ * 2. **GitHub tree URL** — used directly to determine owner/repo/skill.
+ * 3. **Local lock file** (`skills-lock.json`) — reads a pinned SHA from disk
+ *    without making any GitHub API calls.
+ *
+ * In modes 1 and 2, two GitHub API calls are made per check: one to get the
+ * default branch and one to get the tree SHA.
+ *
+ * @category plugin-skills
+ *
+ * @useWhen
+ * - Tracking skills that your project bundles from a known GitHub repository.
+ * - Detecting when a skill's files change so you can review and re-import.
+ *
+ * @avoidWhen
+ * Monitoring skills that are frequently updated as part of active development
+ * — the per-check GitHub API cost may exhaust your rate limit.
+ *
+ * @pitfalls
+ * - **GitHub rate limits**: each check consumes 2 GitHub API requests.  For
+ *   large skill sets, use `apiToken` and pre-flight with
+ *   `RateLimitHandler.reserveBudget`.
+ * - **Lock file stale reads**: when using a lock file, the checker returns a
+ *   snapshot based on the last recorded `computedHash` rather than querying
+ *   GitHub.  The snapshot will be perpetually identical unless the lock file
+ *   is updated — this is intentional for offline or restricted environments.
+ * - **Structural vs. content severity**: adding or removing files in the
+ *   skill directory is classified as `major`; changing file content only is
+ *   `minor`.  There is no `breaking` classification for skills.
+ * - **`treeSha` format difference**: for lock-file-based snapshots, the
+ *   `treeSha` is a SHA-256 of the source URL (or the `computedHash` field),
+ *   not a Git tree SHA.  Do not compare lock-file snapshots with live
+ *   GitHub snapshots directly.
  */
 
 function isValidSha256(h: string): boolean {

@@ -1,6 +1,23 @@
 /**
- * Detection prompts for LLM-based dependency analysis
- * Optimized for identifying external informational dependencies
+ * Detection prompts for LLM-based dependency analysis.
+ *
+ * @remarks
+ * All exported constants and functions in this module are the source of truth
+ * for what the LLM is instructed to do.  Changing them changes detection
+ * behaviour globally — run the full detector integration tests before
+ * modifying prompt templates in production.
+ *
+ * @pitfalls
+ * - Editing prompt templates can silently break the JSON parsing in the
+ *   detector; always verify that the LLM still returns a
+ *   `{ "dependencies": [...] }` top-level key after changes.
+ * - The `{content}` placeholder in `DETECTION_PROMPT_TEMPLATE` is replaced
+ *   with raw file content.  Content containing curly braces can confuse
+ *   naive `String.replace` substitution — the current implementation uses
+ *   a single-pass replace, which is safe but will break if additional
+ *   `{...}` placeholders are introduced.
+ *
+ * @category Detector
  */
 
 export const SYSTEM_PROMPT = `You are an expert at analyzing code repositories to identify external informational dependencies.
@@ -69,6 +86,18 @@ Remember:
 
 Analyze and respond:`;
 
+/**
+ * Renders a detection prompt by substituting the content-type, file path,
+ * and raw content into `DETECTION_PROMPT_TEMPLATE`.
+ *
+ * @param contentType - Human-readable label for the content (e.g. `"README"`).
+ * @param filePath - Repository-relative file path for context.
+ * @param content - Raw file content to analyze (not truncated here — callers
+ *   should truncate before passing to stay within token budgets).
+ * @returns Rendered prompt string ready to send to an LLM provider.
+ *
+ * @category Detector
+ */
 export function createDetectionPrompt(
   contentType: string,
   filePath: string,
@@ -106,6 +135,17 @@ Return JSON:
   "reasoning": "URL structure suggests API documentation"
 }`;
 
+/**
+ * Renders a classification prompt for a single URL, asking the LLM to
+ * determine the dependency type and best access method.
+ *
+ * @param url - The URL to classify.
+ * @param context - Surrounding text or code comments that mention the URL,
+ *   used to improve classification accuracy.
+ * @returns Rendered prompt string.
+ *
+ * @category Detector
+ */
 export function createClassificationPrompt(url: string, context: string): string {
   return CLASSIFICATION_PROMPT_TEMPLATE.replace('{url}', url).replace('{context}', context);
 }

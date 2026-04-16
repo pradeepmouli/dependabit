@@ -11,7 +11,20 @@ import { z } from 'zod';
 import semver from 'semver';
 
 /**
- * Context7 API configuration
+ * Configuration for the {@link Context7Checker}.
+ *
+ * @config
+ * @category plugin-context7
+ *
+ * @useWhen
+ * Monitoring a library's structured documentation via the Context7 API.
+ *
+ * @pitfalls
+ * - `libraryId` must match the exact Context7 library identifier.  If the
+ *   API returns 404 for a valid URL, try extracting the ID from the URL
+ *   manually and providing it explicitly rather than relying on URL parsing.
+ * - When `auth.secret` is omitted, the checker makes unauthenticated
+ *   requests, which may have lower rate limits or restricted access.
  */
 export interface Context7Config {
   url: string;
@@ -80,7 +93,40 @@ const Context7ResponseSchema = z.object({
 });
 
 /**
- * Context7 checker implementation
+ * Monitors library documentation changes via the Context7 API, with a
+ * fallback to direct URL content hashing when the API is unavailable.
+ *
+ * @remarks
+ * The checker first tries `https://api.context7.io/v1/libraries/:id`.  On
+ * 404 or 503 it silently falls back to fetching the documentation URL
+ * directly and hashing the full response body.
+ *
+ * Version severity is determined via `semver.diff` — major semver bumps are
+ * classified as `breaking`, minor as `major`, patch/pre-release as `minor`.
+ * Non-semver versions (e.g. `unknown`) default to `minor`.
+ *
+ * @category plugin-context7
+ *
+ * @useWhen
+ * Tracking libraries whose documentation is indexed by Context7 (e.g.,
+ * React, Next.js, Prisma).
+ *
+ * @avoidWhen
+ * Monitoring libraries without a Context7 entry — the fallback URL hash
+ * is very sensitive to dynamic page content.  Prefer a specific HTTP
+ * checker with normalised content in that case.
+ *
+ * @pitfalls
+ * - **Fallback URL hash instability**: when the API is unavailable and the
+ *   checker falls back to direct URL hashing, any dynamic content on the
+ *   documentation page (e.g., timestamps, ads, CDN-injected nonces) will
+ *   produce false positive changes.
+ * - **Zod schema mismatches**: if Context7 changes its API response shape,
+ *   `Context7ResponseSchema.parse` will throw a `ZodError` and the checker
+ *   silently falls back to URL hashing without logging the schema error.
+ * - **`lastUpdated` change without version bump**: some Context7 libraries
+ *   update their `lastUpdated` field without bumping the version number.
+ *   This produces a `changes: ['lastUpdated']` result with `severity: 'minor'`.
  */
 export class Context7Checker {
   private baseUrl = 'https://api.context7.io';

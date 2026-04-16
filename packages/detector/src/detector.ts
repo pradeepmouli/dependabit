@@ -26,17 +26,75 @@ import type {
   DetectionMethod
 } from '@dependabit/manifest';
 
+/**
+ * Configuration options for the {@link Detector} orchestrator.
+ *
+ * @remarks
+ * All options except `repoPath` and `llmProvider` have safe defaults.
+ * The detector respects `.gitignore` files and git's global excludes file
+ * by default; set `useGitExcludes` to `false` to disable that behaviour.
+ *
+ * @config
+ * @category Detector
+ *
+ * @useWhen
+ * You want to scan a local repository clone for informational dependencies
+ * that package managers do not track.
+ *
+ * @avoidWhen
+ * The repository has not been cloned to disk — the detector reads files
+ * from the filesystem and cannot operate on a bare Git remote.
+ *
+ * @pitfalls
+ * - `ignorePatterns` performs substring matching on path segments; overly
+ *   broad patterns (e.g. `"src"`) will silently exclude large parts of the
+ *   repository.
+ * - `repoOwner` / `repoName` are used to filter self-referential URLs from
+ *   results. Omitting them causes the repo's own URLs to appear as
+ *   dependencies.
+ * - Token budgets: the LLM provider is called once per README (up to 5) and
+ *   once per unclassified URL. Large repositories with many READMEs can
+ *   exhaust the provider's context window mid-run; truncation at 5 000
+ *   characters per document is intentional but may miss late-appearing URLs.
+ */
 export interface DetectorOptions {
+  /** Absolute path to the root of the repository on disk. */
   repoPath: string;
+  /** LLM provider used for document analysis and dependency classification. */
   llmProvider: LLMProvider;
+  /**
+   * Path segments to exclude during directory traversal.
+   * @defaultValue `['node_modules', 'dist', 'build', 'target', 'vendor', 'venv', '__pycache__', 'coverage']`
+   */
   ignorePatterns?: string[];
+  /**
+   * When `true`, `.gitignore` files and git's global excludes are loaded
+   * and applied during traversal.
+   * @defaultValue `true`
+   */
   useGitExcludes?: boolean;
+  /** GitHub owner used to filter self-referential URLs. */
   repoOwner?: string;
+  /** GitHub repository name used to filter self-referential URLs. */
   repoName?: string;
 }
 
+/**
+ * The result produced by {@link Detector.detectDependencies} or
+ * {@link Detector.analyzeFiles}.
+ *
+ * @remarks
+ * `statistics` are informational only — they track how many LLM calls were
+ * made and the cumulative token cost.  Do not rely on `llmCalls` being zero
+ * as an indicator that the LLM was not consulted; programmatic classification
+ * may succeed without any LLM calls.
+ *
+ * @category Detector
+ */
 export interface DetectionResult {
+  /** Discovered dependency entries ready for merging into a manifest. */
   dependencies: DependencyEntry[];
+  /** Diagnostic counters for the scan run. */
   statistics: {
     filesScanned: number;
     urlsFound: number;
@@ -60,7 +118,67 @@ const DEFAULT_IGNORE_PATTERNS = [
 const ALLOWED_DOT_DIRECTORIES = new Set<string>();
 
 /**
- * Main detector class
+ * Orchestrates multi-stage detection of informational external dependencies
+ * inside a local repository clone.
+ *
+ * @remarks
+ * Detection follows a hybrid pipeline:
+ * 1. Programmatic parsing of README files, documentation, package metadata,
+ *    and code comments extracts candidate URLs.
+ * 2. An LLM second-pass (up to 5 README files, capped at 5 000 chars each)
+ *    enriches the candidate set with URLs that plain text parsing missed.
+ * 3. Programmatic heuristics classify each URL's `DependencyType` and
+ *    `AccessMethod`; an LLM fallback is used only when heuristics fail.
+ * 4. Low-confidence entries (below 0.5) are discarded before returning.
+ *
+ * The detector does **not** write to disk or mutate any manifest file —
+ * callers are responsible for merging the returned `DetectionResult` into
+ * an existing manifest via `@dependabit/manifest`.
+ *
+ * @category Detector
+ *
+ * @useWhen
+ * Scanning a freshly-cloned or locally-checked-out repository to build an
+ * initial manifest, or during CI to detect newly-introduced dependencies from
+ * a commit diff.
+ *
+ * @avoidWhen
+ * - The repository is very large (> 10 000 source files) — source file
+ *   scanning is hard-capped at 50 files per run.
+ * - You need deterministic, reproducible output across model versions — LLM
+ *   classifications are non-deterministic even with `temperature: 0`.
+ *
+ * @pitfalls
+ * - **LLM output format instability**: the detector parses raw JSON from the
+ *   LLM response; a model update that changes the output schema will silently
+ *   produce zero LLM-sourced results rather than throwing.  Pin the model
+ *   version in `DetectorOptions.llmProvider` when reproducibility matters.
+ * - **Non-determinism**: identical inputs across two runs may produce
+ *   different `dependencies` arrays if LLM classification is involved.
+ *   Never diff two manifests by dependency count alone.
+ * - **Token budget exhaustion**: manifests with large README files are
+ *   truncated to 5 000 characters before being sent to the LLM.  URLs that
+ *   appear only in the truncated portion will not be discovered by the LLM
+ *   pass (they may still be found by the programmatic parser).
+ * - **Source file cap**: only the first 50 source files returned by the
+ *   directory traversal are scanned for code-comment references.  Repositories
+ *   with many source files may have incomplete coverage.
+ *
+ * @example
+ * ```ts
+ * import { Detector } from '@dependabit/detector';
+ * import { GitHubCopilotProvider } from '@dependabit/detector';
+ *
+ * const detector = new Detector({
+ *   repoPath: '/path/to/repo',
+ *   llmProvider: new GitHubCopilotProvider({ model: 'gpt-4o' }),
+ *   repoOwner: 'my-org',
+ *   repoName: 'my-repo',
+ * });
+ *
+ * const result = await detector.detectDependencies();
+ * console.log(`Found ${result.dependencies.length} dependencies`);
+ * ```
  */
 export class Detector {
   private options: Required<DetectorOptions>;
@@ -101,16 +219,36 @@ export class Detector {
   }
 
   /**
-   * Detect all external dependencies in the repository
+   * Performs a full-repository scan and returns all detected informational
+   * dependencies as a {@link DetectionResult}.
    *
-   * Implementation follows a hybrid approach:
-   * 1. Programmatic parsing of repository files (README, code comments, package files)
-   * 2. LLM analysis only for documents not fully parsed in step 1 (future enhancement)
-   * 3. Programmatic type categorization based on URL patterns and context
-   * 4. LLM fallback for uncategorized dependencies
-   * 5. Programmatic access method determination based on URL patterns
-   * 6. LLM fallback for access methods that can't be determined (future enhancement)
-   * 7. Manifest entry creation with references and versioning
+   * @remarks
+   * The scan is bounded: README files are capped at 5 for LLM analysis,
+   * source files at 50 for code-comment parsing.  Results are
+   * non-deterministic when LLM classification is involved.
+   *
+   * @returns Detected dependencies and diagnostic statistics.
+   *
+   * @throws {Error} If the LLM provider's `analyze` call throws and the error
+   * is not caught by the internal try-catch blocks (individual LLM failures
+   * are logged and skipped; file-system errors bubble up).
+   *
+   * @category Detector
+   *
+   * @useWhen
+   * Building an initial manifest for a repository or running a full refresh
+   * on a schedule.
+   *
+   * @avoidWhen
+   * Only a small subset of files changed — prefer {@link Detector.analyzeFiles}
+   * for incremental updates to avoid unnecessary LLM calls.
+   *
+   * @pitfalls
+   * - Results are **not** cached between calls; calling `detectDependencies`
+   *   twice on the same instance makes duplicate LLM calls.
+   * - The method does not deduplicate against an existing manifest; callers
+   *   must use `mergeManifests` from `@dependabit/manifest` to avoid
+   *   duplicate entries.
    */
   async detectDependencies(): Promise<DetectionResult> {
     const allReferences: Map<
@@ -830,8 +968,37 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
   }
 
   /**
-   * Analyze only specific files for dependencies (for incremental updates)
-   * This is more efficient than full repository scan when only few files changed
+   * Analyzes a specific list of files for dependencies rather than scanning
+   * the entire repository.  Prefer this over {@link Detector.detectDependencies}
+   * when only a handful of files changed (e.g., in a pull-request diff).
+   *
+   * @param filePaths - Absolute or `repoPath`-relative file paths to analyze.
+   *   Paths outside the repository root are silently skipped to prevent
+   *   directory-traversal attacks.
+   *
+   * @returns Detected dependencies and diagnostic statistics.
+   *
+   * @remarks
+   * Unlike `detectDependencies`, this method does NOT perform an LLM second
+   * pass on README files.  Classification still falls back to the LLM when
+   * programmatic heuristics cannot determine a dependency type.
+   *
+   * @category Detector
+   *
+   * @useWhen
+   * Incremental manifest updates after a commit or pull request — pass the
+   * list of changed files from the diff parser.
+   *
+   * @avoidWhen
+   * Running a full initial scan — use {@link Detector.detectDependencies}
+   * instead, which also performs an LLM enrichment pass.
+   *
+   * @pitfalls
+   * - Files outside `repoPath` are **silently** skipped without error.
+   *   Callers relying on path-traversal behaviour will get empty results.
+   * - File read errors are logged with `console.warn` and skipped, not
+   *   thrown; a broken file system will produce partial results without
+   *   surfacing an error.
    */
   async analyzeFiles(filePaths: string[]): Promise<DetectionResult> {
     const allReferences: Map<

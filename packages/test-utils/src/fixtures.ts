@@ -4,9 +4,10 @@
  */
 
 /**
- * Creates mock user data for testing
- * @param overrides - Partial user data to override defaults
- * @returns Mock user object
+ * Creates generic mock user data for testing.
+ * @param overrides - Partial user data to override defaults.
+ * @returns Mock user object.
+ * @category Test Utilities
  * @example
  * ```ts
  * const user = createMockUser({ name: 'John' });
@@ -25,9 +26,10 @@ export function createMockUser(overrides?: Partial<any>): any {
 }
 
 /**
- * Creates mock email data for testing
- * @param overrides - Partial email data to override defaults
- * @returns Mock email object
+ * Creates generic mock email data for testing.
+ * @param overrides - Partial email data to override defaults.
+ * @returns Mock email object.
+ * @category Test Utilities
  * @example
  * ```ts
  * const email = createMockEmail({ to: 'john@example.com' });
@@ -47,9 +49,10 @@ export function createMockEmail(overrides?: Partial<any>): any {
 }
 
 /**
- * Creates mock API response for testing
- * @param overrides - Partial response data to override defaults
- * @returns Mock API response
+ * Creates a generic mock API response envelope for testing.
+ * @param overrides - Partial response data to override defaults.
+ * @returns Mock API response.
+ * @category Test Utilities
  * @example
  * ```ts
  * const response = createMockApiResponse({ status: 201 });
@@ -67,9 +70,10 @@ export function createMockApiResponse(overrides?: Partial<any>): any {
 }
 
 /**
- * Creates mock error response for testing
- * @param message - Error message
- * @returns Mock error response
+ * Creates a generic mock error response envelope for testing.
+ * @param message - Error message string.
+ * @returns Mock error response with `success: false`.
+ * @category Test Utilities
  * @example
  * ```ts
  * const error = createMockErrorResponse('Not found');
@@ -86,10 +90,11 @@ export function createMockErrorResponse(message: string = 'Test error'): any {
 }
 
 /**
- * Creates an array of mock items
- * @param count - Number of items to create
- * @param factory - Function to create individual items
- * @returns Array of mock items
+ * Creates an array of mock items using a factory function.
+ * @param count - Number of items to create.
+ * @param factory - Function called with each zero-based index to produce an item.
+ * @returns Array of `count` items.
+ * @category Test Utilities
  * @example
  * ```ts
  * const users = createMockArray(5, (i) => ({ id: i, name: `User${i}` }));
