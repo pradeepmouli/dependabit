@@ -1,0 +1,2011 @@
+# @dependabit/docs
+
+> Documentation site for dependabit
+
+## @dependabit/action
+
+### main
+
+```ts
+main(): Promise<void>
+```
+
+**Returns:** `Promise<void>`
+
+### createLogger
+
+Create a new logger instance
+
+```ts
+createLogger(config?: LoggerConfig): Logger
+```
+
+**Parameters:**
+- `config: LoggerConfig` (optional) — 
+
+**Returns:** `Logger`
+
+### withTiming
+
+Measure and log operation duration
+
+```ts
+withTiming<T>(logger: Logger, operation: string, fn: () => Promise<T>): Promise<T>
+```
+
+**Parameters:**
+- `logger: Logger` — 
+- `operation: string` — 
+- `fn: () => Promise<T>` — 
+
+**Returns:** `Promise<T>`
+
+### Logger
+
+Structured JSON logger for GitHub Actions
+
+```ts
+constructor(config: LoggerConfig): Logger
+```
+
+**Methods:**
+- `debug(message: string, data?: Record<string, unknown>): void` — Log debug message
+- `info(message: string, data?: Record<string, unknown>): void` — Log info message
+- `warning(message: string, data?: Record<string, unknown>): void` — Log warning message
+- `error(message: string, data?: Record<string, unknown>): void` — Log error message
+- `startGroup(name: string): void` — Start a log group
+- `endGroup(): void` — End a log group
+- `getCorrelationId(): string` — Get correlation ID
+- `child(context?: Record<string, unknown>): Logger` — Create a child logger with the same correlation ID
+- `logLLMInteraction(data: { provider: string; model?: string; prompt: string; response: string; tokens?: number; latencyMs?: number }): void` — Log LLM interaction
+- `logAPICall(data: { endpoint: string; method: string; statusCode?: number; latencyMs?: number; rateLimit?: { remaining: number; limit: number; reset: number } }): void` — Log API call
+- `logDuration(operation: string, durationMs: number, data?: Record<string, unknown>): void` — Log operation duration
+
+### LogEntry
+
+Structured log entry
+
+### LogLevel
+
+Log level enumeration
+
+- `DEBUG` = `"debug"` — 
+- `INFO` = `"info"` — 
+- `WARNING` = `"warning"` — 
+- `ERROR` = `"error"` — 
+
+---
+
+## @dependabit/detector
+
+### createDetectionPrompt
+
+Renders a detection prompt by substituting the content-type, file path,
+and raw content into `DETECTION_PROMPT_TEMPLATE`.
+
+```ts
+createDetectionPrompt(contentType: string, filePath: string, content: string): string
+```
+
+**Parameters:**
+- `contentType: string` — Human-readable label for the content (e.g. `"README"`).
+- `filePath: string` — Repository-relative file path for context.
+- `content: string` — Raw file content to analyze (not truncated here — callers
+  should truncate before passing to stay within token budgets).
+
+**Returns:** `string`
+
+### createClassificationPrompt
+
+Renders a classification prompt for a single URL, asking the LLM to
+determine the dependency type and best access method.
+
+```ts
+createClassificationPrompt(url: string, context: string): string
+```
+
+**Parameters:**
+- `url: string` — The URL to classify.
+- `context: string` — Surrounding text or code comments that mention the URL,
+  used to improve classification accuracy.
+
+**Returns:** `string`
+
+### parseReadme
+
+Parse README content and extract external references
+
+```ts
+parseReadme(content: string, filePath: string): ExtractedReference[]
+```
+
+**Parameters:**
+- `content: string` — 
+- `filePath: string` — 
+
+**Returns:** `ExtractedReference[]`
+
+### extractGitHubReferences
+
+Extract GitHub repository mentions (owner/repo format)
+
+```ts
+extractGitHubReferences(content: string): { owner: string; repo: string; context: string }[]
+```
+
+**Parameters:**
+- `content: string` — 
+
+**Returns:** `{ owner: string; repo: string; context: string }[]`
+
+### parseCodeComments
+
+Parse code files and extract references from comments
+
+```ts
+parseCodeComments(content: string, filePath: string): CommentReference[]
+```
+
+**Parameters:**
+- `content: string` — 
+- `filePath: string` — 
+
+**Returns:** `CommentReference[]`
+
+### extractSpecReferences
+
+Extract specification and RFC references from comments
+
+```ts
+extractSpecReferences(content: string): { spec: string; context: string }[]
+```
+
+**Parameters:**
+- `content: string` — 
+
+**Returns:** `{ spec: string; context: string }[]`
+
+### parsePackageJson
+
+Parse package.json and extract metadata URLs (NOT dependencies)
+
+```ts
+parsePackageJson(content: string): PackageMetadata
+```
+
+**Parameters:**
+- `content: string` — 
+
+**Returns:** `PackageMetadata`
+
+### parseRequirementsTxt
+
+Parse requirements.txt and extract URLs from comments
+EXCLUDES actual packages (handled by dependabot)
+
+```ts
+parseRequirementsTxt(content: string): PackageMetadata
+```
+
+**Parameters:**
+- `content: string` — 
+
+**Returns:** `PackageMetadata`
+
+### parseCargoToml
+
+Parse Cargo.toml and extract metadata URLs
+EXCLUDES actual dependencies (handled by dependabot)
+
+```ts
+parseCargoToml(content: string): PackageMetadata
+```
+
+**Parameters:**
+- `content: string` — 
+
+**Returns:** `PackageMetadata`
+
+### parseGoMod
+
+Parse go.mod and extract URLs from comments
+EXCLUDES actual dependencies (handled by dependabot)
+
+```ts
+parseGoMod(content: string): PackageMetadata
+```
+
+**Parameters:**
+- `content: string` — 
+
+**Returns:** `PackageMetadata`
+
+### parseDiff
+
+Parse a unified diff and extract additions and deletions
+
+```ts
+parseDiff(patch: string): DiffParseResult
+```
+
+**Parameters:**
+- `patch: string` — 
+
+**Returns:** `DiffParseResult`
+
+### extractAddedContent
+
+Extract meaningful content from added lines
+
+```ts
+extractAddedContent(additions: string[], filename?: string): ExtractedContent
+```
+
+**Parameters:**
+- `additions: string[]` — 
+- `filename: string` (optional) — 
+
+**Returns:** `ExtractedContent`
+
+### extractRemovedContent
+
+Extract meaningful content from removed lines
+
+```ts
+extractRemovedContent(deletions: string[], filename?: string): ExtractedContent
+```
+
+**Parameters:**
+- `deletions: string[]` — 
+- `filename: string` (optional) — 
+
+**Returns:** `ExtractedContent`
+
+### getChangedFiles
+
+Identify files relevant for dependency analysis
+
+Note: Filenames in relevantFiles preserve their original case from the commit.
+Case-insensitive matching is used for identification, but original casing is maintained
+for consistency with file system operations.
+
+```ts
+getChangedFiles(files: CommitFile[]): ChangedFilesResult
+```
+
+**Parameters:**
+- `files: CommitFile[]` — 
+
+**Returns:** `ChangedFilesResult`
+
+### parseCommitDiffs
+
+Parse all diffs from commit files
+
+```ts
+parseCommitDiffs(files: CommitFile[]): Map<string, DiffParseResult>
+```
+
+**Parameters:**
+- `files: CommitFile[]` — 
+
+**Returns:** `Map<string, DiffParseResult>`
+
+### extractDependencyChanges
+
+Extract all dependency-related content from commit diffs
+
+```ts
+extractDependencyChanges(files: CommitFile[]): { addedUrls: string[]; removedUrls: string[]; addedPackages: string[]; removedPackages: string[]; changedFiles: ChangedFilesResult }
+```
+
+**Parameters:**
+- `files: CommitFile[]` — 
+
+**Returns:** `{ addedUrls: string[]; removedUrls: string[]; addedPackages: string[]; removedPackages: string[]; changedFiles: ChangedFilesResult }`
+
+### GitHubCopilotProvider
+
+Contract that all LLM provider implementations must satisfy.
+
+```ts
+constructor(config: LLMProviderConfig): GitHubCopilotProvider
+```
+
+**Methods:**
+- `analyze(content: string, prompt: string): Promise<LLMResponse>` — Analyze content and detect external dependencies
+- `getSupportedModels(): string[]` — Get list of supported models for this provider
+- `getRateLimit(): Promise<RateLimitInfo>` — Get current rate limit status
+- `validateConfig(): boolean` — Validate provider configuration
+
+### Detector
+
+Orchestrates multi-stage detection of informational external dependencies
+inside a local repository clone.
+
+```ts
+constructor(options: DetectorOptions): Detector
+```
+
+**Methods:**
+- `detectDependencies(): Promise<DetectionResult>` — Performs a full-repository scan and returns all detected informational
+dependencies as a DetectionResult.
+- `analyzeFiles(filePaths: string[]): Promise<DetectionResult>` — Analyzes a specific list of files for dependencies rather than scanning
+the entire repository.  Prefer this over Detector.detectDependencies
+when only a handful of files changed (e.g., in a pull-request diff).
+
+### LLMProvider
+
+Contract that all LLM provider implementations must satisfy.
+
+### LLMResponse
+
+The structured response returned by LLMProvider.analyze.
+
+### RateLimitInfo
+
+Rate limit information returned by LLMProvider.getRateLimit.
+
+### DetectedDependency
+
+A single dependency detected by the LLM.
+
+### LLMUsageMetadata
+
+Token usage and latency metadata included in every LLMResponse.
+
+### ExtractedReference
+
+README Parser
+Extracts URLs and references from README and markdown files
+
+### CommentReference
+
+Code Comment Parser
+Extracts URLs and references from code comments
+
+### PackageMetadata
+
+Package File Parser
+Extracts metadata and references from package manager files
+EXCLUDES actual dependencies (handled by dependabot)
+
+### DiffParseResult
+
+### ExtractedContent
+
+### ChangedFilesResult
+
+### DetectionResult
+
+The result produced by Detector.detectDependencies or
+Detector.analyzeFiles.
+
+### SYSTEM_PROMPT
+
+Detection prompts for LLM-based dependency analysis.
+
+```ts
+const SYSTEM_PROMPT: "You are an expert at analyzing code repositories to identify external informational dependencies.\n\nYour task is to identify external resources that developers reference but are NOT tracked by package managers (npm, PyPI, Cargo, etc.).\n\nINCLUDE these types of dependencies:\n- GitHub repositories referenced but not declared in package files\n- Documentation sites and API references\n- OpenAPI/GraphQL schemas\n- Research papers and arXiv preprints\n- Reference implementations and code examples\n- Technical specifications and RFCs\n\nEXCLUDE these (handled by dependabot):\n- NPM packages in package.json\n- Python packages in requirements.txt\n- Rust crates in Cargo.toml\n- Docker images in Dockerfile\n- Any declared package manager dependencies\n\nALSO EXCLUDE (false positives):\n- URLs that reference the repository itself (self-references)\n- Relative file paths (e.g., CONTRIBUTING.md, docs/guide.md, ./src/utils)\n- Placeholder URLs used in documentation examples (example.com, example.org, localhost)\n- Internal documentation links within the same repository\n- URLs with template variables or placeholders (e.g., issues/[NUMBER], user/repo)\n\nOnly return dependencies with confidence >= 0.7.\n\nFor each dependency found, provide:\n1. url: The complete URL\n2. name: A descriptive name\n3. description: What this dependency is used for\n4. type: One of [reference-implementation, schema, documentation, research-paper, api-example, other]\n5. confidence: A score from 0.0 to 1.0 indicating detection confidence\n6. reasoning: Brief explanation of why this is a dependency\n\nReturn ONLY valid JSON in this format:\n{\n  \"dependencies\": [\n    {\n      \"url\": \"https://example.com/resource\",\n      \"name\": \"Resource Name\",\n      \"description\": \"Purpose in the project\",\n      \"type\": \"documentation\",\n      \"confidence\": 0.95,\n      \"reasoning\": \"Referenced in README as API documentation\"\n    }\n  ]\n}"
+```
+
+---
+
+## @dependabit/github-client
+
+### createGitHubClient
+
+Create a GitHub client instance
+
+```ts
+createGitHubClient(config?: GitHubClientConfig): GitHubClient
+```
+
+**Parameters:**
+- `config: GitHubClientConfig` (optional) — 
+
+**Returns:** `GitHubClient`
+
+### fetchCommits
+
+Fetch commits from GitHub API
+
+```ts
+fetchCommits(client: GitHubClient, owner: string, repo: string, options: FetchCommitsOptions): Promise<CommitInfo[]>
+```
+
+**Parameters:**
+- `client: GitHubClient` — 
+- `owner: string` — 
+- `repo: string` — 
+- `options: FetchCommitsOptions` — 
+
+**Returns:** `Promise<CommitInfo[]>`
+
+### getCommitDiff
+
+Get detailed diff for a specific commit
+
+```ts
+getCommitDiff(client: GitHubClient, owner: string, repo: string, sha: string): Promise<CommitDiff>
+```
+
+**Parameters:**
+- `client: GitHubClient` — 
+- `owner: string` — 
+- `repo: string` — 
+- `sha: string` — 
+
+**Returns:** `Promise<CommitDiff>`
+
+### parseCommitFiles
+
+Parse commit files into categorized lists
+
+```ts
+parseCommitFiles(files: CommitFile[]): ParsedFiles
+```
+
+**Parameters:**
+- `files: CommitFile[]` — 
+
+**Returns:** `ParsedFiles`
+
+### getCommitsBetween
+
+Get commits between two refs
+
+```ts
+getCommitsBetween(client: GitHubClient, owner: string, repo: string, base: string, head: string): Promise<CommitInfo[]>
+```
+
+**Parameters:**
+- `client: GitHubClient` — 
+- `owner: string` — 
+- `repo: string` — 
+- `base: string` — 
+- `head: string` — 
+
+**Returns:** `Promise<CommitInfo[]>`
+
+### createAuth
+
+Create authentication manager from config
+
+```ts
+createAuth(config: AuthConfig): AuthManager
+```
+
+**Parameters:**
+- `config: AuthConfig` — 
+
+**Returns:** `AuthManager`
+
+### GitHubClient
+
+Thin wrapper around Octokit that adds proactive rate-limit checking.
+
+```ts
+constructor(config: GitHubClientConfig): GitHubClient
+```
+
+**Methods:**
+- `getRateLimit(): Promise<RateLimitInfo>` — Get current rate limit status
+- `checkRateLimit(): Promise<void>` — Check rate limit and throw if exceeded; log a warning when remaining is low.
+- `withRateLimit<T>(fn: () => Promise<T>): Promise<T>` — Execute a request with rate limit checking
+- `getOctokit(): Octokit & { paginate: PaginateInterface } & paginateGraphQLInterface & Api & { retry: { retryRequest: (error: RequestError, retries: number, retryAfter: number) => RequestError } }` — Get the underlying Octokit instance
+- `getLastRateLimitCheck(): RateLimitInfo | undefined` — Get last known rate limit info (cached)
+
+### AuthManager
+
+Authentication manager that supports multiple auth methods
+
+```ts
+constructor(config: AuthConfig): AuthManager
+```
+
+**Methods:**
+- `authenticate(code?: string): Promise<AuthResult>` — Perform authentication
+- `validate(): boolean` — Validate authentication configuration
+- `getType(): string` — Get authentication type
+- `getHandler(): TokenAuthHandler | OAuthHandler | BasicAuthHandler` — Get underlying handler
+
+### IssueManager
+
+```ts
+constructor(auth?: string): IssueManager
+```
+
+**Methods:**
+- `createIssue(data: IssueData): Promise<IssueResult>` — Creates a new issue for a dependency change
+- `findExistingIssue(params: { owner: string; repo: string; dependencyId: string }): Promise<IssueResult | null>` — Finds an existing issue for a dependency
+- `updateIssue(data: UpdateIssueData): Promise<IssueResult>` — Updates an existing issue
+
+### ReleaseManager
+
+```ts
+constructor(auth?: string): ReleaseManager
+```
+
+**Methods:**
+- `getLatestRelease(params: { owner: string; repo: string }): Promise<Release | null>` — Fetches the latest release from a repository
+- `getAllReleases(params: { owner: string; repo: string; page?: number; perPage?: number }): Promise<Release[]>` — Fetches all releases from a repository
+- `compareReleases(oldReleases: Release[], newReleases: Release[]): ReleaseComparison` — Compares two sets of releases to find new ones
+- `getReleaseByTag(params: { owner: string; repo: string; tag: string }): Promise<Release | null>` — Fetches release notes for a specific tag
+
+### RateLimitHandler
+
+Manages GitHub API rate limits and provides budget-reservation utilities
+for batch operations.
+
+```ts
+constructor(auth?: string): RateLimitHandler
+```
+
+**Methods:**
+- `checkRateLimit(): Promise<RateLimitInfo>` — Checks current rate limit status
+- `waitIfNeeded(): Promise<void>` — Waits if rate limited
+- `calculateWaitTime(rateLimitInfo: RateLimitInfo): number` — Calculates wait time until rate limit resets
+- `reserveBudget(callsNeeded: number, options?: { safetyMargin?: number; maxWaitTime?: number }): Promise<BudgetReservation>` — Attempts to reserve API call budget with proactive checking
+- `canProceed(estimatedCalls: number, options?: { threshold?: number; safetyMargin?: number }): Promise<{ canProceed: boolean; reason?: string }>` — Proactively check if operation can proceed without hitting rate limit
+- `getRateLimitStatus(): Promise<RateLimitStatus>` — Gets detailed rate limit status for all API categories
+- `getCachedStatus(): RateLimitStatus | undefined` — Gets cached rate limit status (avoids API call)
+
+### FeedbackListener
+
+Listener that monitors issue labels for false positive feedback
+
+```ts
+constructor(issueManager: IssueManagerInterface, config: FeedbackConfig): FeedbackListener
+```
+
+**Methods:**
+- `collectFeedback(options: CollectOptions): Promise<FeedbackData>` — Collect feedback from issues with feedback labels
+- `getFeedbackRate(options: CollectOptions): Promise<FeedbackRate>` — Calculate false positive rate from collected feedback
+- `getRecentFeedback(days: number, referenceDate?: Date): Promise<FeedbackData>` — Get feedback from recent time window (e.g., last 30 days)
+- `monitorIssue(issueNumber: number): Promise<boolean>` — Check if a specific issue has feedback label
+
+### TokenAuthHandler
+
+Handler for token-based authentication (GitHub PAT, API keys)
+
+```ts
+constructor(token: string): TokenAuthHandler
+```
+
+**Methods:**
+- `authenticate(): Promise<TokenAuth>` — Authenticate and return auth object
+- `validate(): boolean` — Validate token format
+- `getType(): string` — Get authentication type
+- `updateToken(newToken: string): void` — Update token (for rotation)
+- `getToken(): string` — Get current token
+
+### OAuthHandler
+
+Handler for OAuth 2.0 authentication
+
+```ts
+constructor(config: OAuthConfig): OAuthHandler
+```
+
+**Methods:**
+- `authenticate(code: string): Promise<OAuthAuth>` — Exchange authorization code for access token
+- `getAuthorizationUrl(scopes: string[], state?: string): string` — Generate authorization URL for OAuth flow
+- `refreshToken(refreshToken: string): Promise<OAuthAuth>` — Refresh an expired access token
+- `validate(): boolean` — Validate OAuth configuration
+- `getType(): string` — Get authentication type
+
+### BasicAuthHandler
+
+Handler for HTTP Basic authentication
+
+```ts
+constructor(username: string, password: string): BasicAuthHandler
+```
+
+**Methods:**
+- `authenticate(): Promise<BasicAuth>` — Authenticate and return auth object
+- `getAuthHeader(): string` — Get base64-encoded Basic auth header value
+- `validate(): boolean` — Validate credentials format
+- `getType(): string` — Get authentication type
+- `updateCredentials(username: string, password: string): void` — Update credentials (for rotation)
+- `toString(): string` — String representation (masks password)
+- `toJSON(): Record<string, unknown>` — JSON representation (excludes password)
+
+### CommitInfo
+
+### CommitFile
+
+### CommitDiff
+
+### ParsedFiles
+
+### AuthType
+
+```ts
+type AuthType = "token" | "oauth" | "basic"
+```
+
+### AuthResult
+
+```ts
+type AuthResult = TokenAuth | OAuthAuth | BasicAuth
+```
+
+### IssueData
+
+### IssueResult
+
+### UpdateIssueData
+
+### Release
+
+### ReleaseComparison
+
+### RateLimitInfo
+
+Rate limit snapshot for a single GitHub API category.
+
+### RateLimitStatus
+
+Aggregated rate limit status across GitHub's REST, search, and GraphQL
+API categories.
+
+### BudgetReservation
+
+Result of a budget reservation attempt via
+RateLimitHandler.reserveBudget.
+
+### FeedbackData
+
+### FeedbackRate
+
+### TokenAuth
+
+Token authentication handler for GitHub API
+Supports GitHub PAT tokens, fine-grained tokens, and API keys
+
+### OAuthAuth
+
+### BasicAuth
+
+Basic authentication handler for GitHub API
+Supports username/password or username/personal access token
+
+---
+
+## @dependabit/manifest
+
+### validateManifest
+
+Validate a dependency manifest
+
+```ts
+validateManifest(data: unknown): { version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }
+```
+
+**Parameters:**
+- `data: unknown` — 
+
+**Returns:** `{ version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }`
+
+### validateDependencyEntry
+
+Validate a dependency entry
+
+```ts
+validateDependencyEntry(data: unknown): { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }
+```
+
+**Parameters:**
+- `data: unknown` — 
+
+**Returns:** `{ id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }`
+
+### validateConfig
+
+Validate a dependabit configuration
+
+```ts
+validateConfig(data: unknown): { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }
+```
+
+**Parameters:**
+- `data: unknown` — 
+
+**Returns:** `{ version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }`
+
+### safeValidateManifest
+
+Safe validation that returns success/error result
+
+```ts
+safeValidateManifest(data: unknown): { success: boolean; data?: { version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }; error?: ValidationError }
+```
+
+**Parameters:**
+- `data: unknown` — 
+
+**Returns:** `{ success: boolean; data?: { version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }; error?: ValidationError }`
+
+### safeValidateDependencyEntry
+
+Safe validation for dependency entry
+
+```ts
+safeValidateDependencyEntry(data: unknown): { success: boolean; data?: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }; error?: ValidationError }
+```
+
+**Parameters:**
+- `data: unknown` — 
+
+**Returns:** `{ success: boolean; data?: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }; error?: ValidationError }`
+
+### safeValidateConfig
+
+Safe validation for config
+
+```ts
+safeValidateConfig(data: unknown): { success: boolean; data?: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: (...) | (...); major?: (...) | (...); minor?: (...) | (...) }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }; error?: ValidationError }
+```
+
+**Parameters:**
+- `data: unknown` — 
+
+**Returns:** `{ success: boolean; data?: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: (...) | (...); major?: (...) | (...); minor?: (...) | (...) }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }; error?: ValidationError }`
+
+### readManifest
+
+Reads a manifest JSON file from disk and validates it against
+`DependencyManifestSchema`.
+
+```ts
+readManifest(path: string): Promise<{ version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }>
+```
+
+**Parameters:**
+- `path: string` — Absolute or process-relative path to the manifest file.
+
+**Returns:** `Promise<{ version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }>`
+
+### writeManifest
+
+Serialises a manifest to pretty-printed JSON and writes it to disk.
+
+```ts
+writeManifest(path: string, manifest: { version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }, options?: { strict?: boolean }): Promise<{ validationErrors?: string[] }>
+```
+
+**Parameters:**
+- `path: string` — Destination file path.
+- `manifest: { version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }` — Manifest object to write.
+- `options: { strict?: boolean }` (optional) — Optional write behaviour overrides.
+
+**Returns:** `Promise<{ validationErrors?: string[] }>`
+
+### updateDependency
+
+Updates a single dependency entry in the on-disk manifest by ID.
+
+```ts
+updateDependency(path: string, dependencyId: string, updates: Partial<DependencyEntry>): Promise<{ version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }>
+```
+
+**Parameters:**
+- `path: string` — Path to the manifest file.
+- `dependencyId: string` — UUID of the dependency to update.
+- `updates: Partial<DependencyEntry>` — Partial `DependencyEntry` fields to merge.
+
+**Returns:** `Promise<{ version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }>`
+
+### addDependency
+
+Appends a new dependency entry to the on-disk manifest.
+
+```ts
+addDependency(path: string, dependency: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }): Promise<{ version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }>
+```
+
+**Parameters:**
+- `path: string` — Path to the manifest file.
+- `dependency: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }` — The new `DependencyEntry` to add.
+
+**Returns:** `Promise<{ version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }>`
+
+### removeDependency
+
+Removes a dependency from the on-disk manifest by ID.
+
+```ts
+removeDependency(path: string, dependencyId: string): Promise<{ version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }>
+```
+
+**Parameters:**
+- `path: string` — Path to the manifest file.
+- `dependencyId: string` — UUID of the dependency to remove.
+
+**Returns:** `Promise<{ version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }>`
+
+### mergeManifests
+
+Merges an `updated` manifest generated by the detector over an `existing`
+one, optionally preserving manual entries and accumulated change history.
+
+```ts
+mergeManifests(existing: { version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }, updated: { version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }, options: { preserveManual?: boolean; preserveHistory?: boolean }): { version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }
+```
+
+**Parameters:**
+- `existing: { version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }` — The current on-disk manifest.
+- `updated: { version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }` — The freshly-detected manifest to merge.
+- `options: { preserveManual?: boolean; preserveHistory?: boolean }` — Merge strategy options.
+
+**Returns:** `{ version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }`
+
+### createEmptyManifest
+
+Creates a minimal, valid manifest with an empty `dependencies` array.
+
+```ts
+createEmptyManifest(options: { owner: string; name: string; branch: string; commit: string; action?: string; version?: string; llmProvider?: string; llmModel?: string }): { version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }
+```
+
+**Parameters:**
+- `options: { owner: string; name: string; branch: string; commit: string; action?: string; version?: string; llmProvider?: string; llmModel?: string }` — 
+
+**Returns:** `{ version: "1.0.0"; generatedAt: string; generatedBy: { action: string; version: string; llmProvider: string; llmModel?: string }; repository: { owner: string; name: string; branch: string; commit: string }; dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]; statistics: { totalDependencies: number; byType: Record<string, number>; byAccessMethod: Record<string, number>; byDetectionMethod: Record<string, number>; averageConfidence: number; falsePositiveRate?: number } }`
+
+```ts
+const manifest = createEmptyManifest({
+  owner: 'my-org', name: 'my-repo',
+  branch: 'main', commit: 'abc123',
+});
+await writeManifest('.dependabit/manifest.json', manifest);
+```
+
+### readConfig
+
+Reads a YAML configuration file from disk, parses it, and validates it
+against `DependabitConfigSchema`.
+
+```ts
+readConfig(path: string): Promise<{ version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }>
+```
+
+**Parameters:**
+- `path: string` — Path to the `.dependabit.yml` (or `.json`) file.
+
+**Returns:** `Promise<{ version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }>`
+
+### parseConfig
+
+Parses a YAML string into a validated `DependabitConfig`.
+
+```ts
+parseConfig(yaml: string): { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }
+```
+
+**Parameters:**
+- `yaml: string` — Raw YAML or JSON string.
+
+**Returns:** `{ version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }`
+
+### stringifyConfig
+
+Serialises a validated `DependabitConfig` to a YAML string.
+
+```ts
+stringifyConfig(config: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }): string
+```
+
+**Parameters:**
+- `config: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }` — The config to serialise.
+
+**Returns:** `string`
+
+### getEffectiveMonitoringRules
+
+Resolves the effective monitoring rules for a specific dependency URL by
+merging global config defaults with any per-URL override defined in
+`config.dependencies`.
+
+```ts
+getEffectiveMonitoringRules(config: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }, dependencyUrl: string): { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean }
+```
+
+**Parameters:**
+- `config: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }` — Root `DependabitConfig` object.
+- `dependencyUrl: string` — The exact URL of the dependency to look up.
+
+**Returns:** `{ enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean }`
+
+### shouldIgnoreUrl
+
+Returns `true` if the given URL matches any exclusion rule defined in
+`config.ignore` (exact URL list or regex pattern list).
+
+```ts
+shouldIgnoreUrl(config: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }, url: string): boolean
+```
+
+**Parameters:**
+- `config: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }` — Root `DependabitConfig` object.
+- `url: string` — The URL to test.
+
+**Returns:** `boolean`
+
+### checkManifestSize
+
+Check manifest size and return status
+
+```ts
+checkManifestSize(content: string | Buffer<ArrayBufferLike>, options?: SizeCheckOptions): SizeCheckResult
+```
+
+**Parameters:**
+- `content: string | Buffer<ArrayBufferLike>` — 
+- `options: SizeCheckOptions` (optional) — 
+
+**Returns:** `SizeCheckResult`
+
+### formatSize
+
+Get formatted size string
+
+```ts
+formatSize(bytes: number): string
+```
+
+**Parameters:**
+- `bytes: number` — 
+
+**Returns:** `string`
+
+### validateManifestObject
+
+Validate manifest object size before serialization
+
+```ts
+validateManifestObject(manifest: unknown, options?: SizeCheckOptions): SizeCheckResult
+```
+
+**Parameters:**
+- `manifest: unknown` — 
+- `options: SizeCheckOptions` (optional) — 
+
+**Returns:** `SizeCheckResult`
+
+### estimateEntrySize
+
+Estimate manifest size impact of adding an entry
+
+```ts
+estimateEntrySize(entry: unknown): number
+```
+
+**Parameters:**
+- `entry: unknown` — 
+
+**Returns:** `number`
+
+### canAddEntry
+
+Check if adding an entry would exceed limits
+
+```ts
+canAddEntry(currentManifest: unknown, newEntry: unknown, options?: SizeCheckOptions): { canAdd: boolean; currentSize: SizeCheckResult; estimatedSize: SizeCheckResult }
+```
+
+**Parameters:**
+- `currentManifest: unknown` — 
+- `newEntry: unknown` — 
+- `options: SizeCheckOptions` (optional) — 
+
+**Returns:** `{ canAdd: boolean; currentSize: SizeCheckResult; estimatedSize: SizeCheckResult }`
+
+### ValidationError
+
+Wraps a Zod `ZodError` to provide human-readable formatted error messages.
+
+```ts
+constructor(message: string, errors: ZodError): ValidationError
+```
+
+**Properties:**
+- `stackTraceLimit: number` — The `Error.stackTraceLimit` property specifies the number of stack frames
+collected by a stack trace (whether generated by `new Error().stack` or
+`Error.captureStackTrace(obj)`).
+
+The default value is `10` but may be set to any valid JavaScript number. Changes
+will affect any stack trace captured _after_ the value has been changed.
+
+If set to a non-number value, or set to a negative number, stack traces will
+not capture any frames.
+- `errors: ZodError` — 
+- `name: string` — 
+- `message: string` — 
+- `stack: string` — 
+- `cause: unknown` — 
+
+**Methods:**
+- `captureStackTrace(targetObject: object, constructorOpt?: Function): void` — Creates a `.stack` property on `targetObject`, which when accessed returns
+a string representing the location in the code at which
+`Error.captureStackTrace()` was called.
+
+```js
+const myObject = {};
+Error.captureStackTrace(myObject);
+myObject.stack;  // Similar to `new Error().stack`
+```
+
+The first line of the trace will be prefixed with
+`${myObject.name}: ${myObject.message}`.
+
+The optional `constructorOpt` argument accepts a function. If given, all frames
+above `constructorOpt`, including `constructorOpt`, will be omitted from the
+generated stack trace.
+
+The `constructorOpt` argument is useful for hiding implementation
+details of error generation from the user. For instance:
+
+```js
+function a() {
+  b();
+}
+
+function b() {
+  c();
+}
+
+function c() {
+  // Create an error without stack trace to avoid calculating the stack trace twice.
+  const { stackTraceLimit } = Error;
+  Error.stackTraceLimit = 0;
+  const error = new Error();
+  Error.stackTraceLimit = stackTraceLimit;
+
+  // Capture the stack trace above function b
+  Error.captureStackTrace(error, b); // Neither function c, nor b is included in the stack trace
+  throw error;
+}
+
+a();
+```
+- `prepareStackTrace(err: Error, stackTraces: CallSite[]): any` — 
+- `getFormattedErrors(): string[]` — Get formatted error messages
+
+### DependencyManifest
+
+A fully-validated dependency manifest document.
+
+```ts
+type DependencyManifest = z.infer<typeof DependencyManifestSchema>
+```
+
+### DependencyEntry
+
+A single tracked external dependency inside a DependencyManifest.
+
+```ts
+type DependencyEntry = z.infer<typeof DependencyEntrySchema>
+```
+
+### DependencyType
+
+Semantic category of an external dependency.
+
+```ts
+type DependencyType = z.infer<typeof DependencyTypeSchema>
+```
+
+### AccessMethod
+
+The protocol/service used to fetch and compare a dependency's state.
+
+```ts
+type AccessMethod = z.infer<typeof AccessMethodSchema>
+```
+
+### DetectionMethod
+
+How a dependency was originally discovered.
+
+```ts
+type DetectionMethod = z.infer<typeof DetectionMethodSchema>
+```
+
+### Severity
+
+Change severity level used in notifications and issue creation.
+
+```ts
+type Severity = z.infer<typeof SeveritySchema>
+```
+
+### MonitoringRules
+
+Per-dependency monitoring rules (check frequency, enable/disable).
+
+```ts
+type MonitoringRules = z.infer<typeof MonitoringRulesSchema>
+```
+
+### DependabitConfig
+
+Root configuration object parsed from `.dependabit.yml`.
+
+```ts
+type DependabitConfig = z.infer<typeof DependabitConfigSchema>
+```
+
+### Schedule
+
+Check schedule (cron-like, compatible with Dependabot syntax).
+
+```ts
+type Schedule = z.infer<typeof ScheduleSchema>
+```
+
+### LLMConfig
+
+LLM provider configuration stored inside the manifest's `generatedBy`
+section and in `DependabitConfig.llm`.
+
+```ts
+type LLMConfig = z.infer<typeof LLMConfigSchema>
+```
+
+### IssueConfig
+
+Configuration for GitHub issue creation on change detection.
+
+```ts
+type IssueConfig = z.infer<typeof IssueConfigSchema>
+```
+
+### DependencyOverride
+
+A per-URL configuration override inside `DependabitConfig.dependencies`.
+
+```ts
+type DependencyOverride = z.infer<typeof DependencyOverrideSchema>
+```
+
+### ChangeType
+
+Classification of the kind of change detected during monitoring.
+
+```ts
+type ChangeType = z.infer<typeof ChangeTypeSchema>
+```
+
+### ChangeDetectionRecord
+
+A persisted record of a single change detection event.
+
+```ts
+type ChangeDetectionRecord = z.infer<typeof ChangeDetectionRecordSchema>
+```
+
+### SizeCheckResult
+
+Manifest size validation and warnings
+Checks manifest size and warns when approaching limits
+
+### ManifestVersionSchema
+
+```ts
+const ManifestVersionSchema: ZodLiteral<"1.0.0">
+```
+
+### AccessMethodSchema
+
+```ts
+const AccessMethodSchema: ZodEnum<{ context7: "context7"; arxiv: "arxiv"; openapi: "openapi"; github-api: "github-api"; http: "http" }>
+```
+
+### DependencyTypeSchema
+
+```ts
+const DependencyTypeSchema: ZodEnum<{ reference-implementation: "reference-implementation"; schema: "schema"; documentation: "documentation"; research-paper: "research-paper"; api-example: "api-example"; other: "other" }>
+```
+
+### DetectionMethodSchema
+
+```ts
+const DetectionMethodSchema: ZodEnum<{ llm-analysis: "llm-analysis"; manual: "manual"; package-json: "package-json"; requirements-txt: "requirements-txt"; code-comment: "code-comment" }>
+```
+
+### SeveritySchema
+
+```ts
+const SeveritySchema: ZodEnum<{ breaking: "breaking"; major: "major"; minor: "minor" }>
+```
+
+### AuthConfigSchema
+
+```ts
+const AuthConfigSchema: ZodOptional<ZodObject<{ type: ZodEnum<{ token: "token"; oauth: "oauth"; basic: "basic"; none: "none" }>; secretEnvVar: ZodOptional<ZodString> }, $strip>>
+```
+
+### MonitoringRulesSchema
+
+```ts
+const MonitoringRulesSchema: ZodObject<{ enabled: ZodDefault<ZodBoolean>; checkFrequency: ZodDefault<ZodEnum<{ hourly: "hourly"; daily: "daily"; weekly: "weekly"; monthly: "monthly" }>>; ignoreChanges: ZodDefault<ZodBoolean>; severityOverride: ZodOptional<ZodEnum<{ breaking: "breaking"; major: "major"; minor: "minor" }>> }, $strip>
+```
+
+### DependencyEntrySchema
+
+```ts
+const DependencyEntrySchema: ZodObject<{ id: ZodString; url: ZodString; type: ZodEnum<{ reference-implementation: "reference-implementation"; schema: "schema"; documentation: "documentation"; research-paper: "research-paper"; api-example: "api-example"; other: "other" }>; accessMethod: ZodEnum<{ context7: "context7"; arxiv: "arxiv"; openapi: "openapi"; github-api: "github-api"; http: "http" }>; name: ZodString; description: ZodOptional<ZodString>; currentVersion: ZodOptional<ZodString>; currentStateHash: ZodString; detectionMethod: ZodEnum<{ llm-analysis: "llm-analysis"; manual: "manual"; package-json: "package-json"; requirements-txt: "requirements-txt"; code-comment: "code-comment" }>; detectionConfidence: ZodNumber; detectedAt: ZodString; lastChecked: ZodString; lastChanged: ZodOptional<ZodString>; auth: ZodOptional<ZodObject<{ type: ZodEnum<{ token: "token"; oauth: "oauth"; basic: "basic"; none: "none" }>; secretEnvVar: ZodOptional<ZodString> }, $strip>>; monitoring: ZodOptional<ZodObject<{ enabled: ZodDefault<ZodBoolean>; checkFrequency: ZodDefault<ZodEnum<{ hourly: "hourly"; daily: "daily"; weekly: "weekly"; monthly: "monthly" }>>; ignoreChanges: ZodDefault<ZodBoolean>; severityOverride: ZodOptional<ZodEnum<{ breaking: "breaking"; major: "major"; minor: "minor" }>> }, $strip>>; referencedIn: ZodArray<ZodObject<{ file: ZodString; line: ZodOptional<ZodNumber>; context: ZodOptional<ZodString> }, $strip>>; changeHistory: ZodDefault<ZodArray<ZodObject<{ detectedAt: ZodString; oldVersion: ZodOptional<ZodString>; newVersion: ZodOptional<ZodString>; severity: ZodEnum<{ breaking: "breaking"; major: "major"; minor: "minor" }>; issueNumber: ZodOptional<ZodNumber>; falsePositive: ZodDefault<ZodBoolean> }, $strip>>> }, $strip>
+```
+
+### DependencyManifestSchema
+
+```ts
+const DependencyManifestSchema: ZodObject<{ version: ZodLiteral<"1.0.0">; generatedAt: ZodString; generatedBy: ZodObject<{ action: ZodString; version: ZodString; llmProvider: ZodString; llmModel: ZodOptional<ZodString> }, $strip>; repository: ZodObject<{ owner: ZodString; name: ZodString; branch: ZodString; commit: ZodString }, $strip>; dependencies: ZodArray<ZodObject<{ id: ZodString; url: ZodString; type: ZodEnum<{ reference-implementation: "reference-implementation"; schema: "schema"; documentation: "documentation"; research-paper: "research-paper"; api-example: "api-example"; other: "other" }>; accessMethod: ZodEnum<{ context7: "context7"; arxiv: "arxiv"; openapi: "openapi"; github-api: "github-api"; http: "http" }>; name: ZodString; description: ZodOptional<ZodString>; currentVersion: ZodOptional<ZodString>; currentStateHash: ZodString; detectionMethod: ZodEnum<{ llm-analysis: "llm-analysis"; manual: "manual"; package-json: "package-json"; requirements-txt: "requirements-txt"; code-comment: "code-comment" }>; detectionConfidence: ZodNumber; detectedAt: ZodString; lastChecked: ZodString; lastChanged: ZodOptional<ZodString>; auth: ZodOptional<ZodObject<{ type: ZodEnum<{ token: "token"; oauth: "oauth"; basic: "basic"; none: "none" }>; secretEnvVar: ZodOptional<ZodString> }, $strip>>; monitoring: ZodOptional<ZodObject<{ enabled: ZodDefault<ZodBoolean>; checkFrequency: ZodDefault<ZodEnum<{ hourly: ...; daily: ...; weekly: ...; monthly: ... }>>; ignoreChanges: ZodDefault<ZodBoolean>; severityOverride: ZodOptional<ZodEnum<{ breaking: ...; major: ...; minor: ... }>> }, $strip>>; referencedIn: ZodArray<ZodObject<{ file: ZodString; line: ZodOptional<ZodNumber>; context: ZodOptional<ZodString> }, $strip>>; changeHistory: ZodDefault<ZodArray<ZodObject<{ detectedAt: ZodString; oldVersion: ZodOptional<ZodString>; newVersion: ZodOptional<ZodString>; severity: ZodEnum<{ breaking: ...; major: ...; minor: ... }>; issueNumber: ZodOptional<ZodNumber>; falsePositive: ZodDefault<ZodBoolean> }, $strip>>> }, $strip>>; statistics: ZodObject<{ totalDependencies: ZodNumber; byType: ZodRecord<ZodString, ZodNumber>; byAccessMethod: ZodRecord<ZodString, ZodNumber>; byDetectionMethod: ZodRecord<ZodString, ZodNumber>; averageConfidence: ZodNumber; falsePositiveRate: ZodOptional<ZodNumber> }, $strip> }, $strip>
+```
+
+### ScheduleSchema
+
+```ts
+const ScheduleSchema: ZodObject<{ interval: ZodEnum<{ hourly: "hourly"; daily: "daily"; weekly: "weekly"; monthly: "monthly" }>; day: ZodOptional<ZodEnum<{ monday: "monday"; tuesday: "tuesday"; wednesday: "wednesday"; thursday: "thursday"; friday: "friday"; saturday: "saturday"; sunday: "sunday" }>>; time: ZodOptional<ZodString>; timezone: ZodDefault<ZodString> }, $strip>
+```
+
+### LLMConfigSchema
+
+```ts
+const LLMConfigSchema: ZodObject<{ provider: ZodDefault<ZodEnum<{ github-copilot: "github-copilot"; claude: "claude"; openai: "openai"; azure-openai: "azure-openai" }>>; model: ZodOptional<ZodString>; maxTokens: ZodDefault<ZodNumber>; temperature: ZodDefault<ZodNumber> }, $strip>
+```
+
+### IssueConfigSchema
+
+```ts
+const IssueConfigSchema: ZodObject<{ labels: ZodDefault<ZodArray<ZodString>>; assignees: ZodDefault<ZodArray<ZodString>>; aiAgentAssignment: ZodOptional<ZodObject<{ enabled: ZodDefault<ZodBoolean>; breaking: ZodOptional<ZodString>; major: ZodOptional<ZodString>; minor: ZodOptional<ZodString> }, $strip>>; titleTemplate: ZodDefault<ZodString>; bodyTemplate: ZodOptional<ZodString> }, $strip>
+```
+
+### DependencyOverrideSchema
+
+```ts
+const DependencyOverrideSchema: ZodObject<{ url: ZodString; schedule: ZodOptional<ZodObject<{ interval: ZodEnum<{ hourly: "hourly"; daily: "daily"; weekly: "weekly"; monthly: "monthly" }>; day: ZodOptional<ZodEnum<{ monday: "monday"; tuesday: "tuesday"; wednesday: "wednesday"; thursday: "thursday"; friday: "friday"; saturday: "saturday"; sunday: "sunday" }>>; time: ZodOptional<ZodString>; timezone: ZodDefault<ZodString> }, $strip>>; monitoring: ZodOptional<ZodObject<{ enabled: ZodDefault<ZodBoolean>; checkFrequency: ZodDefault<ZodEnum<{ hourly: "hourly"; daily: "daily"; weekly: "weekly"; monthly: "monthly" }>>; ignoreChanges: ZodDefault<ZodBoolean>; severityOverride: ZodOptional<ZodEnum<{ breaking: "breaking"; major: "major"; minor: "minor" }>> }, $strip>>; issues: ZodOptional<ZodObject<{ labels: ZodDefault<ZodArray<ZodString>>; assignees: ZodDefault<ZodArray<ZodString>>; aiAgentAssignment: ZodOptional<ZodObject<{ enabled: ZodDefault<ZodBoolean>; breaking: ZodOptional<ZodString>; major: ZodOptional<ZodString>; minor: ZodOptional<ZodString> }, $strip>>; titleTemplate: ZodDefault<ZodString>; bodyTemplate: ZodOptional<ZodString> }, $strip>> }, $strip>
+```
+
+### DependabitConfigSchema
+
+Zod schema for the top-level `.dependabit.yml` / `.dependabit.json`
+configuration file.
+
+```ts
+const DependabitConfigSchema: ZodObject<{ version: ZodLiteral<"1">; llm: ZodOptional<ZodObject<{ provider: ZodDefault<ZodEnum<{ github-copilot: "github-copilot"; claude: "claude"; openai: "openai"; azure-openai: "azure-openai" }>>; model: ZodOptional<ZodString>; maxTokens: ZodDefault<ZodNumber>; temperature: ZodDefault<ZodNumber> }, $strip>>; schedule: ZodDefault<ZodObject<{ interval: ZodEnum<{ hourly: "hourly"; daily: "daily"; weekly: "weekly"; monthly: "monthly" }>; day: ZodOptional<ZodEnum<{ monday: "monday"; tuesday: "tuesday"; wednesday: "wednesday"; thursday: "thursday"; friday: "friday"; saturday: "saturday"; sunday: "sunday" }>>; time: ZodOptional<ZodString>; timezone: ZodDefault<ZodString> }, $strip>>; issues: ZodOptional<ZodObject<{ labels: ZodDefault<ZodArray<ZodString>>; assignees: ZodDefault<ZodArray<ZodString>>; aiAgentAssignment: ZodOptional<ZodObject<{ enabled: ZodDefault<ZodBoolean>; breaking: ZodOptional<ZodString>; major: ZodOptional<ZodString>; minor: ZodOptional<ZodString> }, $strip>>; titleTemplate: ZodDefault<ZodString>; bodyTemplate: ZodOptional<ZodString> }, $strip>>; monitoring: ZodOptional<ZodObject<{ enabled: ZodDefault<ZodBoolean>; autoUpdate: ZodDefault<ZodBoolean>; falsePositiveThreshold: ZodDefault<ZodNumber> }, $strip>>; dependencies: ZodOptional<ZodArray<ZodObject<{ url: ZodString; schedule: ZodOptional<ZodObject<{ interval: ZodEnum<{ hourly: ...; daily: ...; weekly: ...; monthly: ... }>; day: ZodOptional<ZodEnum<(...)>>; time: ZodOptional<ZodString>; timezone: ZodDefault<ZodString> }, $strip>>; monitoring: ZodOptional<ZodObject<{ enabled: ZodDefault<ZodBoolean>; checkFrequency: ZodDefault<ZodEnum<(...)>>; ignoreChanges: ZodDefault<ZodBoolean>; severityOverride: ZodOptional<ZodEnum<(...)>> }, $strip>>; issues: ZodOptional<ZodObject<{ labels: ZodDefault<ZodArray<(...)>>; assignees: ZodDefault<ZodArray<(...)>>; aiAgentAssignment: ZodOptional<ZodObject<(...), (...)>>; titleTemplate: ZodDefault<ZodString>; bodyTemplate: ZodOptional<ZodString> }, $strip>> }, $strip>>>; ignore: ZodOptional<ZodObject<{ urls: ZodOptional<ZodArray<ZodString>>; types: ZodOptional<ZodArray<ZodEnum<{ reference-implementation: "reference-implementation"; schema: "schema"; documentation: "documentation"; research-paper: "research-paper"; api-example: "api-example"; other: "other" }>>>; patterns: ZodOptional<ZodArray<ZodString>>; useGitExcludes: ZodDefault<ZodBoolean> }, $strip>> }, $strip>
+```
+
+### ChangeTypeSchema
+
+```ts
+const ChangeTypeSchema: ZodEnum<{ unknown: "unknown"; version-bump: "version-bump"; content-changed: "content-changed"; released: "released"; deprecated: "deprecated"; unavailable: "unavailable" }>
+```
+
+### ChangeDetectionRecordSchema
+
+```ts
+const ChangeDetectionRecordSchema: ZodObject<{ id: ZodString; timestamp: ZodString; dependencyId: ZodString; dependencyUrl: ZodString; dependencyName: ZodString; changeType: ZodEnum<{ unknown: "unknown"; version-bump: "version-bump"; content-changed: "content-changed"; released: "released"; deprecated: "deprecated"; unavailable: "unavailable" }>; severity: ZodEnum<{ breaking: "breaking"; major: "major"; minor: "minor" }>; oldState: ZodObject<{ version: ZodOptional<ZodString>; hash: ZodString; checkedAt: ZodString }, $strip>; newState: ZodObject<{ version: ZodOptional<ZodString>; hash: ZodString; checkedAt: ZodString }, $strip>; summary: ZodString; details: ZodOptional<ZodString>; breakingChanges: ZodOptional<ZodArray<ZodString>>; issueCreated: ZodDefault<ZodBoolean>; issueNumber: ZodOptional<ZodNumber>; issueUrl: ZodOptional<ZodString> }, $strip>
+```
+
+---
+
+## @dependabit/monitor
+
+### normalizeHTML
+
+Normalizes HTML content for consistent comparison
+
+```ts
+normalizeHTML(html: string): string
+```
+
+**Parameters:**
+- `html: string` — Raw HTML content
+
+**Returns:** `string`
+
+### normalizeURL
+
+Normalizes a URL by removing tracking parameters
+
+```ts
+normalizeURL(url: string): string
+```
+
+**Parameters:**
+- `url: string` — URL string
+
+**Returns:** `string`
+
+### Monitor
+
+Orchestrates dependency checking across multiple access methods.
+
+```ts
+constructor(): Monitor
+```
+
+**Methods:**
+- `checkDependency(dependency: DependencyConfig): Promise<CheckResult>` — Checks a single dependency for changes
+- `checkAll(dependencies: DependencyConfig[]): Promise<CheckResult[]>` — Checks multiple dependencies, respecting monitoring rules
+- `registerChecker(accessMethod: string, checker: Checker): void` — Registers a custom checker for an access method
+
+### GitHubRepoChecker
+
+Contract for all dependency checker implementations.
+
+```ts
+constructor(): GitHubRepoChecker
+```
+
+**Methods:**
+- `fetch(config: AccessConfig): Promise<DependencySnapshot>` — Fetches latest release information from a GitHub repository
+- `compare(prev: DependencySnapshot, curr: DependencySnapshot): Promise<ChangeDetection>` — Compares two snapshots to detect version/state changes
+
+### URLContentChecker
+
+Contract for all dependency checker implementations.
+
+```ts
+constructor(): URLContentChecker
+```
+
+**Methods:**
+- `fetch(config: AccessConfig): Promise<DependencySnapshot>` — Fetches and hashes URL content
+- `compare(prev: DependencySnapshot, curr: DependencySnapshot): Promise<ChangeDetection>` — Compares two snapshots to detect content changes
+
+### OpenAPIChecker
+
+Contract for all dependency checker implementations.
+
+```ts
+constructor(): OpenAPIChecker
+```
+
+**Methods:**
+- `fetch(config: AccessConfig): Promise<DependencySnapshot>` — Fetches and parses OpenAPI specification
+- `compare(prev: DependencySnapshot, curr: DependencySnapshot): Promise<ChangeDetection>` — Compares two OpenAPI snapshots with semantic diffing
+
+### StateComparator
+
+```ts
+constructor(): StateComparator
+```
+
+**Methods:**
+- `compare(oldState: DependencySnapshot, newState: DependencySnapshot): ChangeDetection` — Compares two dependency snapshots to detect changes
+
+### SeverityClassifier
+
+```ts
+constructor(): SeverityClassifier
+```
+
+**Methods:**
+- `classify(changes: ChangeDetection): Severity` — Classifies the severity of a change based on version changes and change types
+
+### Scheduler
+
+Scheduler for per-dependency monitoring
+
+Determines which dependencies should be checked based on:
+- Check frequency (hourly, daily, weekly, monthly)
+- Last checked timestamp
+- Enabled/disabled status
+- IgnoreChanges flag
+- Config overrides
+
+```ts
+constructor(): Scheduler
+```
+
+**Methods:**
+- `shouldCheckDependency(dependency: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }, config: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }, currentTime: Date): boolean` — Check if a dependency should be checked now
+- `filterDependenciesToCheck(dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[], config: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }, currentTime: Date): { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]` — Filter dependencies that should be checked
+- `getNextCheckTime(dependency: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }, config: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }): Date` — Get next check time for a dependency
+- `getScheduleSummary(dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[], config: { version: "1"; schedule: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; llm?: { provider: "github-copilot" | "claude" | "openai" | "azure-openai"; maxTokens: number; temperature: number; model?: string }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string }; monitoring?: { enabled: boolean; autoUpdate: boolean; falsePositiveThreshold: number }; dependencies?: { url: string; schedule?: { interval: "hourly" | "daily" | "weekly" | "monthly"; timezone: string; day?: "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; time?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" }; issues?: { labels: string[]; assignees: string[]; titleTemplate: string; aiAgentAssignment?: { enabled: boolean; breaking?: string; major?: string; minor?: string }; bodyTemplate?: string } }[]; ignore?: { useGitExcludes: boolean; urls?: string[]; types?: ("reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other")[]; patterns?: string[] } }): { hourly: number; daily: number; weekly: number; monthly: number; disabled: number }` — Get schedule summary for all dependencies
+
+### CheckResult
+
+The outcome of a single dependency check performed by Monitor.
+
+### Severity
+
+```ts
+type Severity = "breaking" | "major" | "minor"
+```
+
+### Checker
+
+Contract for all dependency checker implementations.
+
+### DependencySnapshot
+
+A point-in-time snapshot of a dependency's state.
+
+### ChangeDetection
+
+The result of comparing two DependencySnapshot objects.
+
+---
+
+## @dependabit/test-utils
+
+Main export for test utilities
+
+### createMockFn
+
+Creates a Vitest mock function.
+
+```ts
+createMockFn(): Mock<Procedure | Constructable>
+```
+
+**Returns:** `Mock<Procedure | Constructable>`
+
+```ts
+const mockFn = createMockFn()
+  .mockResolvedValue('test');
+```
+
+### spyOn
+
+Creates a Vitest spy on an object method.
+
+```ts
+spyOn<T, K>(obj: T, method: K): any
+```
+
+**Parameters:**
+- `obj: T` — Object to spy on.
+- `method: K` — Method name to spy on.
+
+**Returns:** `any`
+
+```ts
+const consoleSpy = spyOn(console, 'log');
+console.log('test');
+expect(consoleSpy).toHaveBeenCalledWith('test');
+```
+
+### createMockTimer
+
+Activates Vitest fake timers and returns a helper object.
+
+```ts
+createMockTimer(): { runAll: () => VitestUtils; runOnlyPendingTimers: () => VitestUtils; advanceTimersByTime: (ms: number) => VitestUtils; restore: () => VitestUtils }
+```
+
+**Returns:** `{ runAll: () => VitestUtils; runOnlyPendingTimers: () => VitestUtils; advanceTimersByTime: (ms: number) => VitestUtils; restore: () => VitestUtils }`
+
+```ts
+const timer = createMockTimer();
+timer.runAll();
+```
+
+### mockFetch
+
+Replaces the global `fetch` with a Vitest mock that returns `response`
+as JSON when `url` is requested.
+
+```ts
+mockFetch(url: string, response: any): void
+```
+
+**Parameters:**
+- `url: string` — The URL string to match.
+- `response: any` — JSON-serialisable response body.
+
+```ts
+mockFetch('/api/users', { success: true });
+const res = await fetch('/api/users');
+expect(res.json()).resolves.toEqual({ success: true });
+```
+
+### createMockUser
+
+Creates generic mock user data for testing.
+
+```ts
+createMockUser(overrides?: Partial<any>): any
+```
+
+**Parameters:**
+- `overrides: Partial<any>` (optional) — Partial user data to override defaults.
+
+**Returns:** `any`
+
+```ts
+const user = createMockUser({ name: 'John' });
+expect(user.name).toBe('John');
+expect(user.email).toBe('user@example.com');
+```
+
+### createMockEmail
+
+Creates generic mock email data for testing.
+
+```ts
+createMockEmail(overrides?: Partial<any>): any
+```
+
+**Parameters:**
+- `overrides: Partial<any>` (optional) — Partial email data to override defaults.
+
+**Returns:** `any`
+
+```ts
+const email = createMockEmail({ to: 'john@example.com' });
+expect(email.to).toBe('john@example.com');
+```
+
+### createMockApiResponse
+
+Creates a generic mock API response envelope for testing.
+
+```ts
+createMockApiResponse(overrides?: Partial<any>): any
+```
+
+**Parameters:**
+- `overrides: Partial<any>` (optional) — Partial response data to override defaults.
+
+**Returns:** `any`
+
+```ts
+const response = createMockApiResponse({ status: 201 });
+expect(response.status).toBe(201);
+```
+
+### createMockErrorResponse
+
+Creates a generic mock error response envelope for testing.
+
+```ts
+createMockErrorResponse(message: string): any
+```
+
+**Parameters:**
+- `message: string` — Error message string.
+
+**Returns:** `any`
+
+```ts
+const error = createMockErrorResponse('Not found');
+expect(error.success).toBe(false);
+```
+
+### createMockArray
+
+Creates an array of mock items using a factory function.
+
+```ts
+createMockArray<T>(count: number, factory: (index: number) => T): T[]
+```
+
+**Parameters:**
+- `count: number` — Number of items to create.
+- `factory: (index: number) => T` — Function called with each zero-based index to produce an item.
+
+**Returns:** `T[]`
+
+```ts
+const users = createMockArray(5, (i) => ({ id: i, name: `User${i}` }));
+expect(users).toHaveLength(5);
+```
+
+---
+
+## @dependabit/utils
+
+Main export file for utils package
+
+### capitalize
+
+Capitalizes the first letter of a string.
+
+```ts
+capitalize(str: string): string
+```
+
+**Parameters:**
+- `str: string` — The string to capitalize.
+
+**Returns:** `string`
+
+```ts
+capitalize('hello'); // 'Hello'
+```
+
+### camelCase
+
+Converts a string to camelCase.
+
+```ts
+camelCase(str: string): string
+```
+
+**Parameters:**
+- `str: string` — The string to convert.
+
+**Returns:** `string`
+
+```ts
+camelCase('hello-world'); // 'helloWorld'
+```
+
+### kebabCase
+
+Converts a string to kebab-case.
+
+```ts
+kebabCase(str: string): string
+```
+
+**Parameters:**
+- `str: string` — The string to convert.
+
+**Returns:** `string`
+
+```ts
+kebabCase('HelloWorld'); // 'hello-world'
+```
+
+### truncate
+
+Truncates a string to a maximum length, appending a suffix if truncated.
+
+```ts
+truncate(str: string, maxLength: number, suffix: string): string
+```
+
+**Parameters:**
+- `str: string` — The string to truncate.
+- `maxLength: number` — Maximum total output length, including the suffix.
+- `suffix: string` — Suffix to append when truncation occurs.
+
+**Returns:** `string`
+
+```ts
+truncate('Hello World', 8); // 'Hello...'
+```
+
+### unique
+
+Removes duplicates from an array using `Set` equality.
+
+```ts
+unique<T>(arr: T[]): T[]
+```
+
+**Parameters:**
+- `arr: T[]` — The array to deduplicate.
+
+**Returns:** `T[]`
+
+```ts
+unique([1, 2, 2, 3]); // [1, 2, 3]
+```
+
+### groupBy
+
+Groups array elements by a key function.
+
+```ts
+groupBy<T, K>(arr: T[], keyFn: (item: T) => K): Record<K, T[]>
+```
+
+**Parameters:**
+- `arr: T[]` — The array to group.
+- `keyFn: (item: T) => K` — Function that maps each element to a group key.
+
+**Returns:** `Record<K, T[]>`
+
+```ts
+groupBy([1, 2, 3], n => n % 2); // { '0': [2], '1': [1, 3] }
+```
+
+### flatten
+
+Flattens a nested array up to the given depth.
+
+```ts
+flatten<T>(arr: (T | T[])[], depth: number): T[]
+```
+
+**Parameters:**
+- `arr: (T | T[])[]` — The array to flatten.
+- `depth: number` — Depth to flatten.
+
+**Returns:** `T[]`
+
+```ts
+flatten([[1, 2], [3, [4, 5]]], 1); // [1, 2, 3, [4, 5]]
+```
+
+### chunk
+
+Splits an array into consecutive chunks of the given size.
+
+```ts
+chunk<T>(arr: T[], size: number): T[][]
+```
+
+**Parameters:**
+- `arr: T[]` — The array to chunk.
+- `size: number` — Maximum number of elements per chunk.
+
+**Returns:** `T[][]`
+
+```ts
+chunk([1, 2, 3, 4, 5], 2); // [[1, 2], [3, 4], [5]]
+```
+
+---
+
+## @dependabit/plugins
+
+### createPluginRegistry
+
+Create a new, isolated plugin registry instance.
+
+This is useful in testing scenarios where you want to avoid shared
+global state between tests (for example, when tests run in parallel
+or when they need strict isolation of registered plugins).
+
+```ts
+createPluginRegistry(): PluginRegistry
+```
+
+**Returns:** `PluginRegistry`
+
+### registerPlugin
+
+Register a plugin to the global registry
+
+```ts
+registerPlugin(plugin: Plugin): void
+```
+
+**Parameters:**
+- `plugin: Plugin` — 
+
+### getPlugin
+
+Get a plugin from the global registry
+
+```ts
+getPlugin(accessMethod: string): Plugin | undefined
+```
+
+**Parameters:**
+- `accessMethod: string` — 
+
+**Returns:** `Plugin | undefined`
+
+### listPlugins
+
+List all plugins in the global registry
+
+```ts
+listPlugins(): { name: string; version: string; accessMethod: string; description?: string; supportedTypes?: string[]; apiVersion?: string }[]
+```
+
+**Returns:** `{ name: string; version: string; accessMethod: string; description?: string; supportedTypes?: string[]; apiVersion?: string }[]`
+
+### discoverAccessMethods
+
+Discover available access methods
+
+```ts
+discoverAccessMethods(): string[]
+```
+
+**Returns:** `string[]`
+
+### createPluginLoader
+
+Create a plugin loader
+
+```ts
+createPluginLoader(config?: PluginLoaderConfig): PluginLoader
+```
+
+**Parameters:**
+- `config: PluginLoaderConfig` (optional) — 
+
+**Returns:** `PluginLoader`
+
+### PluginRegistry
+
+Registry that maps access method identifiers to plugin instances.
+
+```ts
+constructor(): PluginRegistry
+```
+
+**Methods:**
+- `register(plugin: Plugin): void` — Register a plugin
+- `unregister(accessMethod: string): Promise<boolean>` — Unregister a plugin
+- `get(accessMethod: string): Plugin | undefined` — Get a plugin by access method
+- `has(accessMethod: string): boolean` — Check if a plugin is registered
+- `list(): { name: string; version: string; accessMethod: string; description?: string; supportedTypes?: string[]; apiVersion?: string }[]` — List all registered plugins
+- `discover(): string[]` — Discover and list available access methods
+- `count(): number` — Get plugin count
+- `clear(): void` — Clear all plugins
+
+### PluginLoader
+
+Validates and optionally initialises plugin instances before they are
+registered.
+
+```ts
+constructor(config: PluginLoaderConfig): PluginLoader
+```
+
+**Methods:**
+- `validateMetadata(metadata: unknown): { name: string; version: string; accessMethod: string; description?: string; supportedTypes?: string[]; apiVersion?: string }` — Validate plugin metadata
+- `validatePlugin(plugin: unknown): Plugin` — Validate plugin structure
+- `load(plugin: unknown): Promise<Plugin>` — Load and validate a plugin
+- `loadMany(plugins: unknown[]): Promise<Plugin[]>` — Load multiple plugins
+- `instantiate<T, A>(PluginClass: (args: A) => T, args: A): Promise<T>` — Instantiate a plugin from a class
+
+### PluginMetadata
+
+Validated plugin metadata type.
+
+```ts
+type PluginMetadata = z.infer<typeof PluginMetadataSchema>
+```
+
+### Plugin
+
+Contract that all dependabit plugins must satisfy.
+
+### PluginCheckResult
+
+The result returned by Plugin.check.
+
+### PluginMetadataSchema
+
+Zod schema for validating plugin metadata at load time.
+
+```ts
+const PluginMetadataSchema: ZodObject<{ name: ZodString; version: ZodString; description: ZodOptional<ZodString>; accessMethod: ZodString; supportedTypes: ZodOptional<ZodArray<ZodString>>; apiVersion: ZodOptional<ZodString> }, $strip>
+```
+
+### globalRegistry
+
+Global plugin registry instance.
+
+NOTE: This is a shared singleton. Tests that rely on `globalRegistry`
+may interfere with each other if they run in parallel, because they
+mutate shared state. For isolated testing, prefer using
+createPluginRegistry to obtain a fresh registry instance per test.
+
+```ts
+const globalRegistry: PluginRegistry
+```
+
+---
+
+## @dependabit/plugin-arxiv
+
+### createArxivChecker
+
+Create an arXiv checker instance
+
+```ts
+createArxivChecker(): ArxivChecker
+```
+
+**Returns:** `ArxivChecker`
+
+### ArxivChecker
+
+Monitors arXiv preprints for new versions via the arXiv Atom API.
+
+```ts
+constructor(): ArxivChecker
+```
+
+**Methods:**
+- `fetch(config: ArxivConfig): Promise<ArxivSnapshot>` — Fetch paper information from arXiv API
+- `compare(prev: ArxivSnapshot, curr: ArxivSnapshot): Promise<ArxivChangeDetection>` — Compare two arXiv snapshots to detect changes
+
+### ArxivPaper
+
+arXiv paper metadata
+
+### ArxivSnapshot
+
+arXiv snapshot result
+
+### ArxivChangeDetection
+
+arXiv change detection result
+
+---
+
+## @dependabit/plugin-context7
+
+### createContext7Checker
+
+Create a Context7 checker instance
+
+```ts
+createContext7Checker(): Context7Checker
+```
+
+**Returns:** `Context7Checker`
+
+### Context7Checker
+
+Monitors library documentation changes via the Context7 API, with a
+fallback to direct URL content hashing when the API is unavailable.
+
+```ts
+constructor(): Context7Checker
+```
+
+**Methods:**
+- `fetch(config: Context7Config): Promise<Context7Snapshot>` — Fetch library information from Context7 API
+- `compare(prev: Context7Snapshot, curr: Context7Snapshot): Promise<Context7ChangeDetection>` — Compare two Context7 snapshots to detect changes
+
+### Context7Library
+
+Context7 library metadata
+
+### Context7Snapshot
+
+Context7 snapshot result
+
+### Context7ChangeDetection
+
+Context7 change detection result
+
+---
+
+## @dependabit/plugin-skills
+
+### createSkillsChecker
+
+Create a skills checker instance
+
+```ts
+createSkillsChecker(): SkillsChecker
+```
+
+**Returns:** `SkillsChecker`
+
+### SkillsChecker
+
+@dependabit/plugin-skills
+
+Skills.sh plugin for monitoring AI agent skill versions
+
+```ts
+constructor(): SkillsChecker
+```
+
+**Methods:**
+- `fetch(config: SkillsConfig): Promise<SkillSnapshot>` — Fetch skill information and create a snapshot
+- `compare(prev: SkillSnapshot, curr: SkillSnapshot): Promise<SkillChangeDetection>` — Compare two skill snapshots to detect changes
+
+### SkillInfo
+
+Skill metadata from GitHub
+
+### SkillSnapshot
+
+Skill snapshot result
+
+### SkillChangeDetection
+
+Skill change detection result
+
+---
