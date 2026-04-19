@@ -14,6 +14,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.30.0
         version: 2.30.0(@types/node@25.6.0)
+      '@to-skills/vitepress':
+        specifier: ^0.2.0
+        version: 0.2.0
       '@types/node':
         specifier: ^25.6.0
         version: 25.6.0
@@ -59,6 +62,9 @@ importers:
       typedoc-plugin-markdown:
         specifier: ^4.11.0
         version: 4.11.0(typedoc@0.28.17(typescript@5.9.3))
+      typedoc-plugin-to-skills:
+        specifier: ^0.6.0
+        version: 0.6.2(typedoc@0.28.17(typescript@5.9.3))
       typedoc-vitepress-theme:
         specifier: ^1.1.2
         version: 1.1.2(typedoc-plugin-markdown@4.11.0(typedoc@0.28.17(typescript@5.9.3)))
@@ -99,25 +105,6 @@ importers:
       '@vercel/ncc':
         specifier: ^0.38.4
         version: 0.38.4
-      tsx:
-        specifier: ^4.21.0
-        version: 4.21.0
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^4.1.4
-        version: 4.1.4(@types/node@25.6.0)(@vitest/coverage-v8@4.1.4)(@vitest/ui@4.1.4)(vite@7.3.1(@types/node@25.6.0)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
-
-  packages/core:
-    dependencies:
-      zod:
-        specifier: ^4.3.6
-        version: 4.3.6
-    devDependencies:
-      '@types/node':
-        specifier: ^25.6.0
-        version: 25.6.0
       tsx:
         specifier: ^4.21.0
         version: 4.21.0
@@ -404,10 +391,6 @@ importers:
         version: 4.1.4(@types/node@25.6.0)(@vitest/coverage-v8@4.1.4)(@vitest/ui@4.1.4)(vite@7.3.1(@types/node@25.6.0)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/utils:
-    dependencies:
-      '@dependabit/core':
-        specifier: workspace:*
-        version: link:../core
     devDependencies:
       '@types/node':
         specifier: ^25.6.0
@@ -1424,6 +1407,14 @@ packages:
     resolution: {integrity: sha512-COGD8p9qqwBBrnW1uDCbXzGHzSLmVewTrEPBEt4bOXPY0/+RLTw4hggvv+gJhoZoo2FCDSfI5t5DUh5U9ekHFA==}
     peerDependencies:
       typedoc: '>=0.28.0'
+
+  '@to-skills/vitepress@0.2.0':
+    resolution: {integrity: sha512-s4JMollbgR0Xtd8DcskBatLbS83Bat1njjMOUpS6JsCnzHc1HUBY/7tGj2/VocJnWr3f5Q0d8Tjq/Emn9IApwQ==}
+    peerDependencies:
+      vitepress: '>=1.0.0'
+    peerDependenciesMeta:
+      vitepress:
+        optional: true
 
   '@types/aws-lambda@8.10.160':
     resolution: {integrity: sha512-uoO4QVQNWFPJMh26pXtmtrRfGshPUSpMZGUyUQY20FhfHEElEBOPKgVmFs1z+kbpyBsRs2JnoOPT7++Z4GA9pA==}
@@ -3418,6 +3409,10 @@ snapshots:
     dependencies:
       '@to-skills/core': 0.10.0
       typedoc: 0.28.17(typescript@5.9.3)
+
+  '@to-skills/vitepress@0.2.0':
+    dependencies:
+      '@to-skills/core': 0.10.0
 
   '@types/aws-lambda@8.10.160': {}
 

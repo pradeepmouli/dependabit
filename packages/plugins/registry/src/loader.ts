@@ -1,7 +1,15 @@
 import { type Plugin, PluginMetadataSchema, type PluginMetadata } from './registry.js';
 
 /**
- * Plugin loader configuration
+ * Configuration for the {@link PluginLoader}.
+ *
+ * @config
+ * @category Plugins
+ *
+ * @pitfalls
+ * - Setting `autoInitialize: false` skips calling `plugin.initialize()` on
+ *   load.  Plugins that allocate resources in `initialize` will be unusable
+ *   until the caller manually invokes `plugin.initialize()`.
  */
 export interface PluginLoaderConfig {
   validateMetadata?: boolean;
@@ -9,7 +17,33 @@ export interface PluginLoaderConfig {
 }
 
 /**
- * Plugin loader for loading and validating plugins
+ * Validates and optionally initialises plugin instances before they are
+ * registered.
+ *
+ * @remarks
+ * `PluginLoader` is the recommended way to bring plugins into the registry
+ * because it validates metadata and calls `initialize` atomically.
+ *
+ * @category Plugins
+ *
+ * @useWhen
+ * Loading plugins from dynamic imports, configuration-driven plugin lists,
+ * or test fixtures where you want to confirm a plugin satisfies the contract
+ * before registering it.
+ *
+ * @avoidWhen
+ * You control the plugin class directly and prefer to call `new` and
+ * `initialize` manually — the overhead of `validatePlugin` is minimal but
+ * the extra abstraction may be unnecessary.
+ *
+ * @pitfalls
+ * - `load` calls `initialize` if `autoInitialize` is `true`.  If `initialize`
+ *   throws, the plugin is **not** registered — but if the caller has already
+ *   called `PluginRegistry.register`, the registry will hold a broken plugin
+ *   instance.  Always call `load` **before** `register`.
+ * - `instantiate` creates a new instance and calls `load`; the returned
+ *   instance is fully initialised.  Calling `new PluginClass()` directly and
+ *   registering without going through the loader bypasses metadata validation.
  */
 export class PluginLoader {
   private config: Required<PluginLoaderConfig>;

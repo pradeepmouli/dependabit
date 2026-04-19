@@ -27,7 +27,7 @@ Use the `workspace:*` protocol to reference packages within the monorepo:
 ```json
 {
   "dependencies": {
-    "@dependabit/core": "workspace:*"
+    "@dependabit/manifest": "workspace:*"
   }
 }
 ```
@@ -73,7 +73,7 @@ pnpm install
 pnpm run dev
 
 # Run development for a specific package
-pnpm --filter @dependabit/core run dev
+pnpm --filter @dependabit/manifest run dev
 ```
 
 ### Building
@@ -102,7 +102,7 @@ pnpm run test:watch
 pnpm run test:coverage
 
 # Run tests for specific package
-pnpm --filter @dependabit/core run test
+pnpm --filter @dependabit/manifest run test
 
 # Run integration tests
 pnpm run test integration.test.ts
@@ -223,7 +223,7 @@ src/
 
 ```javascript
 // ✅ Workspace package (during development)
-"@dependabit/core": "workspace:*"
+"@dependabit/manifest": "workspace:*"
 
 // ✅ Specific version
 "zod": "^4.2.1"
@@ -242,7 +242,7 @@ src/
 pnpm ls --depth 0 -r
 
 # Check specific package dependencies
-pnpm ls --filter @dependabit/core
+pnpm ls --filter @dependabit/manifest
 
 # Visualize dependency tree
 pnpm --filter @dependabit/utils run type-check
@@ -259,7 +259,7 @@ pnpm --filter @dependabit/utils run type-check
 ### 2. Consistent Naming
 
 ```
-✅ @dependabit/core
+✅ @dependabit/manifest
 ✅ @dependabit/utils
 ✅ @dependabit/test-utils
 ✅ @dependabit/components (if using React)
@@ -330,10 +330,10 @@ pnpm install
 **Solution**:
 ```bash
 # Build only changed packages
-pnpm --filter "...{packages/core}" run build
+pnpm --filter "...{packages/manifest}" run build
 
 # Or build specific package
-pnpm --filter @dependabit/core run build
+pnpm --filter @dependabit/manifest run build
 ```
 
 ## Resources

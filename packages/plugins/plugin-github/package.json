@@ -1,12 +1,18 @@
 {
   "name": "@dependabit/plugin-github",
   "version": "0.1.14",
+  "description": "GitHub releases, tags, and raw file checker plugin for dependabit — monitors repository-hosted dependency sources.",
+  "homepage": "https://pradeepmouli.github.io/dependabit/",
+  "bugs": {
+    "url": "https://github.com/pradeepmouli/dependabit/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pradeepmouli/dependabit",
+    "url": "git+https://github.com/pradeepmouli/dependabit.git",
     "directory": "packages/plugins/plugin-github"
   },
-  "description": "GitHub API file/release access plugin for dependency tracking",
+  "license": "MIT",
+  "author": "Pradeep Mouli <pmouli@mac.com> (https://github.com/pradeepmouli)",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -36,12 +42,16 @@
     "vitest": "^4.1.4"
   },
   "keywords": [
-    "plugin",
     "github",
-    "releases"
+    "plugin",
+    "dependabit",
+    "releases",
+    "tags",
+    "commits"
   ],
-  "license": "MIT",
-  "author": "Pradeep Mouli <pmouli@mac.com> (https://github.com/pradeepmouli)",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "publishConfig": {
     "access": "public"
   },

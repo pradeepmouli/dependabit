@@ -4,9 +4,10 @@
  */
 
 /**
- * Capitalizes the first letter of a string
- * @param str - The string to capitalize
- * @returns The capitalized string
+ * Capitalizes the first letter of a string.
+ * @param str - The string to capitalize.
+ * @returns The capitalized string.
+ * @category Utils
  * @example
  * ```ts
  * capitalize('hello'); // 'Hello'
@@ -18,9 +19,10 @@ export function capitalize(str: string): string {
 }
 
 /**
- * Converts a string to camelCase
- * @param str - The string to convert
- * @returns The camelCase string
+ * Converts a string to camelCase.
+ * @param str - The string to convert.
+ * @returns The camelCase string.
+ * @category Utils
  * @example
  * ```ts
  * camelCase('hello-world'); // 'helloWorld'
@@ -31,9 +33,10 @@ export function camelCase(str: string): string {
 }
 
 /**
- * Converts a string to kebab-case
- * @param str - The string to convert
- * @returns The kebab-case string
+ * Converts a string to kebab-case.
+ * @param str - The string to convert.
+ * @returns The kebab-case string.
+ * @category Utils
  * @example
  * ```ts
  * kebabCase('HelloWorld'); // 'hello-world'
@@ -47,11 +50,13 @@ export function kebabCase(str: string): string {
 }
 
 /**
- * Truncates a string to a maximum length
- * @param str - The string to truncate
- * @param maxLength - Maximum length
- * @param suffix - Suffix to add if truncated (default: '...')
- * @returns The truncated string
+ * Truncates a string to a maximum length, appending a suffix if truncated.
+ * @param str - The string to truncate.
+ * @param maxLength - Maximum total output length, including the suffix.
+ * @param suffix - Suffix to append when truncation occurs.
+ * @returns The truncated string.
+ * @defaultValue `suffix = '...'`
+ * @category Utils
  * @example
  * ```ts
  * truncate('Hello World', 8); // 'Hello...'

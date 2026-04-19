@@ -8,6 +8,30 @@ export default defineConfig({
   lastUpdated: true,
   cleanUrls: true,
   ignoreDeadLinks: true,
+  head: [
+    ['meta', { property: 'og:title', content: 'Dependabit' }],
+    [
+      'meta',
+      {
+        property: 'og:description',
+        content: 'AI-Powered Dependency Tracking for External Resources'
+      }
+    ],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:url', content: 'https://pradeepmouli.github.io/dependabit/' }],
+    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:title', content: 'Dependabit' }],
+    [
+      'meta',
+      {
+        name: 'twitter:description',
+        content: 'AI-Powered Dependency Tracking for External Resources'
+      }
+    ]
+  ],
+  sitemap: {
+    hostname: 'https://pradeepmouli.github.io/dependabit'
+  },
   themeConfig: {
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },

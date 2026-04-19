@@ -52,72 +52,38 @@ chunk([1, 2, 3, 4, 5], 2);            // [[1, 2], [3, 4], [5]]
 chunk('hello', 2);                    // ['he', 'll', 'o']
 ```
 
-## Core Utilities
+## Manifest Utilities
 
-### Email Validation
-
-```typescript
-import { isValidEmail, createSuccessResponse, createErrorResponse } from '@dependabit/core';
-
-// Validate email
-isValidEmail('user@example.com');     // true
-isValidEmail('invalid-email');        // false
-
-// Create response
-const response = createSuccessResponse({ email: 'user@example.com' });
-// { success: true, data: { email: 'user@example.com' } }
-```
-
-### API Response Helpers
+### Reading and Parsing Config
 
 ```typescript
-import { createSuccessResponse, createErrorResponse } from '@dependabit/core';
+import { readConfig, parseConfig } from '@dependabit/manifest';
 
-// Success response
-const success = createSuccessResponse({
-  user: { id: 1, name: 'John' },
-  token: 'abc123',
-});
-// { success: true, data: { user: {...}, token: '...' } }
+// Parse YAML config from a string
+const config = parseConfig('version: "1.0.0"\n');
 
-// Error response
-const error = createErrorResponse('User not found');
-// { success: false, error: 'User not found' }
+// Or load from disk
+const loaded = await readConfig('./dependabit.yml');
 ```
 
-### Async Utilities
+### Manifest Operations
 
-```typescript
-import { delay } from '@dependabit/core';
-
-// Wait before continuing
-async function fetchWithRetry() {
-  try {
-    return await fetch('/api/data');
-  } catch {
-    // Retry after delay
-    await delay(1000);
-    return fetch('/api/data');
-  }
-}
-```
+See the full API for manifest reading, writing, merging, and dependency
+mutation at <https://pradeepmouli.github.io/dependabit/api/>.
 
 ## Cross-Package Usage
 
 ```typescript
-import { isValidEmail } from '@dependabit/core';
+import { parseConfig } from '@dependabit/manifest';
 import { capitalize } from '@dependabit/utils';
 
 // Combine utilities
-function formatUserEmail(email: string): string | null {
-  if (!isValidEmail(email)) return null;
-
-  const [localPart] = email.split('@');
-  return capitalize(localPart);
+function describeConfig(yaml: string): string {
+  const config = parseConfig(yaml);
+  return `${capitalize('config')} version ${config.version}`;
 }
 
-formatUserEmail('john.doe@example.com');  // 'John.doe'
-formatUserEmail('invalid-email');         // null
+describeConfig('version: "1.0.0"\n');  // 'Config version 1.0.0'
 ```
 
 ## Testing with Test Utilities
@@ -149,29 +115,29 @@ describe('User Service', () => {
 Creating a new feature across packages:
 
 ```typescript
-// 1. Add validation logic in @dependabit/core
-// packages/core/src/validation.ts
-export function validateUsername(username: string): boolean {
-  return username.length >= 3 && /^[a-zA-Z0-9_]+$/.test(username);
+// 1. Add a helper in @dependabit/manifest
+// packages/manifest/src/version.ts
+export function isValidVersion(v: string): boolean {
+  return /^\d+\.\d+\.\d+$/.test(v);
 }
 
 // 2. Use in @dependabit/utils for formatting
-// packages/utils/src/user.ts
-import { validateUsername } from '@dependabit/core';
+// packages/utils/src/version.ts
+import { isValidVersion } from '@dependabit/manifest';
 
-export function formatUsername(name: string): string {
-  if (!validateUsername(name)) throw new Error('Invalid username');
-  return name.toLowerCase();
+export function formatVersion(v: string): string {
+  if (!isValidVersion(v)) throw new Error('Invalid version');
+  return `v${v}`;
 }
 
 // 3. Test integration
 // integration.test.ts
-import { validateUsername } from '@dependabit/core';
-import { formatUsername } from '@dependabit/utils';
+import { isValidVersion } from '@dependabit/manifest';
+import { formatVersion } from '@dependabit/utils';
 
-it('should validate and format usernames', () => {
-  expect(formatUsername('JohnDoe')).toBe('johndoe');
-  expect(() => formatUsername('ab')).toThrow();
+it('should validate and format versions', () => {
+  expect(formatVersion('1.2.3')).toBe('v1.2.3');
+  expect(() => formatVersion('nope')).toThrow();
 });
 ```
 
@@ -180,26 +146,17 @@ it('should validate and format usernames', () => {
 ### User Data Processing
 
 ```typescript
-import { isValidEmail } from '@dependabit/core';
 import { capitalize, unique } from '@dependabit/utils';
 
 const users = [
-  { email: 'john@example.com', name: 'john' },
-  { email: 'invalid', name: 'jane' },
-  { email: 'bob@example.com', name: 'bob' },
+  { name: 'john' },
+  { name: 'jane' },
+  { name: 'bob' },
+  { name: 'jane' },
 ];
 
-const validUsers = users
-  .filter((u) => isValidEmail(u.email))
-  .map((u) => ({
-    ...u,
-    name: capitalize(u.name),
-  }));
-
-// [
-//   { email: 'john@example.com', name: 'John' },
-//   { email: 'bob@example.com', name: 'Bob' },
-// ]
+const displayNames = unique(users.map((u) => capitalize(u.name)));
+// ['John', 'Jane', 'Bob']
 ```
 
 ### Data Batch Processing
@@ -217,28 +174,9 @@ for (const batch of batches) {
 
 ### API Error Handling
 
-```typescript
-import { createSuccessResponse, createErrorResponse, delay } from '@dependabit/core';
-
-async function fetchWithFallback(url: string) {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return createSuccessResponse(data);
-  } catch (error) {
-    // Retry with exponential backoff
-    await delay(1000);
-
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      return createSuccessResponse(data);
-    } catch {
-      return createErrorResponse('Failed to fetch data');
-    }
-  }
-}
-```
+For HTTP fetch patterns and response shapes used by Dependabit, see the
+live API reference at <https://pradeepmouli.github.io/dependabit/api/>
+(for example, `@dependabit/github-client` and `@dependabit/monitor`).
 
 ## Running Examples
 
@@ -257,7 +195,7 @@ pnpm run test:watch -- integration.test.ts
 
 ## More Information
 
-- [Core Package](../packages/core/README.md)
+- [Manifest Package](../packages/manifest/README.md)
 - [Utils Package](../packages/utils/README.md)
 - [Test Utils Package](../packages/test-utils/README.md)
 - [Workspace Guide](./WORKSPACE.md)

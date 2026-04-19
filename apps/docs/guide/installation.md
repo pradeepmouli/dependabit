@@ -7,8 +7,8 @@ title: Installation
 Dependabit is distributed as a set of scoped packages under `@dependabit/*`.
 
 ```bash
-# Core runtime
-pnpm add @dependabit/core
+# Manifest parsing
+pnpm add @dependabit/manifest
 
 # Or the CLI / GitHub Action bundle
 pnpm add -D @dependabit/action

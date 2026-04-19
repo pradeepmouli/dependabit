@@ -1,30 +1,103 @@
 /**
- * Rate Limit Handler
- * Manages GitHub API rate limits and request budgeting
+ * Rate Limit Handler — manages GitHub API rate limits and request budgeting.
+ *
+ * @remarks
+ * Provides a richer interface than {@link GitHubClient} for scenarios where
+ * you need to check budget availability before a batch operation, or track
+ * rate-limit status across the core, search, and GraphQL API categories.
+ *
+ * The token is read from `GITHUB_TOKEN` when not provided explicitly.
+ *
+ * @pitfalls
+ * - **Primary vs. secondary limits**: GitHub enforces two independent limit
+ *   systems.  This handler tracks only the *primary* limit (requests per
+ *   hour per token).  Secondary (abuse) limits trigger 403 responses with a
+ *   `Retry-After` header and are not handled here — callers must implement
+ *   exponential back-off for burst scenarios.
+ * - **Cached status TTL**: `getCachedStatus` returns a snapshot up to 60
+ *   seconds old.  In fast loops, rely on `getRateLimitStatus` directly for
+ *   accurate readings.
+ * - **Unauthenticated requests**: if no token is provided and
+ *   `GITHUB_TOKEN` is unset, the rate limit is 60 req/h shared across all
+ *   unauthenticated requests from the same IP.
+ *
+ * @module
  */
 
 import { Octokit } from 'octokit';
 
+/**
+ * Rate limit snapshot for a single GitHub API category.
+ *
+ * @remarks
+ * `warning` is set automatically when `remaining < limit * 0.1`.
+ *
+ * @category GitHub Client
+ */
 export interface RateLimitInfo {
   limit: number;
   remaining: number;
   reset: Date;
   used: number;
+  /** Present when remaining calls fall below 10 % of the total limit. */
   warning?: string;
 }
 
+/**
+ * Aggregated rate limit status across GitHub's REST, search, and GraphQL
+ * API categories.
+ *
+ * @category GitHub Client
+ */
 export interface RateLimitStatus {
   core: RateLimitInfo & { percentageRemaining: number };
   search: RateLimitInfo & { percentageRemaining: number };
   graphql: RateLimitInfo & { percentageRemaining: number };
 }
 
+/**
+ * Result of a budget reservation attempt via
+ * {@link RateLimitHandler.reserveBudget}.
+ *
+ * @remarks
+ * When `reserved` is `false`, `waitTime` (milliseconds until reset) and
+ * `reason` explain why the reservation failed.
+ *
+ * @category GitHub Client
+ */
 export interface BudgetReservation {
   reserved: boolean;
   reason?: string;
   waitTime?: number;
 }
 
+/**
+ * Manages GitHub API rate limits and provides budget-reservation utilities
+ * for batch operations.
+ *
+ * @remarks
+ * Use {@link RateLimitHandler.reserveBudget} before starting a batch of API
+ * calls to verify that sufficient quota exists.  Use
+ * {@link RateLimitHandler.waitIfNeeded} as a simpler "wait until safe"
+ * primitive.
+ *
+ * @category GitHub Client
+ *
+ * @useWhen
+ * Coordinating large batches of GitHub API calls (e.g., checking 100+
+ * dependencies in one monitor run) where you need pre-flight quota checks.
+ *
+ * @avoidWhen
+ * Making a small number of one-off API calls — use {@link GitHubClient}
+ * with its built-in threshold check instead.
+ *
+ * @pitfalls
+ * - `reserveBudget` does **not** lock the quota — another process could
+ *   consume the reserved capacity between the check and the actual calls.
+ * - The handler does not track the search or GraphQL categories
+ *   individually for budget reservation; use `getRateLimitStatus` to
+ *   inspect those limits manually.
+ */
 export class RateLimitHandler {
   private octokit: Octokit;
   private lastCheck?: RateLimitStatus;

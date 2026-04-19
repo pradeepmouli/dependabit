@@ -1,0 +1,327 @@
+# @dependabit/docs
+
+> Documentation site for dependabit
+
+## @dependabit/action
+
+### API
+
+- `main`
+- `createLogger`: Create a new logger instance
+- `withTiming`: Measure and log operation duration
+- `Logger`: Structured JSON logger for GitHub Actions
+
+## Optional
+
+### Types
+
+- `LogEntry`: Structured log entry
+- `LogLevel`: Log level enumeration
+
+## @dependabit/detector
+
+### API
+
+- `createDetectionPrompt`: Renders a detection prompt by substituting the content-type, file path,
+and raw content into `DETECTION_PROMPT_TEMPLATE`.
+- `createClassificationPrompt`: Renders a classification prompt for a single URL, asking the LLM to
+determine the dependency type and best access method.
+- `parseReadme`: Parse README content and extract external references
+- `extractGitHubReferences`: Extract GitHub repository mentions (owner/repo format)
+- `parseCodeComments`: Parse code files and extract references from comments
+- `extractSpecReferences`: Extract specification and RFC references from comments
+- `parsePackageJson`: Parse package.json and extract metadata URLs (NOT dependencies)
+- `parseRequirementsTxt`: Parse requirements.txt and extract URLs from comments
+EXCLUDES actual packages (handled by dependabot)
+- `parseCargoToml`: Parse Cargo.toml and extract metadata URLs
+EXCLUDES actual dependencies (handled by dependabot)
+- `parseGoMod`: Parse go.mod and extract URLs from comments
+EXCLUDES actual dependencies (handled by dependabot)
+- `parseDiff`: Parse a unified diff and extract additions and deletions
+- `extractAddedContent`: Extract meaningful content from added lines
+- `extractRemovedContent`: Extract meaningful content from removed lines
+- `getChangedFiles`: Identify files relevant for dependency analysis
+
+Note: Filenames in relevantFiles preserve their original case from the commit.
+- `parseCommitDiffs`: Parse all diffs from commit files
+- `extractDependencyChanges`: Extract all dependency-related content from commit diffs
+- `GitHubCopilotProvider`: Contract that all LLM provider implementations must satisfy.
+- `Detector`: Orchestrates multi-stage detection of informational external dependencies
+inside a local repository clone.
+- `SYSTEM_PROMPT`: Detection prompts for LLM-based dependency analysis.
+
+## Optional
+
+### Types
+
+- `LLMProvider`: Contract that all LLM provider implementations must satisfy.
+- `LLMResponse`: The structured response returned by LLMProvider.analyze.
+- `RateLimitInfo`: Rate limit information returned by LLMProvider.getRateLimit.
+- `DetectedDependency`: A single dependency detected by the LLM.
+- `LLMUsageMetadata`: Token usage and latency metadata included in every LLMResponse.
+- `ExtractedReference`: README Parser
+Extracts URLs and references from README and markdown files
+- `CommentReference`: Code Comment Parser
+Extracts URLs and references from code comments
+- `PackageMetadata`: Package File Parser
+Extracts metadata and references from package manager files
+EXCLUDES actual dependencies (handled by dependabot)
+- `DiffParseResult`
+- `ExtractedContent`
+- `ChangedFilesResult`
+- `DetectionResult`: The result produced by Detector.detectDependencies or
+Detector.analyzeFiles.
+
+## @dependabit/github-client
+
+### API
+
+- `createGitHubClient`: Create a GitHub client instance
+- `fetchCommits`: Fetch commits from GitHub API
+- `getCommitDiff`: Get detailed diff for a specific commit
+- `parseCommitFiles`: Parse commit files into categorized lists
+- `getCommitsBetween`: Get commits between two refs
+- `createAuth`: Create authentication manager from config
+- `GitHubClient`: Thin wrapper around Octokit that adds proactive rate-limit checking.
+- `AuthManager`: Authentication manager that supports multiple auth methods
+- `IssueManager`
+- `ReleaseManager`
+- `RateLimitHandler`: Manages GitHub API rate limits and provides budget-reservation utilities
+for batch operations.
+- `FeedbackListener`: Listener that monitors issue labels for false positive feedback
+- `TokenAuthHandler`: Handler for token-based authentication (GitHub PAT, API keys)
+- `OAuthHandler`: Handler for OAuth 2.0 authentication
+- `BasicAuthHandler`: Handler for HTTP Basic authentication
+
+## Optional
+
+### Types
+
+- `CommitInfo`
+- `CommitFile`
+- `CommitDiff`
+- `ParsedFiles`
+- `AuthType`
+- `AuthResult`
+- `IssueData`
+- `IssueResult`
+- `UpdateIssueData`
+- `Release`
+- `ReleaseComparison`
+- `RateLimitInfo`: Rate limit snapshot for a single GitHub API category.
+- `RateLimitStatus`: Aggregated rate limit status across GitHub's REST, search, and GraphQL
+API categories.
+- `BudgetReservation`: Result of a budget reservation attempt via
+RateLimitHandler.reserveBudget.
+- `FeedbackData`
+- `FeedbackRate`
+- `TokenAuth`: Token authentication handler for GitHub API
+Supports GitHub PAT tokens, fine-grained tokens, and API keys
+- `OAuthAuth`
+- `BasicAuth`: Basic authentication handler for GitHub API
+Supports username/password or username/personal access token
+
+## @dependabit/manifest
+
+### API
+
+- `validateManifest`: Validate a dependency manifest
+- `validateDependencyEntry`: Validate a dependency entry
+- `validateConfig`: Validate a dependabit configuration
+- `safeValidateManifest`: Safe validation that returns success/error result
+- `safeValidateDependencyEntry`: Safe validation for dependency entry
+- `safeValidateConfig`: Safe validation for config
+- `readManifest`: Reads a manifest JSON file from disk and validates it against
+`DependencyManifestSchema`.
+- `writeManifest`: Serialises a manifest to pretty-printed JSON and writes it to disk.
+- `updateDependency`: Updates a single dependency entry in the on-disk manifest by ID.
+- `addDependency`: Appends a new dependency entry to the on-disk manifest.
+- `removeDependency`: Removes a dependency from the on-disk manifest by ID.
+- `mergeManifests`: Merges an `updated` manifest generated by the detector over an `existing`
+one, optionally preserving manual entries and accumulated change history.
+- `createEmptyManifest`: Creates a minimal, valid manifest with an empty `dependencies` array.
+- `readConfig`: Reads a YAML configuration file from disk, parses it, and validates it
+against `DependabitConfigSchema`.
+- `parseConfig`: Parses a YAML string into a validated `DependabitConfig`.
+- `stringifyConfig`: Serialises a validated `DependabitConfig` to a YAML string.
+- `getEffectiveMonitoringRules`: Resolves the effective monitoring rules for a specific dependency URL by
+merging global config defaults with any per-URL override defined in
+`config.
+- `shouldIgnoreUrl`: Returns `true` if the given URL matches any exclusion rule defined in
+`config.ignore` (exact URL list or regex pattern list).
+- `checkManifestSize`: Check manifest size and return status
+- `formatSize`: Get formatted size string
+- `validateManifestObject`: Validate manifest object size before serialization
+- `estimateEntrySize`: Estimate manifest size impact of adding an entry
+- `canAddEntry`: Check if adding an entry would exceed limits
+- `ValidationError`: Wraps a Zod `ZodError` to provide human-readable formatted error messages.
+- `ManifestVersionSchema`
+- `AccessMethodSchema`
+- `DependencyTypeSchema`
+- `DetectionMethodSchema`
+- `SeveritySchema`
+- `AuthConfigSchema`
+- `MonitoringRulesSchema`
+- `DependencyEntrySchema`
+- `DependencyManifestSchema`
+- `ScheduleSchema`
+- `LLMConfigSchema`
+- `IssueConfigSchema`
+- `DependencyOverrideSchema`
+- `DependabitConfigSchema`: Zod schema for the top-level `.dependabit.yml` / `.dependabit.json`
+configuration file.
+- `ChangeTypeSchema`
+- `ChangeDetectionRecordSchema`
+
+## Optional
+
+### Types
+
+- `DependencyManifest`: A fully-validated dependency manifest document.
+- `DependencyEntry`: A single tracked external dependency inside a DependencyManifest.
+- `DependencyType`: Semantic category of an external dependency.
+- `AccessMethod`: The protocol/service used to fetch and compare a dependency's state.
+- `DetectionMethod`: How a dependency was originally discovered.
+- `Severity`: Change severity level used in notifications and issue creation.
+- `MonitoringRules`: Per-dependency monitoring rules (check frequency, enable/disable).
+- `DependabitConfig`: Root configuration object parsed from `.dependabit.yml`.
+- `Schedule`: Check schedule (cron-like, compatible with Dependabot syntax).
+- `LLMConfig`: LLM provider configuration stored inside the manifest's `generatedBy`
+section and in `DependabitConfig.llm`.
+- `IssueConfig`: Configuration for GitHub issue creation on change detection.
+- `DependencyOverride`: A per-URL configuration override inside `DependabitConfig.dependencies`.
+- `ChangeType`: Classification of the kind of change detected during monitoring.
+- `ChangeDetectionRecord`: A persisted record of a single change detection event.
+- `SizeCheckResult`: Manifest size validation and warnings
+Checks manifest size and warns when approaching limits
+
+## @dependabit/monitor
+
+### API
+
+- `normalizeHTML`: Normalizes HTML content for consistent comparison
+- `normalizeURL`: Normalizes a URL by removing tracking parameters
+- `Monitor`: Orchestrates dependency checking across multiple access methods.
+- `GitHubRepoChecker`: Contract for all dependency checker implementations.
+- `URLContentChecker`: Contract for all dependency checker implementations.
+- `OpenAPIChecker`: Contract for all dependency checker implementations.
+- `StateComparator`
+- `SeverityClassifier`
+- `Scheduler`: Scheduler for per-dependency monitoring
+
+Determines which dependencies should be checked based on:
+- Check frequency (hourly, daily, weekly, monthl...
+
+## Optional
+
+### Types
+
+- `CheckResult`: The outcome of a single dependency check performed by Monitor.
+- `Severity`
+- `Checker`: Contract for all dependency checker implementations.
+- `DependencySnapshot`: A point-in-time snapshot of a dependency's state.
+- `ChangeDetection`: The result of comparing two DependencySnapshot objects.
+
+## @dependabit/test-utils
+
+> Main export for test utilities
+
+### API
+
+- `createMockFn`: Creates a Vitest mock function.
+- `spyOn`: Creates a Vitest spy on an object method.
+- `createMockTimer`: Activates Vitest fake timers and returns a helper object.
+- `mockFetch`: Replaces the global `fetch` with a Vitest mock that returns `response`
+as JSON when `url` is requested.
+- `createMockUser`: Creates generic mock user data for testing.
+- `createMockEmail`: Creates generic mock email data for testing.
+- `createMockApiResponse`: Creates a generic mock API response envelope for testing.
+- `createMockErrorResponse`: Creates a generic mock error response envelope for testing.
+- `createMockArray`: Creates an array of mock items using a factory function.
+
+## @dependabit/utils
+
+> Main export file for utils package
+
+### API
+
+- `capitalize`: Capitalizes the first letter of a string.
+- `camelCase`: Converts a string to camelCase.
+- `kebabCase`: Converts a string to kebab-case.
+- `truncate`: Truncates a string to a maximum length, appending a suffix if truncated.
+- `unique`: Removes duplicates from an array using `Set` equality.
+- `groupBy`: Groups array elements by a key function.
+- `flatten`: Flattens a nested array up to the given depth.
+- `chunk`: Splits an array into consecutive chunks of the given size.
+
+## @dependabit/plugins
+
+### API
+
+- `createPluginRegistry`: Create a new, isolated plugin registry instance.
+- `registerPlugin`: Register a plugin to the global registry
+- `getPlugin`: Get a plugin from the global registry
+- `listPlugins`: List all plugins in the global registry
+- `discoverAccessMethods`: Discover available access methods
+- `createPluginLoader`: Create a plugin loader
+- `PluginRegistry`: Registry that maps access method identifiers to plugin instances.
+- `PluginLoader`: Validates and optionally initialises plugin instances before they are
+registered.
+- `PluginMetadataSchema`: Zod schema for validating plugin metadata at load time.
+- `globalRegistry`: Global plugin registry instance.
+
+## Optional
+
+### Types
+
+- `PluginMetadata`: Validated plugin metadata type.
+- `Plugin`: Contract that all dependabit plugins must satisfy.
+- `PluginCheckResult`: The result returned by Plugin.check.
+
+## @dependabit/plugin-arxiv
+
+### API
+
+- `createArxivChecker`: Create an arXiv checker instance
+- `ArxivChecker`: Monitors arXiv preprints for new versions via the arXiv Atom API.
+
+## Optional
+
+### Types
+
+- `ArxivPaper`: arXiv paper metadata
+- `ArxivSnapshot`: arXiv snapshot result
+- `ArxivChangeDetection`: arXiv change detection result
+
+## @dependabit/plugin-context7
+
+### API
+
+- `createContext7Checker`: Create a Context7 checker instance
+- `Context7Checker`: Monitors library documentation changes via the Context7 API, with a
+fallback to direct URL content hashing when the API is unavailable.
+
+## Optional
+
+### Types
+
+- `Context7Library`: Context7 library metadata
+- `Context7Snapshot`: Context7 snapshot result
+- `Context7ChangeDetection`: Context7 change detection result
+
+## @dependabit/plugin-skills
+
+### API
+
+- `createSkillsChecker`: Create a skills checker instance
+- `SkillsChecker`: @dependabit/plugin-skills
+
+Skills.sh plugin for monitoring AI agent skill versions
+
+## Optional
+
+### Types
+
+- `SkillInfo`: Skill metadata from GitHub
+- `SkillSnapshot`: Skill snapshot result
+- `SkillChangeDetection`: Skill change detection result

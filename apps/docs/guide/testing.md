@@ -103,19 +103,15 @@ Test integration between packages in `integration.test.ts`:
 
 ```typescript
 import { describe, it, expect } from 'vitest';
-import { isValidEmail, createSuccessResponse } from '@dependabit/core';
+import { parseConfig } from '@dependabit/manifest';
 import { capitalize } from '@dependabit/utils';
 
 describe('Cross-Package Integration', () => {
   it('should combine utilities', () => {
-    const response = createSuccessResponse({
-      email: 'john@example.com',
-      isValid: isValidEmail('john@example.com'),
-      displayName: capitalize('john'),
-    });
+    const config = parseConfig('version: "1.0.0"\n');
 
-    expect(response.success).toBe(true);
-    expect(response.data?.isValid).toBe(true);
+    expect(config.version).toBe('1.0.0');
+    expect(capitalize('dependabit')).toBe('Dependabit');
   });
 });
 ```

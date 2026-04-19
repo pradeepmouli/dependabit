@@ -1,6 +1,15 @@
 /**
- * Entry point for @dependabit/action
- * Routes to the appropriate action based on input
+ * Entry point for `@dependabit/action`.
+ *
+ * @remarks
+ * Reads the `action` input from the GitHub Actions runtime and dispatches to
+ * the appropriate sub-action: `generate`, `update`, or `validate`.
+ * The `check` action is not yet implemented and will call `core.setFailed`.
+ *
+ * The `main` function is called immediately on module load.  It is also
+ * exported for testing purposes.
+ *
+ * @category Action
  */
 
 import * as core from '@actions/core';

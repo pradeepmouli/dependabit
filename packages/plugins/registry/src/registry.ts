@@ -1,7 +1,38 @@
+/**
+ * Plugin registry and core plugin types for `@dependabit/plugins`.
+ *
+ * @remarks
+ * The registry maps access method identifiers (e.g. `'arxiv'`, `'context7'`)
+ * to plugin instances.  A single global registry ({@link globalRegistry}) is
+ * provided for convenience, but isolated instances can be created with
+ * {@link createPluginRegistry} for testing or multi-tenant scenarios.
+ *
+ * @pitfalls
+ * - **Plugin name collisions**: registering a second plugin for the same
+ *   `accessMethod` throws an error in `PluginRegistry.register`.  Use
+ *   `PluginRegistry.unregister` before re-registering if hot-swapping is
+ *   needed.
+ * - **Init order**: if a plugin's `initialize` method depends on another
+ *   plugin being present in the registry, register dependencies first.
+ *   `PluginLoader.autoInitialize` calls `initialize` during `load` — ensure
+ *   the registry is populated before calling `load` on dependent plugins.
+ * - **Calling plugins before `initialize`**: plugins that require async
+ *   setup (e.g., opening a database connection) will behave incorrectly if
+ *   `check` is called before `initialize` completes.  Always `await` the
+ *   `load` or `instantiate` call from `PluginLoader` before using the
+ *   plugin.
+ * - **Global registry in tests**: tests that register plugins on
+ *   `globalRegistry` and run in parallel will interfere with each other.
+ *   Use {@link createPluginRegistry} per test suite.
+ *
+ * @module
+ */
+
 import { z } from 'zod';
 
 /**
- * Plugin metadata schema
+ * Zod schema for validating plugin metadata at load time.
+ * @category Plugins
  */
 export const PluginMetadataSchema = z.object({
   name: z.string(),
@@ -12,20 +43,52 @@ export const PluginMetadataSchema = z.object({
   apiVersion: z.string().optional()
 });
 
+/** Validated plugin metadata type. @category Plugins */
 export type PluginMetadata = z.infer<typeof PluginMetadataSchema>;
 
 /**
- * Plugin interface
+ * Contract that all dependabit plugins must satisfy.
+ *
+ * @remarks
+ * Plugins are loaded and validated by {@link PluginLoader} before being
+ * registered.  The optional lifecycle hooks `initialize` and `destroy` are
+ * called by `PluginLoader.load` and `PluginRegistry.unregister` respectively.
+ *
+ * @category Plugins
+ *
+ * @useWhen
+ * Implementing a custom access method (e.g., a proprietary package registry,
+ * an internal documentation API, or a new public API).
+ *
+ * @pitfalls
+ * - Do NOT perform network calls or resource allocation in the constructor —
+ *   use `initialize` instead so that errors are surfaced at load time, not
+ *   at registration.
+ * - `destroy` must be idempotent; `PluginRegistry.clear` may call it even if
+ *   `initialize` was never called.
  */
 export interface Plugin {
   metadata: PluginMetadata;
+  /**
+   * Fetch the current state of the resource at `url` and return a snapshot.
+   * @param url - The dependency URL to check.
+   */
   check(url: string): Promise<PluginCheckResult>;
+  /** Optional async setup called by `PluginLoader` after validation. */
   initialize?(): Promise<void>;
+  /** Optional async teardown called when the plugin is removed from the registry. */
   destroy?(): Promise<void>;
 }
 
 /**
- * Plugin check result
+ * The result returned by {@link Plugin.check}.
+ *
+ * @remarks
+ * `hash` should be a stable, deterministic digest of the resource state
+ * (e.g., a SHA-256 of the version string or content).  The `Monitor` uses
+ * hash equality to detect changes.
+ *
+ * @category Plugins
  */
 export interface PluginCheckResult {
   version?: string;
@@ -35,7 +98,30 @@ export interface PluginCheckResult {
 }
 
 /**
- * Plugin registry for managing access method plugins
+ * Registry that maps access method identifiers to plugin instances.
+ *
+ * @remarks
+ * Each access method can have at most one registered plugin at a time.
+ * Attempting to register a second plugin for the same `accessMethod` without
+ * first unregistering the existing one throws an `Error`.
+ *
+ * @category Plugins
+ *
+ * @useWhen
+ * - Managing a set of plugins across the lifetime of an application.
+ * - Isolating plugins in a test suite (via {@link createPluginRegistry}).
+ *
+ * @avoidWhen
+ * Using the `globalRegistry` singleton directly in tests that run in
+ * parallel — mutations to the global registry leak between test cases.
+ *
+ * @pitfalls
+ * - **Silent collision override is intentional by design in the old API**;
+ *   the current implementation *throws* on collision.  Do not assume
+ *   `register` is idempotent.
+ * - **`clear` is fire-and-forget**: errors from `plugin.destroy()` are
+ *   caught and logged but not re-thrown.  A plugin that fails to tear down
+ *   cleanly will leave resources open silently.
  */
 export class PluginRegistry {
   private plugins: Map<string, Plugin> = new Map();

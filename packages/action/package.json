@@ -3,10 +3,14 @@
   "version": "0.1.16",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pradeepmouli/dependabit",
+    "url": "https://github.com/pradeepmouli/dependabit.git",
     "directory": "packages/action"
   },
-  "description": "GitHub Action entry points for dependency tracking",
+  "homepage": "https://pradeepmouli.github.io/dependabit/",
+  "bugs": {
+    "url": "https://github.com/pradeepmouli/dependabit/issues"
+  },
+  "description": "GitHub Action runtime for dependabit: generate, update, and validate external dependency manifests in CI.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -42,9 +46,12 @@
     "vitest": "^4.1.4"
   },
   "keywords": [
+    "dependabit",
     "github-action",
     "dependency",
-    "tracking"
+    "tracking",
+    "automation",
+    "ci"
   ],
   "license": "MIT",
   "author": "Pradeep Mouli <pmouli@mac.com> (https://github.com/pradeepmouli)",
