@@ -55,7 +55,7 @@
     "@changesets/cli": "^2.30.0",
     "@to-skills/vitepress": "^0.2.0",
     "@types/node": "^25.6.0",
-    "@typescript/native-preview": "7.0.0-dev.20260219.1",
+    "@typescript/native-preview": "7.0.0-dev.20260419.1",
     "@vitest/coverage-v8": "^4.1.4",
     "@vitest/ui": "^4.1.4",
     "lint-staged": "^16.4.0",
