@@ -43,6 +43,8 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v5
         with:
+          version: 10.32.0
+        with:
           version: ${{ steps.pnpm_version.outputs.version }}
 
       - name: Setup Node.js
