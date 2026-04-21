@@ -8,7 +8,7 @@
  * sources) should use `safeValidateManifest` from `@dependabit/manifest`
  * rather than calling `.parse()` directly.
  *
- * @pitfalls
+ * @never
  * - **Schema version drift**: manifests without an explicit `version` field
  *   will fail validation.  Always include `"version": "1.0.0"` in generated
  *   manifests.
@@ -356,7 +356,7 @@ export type MonitoringRules = z.infer<typeof MonitoringRulesSchema>;
  * Storing raw secret values — use `secretEnvVar` in `AuthConfig` to reference
  * environment variables by name only.
  *
- * @pitfalls
+ * @never
  * - YAML comments in the original file are **lost** after a
  *   `parseConfig → stringifyConfig` round-trip.
  * - The `version` field must be the string `"1"` (not `1` or `"1.0.0"`).
@@ -376,7 +376,7 @@ export type Schedule = z.infer<typeof ScheduleSchema>;
  * @config
  * @category Manifest
  *
- * @pitfalls
+ * @never
  * - `model` is optional and defaults to the provider's current default.
  *   Omitting it means model changes in new SDK versions can silently alter
  *   detection behaviour.

@@ -17,7 +17,7 @@ import { validateManifest, validateDependencyEntry, safeValidateManifest } from 
  *
  * @useWhen Loading an existing manifest to pass to the monitor or detector.
  *
- * @pitfalls
+ * @never
  * - The file is parsed as JSON, not YAML.  Passing a YAML manifest path
  *   will throw a `SyntaxError`; use `readConfig` for YAML.
  */
@@ -47,7 +47,7 @@ export async function readManifest(path: string): Promise<DependencyManifest> {
  *
  * @category Manifest
  *
- * @pitfalls
+ * @never
  * - Writing a manifest with `strict: false` can persist invalid data that
  *   later fails to parse.  Prefer `strict: true` in production pipelines.
  */
@@ -93,7 +93,7 @@ export async function writeManifest(
  *
  * @category Manifest
  *
- * @pitfalls
+ * @never
  * - This function performs a **read–modify–write** cycle.  Concurrent calls
  *   with the same `path` and different `dependencyId` values will race and
  *   one write will silently overwrite the other.  Use a file lock or
@@ -137,7 +137,7 @@ export async function updateDependency(
  *
  * @category Manifest
  *
- * @pitfalls
+ * @never
  * - Duplicate URL detection is exact-match only.  Trailing slashes or
  *   fragment identifiers will not be treated as duplicates.
  * - Same race condition as {@link updateDependency} applies.
@@ -235,7 +235,7 @@ export async function removeDependency(
  * You want to completely replace the existing manifest — just write
  * `updated` directly via {@link writeManifest}.
  *
- * @pitfalls
+ * @never
  * - Matching between `existing` and `updated` uses `id` **or** `url`.
  *   If the URL of a dependency changes (e.g. a redirect is resolved), the
  *   entry will be treated as new and history will not be preserved.

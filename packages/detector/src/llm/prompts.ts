@@ -7,7 +7,7 @@
  * behaviour globally — run the full detector integration tests before
  * modifying prompt templates in production.
  *
- * @pitfalls
+ * @never
  * - Editing prompt templates can silently break the JSON parsing in the
  *   detector; always verify that the LLM still returns a
  *   `{ "dependencies": [...] }` top-level key after changes.

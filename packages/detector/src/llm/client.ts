@@ -7,7 +7,7 @@
  * `analyze` method to parse raw LLM JSON output; provider implementations are
  * responsible for extracting the `dependencies` array from the model response.
  *
- * @pitfalls
+ * @never
  * - **Output format instability**: the schema of `LLMResponse` (specifically
  *   the `dependencies` array) may silently break when the underlying model
  *   is updated.  Pin the model version in `LLMProviderConfig.model` and
@@ -102,7 +102,7 @@ export interface LLMResponse {
  * @config
  * @category Detector
  *
- * @pitfalls
+ * @never
  * - `model` controls which checkpoint is used. Leaving it `undefined` causes
  *   the provider to select its default, which can change between SDK
  *   versions — pin the model to avoid silent classification drift.
@@ -138,7 +138,7 @@ export interface LLMProviderConfig {
  * always returns an empty `dependencies` array has a small overhead but is
  * safe.
  *
- * @pitfalls
+ * @never
  * - Provider implementations must return valid JSON matching the
  *   `LLMResponse` shape.  Returning plain text causes the detector to
  *   silently produce zero LLM-sourced results.

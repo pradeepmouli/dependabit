@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url';
  * Monitoring a specific AI agent skill hosted on skills.sh or stored in a
  * GitHub repository for version changes (detected via Git tree SHA).
  *
- * @pitfalls
+ * @never
  * - When `lockFilePath` points to a lock file with multiple skills and
  *   `lockSkillKey` is not set, the checker throws asking you to specify one.
  *   Always set `lockSkillKey` when monitoring a single skill from a
@@ -126,7 +126,7 @@ export interface SkillChangeDetection {
  * Monitoring skills that are frequently updated as part of active development
  * — the per-check GitHub API cost may exhaust your rate limit.
  *
- * @pitfalls
+ * @never
  * - **GitHub rate limits**: each check consumes 2 GitHub API requests.  For
  *   large skill sets, use `apiToken` and pre-flight with
  *   `RateLimitHandler.reserveBudget`.

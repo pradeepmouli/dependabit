@@ -6,7 +6,7 @@ import { type Plugin, PluginMetadataSchema, type PluginMetadata } from './regist
  * @config
  * @category Plugins
  *
- * @pitfalls
+ * @never
  * - Setting `autoInitialize: false` skips calling `plugin.initialize()` on
  *   load.  Plugins that allocate resources in `initialize` will be unusable
  *   until the caller manually invokes `plugin.initialize()`.
@@ -36,7 +36,7 @@ export interface PluginLoaderConfig {
  * `initialize` manually — the overhead of `validatePlugin` is minimal but
  * the extra abstraction may be unnecessary.
  *
- * @pitfalls
+ * @never
  * - `load` calls `initialize` if `autoInitialize` is `true`.  If `initialize`
  *   throws, the plugin is **not** registered — but if the caller has already
  *   called `PluginRegistry.register`, the registry will hold a broken plugin

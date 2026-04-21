@@ -3,7 +3,7 @@
   "blockTags": [
     "@useWhen",
     "@avoidWhen",
-    "@pitfalls",
+    "@never",
     "@config",
     "@param",
     "@returns",

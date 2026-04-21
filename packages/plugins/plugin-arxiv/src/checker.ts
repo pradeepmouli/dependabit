@@ -17,7 +17,7 @@ import crypto from 'node:crypto';
  * @useWhen
  * Monitoring an arXiv preprint for new versions or abstract revisions.
  *
- * @pitfalls
+ * @never
  * - `url` should point to the abstract page (`/abs/`) not the PDF (`/pdf/`).
  *   The ID extractor supports both, but the canonical URL in the manifest
  *   should use the abstract form.
@@ -99,7 +99,7 @@ export interface ArxivChangeDetection {
  * Monitoring large arXiv search result pages — this checker is designed for
  * individual paper IDs only.
  *
- * @pitfalls
+ * @never
  * - **No rate limit handling**: burst usage (checking many papers at once)
  *   will hit arXiv's rate limit.  Add a delay between concurrent checks.
  * - **Abstract hash instability**: arXiv occasionally re-formats abstracts

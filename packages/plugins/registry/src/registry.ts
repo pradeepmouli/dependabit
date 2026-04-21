@@ -7,7 +7,7 @@
  * provided for convenience, but isolated instances can be created with
  * {@link createPluginRegistry} for testing or multi-tenant scenarios.
  *
- * @pitfalls
+ * @never
  * - **Plugin name collisions**: registering a second plugin for the same
  *   `accessMethod` throws an error in `PluginRegistry.register`.  Use
  *   `PluginRegistry.unregister` before re-registering if hot-swapping is
@@ -60,7 +60,7 @@ export type PluginMetadata = z.infer<typeof PluginMetadataSchema>;
  * Implementing a custom access method (e.g., a proprietary package registry,
  * an internal documentation API, or a new public API).
  *
- * @pitfalls
+ * @never
  * - Do NOT perform network calls or resource allocation in the constructor —
  *   use `initialize` instead so that errors are surfaced at load time, not
  *   at registration.
@@ -115,7 +115,7 @@ export interface PluginCheckResult {
  * Using the `globalRegistry` singleton directly in tests that run in
  * parallel — mutations to the global registry leak between test cases.
  *
- * @pitfalls
+ * @never
  * - **Silent collision override is intentional by design in the old API**;
  *   the current implementation *throws* on collision.  Do not assume
  *   `register` is idempotent.

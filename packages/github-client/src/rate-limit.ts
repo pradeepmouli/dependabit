@@ -8,7 +8,7 @@
  *
  * The token is read from `GITHUB_TOKEN` when not provided explicitly.
  *
- * @pitfalls
+ * @never
  * - **Primary vs. secondary limits**: GitHub enforces two independent limit
  *   systems.  This handler tracks only the *primary* limit (requests per
  *   hour per token).  Secondary (abuse) limits trigger 403 responses with a
@@ -91,7 +91,7 @@ export interface BudgetReservation {
  * Making a small number of one-off API calls — use {@link GitHubClient}
  * with its built-in threshold check instead.
  *
- * @pitfalls
+ * @never
  * - `reserveBudget` does **not** lock the quota — another process could
  *   consume the reserved capacity between the check and the actual calls.
  * - The handler does not track the search or GraphQL categories

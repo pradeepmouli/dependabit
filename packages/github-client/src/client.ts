@@ -22,7 +22,7 @@ export interface RateLimitInfo {
  * @config
  * @category GitHub Client
  *
- * @pitfalls
+ * @never
  * - **Fine-grained vs. classic tokens**: fine-grained personal access tokens
  *   restrict API access to selected repositories and scopes.  Some endpoints
  *   (e.g. `rateLimit.get()`) are available to unauthenticated requests, but
@@ -61,7 +61,7 @@ export interface GitHubClientConfig {
  * `GitHubClient` via the constructor is not possible; use the separate
  * `RateLimitHandler` for advanced budget management.
  *
- * @pitfalls
+ * @never
  * - **Primary vs. secondary rate limits**: `checkRateLimit` only checks the
  *   primary REST API rate limit.  GitHub also enforces secondary (abuse)
  *   rate limits on burst patterns (many requests in a short window).  A

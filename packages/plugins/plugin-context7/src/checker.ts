@@ -19,7 +19,7 @@ import semver from 'semver';
  * @useWhen
  * Monitoring a library's structured documentation via the Context7 API.
  *
- * @pitfalls
+ * @never
  * - `libraryId` must match the exact Context7 library identifier.  If the
  *   API returns 404 for a valid URL, try extracting the ID from the URL
  *   manually and providing it explicitly rather than relying on URL parsing.
@@ -116,7 +116,7 @@ const Context7ResponseSchema = z.object({
  * is very sensitive to dynamic page content.  Prefer a specific HTTP
  * checker with normalised content in that case.
  *
- * @pitfalls
+ * @never
  * - **Fallback URL hash instability**: when the API is unavailable and the
  *   checker falls back to direct URL hashing, any dynamic content on the
  *   documentation page (e.g., timestamps, ads, CDN-injected nonces) will

@@ -20,7 +20,7 @@ import type { Checker, AccessConfig, DependencySnapshot, ChangeDetection } from 
  * @config
  * @category Monitor
  *
- * @pitfalls
+ * @never
  * - `currentStateHash` must reflect the **last known good state** fetched by
  *   the monitor.  An empty string or stale hash causes the first check to
  *   always report a change (false positive on first run).
@@ -84,7 +84,7 @@ export interface CheckResult {
  * specific checker (e.g., `GitHubRepoChecker`) directly to avoid loading
  * all built-in checkers.
  *
- * @pitfalls
+ * @never
  * - **Concurrent update races**: if two `Monitor` instances watch the same
  *   dependency and call `updateDependency` on the shared manifest file
  *   simultaneously, one write will silently overwrite the other.  Serialise

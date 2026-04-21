@@ -45,7 +45,7 @@ import type {
  * The repository has not been cloned to disk — the detector reads files
  * from the filesystem and cannot operate on a bare Git remote.
  *
- * @pitfalls
+ * @never
  * - `ignorePatterns` performs substring matching on path segments; overly
  *   broad patterns (e.g. `"src"`) will silently exclude large parts of the
  *   repository.
@@ -148,7 +148,7 @@ const ALLOWED_DOT_DIRECTORIES = new Set<string>();
  * - You need deterministic, reproducible output across model versions — LLM
  *   classifications are non-deterministic even with `temperature: 0`.
  *
- * @pitfalls
+ * @never
  * - **LLM output format instability**: the detector parses raw JSON from the
  *   LLM response; a model update that changes the output schema will silently
  *   produce zero LLM-sourced results rather than throwing.  Pin the model
@@ -243,7 +243,7 @@ export class Detector {
    * Only a small subset of files changed — prefer {@link Detector.analyzeFiles}
    * for incremental updates to avoid unnecessary LLM calls.
    *
-   * @pitfalls
+   * @never
    * - Results are **not** cached between calls; calling `detectDependencies`
    *   twice on the same instance makes duplicate LLM calls.
    * - The method does not deduplicate against an existing manifest; callers
@@ -993,7 +993,7 @@ Return as JSON: {"accessMethod": "...", "confidence": 0.0-1.0}`;
    * Running a full initial scan — use {@link Detector.detectDependencies}
    * instead, which also performs an LLM enrichment pass.
    *
-   * @pitfalls
+   * @never
    * - Files outside `repoPath` are **silently** skipped without error.
    *   Callers relying on path-traversal behaviour will get empty results.
    * - File read errors are logged with `console.warn` and skipped, not

@@ -18,7 +18,7 @@
  *
  * @category Monitor
  *
- * @pitfalls
+ * @never
  * - Different checker implementations may compute `stateHash` differently
  *   (e.g., hashing the full HTTP body vs. only the version string).
  *   Snapshots produced by different checkers for the same URL are **not**
@@ -41,7 +41,7 @@ export interface DependencySnapshot {
  *
  * @category Monitor
  *
- * @pitfalls
+ * @never
  * - `hasChanged: true` does not guarantee a real change; ETag drift in
  *   dynamic HTTP responses can trigger false positives for URL-based
  *   checkers.  See `URLContentChecker` pitfalls.
@@ -61,7 +61,7 @@ export interface ChangeDetection {
  * @config
  * @category Monitor
  *
- * @pitfalls
+ * @never
  * - `auth.secret` contains the raw credential value at runtime.  **Never**
  *   persist this object to disk or logs.  Store the secret reference in
  *   `DependencyEntry.auth.secretEnvVar` and resolve it at runtime.
@@ -89,7 +89,7 @@ export interface AccessConfig {
  * Implementing a custom checker for a new access method (e.g., a proprietary
  * API or registry).  Register it with {@link Monitor.registerChecker}.
  *
- * @pitfalls
+ * @never
  * - `fetch` should throw only for unrecoverable errors (network failure,
  *   auth error).  Temporary 5xx responses should be retried inside the
  *   implementation to avoid marking the dependency as errored.

@@ -15,7 +15,7 @@ import { validateConfig } from './validator.js';
  *
  * @category Manifest
  *
- * @pitfalls
+ * @never
  * - YAML comments are parsed but not preserved in the returned object.
  *   A subsequent `stringifyConfig` call will lose all comments.
  * - Duplicate YAML keys are silently overwritten by the YAML parser (last
@@ -56,7 +56,7 @@ export function parseConfig(yaml: string): DependabitConfig {
  *
  * @category Manifest
  *
- * @pitfalls
+ * @never
  * - YAML comments present in the original file are **not** preserved;
  *   this function always produces comment-free YAML.
  */
