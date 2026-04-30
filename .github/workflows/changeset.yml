@@ -83,7 +83,7 @@ jobs:
             PRIVATE=$(jq -r '.private // false' "$pkg_json" 2>/dev/null || echo 'false')
             NAME=$(jq -r '.name // ""' "$pkg_json" 2>/dev/null || echo '')
             if [ "$PRIVATE" != "true" ] && [ -n "$NAME" ] && [ "$NAME" != "null" ]; then
-              FRONTMATTER="${FRONTMATTER}  \"${NAME}\": ${TYPE}\n"
+              FRONTMATTER="${FRONTMATTER}\"${NAME}\": ${TYPE}\n"
             fi
           done
 
@@ -92,7 +92,7 @@ jobs:
             PRIVATE=$(jq -r '.private // false' "package.json" 2>/dev/null || echo 'false')
             NAME=$(jq -r '.name // ""' "package.json" 2>/dev/null || echo '')
             if [ "$PRIVATE" != "true" ] && [ -n "$NAME" ] && [ "$NAME" != "null" ]; then
-              FRONTMATTER="  \"${NAME}\": ${TYPE}\n"
+              FRONTMATTER="\"${NAME}\": ${TYPE}\n"
             fi
           fi
 
