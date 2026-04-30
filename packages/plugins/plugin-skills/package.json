@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/plugin-skills",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Skills.sh checker plugin for dependabit — tracks AI agent skill package versions as monitored dependencies.",
   "homepage": "https://pradeepmouli.github.io/dependabit/",
   "bugs": {
