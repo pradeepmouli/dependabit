@@ -1,5 +1,11 @@
 # @dependabit/test-utils
 
+## 0.1.15
+
+### Patch Changes
+
+- [#101](https://github.com/pradeepmouli/dependabit/pull/101) [`83b9818`](https://github.com/pradeepmouli/dependabit/commit/83b98187940da75a41fb41990ea03c8d962146b4) Thanks [@pradeepmouli](https://github.com/pradeepmouli)! - - chore: bump typedoc-plugin-to-skills to ^1.3.0
+
 ## 0.1.14
 
 ### Patch Changes

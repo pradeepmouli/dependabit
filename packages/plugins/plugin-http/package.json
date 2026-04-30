@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/plugin-http",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Generic HTTP content-hash checker plugin for dependabit — fingerprints arbitrary URL resources to detect upstream changes.",
   "homepage": "https://pradeepmouli.github.io/dependabit/",
   "bugs": {
