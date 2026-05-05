@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/plugin-context7",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Context7 library documentation checker plugin for dependabit — detects upstream doc and version changes for tracked libraries.",
   "homepage": "https://pradeepmouli.github.io/dependabit/",
   "bugs": {

@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/plugin-openapi",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "OpenAPI / Swagger spec checker plugin for dependabit — tracks API schema drift across fetched service descriptions.",
   "homepage": "https://pradeepmouli.github.io/dependabit/",
   "bugs": {
