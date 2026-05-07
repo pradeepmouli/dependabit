@@ -41,6 +41,30 @@
 TokenAuth | OAuthAuth | BasicAuth
 ```
 
+### `TokenAuth`
+Token authentication handler for GitHub API
+Supports GitHub PAT tokens, fine-grained tokens, and API keys
+**Properties:**
+- `type: "token"`
+- `token: string`
+
+### `OAuthAuth`
+**Properties:**
+- `type: "oauth"`
+- `token: string`
+- `tokenType: string`
+- `scope: string` (optional)
+- `expiresIn: number` (optional)
+- `refreshToken: string` (optional)
+
+### `BasicAuth`
+Basic authentication handler for GitHub API
+Supports username/password or username/personal access token
+**Properties:**
+- `type: "basic"`
+- `username: string`
+- `password: string`
+
 ## issues
 
 ### `IssueData`
@@ -126,33 +150,3 @@ RateLimitHandler.reserveBudget.
 - `falsePositiveRate: number`
 - `truePositiveRate: number`
 - `totalFeedback: number`
-
-## token
-
-### `TokenAuth`
-Token authentication handler for GitHub API
-Supports GitHub PAT tokens, fine-grained tokens, and API keys
-**Properties:**
-- `type: "token"`
-- `token: string`
-
-## oauth
-
-### `OAuthAuth`
-**Properties:**
-- `type: "oauth"`
-- `token: string`
-- `tokenType: string`
-- `scope: string` (optional)
-- `expiresIn: number` (optional)
-- `refreshToken: string` (optional)
-
-## basic
-
-### `BasicAuth`
-Basic authentication handler for GitHub API
-Supports username/password or username/personal access token
-**Properties:**
-- `type: "basic"`
-- `username: string`
-- `password: string`

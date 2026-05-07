@@ -1,6 +1,8 @@
 # Functions
 
-## `main`
+## action/src
+
+### `main`
 ```ts
 main(): Promise<void>
 ```

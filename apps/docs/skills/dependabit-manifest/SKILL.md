@@ -1,6 +1,6 @@
 ---
 name: dependabit-manifest
-description: Documentation site for dependabit
+description: "Documentation site for dependabit Use when: Loading an existing manifest to pass to the monitor or detector.."
 ---
 
 # @dependabit/manifest
@@ -9,57 +9,55 @@ Documentation site for dependabit
 
 ## When to Use
 
-- Loading an existing manifest to pass to the monitor or detector.
-- Applying the output of Detector to an existing manifest without
-- losing manually-curated entries or historical change records.
-- Parsing config from an in-memory string (e.g., fetched from GitHub API).
+**Use this skill when:**
+- Loading an existing manifest to pass to the monitor or detector. → use `readManifest`
+- Applying the output of Detector to an existing manifest without losing manually-curated entries or historical change records. → use `mergeManifests`
+- Parsing config from an in-memory string (e.g., fetched from GitHub API). → use `parseConfig`
 
-**Avoid when:**
-- You want to completely replace the existing manifest — just write
-- `updated` directly via writeManifest.
-- API surface: 23 functions, 1 classes, 15 types, 16 constants
+**Do NOT use when:**
+- You want to completely replace the existing manifest — just write `updated` directly via writeManifest.
 
-## Pitfalls
+API surface: 23 functions, 1 classes, 12 types, 16 constants
 
-- The file is parsed as JSON, not YAML.  Passing a YAML manifest path
-- will throw a `SyntaxError`; use `readConfig` for YAML.
-- Writing a manifest with `strict: false` can persist invalid data that
-- later fails to parse.  Prefer `strict: true` in production pipelines.
-- This function performs a **read–modify–write** cycle.  Concurrent calls
-- with the same `path` and different `dependencyId` values will race and
-- one write will silently overwrite the other.  Use a file lock or
-- serialise calls if running multiple monitors in parallel.
-- Duplicate URL detection is exact-match only.  Trailing slashes or
-- fragment identifiers will not be treated as duplicates.
+## NEVER
+
+- The file is parsed as JSON, not YAML.  Passing a YAML manifest path will throw a `SyntaxError`; use `readConfig` for YAML.
+- Writing a manifest with `strict: false` can persist invalid data that later fails to parse.  Prefer `strict: true` in production pipelines.
+- This function performs a **read–modify–write** cycle.  Concurrent calls with the same `path` and different `dependencyId` values will race and one write will silently overwrite the other.  Use a file lock or serialise calls if running multiple monitors in parallel.
+- Duplicate URL detection is exact-match only.  Trailing slashes or fragment identifiers will not be treated as duplicates.
 - Same race condition as updateDependency applies.
-- Matching between `existing` and `updated` uses `id` **or** `url`.
-- If the URL of a dependency changes (e.g. a redirect is resolved), the
-- entry will be treated as new and history will not be preserved.
-- `preserveManual: true` can re-add entries that were intentionally
-- removed from the repository.  Set it to `false` when performing a
-- deliberate full refresh.
-- YAML comments are parsed but not preserved in the returned object.
-- A subsequent `stringifyConfig` call will lose all comments.
-- Duplicate YAML keys are silently overwritten by the YAML parser (last
-- value wins) — no warning is emitted.
-- YAML comments present in the original file are **not** preserved;
-- this function always produces comment-free YAML.
+- Matching between `existing` and `updated` uses `id` **or** `url`. If the URL of a dependency changes (e.g. a redirect is resolved), the entry will be treated as new and history will not be preserved.
+- `preserveManual: true` can re-add entries that were intentionally removed from the repository.  Set it to `false` when performing a deliberate full refresh.
+- YAML comments are parsed but not preserved in the returned object. A subsequent `stringifyConfig` call will lose all comments.
+- Duplicate YAML keys are silently overwritten by the YAML parser (last value wins) — no warning is emitted.
+- YAML comments present in the original file are **not** preserved; this function always produces comment-free YAML.
 
 ## Configuration
 
-### SizeCheckOptions
-
-| Key | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| `warnThreshold` | `number` | no | — |  |
-| `errorThreshold` | `number` | no | — |  |
+4 configuration interfaces — see references/config.md for details.
 
 ## Quick Reference
 
-**validator:** `validateManifest`, `validateDependencyEntry`, `validateConfig`, `safeValidateManifest`, `safeValidateDependencyEntry`, `safeValidateConfig`
-**Manifest:** `readManifest`, `writeManifest`, `updateDependency`, `addDependency`, `removeDependency`, `mergeManifests`, `createEmptyManifest`, `readConfig`, `parseConfig`, `stringifyConfig`, `getEffectiveMonitoringRules`, `shouldIgnoreUrl`, `ValidationError`, `DependencyManifest`, `DependencyEntry`, `DependencyType`, `AccessMethod`, `DetectionMethod`, `Severity`, `MonitoringRules`, `DependabitConfig`, `Schedule`, `LLMConfig`, `IssueConfig`, `DependencyOverride`, `ChangeType`, `ChangeDetectionRecord`, `DependabitConfigSchema`
-**size-check:** `checkManifestSize`, `formatSize`, `validateManifestObject`, `estimateEntrySize`, `canAddEntry`, `SizeCheckResult`
-**schema:** `ManifestVersionSchema`, `AccessMethodSchema`, `DependencyTypeSchema`, `DetectionMethodSchema`, `SeveritySchema`, `AuthConfigSchema`, `MonitoringRulesSchema`, `DependencyEntrySchema`, `DependencyManifestSchema`, `ScheduleSchema`, `LLMConfigSchema`, `IssueConfigSchema`, `DependencyOverrideSchema`, `ChangeTypeSchema`, `ChangeDetectionRecordSchema`
+**Key functions:** `readManifest` (Reads a manifest JSON file from disk and validates it against
+`DependencyManifestSchema`), `writeManifest` (Serialises a manifest to pretty-printed JSON and writes it to disk), `updateDependency` (Updates a single dependency entry in the on-disk manifest by ID), `addDependency` (Appends a new dependency entry to the on-disk manifest), `removeDependency` (Removes a dependency from the on-disk manifest by ID), `mergeManifests` (Merges an `updated` manifest generated by the detector over an `existing`
+one, optionally preserving manual entries and accumulated change history), `createEmptyManifest` (Creates a minimal, valid manifest with an empty `dependencies` array), `readConfig` (Reads a YAML configuration file from disk, parses it, and validates it
+against `DependabitConfigSchema`), `parseConfig` (Parses a YAML string into a validated `DependabitConfig`), `stringifyConfig` (Serialises a validated `DependabitConfig` to a YAML string), `getEffectiveMonitoringRules` (Resolves the effective monitoring rules for a specific dependency URL by
+merging global config defaults with any per-URL override defined in
+`config), `shouldIgnoreUrl` (Returns `true` if the given URL matches any exclusion rule defined in
+`config)
+**Key classes:** `ValidationError` (Wraps a Zod `ZodError` to provide human-readable formatted error messages)
+
+*52 exports total — see references/ for full API.*
+
+## References
+
+Load these on demand — do NOT read all at once:
+
+- When calling any function → read `references/functions.md` for full signatures, parameters, and return types
+- When using a class → read `references/classes/` for properties, methods, and inheritance
+- When defining typed variables or function parameters → read `references/types.md`
+- When using exported constants → read `references/variables.md`
+- When configuring options → read `references/config.md` for all settings and defaults
 
 ## Links
 

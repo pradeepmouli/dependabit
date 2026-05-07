@@ -27,7 +27,7 @@ createClassificationPrompt(url: string, context: string): string
   used to improve classification accuracy.
 **Returns:** `string` — Rendered prompt string.
 
-## readme
+## parsers
 
 ### `parseReadme`
 Parse README content and extract external references
@@ -48,8 +48,6 @@ extractGitHubReferences(content: string): { owner: string; repo: string; context
 - `content: string`
 **Returns:** `{ owner: string; repo: string; context: string }[]`
 
-## code-comments
-
 ### `parseCodeComments`
 Parse code files and extract references from comments
 ```ts
@@ -68,8 +66,6 @@ extractSpecReferences(content: string): { spec: string; context: string }[]
 **Parameters:**
 - `content: string`
 **Returns:** `{ spec: string; context: string }[]`
-
-## package-files
 
 ### `parsePackageJson`
 Parse package.json and extract metadata URLs (NOT dependencies)

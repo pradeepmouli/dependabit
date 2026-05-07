@@ -78,14 +78,9 @@ rule fields.  This is typically constructed by reading a
 
 **Type:** `{ type: "token" | "oauth" | "basic" | "none"; secret?: string }`
 
-### Pitfalls
-- `currentStateHash` must reflect the **last known good state** fetched by
-- the monitor.  An empty string or stale hash causes the first check to
-- always report a change (false positive on first run).
-- `lastChecked` is used by the `Scheduler` to decide whether a dependency
-- is due for checking.  An incorrect or missing timestamp causes either
-- perpetual over-checking (missing timestamp) or silent skipping (future
-- timestamp).
+### NEVER
+- `currentStateHash` must reflect the **last known good state** fetched by the monitor.  An empty string or stale hash causes the first check to always report a change (false positive on first run).
+- `lastChecked` is used by the `Scheduler` to decide whether a dependency is due for checking.  An incorrect or missing timestamp causes either perpetual over-checking (missing timestamp) or silent skipping (future timestamp).
 
 ## AccessConfig
 
@@ -115,7 +110,5 @@ Minimum configuration required to fetch and compare a dependency.
 
 **Type:** `{ type: "token" | "oauth" | "basic" | "none"; secret?: string }`
 
-### Pitfalls
-- `auth.secret` contains the raw credential value at runtime.  **Never**
-- persist this object to disk or logs.  Store the secret reference in
-- `DependencyEntry.auth.secretEnvVar` and resolve it at runtime.
+### NEVER
+- `auth.secret` contains the raw credential value at runtime.  **Never** persist this object to disk or logs.  Store the secret reference in `DependencyEntry.auth.secretEnvVar` and resolve it at runtime.

@@ -49,6 +49,44 @@ constructor(config: AuthConfig): AuthManager
 - `getType(): string` — Get authentication type
 - `getHandler(): TokenAuthHandler | OAuthHandler | BasicAuthHandler` — Get underlying handler
 
+### `TokenAuthHandler`
+Handler for token-based authentication (GitHub PAT, API keys)
+```ts
+constructor(token: string): TokenAuthHandler
+```
+**Methods:**
+- `authenticate(): Promise<TokenAuth>` — Authenticate and return auth object
+- `validate(): boolean` — Validate token format
+- `getType(): string` — Get authentication type
+- `updateToken(newToken: string): void` — Update token (for rotation)
+- `getToken(): string` — Get current token
+
+### `OAuthHandler`
+Handler for OAuth 2.0 authentication
+```ts
+constructor(config: OAuthConfig): OAuthHandler
+```
+**Methods:**
+- `authenticate(code: string): Promise<OAuthAuth>` — Exchange authorization code for access token
+- `getAuthorizationUrl(scopes: string[], state?: string): string` — Generate authorization URL for OAuth flow
+- `refreshToken(refreshToken: string): Promise<OAuthAuth>` — Refresh an expired access token
+- `validate(): boolean` — Validate OAuth configuration
+- `getType(): string` — Get authentication type
+
+### `BasicAuthHandler`
+Handler for HTTP Basic authentication
+```ts
+constructor(username: string, password: string): BasicAuthHandler
+```
+**Methods:**
+- `authenticate(): Promise<BasicAuth>` — Authenticate and return auth object
+- `getAuthHeader(): string` — Get base64-encoded Basic auth header value
+- `validate(): boolean` — Validate credentials format
+- `getType(): string` — Get authentication type
+- `updateCredentials(username: string, password: string): void` — Update credentials (for rotation)
+- `toString(): string` — String representation (masks password)
+- `toJSON(): Record<string, unknown>` — JSON representation (excludes password)
+
 ## issues
 
 ### `IssueManager`
@@ -84,47 +122,3 @@ constructor(issueManager: IssueManagerInterface, config: FeedbackConfig): Feedba
 - `getFeedbackRate(options: CollectOptions): Promise<FeedbackRate>` — Calculate false positive rate from collected feedback
 - `getRecentFeedback(days: number, referenceDate?: Date): Promise<FeedbackData>` — Get feedback from recent time window (e.g., last 30 days)
 - `monitorIssue(issueNumber: number): Promise<boolean>` — Check if a specific issue has feedback label
-
-## token
-
-### `TokenAuthHandler`
-Handler for token-based authentication (GitHub PAT, API keys)
-```ts
-constructor(token: string): TokenAuthHandler
-```
-**Methods:**
-- `authenticate(): Promise<TokenAuth>` — Authenticate and return auth object
-- `validate(): boolean` — Validate token format
-- `getType(): string` — Get authentication type
-- `updateToken(newToken: string): void` — Update token (for rotation)
-- `getToken(): string` — Get current token
-
-## oauth
-
-### `OAuthHandler`
-Handler for OAuth 2.0 authentication
-```ts
-constructor(config: OAuthConfig): OAuthHandler
-```
-**Methods:**
-- `authenticate(code: string): Promise<OAuthAuth>` — Exchange authorization code for access token
-- `getAuthorizationUrl(scopes: string[], state?: string): string` — Generate authorization URL for OAuth flow
-- `refreshToken(refreshToken: string): Promise<OAuthAuth>` — Refresh an expired access token
-- `validate(): boolean` — Validate OAuth configuration
-- `getType(): string` — Get authentication type
-
-## basic
-
-### `BasicAuthHandler`
-Handler for HTTP Basic authentication
-```ts
-constructor(username: string, password: string): BasicAuthHandler
-```
-**Methods:**
-- `authenticate(): Promise<BasicAuth>` — Authenticate and return auth object
-- `getAuthHeader(): string` — Get base64-encoded Basic auth header value
-- `validate(): boolean` — Validate credentials format
-- `getType(): string` — Get authentication type
-- `updateCredentials(username: string, password: string): void` — Update credentials (for rotation)
-- `toString(): string` — String representation (masks password)
-- `toJSON(): Record<string, unknown>` — JSON representation (excludes password)
