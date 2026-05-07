@@ -44,29 +44,10 @@ Per-dependency monitoring rules (check frequency, enable/disable).
 z.infer<typeof MonitoringRulesSchema>
 ```
 
-### `DependabitConfig`
-Root configuration object parsed from `.dependabit.yml`.
-```ts
-z.infer<typeof DependabitConfigSchema>
-```
-
 ### `Schedule`
 Check schedule (cron-like, compatible with Dependabot syntax).
 ```ts
 z.infer<typeof ScheduleSchema>
-```
-
-### `LLMConfig`
-LLM provider configuration stored inside the manifest's `generatedBy`
-section and in `DependabitConfig.llm`.
-```ts
-z.infer<typeof LLMConfigSchema>
-```
-
-### `IssueConfig`
-Configuration for GitHub issue creation on change detection.
-```ts
-z.infer<typeof IssueConfigSchema>
 ```
 
 ### `DependencyOverride`

@@ -23,10 +23,6 @@ Explicit arXiv ID (e.g. `2301.00001`) — parsed from `url` when omitted.
 ### Use when
 - Monitoring an arXiv preprint for new versions or abstract revisions.
 
-### Pitfalls
-- `url` should point to the abstract page (`/abs/`) not the PDF (`/pdf/`).
-- The ID extractor supports both, but the canonical URL in the manifest
-- should use the abstract form.
-- arXiv IDs do not carry version numbers; the checker always fetches the
-- **latest** version.  If a paper is withdrawn, the API returns an empty
-- entry and the checker throws.
+### NEVER
+- `url` should point to the abstract page (`/abs/`) not the PDF (`/pdf/`). The ID extractor supports both, but the canonical URL in the manifest should use the abstract form.
+- arXiv IDs do not carry version numbers; the checker always fetches the **latest** version.  If a paper is withdrawn, the API returns an empty entry and the checker throws.
