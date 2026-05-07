@@ -5,10 +5,10 @@
 ### `checkManifestSize`
 Check manifest size and return status
 ```ts
-checkManifestSize(content: any, options?: SizeCheckOptions): SizeCheckResult
+checkManifestSize(content: string | Buffer<ArrayBufferLike>, options?: SizeCheckOptions): SizeCheckResult
 ```
 **Parameters:**
-- `content: any`
+- `content: string | Buffer<ArrayBufferLike>`
 - `options: SizeCheckOptions` (optional)
 **Returns:** `SizeCheckResult`
 

@@ -45,7 +45,7 @@ Detector.analyzeFiles.
 - `dependencies: { id: string; url: string; type: "reference-implementation" | "schema" | "documentation" | "research-paper" | "api-example" | "other"; accessMethod: "context7" | "arxiv" | "openapi" | "github-api" | "http"; name: string; currentStateHash: string; detectionMethod: "llm-analysis" | "manual" | "package-json" | "requirements-txt" | "code-comment"; detectionConfidence: number; detectedAt: string; lastChecked: string; referencedIn: { file: string; line?: number; context?: string }[]; changeHistory: { detectedAt: string; severity: "breaking" | "major" | "minor"; falsePositive: boolean; oldVersion?: string; newVersion?: string; issueNumber?: number }[]; description?: string; currentVersion?: string; lastChanged?: string; auth?: { type: "token" | "oauth" | "basic" | "none"; secretEnvVar?: string }; monitoring?: { enabled: boolean; checkFrequency: "hourly" | "daily" | "weekly" | "monthly"; ignoreChanges: boolean; severityOverride?: "breaking" | "major" | "minor" } }[]` — Discovered dependency entries ready for merging into a manifest.
 - `statistics: { filesScanned: number; urlsFound: number; llmCalls: number; totalTokens: number; totalLatencyMs: number }` — Diagnostic counters for the scan run.
 
-## readme
+## parsers
 
 ### `ExtractedReference`
 README Parser
@@ -56,8 +56,6 @@ Extracts URLs and references from README and markdown files
 - `line: number` (optional)
 - `type: "markdown-link" | "bare-url" | "reference-link"`
 
-## code-comments
-
 ### `CommentReference`
 Code Comment Parser
 Extracts URLs and references from code comments
@@ -67,8 +65,6 @@ Extracts URLs and references from code comments
 - `file: string`
 - `line: number`
 - `commentType: "single-line" | "multi-line" | "jsdoc"`
-
-## package-files
 
 ### `PackageMetadata`
 Package File Parser
