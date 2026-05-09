@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { Scheduler, type SchedulerOptions } from '../src/scheduler.js';
+import { Scheduler } from '../src/scheduler.js';
 import type { DependencyEntry, DependabitConfig } from '@dependabit/manifest';
 
 describe('Scheduler', () => {

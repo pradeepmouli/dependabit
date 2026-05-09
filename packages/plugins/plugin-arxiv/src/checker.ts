@@ -148,11 +148,6 @@ export class ArxivChecker {
       return match?.[1]?.trim() || '';
     };
 
-    const getAllTagContent = (tag: string, content: string): string[] => {
-      const regex = new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`, 'gi');
-      const matches = content.matchAll(regex);
-      return Array.from(matches).map((m) => m[1]?.trim() || '');
-    };
 
     // Find the entry element
     const entryMatch = xml.match(/<entry>([\s\S]*?)<\/entry>/);

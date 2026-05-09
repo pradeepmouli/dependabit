@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseAgentConfig, type AgentAssignmentConfig } from '../../src/utils/agent-config.js';
+import { parseAgentConfig } from '../../src/utils/agent-config.js';
 import type { DependabitConfig } from '@dependabit/manifest';
 
 describe('Agent Config Parser', () => {

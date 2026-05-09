@@ -33,7 +33,7 @@ const SKIP_PATTERNS = [
 /**
  * Parse README content and extract external references
  */
-export function parseReadme(content: string, filePath = 'README.md'): ExtractedReference[] {
+export function parseReadme(content: string, _filePath = 'README.md'): ExtractedReference[] {
   const references: ExtractedReference[] = [];
   const lines = content.split('\n');
 

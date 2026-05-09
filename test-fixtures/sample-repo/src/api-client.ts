@@ -32,7 +32,7 @@ export class APIClient {
    * Validates response against JSON Schema
    * Schema spec: https://json-schema.org/draft/2020-12/schema
    */
-  validateResponse(data: any, schema: any): boolean {
+  validateResponse(_data: any, _schema: any): boolean {
     // Validation logic here
     return true;
   }

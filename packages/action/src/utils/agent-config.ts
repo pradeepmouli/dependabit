@@ -1,4 +1,4 @@
-import type { DependabitConfig, Severity } from '@dependabit/manifest';
+import type { DependabitConfig } from '@dependabit/manifest';
 
 /**
  * Agent assignment configuration

@@ -20,7 +20,6 @@
  *   for unusually low `promptTokens` values.
  */
 
-import type { z } from 'zod';
 
 /**
  * Rate limit information returned by {@link LLMProvider.getRateLimit}.
@@ -188,7 +187,7 @@ export interface LLMProvider {
  * @deprecated Use the concrete provider classes exported from
  * `@dependabit/detector` (e.g. `GitHubCopilotProvider`) directly.
  */
-export function createLLMProvider(providerName: string, config: LLMProviderConfig): LLMProvider {
+export function createLLMProvider(providerName: string, _config: LLMProviderConfig): LLMProvider {
   // Implementation will be in specific provider files
   throw new Error(`Provider ${providerName} not yet implemented`);
 }
