@@ -32,11 +32,11 @@
   },
   "dependencies": {
     "@dependabit/manifest": "workspace:*",
-    "semver": "^7.7.4",
-    "zod": "^4.3.6"
+    "semver": "^7.8.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.6.2",
     "@types/semver": "^7.7.1",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",

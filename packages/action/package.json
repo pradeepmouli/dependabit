@@ -30,16 +30,16 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@actions/core": "^3.0.0",
-    "@actions/github": "^9.1.0",
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1",
     "@dependabit/detector": "workspace:*",
     "@dependabit/github-client": "workspace:*",
     "@dependabit/manifest": "workspace:*",
     "@dependabit/monitor": "workspace:*",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.6.2",
     "@vercel/ncc": "^0.38.4",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
