@@ -1,5 +1,17 @@
 # @dependabit/action
 
+## 0.1.18
+
+### Patch Changes
+
+- [`ca60e76`](https://github.com/pradeepmouli/dependabit/commit/ca60e767ca80da383f6348b3b893c182f4cd184e) Thanks [@pradeepmouli](https://github.com/pradeepmouli)! - Update production dependencies (@actions/core, @actions/github, zod, yaml)
+
+- Updated dependencies [[`ca60e76`](https://github.com/pradeepmouli/dependabit/commit/ca60e767ca80da383f6348b3b893c182f4cd184e)]:
+  - @dependabit/detector@0.1.18
+  - @dependabit/github-client@0.1.16
+  - @dependabit/manifest@0.1.16
+  - @dependabit/monitor@0.1.16
+
 ## 0.1.17
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @dependabit/plugin-github
 
+## 0.1.16
+
+### Patch Changes
+
+- Updated dependencies [[`ca60e76`](https://github.com/pradeepmouli/dependabit/commit/ca60e767ca80da383f6348b3b893c182f4cd184e)]:
+  - @dependabit/github-client@0.1.16
+  - @dependabit/manifest@0.1.16
+
 ## 0.1.15
 
 ### Patch Changes
