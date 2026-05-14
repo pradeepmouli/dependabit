@@ -20,7 +20,6 @@
  *   for unusually low `promptTokens` values.
  */
 
-
 /**
  * Rate limit information returned by {@link LLMProvider.getRateLimit}.
  *

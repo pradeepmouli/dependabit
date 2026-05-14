@@ -148,7 +148,6 @@ export class ArxivChecker {
       return match?.[1]?.trim() || '';
     };
 
-
     // Find the entry element
     const entryMatch = xml.match(/<entry>([\s\S]*?)<\/entry>/);
     if (!entryMatch) {
