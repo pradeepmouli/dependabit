@@ -17,33 +17,35 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          REPO="${{ github.repository }}"
+
           echo "=== Enabling auto-merge on new dependabot PRs ==="
-          gh pr list --author app/dependabot --json number,autoMergeRequest \
+          gh pr list --repo "$REPO" --author app/dependabot --json number,autoMergeRequest \
             --jq '.[] | select(.autoMergeRequest == null) | .number' | \
           while read pr; do
             echo "Enabling auto-merge on #$pr"
-            gh pr merge "$pr" --squash --auto 2>&1 || true
+            gh pr merge "$pr" --repo "$REPO" --squash --auto 2>&1 || true
           done
 
           echo ""
           echo "=== Updating BEHIND PRs ==="
-          gh pr list --author app/dependabot --json number,mergeStateStatus \
+          gh pr list --repo "$REPO" --author app/dependabot --json number,mergeStateStatus \
             --jq '.[] | select(.mergeStateStatus == "BEHIND") | .number' | \
           while read pr; do
             echo "Updating branch for #$pr"
-            gh pr update-branch "$pr" 2>&1 || true
+            gh pr update-branch "$pr" --repo "$REPO" 2>&1 || true
           done
 
           echo ""
           echo "=== Closing DIRTY PRs (dependabot will recreate) ==="
-          gh pr list --author app/dependabot --json number,mergeStateStatus \
+          gh pr list --repo "$REPO" --author app/dependabot --json number,mergeStateStatus \
             --jq '.[] | select(.mergeStateStatus == "DIRTY") | .number' | \
           while read pr; do
             echo "Closing conflicting #$pr"
-            gh pr close "$pr" -c "Closing conflicting PR — dependabot will recreate with fresh base." 2>&1 || true
+            gh pr close "$pr" --repo "$REPO" -c "Closing conflicting PR — dependabot will recreate with fresh base." 2>&1 || true
           done
 
           echo ""
           echo "=== Summary ==="
-          total=$(gh pr list --author app/dependabot --json number --jq 'length')
+          total=$(gh pr list --repo "$REPO" --author app/dependabot --json number --jq 'length')
           echo "Remaining dependabot PRs: $total"
