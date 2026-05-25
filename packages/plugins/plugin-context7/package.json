@@ -40,7 +40,7 @@
     "@types/semver": "^7.7.1",
     "tsx": "^4.22.2",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.7"
   },
   "keywords": [
     "context7",
