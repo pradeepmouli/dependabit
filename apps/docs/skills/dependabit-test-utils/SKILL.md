@@ -1,6 +1,6 @@
 ---
-name: dependabit-test-utils
 description: Documentation site for dependabit
+name: dependabit-test-utils
 ---
 
 # @dependabit/test-utils

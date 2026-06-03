@@ -8,13 +8,9 @@ Configuration for the PluginLoader.
 
 #### validateMetadata
 
-
-
 **Type:** `boolean`
 
 #### autoInitialize
-
-
 
 **Type:** `boolean`
 

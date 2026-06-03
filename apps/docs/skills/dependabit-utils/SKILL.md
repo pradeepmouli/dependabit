@@ -1,6 +1,6 @@
 ---
-name: dependabit-utils
 description: Documentation site for dependabit
+name: dependabit-utils
 ---
 
 # @dependabit/utils
