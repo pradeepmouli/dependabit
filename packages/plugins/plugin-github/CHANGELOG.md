@@ -1,5 +1,13 @@
 # @dependabit/plugin-github
 
+## 0.1.17
+
+### Patch Changes
+
+- Updated dependencies [[`74aac50`](https://github.com/pradeepmouli/dependabit/commit/74aac50256e0ac601779e68b5360cba4369db997)]:
+  - @dependabit/github-client@0.1.17
+  - @dependabit/manifest@0.1.17
+
 ## 0.1.16
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @dependabit/test-utils
 
+## 0.1.17
+
+### Patch Changes
+
+- [#127](https://github.com/pradeepmouli/dependabit/pull/127) [`74aac50`](https://github.com/pradeepmouli/dependabit/commit/74aac50256e0ac601779e68b5360cba4369db997) Thanks [@pradeepmouli](https://github.com/pradeepmouli)! - - chore: also drop .github/agents, prompts, skills, copilot from master
+  - chore: also drop specs/, .claude-plugin/ from master
+  - chore: drop AI tooling files from master
+
 ## 0.1.16
 
 ### Patch Changes
