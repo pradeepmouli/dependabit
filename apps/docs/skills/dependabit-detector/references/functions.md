@@ -32,11 +32,11 @@ createClassificationPrompt(url: string, context: string): string
 ### `parseReadme`
 Parse README content and extract external references
 ```ts
-parseReadme(content: string, filePath: string): ExtractedReference[]
+parseReadme(content: string, _filePath: string): ExtractedReference[]
 ```
 **Parameters:**
 - `content: string`
-- `filePath: string` — default: `'README.md'`
+- `_filePath: string` — default: `'README.md'`
 **Returns:** `ExtractedReference[]`
 
 ### `extractGitHubReferences`

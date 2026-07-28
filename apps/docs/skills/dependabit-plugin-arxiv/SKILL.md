@@ -1,6 +1,6 @@
 ---
-name: dependabit-plugin-arxiv
 description: "Documentation site for dependabit Use when: Tracking research papers that your project cites or implements, to be...."
+name: dependabit-plugin-arxiv
 ---
 
 # @dependabit/plugin-arxiv
@@ -41,7 +41,7 @@ API surface: 1 functions, 1 classes, 3 types
 Load these on demand — do NOT read all at once:
 
 - When calling any function → read `references/functions.md` for full signatures, parameters, and return types
-- When using a class → read `references/classes/` for properties, methods, and inheritance
+- When using a class → read `references/classes.md` for properties, methods, and inheritance
 - When defining typed variables or function parameters → read `references/types.md`
 - When configuring options → read `references/config.md` for all settings and defaults
 

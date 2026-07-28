@@ -12,27 +12,19 @@ rule fields.  This is typically constructed by reading a
 
 #### id
 
-
-
 **Type:** `string`
 
 **Required:** yes
 
 #### name
 
-
-
 **Type:** `string`
 
 #### type
 
-
-
 **Type:** `string`
 
 #### currentStateHash
-
-
 
 **Type:** `string`
 
@@ -40,25 +32,17 @@ rule fields.  This is typically constructed by reading a
 
 #### currentVersion
 
-
-
 **Type:** `string`
 
 #### lastChecked
-
-
 
 **Type:** `string`
 
 #### monitoring
 
-
-
 **Type:** `{ enabled?: boolean; ignoreChanges?: boolean }`
 
 #### url
-
-
 
 **Type:** `string`
 
@@ -66,15 +50,11 @@ rule fields.  This is typically constructed by reading a
 
 #### accessMethod
 
-
-
 **Type:** `"context7" | "arxiv" | "openapi" | "github-api" | "http"`
 
 **Required:** yes
 
 #### auth
-
-
 
 **Type:** `{ type: "token" | "oauth" | "basic" | "none"; secret?: string }`
 
@@ -90,23 +70,17 @@ Minimum configuration required to fetch and compare a dependency.
 
 #### url
 
-
-
 **Type:** `string`
 
 **Required:** yes
 
 #### accessMethod
 
-
-
 **Type:** `"context7" | "arxiv" | "openapi" | "github-api" | "http"`
 
 **Required:** yes
 
 #### auth
-
-
 
 **Type:** `{ type: "token" | "oauth" | "basic" | "none"; secret?: string }`
 

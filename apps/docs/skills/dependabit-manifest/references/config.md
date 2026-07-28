@@ -29,12 +29,8 @@ Configuration for GitHub issue creation on change detection.
 
 #### warnThreshold
 
-
-
 **Type:** `number`
 
 #### errorThreshold
-
-
 
 **Type:** `number`

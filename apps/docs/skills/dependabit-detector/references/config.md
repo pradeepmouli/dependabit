@@ -8,13 +8,9 @@ Configuration passed to an LLM provider at construction time.
 
 #### apiKey
 
-
-
 **Type:** `string`
 
 #### endpoint
-
-
 
 **Type:** `string`
 
@@ -26,13 +22,9 @@ Model identifier; pin this value to avoid classification drift.
 
 #### maxTokens
 
-
-
 **Type:** `number`
 
 #### temperature
-
-
 
 **Type:** `number`
 
