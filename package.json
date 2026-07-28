@@ -55,13 +55,13 @@
     "@changesets/cli": "^2.31.0",
     "@to-skills/vitepress": "^0.2.25",
     "@types/node": "^25.9.1",
-    "@vitest/coverage-v8": "^4.1.8",
-    "@vitest/ui": "^4.1.8",
+    "@vitest/coverage-v8": "^4.1.10",
+    "@vitest/ui": "^4.1.10",
     "lint-staged": "^17.0.8",
     "oxfmt": "^0.56.0",
     "oxlint": "^1.71.0",
     "simple-git-hooks": "^2.13.1",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.10"
   },
   "engines": {
     "node": ">=22.0.0",
