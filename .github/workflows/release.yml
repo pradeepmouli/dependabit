@@ -75,6 +75,7 @@ jobs:
           title: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
 
       - name: Enable auto-merge on version PR
@@ -87,7 +88,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
-              head: `${context.repo.owner}:changeset-release/master`
+              head: `${context.repo.owner}:changeset-release/${context.ref.replace('refs/heads/', '')}`
             });
             if (pulls.length === 0) { console.log('No version PR found'); return; }
             const pr = pulls[0];
