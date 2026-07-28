@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@dependabit/manifest": "workspace:*",
-    "semver": "^7.8.0",
+    "semver": "^7.8.5",
     "zod": "^4.4.3"
   },
   "devDependencies": {
