@@ -32,7 +32,7 @@
     "@actions/core": "^3.0.1",
     "@dependabit/github-client": "workspace:*",
     "@dependabit/manifest": "workspace:*",
-    "ignore": "^7.0.5",
+    "ignore": "^7.0.6",
     "zod": "^4.4.3"
   },
   "devDependencies": {
