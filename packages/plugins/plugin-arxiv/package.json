@@ -1,7 +1,7 @@
 {
   "name": "@dependabit/plugin-arxiv",
-  "version": "0.1.16",
-  "description": "arXiv paper version checker plugin for dependabit \u2014 tracks academic preprint revisions as dependency sources.",
+  "version": "0.1.17",
+  "description": "arXiv paper version checker plugin for dependabit — tracks academic preprint revisions as dependency sources.",
   "homepage": "https://pradeepmouli.github.io/dependabit/",
   "bugs": {
     "url": "https://github.com/pradeepmouli/dependabit/issues"
