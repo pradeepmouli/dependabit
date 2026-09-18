@@ -1,5 +1,15 @@
 # @dependabit/utils
 
+## 0.1.17
+
+### Patch Changes
+
+- [#145](https://github.com/pradeepmouli/dependabit/pull/145) [`0f27a09`](https://github.com/pradeepmouli/dependabit/commit/0f27a09215683c508cb5575ea41e5a8b602b7ab9) Thanks [@pradeepmouli](https://github.com/pradeepmouli)! - - fix(ci): generate changeset and keep TS6 pins in dep-update workflow
+  - chore(deps)(deps-dev): bump the code-quality group across 1 directory with 3 updates
+  - chore(deps)(deps-dev): bump tsx
+  - chore(deps)(deps): bump ignore from 7.0.5 to 7.0.9
+  - chore(deps)(deps-dev): bump vitepress
+
 ## 0.1.16
 
 ### Patch Changes
