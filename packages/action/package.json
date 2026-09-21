@@ -36,11 +36,11 @@
     "@dependabit/github-client": "workspace:*",
     "@dependabit/manifest": "workspace:*",
     "@dependabit/monitor": "workspace:*",
-    "zod": "^4.4.3"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
-    "@vercel/ncc": "^0.44.1",
+    "@vercel/ncc": "^0.45.0",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2",
     "vitest": "^4.1.8"
