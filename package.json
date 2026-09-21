@@ -1,6 +1,6 @@
 {
   "name": "dependabit",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "private": true,
   "description": "dependabot for resources, related projects, and knowledge",
   "keywords": [
@@ -51,9 +51,8 @@
     "docs:build": "pnpm --filter @dependabit/docs build"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.7.0",
-    "@changesets/cli": "^2.31.0",
-    "@to-skills/vitepress": "^0.2.25",
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
     "@types/node": "^25.9.1",
     "@vitest/coverage-v8": "^4.1.8",
     "@vitest/ui": "^4.1.8",
