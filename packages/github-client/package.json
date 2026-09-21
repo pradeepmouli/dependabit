@@ -31,7 +31,7 @@
   "dependencies": {
     "@actions/github": "^9.1.1",
     "octokit": "^5.0.5",
-    "zod": "^4.4.3"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
