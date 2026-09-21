@@ -35,10 +35,10 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "^25.8.0",
-    "tsx": "^4.22.2",
+    "@types/node": "^25.9.1",
+    "tsx": "^4.23.13",
     "typescript": "^7.0.2",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.8"
   },
   "keywords": [
     "skills",

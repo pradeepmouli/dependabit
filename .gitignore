@@ -18,16 +18,3 @@ docs/html/
 # Generated API docs (typedoc)
 docs/api/
 
-# BEGIN ai-artifacts
-.claude/
-.codex/
-.agents/
-.specify/
-.cursor/
-.continue/
-.aider/
-.roo/
-.windsurf/
-AGENTS.md
-GEMINI.md
-# END ai-artifacts
