@@ -33,7 +33,7 @@
   "dependencies": {
     "@dependabit/github-client": "workspace:*",
     "@dependabit/manifest": "workspace:*",
-    "zod": "^4.4.3"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
