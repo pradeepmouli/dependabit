@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/plugins",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Plugin registry and loader for dependabit \u2014 registers, discovers, and instantiates extensible dependency access-method plugins.",
   "homepage": "https://pradeepmouli.github.io/dependabit/",
   "bugs": {

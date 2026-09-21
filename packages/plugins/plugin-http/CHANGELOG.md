@@ -1,5 +1,13 @@
 # @dependabit/plugin-http
 
+## 0.1.18
+
+### Patch Changes
+
+- - chore(deps): update runtime dependencies
+- Updated dependencies [[`0f27a09`](https://github.com/pradeepmouli/dependabit/commit/0f27a09215683c508cb5575ea41e5a8b602b7ab9)]:
+  - @dependabit/manifest@0.1.18
+
 ## 0.1.17
 
 ### Patch Changes

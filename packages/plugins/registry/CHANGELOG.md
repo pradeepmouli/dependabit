@@ -1,5 +1,11 @@
 # @dependabit/plugins
 
+## 0.1.14
+
+### Patch Changes
+
+- - chore(deps): update runtime dependencies
+
 ## 0.1.13
 
 ### Patch Changes
