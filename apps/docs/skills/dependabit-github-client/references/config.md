@@ -8,19 +8,13 @@ Configuration for the GitHubClient wrapper.
 
 #### auth
 
-
-
 **Type:** `string`
 
 #### rateLimitWarningThreshold
 
-
-
 **Type:** `number`
 
 #### rateLimitMinRemaining
-
-
 
 **Type:** `number`
 
@@ -34,37 +28,25 @@ Configuration for the GitHubClient wrapper.
 
 #### since
 
-
-
 **Type:** `string`
 
 #### until
-
-
 
 **Type:** `string`
 
 #### sha
 
-
-
 **Type:** `string`
 
 #### path
-
-
 
 **Type:** `string`
 
 #### per_page
 
-
-
 **Type:** `number`
 
 #### page
-
-
 
 **Type:** `number`
 
@@ -74,33 +56,23 @@ Configuration for the GitHubClient wrapper.
 
 #### type
 
-
-
 **Type:** `AuthType`
 
 **Required:** yes
 
 #### token
 
-
-
 **Type:** `string`
 
 #### oauth
-
-
 
 **Type:** `OAuthConfig`
 
 #### username
 
-
-
 **Type:** `string`
 
 #### password
-
-
 
 **Type:** `string`
 
@@ -110,13 +82,9 @@ Configuration for the GitHubClient wrapper.
 
 #### truePositiveLabel
 
-
-
 **Type:** `string`
 
 #### falsePositiveLabel
-
-
 
 **Type:** `string`
 
@@ -129,23 +97,17 @@ Supports authorization code flow and token refresh
 
 #### clientId
 
-
-
 **Type:** `string`
 
 **Required:** yes
 
 #### clientSecret
 
-
-
 **Type:** `string`
 
 **Required:** yes
 
 #### redirectUri
-
-
 
 **Type:** `string`
 

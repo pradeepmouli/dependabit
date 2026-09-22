@@ -1,6 +1,6 @@
 ---
-name: dependabit-plugins
 description: "Documentation site for dependabit Use when: Managing a set of plugins across the lifetime of an application.."
+name: dependabit-plugins
 ---
 
 # @dependabit/plugins
@@ -31,7 +31,7 @@ API surface: 6 functions, 2 classes, 3 types, 2 constants
 
 **PluginLoaderConfig** — Configuration for the PluginLoader. (2 options — see references/config.md)
 
-**Pitfalls:**
+**Never:**
 - Setting `autoInitialize: false` skips calling `plugin.initialize()` on load.  Plugins that allocate resources in `initialize` will be unusable until the caller manually invokes `plugin.initialize()`.
 
 ## Quick Reference
@@ -46,7 +46,7 @@ registered), `PluginMetadata` (Validated plugin metadata type), `Plugin` (Contra
 Load these on demand — do NOT read all at once:
 
 - When calling any function → read `references/functions.md` for full signatures, parameters, and return types
-- When using a class → read `references/classes/` for properties, methods, and inheritance
+- When using a class → read `references/classes.md` for properties, methods, and inheritance
 - When defining typed variables or function parameters → read `references/types.md`
 - When using exported constants → read `references/variables.md`
 - When configuring options → read `references/config.md` for all settings and defaults
