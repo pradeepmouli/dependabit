@@ -1,6 +1,6 @@
 {
   "name": "@dependabit/plugin-github",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "GitHub releases, tags, and raw file checker plugin for dependabit \u2014 monitors repository-hosted dependency sources.",
   "homepage": "https://pradeepmouli.github.io/dependabit/",
   "bugs": {
