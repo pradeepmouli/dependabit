@@ -8,21 +8,15 @@ Configuration for the Context7Checker.
 
 #### url
 
-
-
 **Type:** `string`
 
 **Required:** yes
 
 #### libraryId
 
-
-
 **Type:** `string`
 
 #### auth
-
-
 
 **Type:** `{ type: "token" | "none"; secret?: string }`
 

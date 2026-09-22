@@ -14,8 +14,8 @@ Use this router when:
 - Documentation site for dependabit
 - Documentation site for dependabit
 - Documentation site for dependabit
-- Documentation site for dependabit
-- Documentation site for dependabit
+- Main export for test utilities
+- Main export file for utils package
 - Documentation site for dependabit
 - Documentation site for dependabit
 - Documentation site for dependabit
@@ -28,8 +28,8 @@ Use this router when:
 3. Documentation site for dependabit? → `dependabit-github-client`
 4. Documentation site for dependabit? → `dependabit-manifest`
 5. Documentation site for dependabit? → `dependabit-monitor`
-6. Documentation site for dependabit? → `dependabit-test-utils`
-7. Documentation site for dependabit? → `dependabit-utils`
+6. Main export for test utilities? → `dependabit-test-utils`
+7. Main export file for utils package? → `dependabit-utils`
 8. Documentation site for dependabit? → `dependabit-plugins`
 9. Documentation site for dependabit? → `dependabit-plugin-arxiv`
 10. Documentation site for dependabit? → `dependabit-plugin-context7`
@@ -143,10 +143,10 @@ User: "I need to documentation site for dependabit"
 User: "I need to documentation site for dependabit"  
 → Load `dependabit-monitor`
 
-User: "I need to documentation site for dependabit"  
+User: "I need to main export for test utilities"  
 → Load `dependabit-test-utils`
 
-User: "I need to documentation site for dependabit"  
+User: "I need to main export file for utils package"  
 → Load `dependabit-utils`
 
 User: "I need to documentation site for dependabit"  
