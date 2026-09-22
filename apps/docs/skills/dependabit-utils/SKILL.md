@@ -1,11 +1,11 @@
 ---
+description: Main export file for utils package
 name: dependabit-utils
-description: Documentation site for dependabit
 ---
 
 # @dependabit/utils
 
-Documentation site for dependabit
+Main export file for utils package
 
 ## Quick Reference
 

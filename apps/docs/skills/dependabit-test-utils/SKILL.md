@@ -1,11 +1,11 @@
 ---
+description: Main export for test utilities
 name: dependabit-test-utils
-description: Documentation site for dependabit
 ---
 
 # @dependabit/test-utils
 
-Documentation site for dependabit
+Main export for test utilities
 
 ## Quick Reference
 

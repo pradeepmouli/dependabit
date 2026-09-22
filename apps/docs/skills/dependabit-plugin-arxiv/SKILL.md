@@ -1,6 +1,6 @@
 ---
-name: dependabit-plugin-arxiv
 description: "Documentation site for dependabit Use when: Tracking research papers that your project cites or implements, to be...."
+name: dependabit-plugin-arxiv
 ---
 
 # @dependabit/plugin-arxiv
@@ -27,7 +27,7 @@ API surface: 1 functions, 1 classes, 3 types
 
 **ArxivConfig** — Configuration for the ArxivChecker. (2 options — see references/config.md)
 
-**Pitfalls:**
+**Never:**
 - `url` should point to the abstract page (`/abs/`) not the PDF (`/pdf/`). The ID extractor supports both, but the canonical URL in the manifest should use the abstract form.
 - arXiv IDs do not carry version numbers; the checker always fetches the **latest** version.  If a paper is withdrawn, the API returns an empty entry and the checker throws.
 
@@ -41,7 +41,7 @@ API surface: 1 functions, 1 classes, 3 types
 Load these on demand — do NOT read all at once:
 
 - When calling any function → read `references/functions.md` for full signatures, parameters, and return types
-- When using a class → read `references/classes/` for properties, methods, and inheritance
+- When using a class → read `references/classes.md` for properties, methods, and inheritance
 - When defining typed variables or function parameters → read `references/types.md`
 - When configuring options → read `references/config.md` for all settings and defaults
 
