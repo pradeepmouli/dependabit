@@ -1,5 +1,14 @@
 # @dependabit/detector
 
+## 0.1.21
+
+### Patch Changes
+
+- [#164](https://github.com/pradeepmouli/dependabit/pull/164) [`b6d3f6d`](https://github.com/pradeepmouli/dependabit/commit/b6d3f6d7eeea7d690458f9c95d88b54018d15139) Thanks [@pradeepmouli](https://github.com/pradeepmouli)! - - fix(ci): remove duplicate 'with:' key in Setup pnpm step
+- Updated dependencies [[`b6d3f6d`](https://github.com/pradeepmouli/dependabit/commit/b6d3f6d7eeea7d690458f9c95d88b54018d15139)]:
+  - @dependabit/github-client@0.1.19
+  - @dependabit/manifest@0.1.19
+
 ## 0.1.20
 
 ### Patch Changes
