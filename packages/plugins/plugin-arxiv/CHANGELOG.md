@@ -1,5 +1,12 @@
 # @dependabit/plugin-arxiv
 
+## 0.1.19
+
+### Patch Changes
+
+- Updated dependencies [[`b6d3f6d`](https://github.com/pradeepmouli/dependabit/commit/b6d3f6d7eeea7d690458f9c95d88b54018d15139)]:
+  - @dependabit/manifest@0.1.19
+
 ## 0.1.18
 
 ### Patch Changes
