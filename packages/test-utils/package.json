@@ -36,10 +36,10 @@
   "devDependencies": {
     "@types/node": "^25.9.1",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.1"
+    "vitest": "^5.0.3"
   },
   "peerDependencies": {
-    "vitest": "^5.0.1"
+    "vitest": "^5.0.3"
   },
   "keywords": [
     "dependabit",
